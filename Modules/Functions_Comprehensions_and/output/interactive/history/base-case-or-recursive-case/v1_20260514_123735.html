@@ -1,0 +1,878 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base Case or Recursive Case?</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  #activity-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  #activity-header h1 {
+    font-size: 1.8rem;
+    color: #cba6f7;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  #activity-header p.instructions {
+    font-size: 1rem;
+    color: #a6adc8;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+
+  #score-bar {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    background: #313244;
+    border-radius: 12px;
+    padding: 10px 30px;
+    margin-bottom: 24px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .score-label {
+    font-size: 0.75rem;
+    color: #a6adc8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .score-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #cba6f7;
+  }
+
+  #game-card {
+    background: #313244;
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  #function-label {
+    font-size: 0.85rem;
+    color: #a6adc8;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  #code-display {
+    background: #1e1e2e;
+    border-radius: 10px;
+    padding: 20px 22px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    overflow-x: auto;
+    border: 1px solid #45475a;
+  }
+
+  .code-line {
+    display: block;
+    white-space: pre;
+  }
+
+  .kw { color: #cba6f7; }
+  .fn { color: #89b4fa; }
+  .num { color: #fab387; }
+  .str { color: #a6e3a1; }
+  .op { color: #89dceb; }
+  .comment { color: #6c7086; font-style: italic; }
+
+  .masked-block {
+    display: inline-block;
+    background: #45475a;
+    border: 2px dashed #cba6f7;
+    border-radius: 6px;
+    padding: 2px 14px;
+    color: #cba6f7;
+    font-weight: bold;
+    cursor: default;
+    animation: pulse 2s infinite;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  @keyframes pulse {
+    0%, 100% { border-color: #cba6f7; }
+    50% { border-color: #89b4fa; }
+  }
+
+  .revealed-base {
+    display: inline-block;
+    background: #1e3a5f;
+    border: 2px solid #89b4fa;
+    border-radius: 6px;
+    padding: 2px 14px;
+    color: #89dceb;
+    font-weight: bold;
+    animation: reveal-pop 0.4s ease;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .revealed-recursive {
+    display: inline-block;
+    background: #3d1f5e;
+    border: 2px solid #cba6f7;
+    border-radius: 6px;
+    padding: 2px 14px;
+    color: #f5c2e7;
+    font-weight: bold;
+    animation: reveal-pop 0.4s ease;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  @keyframes reveal-pop {
+    0% { transform: scale(0.85); opacity: 0; }
+    60% { transform: scale(1.06); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  #question-prompt {
+    margin-top: 22px;
+    font-size: 1.05rem;
+    color: #cdd6f4;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  #choice-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 18px;
+  }
+
+  .choice-btn {
+    flex: 1;
+    max-width: 240px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+    min-height: 52px;
+    letter-spacing: 0.3px;
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+
+  .choice-btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  #btn-base {
+    background: #1e3a5f;
+    color: #89dceb;
+    border: 2px solid #89b4fa;
+  }
+
+  #btn-recursive {
+    background: #3d1f5e;
+    color: #f5c2e7;
+    border: 2px solid #cba6f7;
+  }
+
+  .choice-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-correct {
+    animation: correct-flash 0.5s ease;
+    outline: 3px solid #a6e3a1 !important;
+  }
+
+  .btn-wrong {
+    animation: wrong-shake 0.45s ease;
+    outline: 3px solid #f38ba8 !important;
+    opacity: 0.5 !important;
+  }
+
+  @keyframes correct-flash {
+    0%, 100% { transform: scale(1); }
+    40% { transform: scale(1.07); }
+  }
+
+  @keyframes wrong-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    70% { transform: translateX(-4px); }
+  }
+
+  #feedback-panel {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    display: none;
+    animation: fade-in 0.3s ease;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .feedback-correct {
+    background: #1f3b2a;
+    border: 1px solid #a6e3a1;
+    color: #a6e3a1;
+  }
+
+  .feedback-wrong {
+    background: #3b1f24;
+    border: 1px solid #f38ba8;
+    color: #f38ba8;
+  }
+
+  #feedback-panel strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  #feedback-panel .explanation {
+    color: #cdd6f4;
+    font-size: 0.92rem;
+    margin-top: 6px;
+  }
+
+  #next-btn {
+    display: none;
+    margin: 18px auto 0;
+    padding: 12px 36px;
+    background: #cba6f7;
+    color: #1e1e2e;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    min-height: 46px;
+  }
+
+  #next-btn:hover {
+    background: #d8b4fe;
+    transform: translateY(-2px);
+  }
+
+  /* End Screen */
+  #end-screen {
+    display: none;
+    background: #313244;
+    border-radius: 16px;
+    padding: 40px 36px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    animation: fade-in 0.5s ease;
+  }
+
+  #end-screen h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .end-win h2 { color: #a6e3a1; }
+  .end-pass h2 { color: #89dceb; }
+  .end-retry h2 { color: #fab387; }
+
+  #end-screen .end-score-display {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 18px 0 10px;
+    color: #cba6f7;
+  }
+
+  #end-screen .end-message {
+    font-size: 1.05rem;
+    color: #a6adc8;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  #reset-btn {
+    padding: 14px 42px;
+    background: #cba6f7;
+    color: #1e1e2e;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    min-height: 52px;
+  }
+
+  #reset-btn:hover {
+    background: #d8b4fe;
+    transform: translateY(-2px);
+  }
+
+  .progress-bar-wrap {
+    width: 100%;
+    height: 6px;
+    background: #45475a;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #89b4fa, #cba6f7);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  @media (max-width: 500px) {
+    #activity-header h1 { font-size: 1.4rem; }
+    #code-display { font-size: 0.82rem; }
+    #choice-buttons { flex-direction: column; align-items: center; }
+    .choice-btn { max-width: 100%; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="activity-header">
+  <h1>Base Case or Recursive Case?</h1>
+  <p class="instructions">
+    A highlighted block in the function below is hidden. Decide whether it represents a <strong>base case</strong> (the stopping condition) or a <strong>recursive case</strong> (where the function calls itself). Click your answer to find out!
+  </p>
+</div>
+
+<div id="score-bar">
+  <div class="score-item">
+    <span class="score-label">Round</span>
+    <span class="score-value" id="round-display">1 / 10</span>
+  </div>
+  <div class="score-item">
+    <span class="score-label">Score</span>
+    <span class="score-value" id="score-display">0</span>
+  </div>
+  <div class="score-item">
+    <span class="score-label">Correct</span>
+    <span class="score-value" id="correct-display">0</span>
+  </div>
+  <div class="score-item">
+    <span class="score-label">Incorrect</span>
+    <span class="score-value" id="incorrect-display">0</span>
+  </div>
+</div>
+
+<div id="game-card">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+  </div>
+  <div id="function-label">Python Recursive Function</div>
+  <div id="code-display"></div>
+  <p id="question-prompt">Is the highlighted block a <strong>Base Case</strong> or a <strong>Recursive Case</strong>?</p>
+  <div id="choice-buttons">
+    <button class="choice-btn" id="btn-base" onclick="submitAnswer('base')">🛑 Base Case</button>
+    <button class="choice-btn" id="btn-recursive" onclick="submitAnswer('recursive')">🔁 Recursive Case</button>
+  </div>
+  <div id="feedback-panel"></div>
+  <button id="next-btn" onclick="advanceRound()">Next Round →</button>
+</div>
+
+<div id="end-screen">
+  <h2 id="end-title"></h2>
+  <div class="end-score-display" id="end-score"></div>
+  <p class="end-message" id="end-message"></p>
+  <button id="reset-btn" onclick="resetGame()">🔄 Play Again</button>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  DATA: Ten rounds of recursive function challenges
+  //  Each round has:
+  //    functionName  – displayed label
+  //    codeLines     – array of line objects; a line with maskedContent
+  //                    will have its content replaced by the blank
+  //    maskedLabel   – the short text shown in the blank
+  //    classification – 'base' or 'recursive'
+  //    revealedCode  – what the blank reveals after answering
+  //    explanation   – one-sentence educational explanation
+  // ─────────────────────────────────────────────────────────────
+
+  const ROUNDS = [
+    {
+      functionName: "factorial(n)",
+      codeLines: [
+        { text: "def factorial(n):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" factorial"},{t:"op",v:"(n):"}
+        ]},
+        { text: "    if n == 0:", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "if n == 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" n "},{t:"op",v:"=="},{t:"op",v:" "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return 1", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"num",v:"1"}
+        ]},
+        { text: "    return n * factorial(n - 1)", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" n "},{t:"op",v:"*"},{t:"op",v:" "},{t:"fn",v:"factorial"},{t:"op",v:"(n "},{t:"op",v:"-"},{t:"op",v:" "},{t:"num",v:"1"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "base",
+      explanation: "This is the base case: when n equals 0, the function stops calling itself and returns 1, preventing infinite recursion."
+    },
+    {
+      functionName: "factorial(n)",
+      codeLines: [
+        { text: "def factorial(n):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" factorial"},{t:"op",v:"(n):"}
+        ]},
+        { text: "    if n == 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" n == "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return 1", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"num",v:"1"}
+        ]},
+        { text: "    return n * factorial(n - 1)", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "return n * factorial(n - 1)", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" n * "},{t:"fn",v:"factorial"},{t:"op",v:"(n - "},{t:"num",v:"1"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "recursive",
+      explanation: "This is the recursive case: the function calls itself with a smaller argument (n − 1), progressively reducing the problem."
+    },
+    {
+      functionName: "fibonacci(n)",
+      codeLines: [
+        { text: "def fibonacci(n):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" fibonacci"},{t:"op",v:"(n):"}
+        ]},
+        { text: "    if n <= 1:", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "if n <= 1:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" n <= "},{t:"num",v:"1"},{t:"op",v:":"}
+        ]},
+        { text: "        return n", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" n"}
+        ]},
+        { text: "    return fibonacci(n-1) + fibonacci(n-2)", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" "},{t:"fn",v:"fibonacci"},{t:"op",v:"(n-"},{t:"num",v:"1"},{t:"op",v:") + "},{t:"fn",v:"fibonacci"},{t:"op",v:"(n-"},{t:"num",v:"2"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "base",
+      explanation: "This is the base case: for n ≤ 1, fibonacci returns n directly without any further self-calls."
+    },
+    {
+      functionName: "fibonacci(n)",
+      codeLines: [
+        { text: "def fibonacci(n):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" fibonacci"},{t:"op",v:"(n):"}
+        ]},
+        { text: "    if n <= 1:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" n <= "},{t:"num",v:"1"},{t:"op",v:":"}
+        ]},
+        { text: "        return n", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" n"}
+        ]},
+        { text: "    return fibonacci(n-1) + fibonacci(n-2)", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "return fibonacci(n-1) + fibonacci(n-2)", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" "},{t:"fn",v:"fibonacci"},{t:"op",v:"(n-"},{t:"num",v:"1"},{t:"op",v:") + "},{t:"fn",v:"fibonacci"},{t:"op",v:"(n-"},{t:"num",v:"2"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "recursive",
+      explanation: "This is the recursive case: the function calls itself twice with smaller inputs to compute the sum of the two preceding Fibonacci numbers."
+    },
+    {
+      functionName: "sum_list(lst)",
+      codeLines: [
+        { text: "def sum_list(lst):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" sum_list"},{t:"op",v:"(lst):"}
+        ]},
+        { text: "    if len(lst) == 0:", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "if len(lst) == 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" len(lst) == "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return 0", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"num",v:"0"}
+        ]},
+        { text: "    return lst[0] + sum_list(lst[1:])", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" lst["},{t:"num",v:"0"},{t:"op",v:"] + "},{t:"fn",v:"sum_list"},{t:"op",v:"(lst["},{t:"num",v:"1"},{t:"op",v:":])"} 
+        ]}
+      ],
+      classification: "base",
+      explanation: "This is the base case: an empty list has no elements to sum, so the function returns 0 and stops recursing."
+    },
+    {
+      functionName: "sum_list(lst)",
+      codeLines: [
+        { text: "def sum_list(lst):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" sum_list"},{t:"op",v:"(lst):"}
+        ]},
+        { text: "    if len(lst) == 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" len(lst) == "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return 0", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"num",v:"0"}
+        ]},
+        { text: "    return lst[0] + sum_list(lst[1:])", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "return lst[0] + sum_list(lst[1:])", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" lst["},{t:"num",v:"0"},{t:"op",v:"] + "},{t:"fn",v:"sum_list"},{t:"op",v:"(lst["},{t:"num",v:"1"},{t:"op",v:":])"} 
+        ]}
+      ],
+      classification: "recursive",
+      explanation: "This is the recursive case: the first element is added to the result of calling sum_list on the remaining (shorter) list."
+    },
+    {
+      functionName: "count_down(n)",
+      codeLines: [
+        { text: "def count_down(n):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" count_down"},{t:"op",v:"(n):"}
+        ]},
+        { text: "    if n < 0:", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "if n < 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" n < "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return", tokens: [
+            {t:"kw",v:"        return"}
+        ]},
+        { text: "    print(n)", tokens: [
+            {t:"fn",v:"    print"},{t:"op",v:"(n)"}
+        ]},
+        { text: "    count_down(n - 1)", tokens: [
+            {t:"fn",v:"    count_down"},{t:"op",v:"(n - "},{t:"num",v:"1"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "base",
+      explanation: "This is the base case: when n drops below 0, the function returns immediately without printing or recursing further."
+    },
+    {
+      functionName: "power(base, exp)",
+      codeLines: [
+        { text: "def power(base, exp):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" power"},{t:"op",v:"(base, exp):"}
+        ]},
+        { text: "    if exp == 0:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" exp == "},{t:"num",v:"0"},{t:"op",v:":"}
+        ]},
+        { text: "        return 1", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"num",v:"1"}
+        ]},
+        { text: "    return base * power(base, exp - 1)", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "return base * power(base, exp - 1)", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" base * "},{t:"fn",v:"power"},{t:"op",v:"(base, exp - "},{t:"num",v:"1"},{t:"op",v:")"}
+        ]}
+      ],
+      classification: "recursive",
+      explanation: "This is the recursive case: base is multiplied by a recursive call that reduces the exponent by 1 each time."
+    },
+    {
+      functionName: "is_palindrome(s)",
+      codeLines: [
+        { text: "def is_palindrome(s):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" is_palindrome"},{t:"op",v:"(s):"}
+        ]},
+        { text: "    if len(s) <= 1:", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "if len(s) <= 1:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" len(s) <= "},{t:"num",v:"1"},{t:"op",v:":"}
+        ]},
+        { text: "        return True", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"kw",v:"True"}
+        ]},
+        { text: "    if s[0] != s[-1]:", tokens: [
+            {t:"kw",v:"    if"},{t:"op",v:" s["},{t:"num",v:"0"},{t:"op",v:"] != s[-"},{t:"num",v:"1"},{t:"op",v:"]:"}
+        ]},
+        { text: "        return False", tokens: [
+            {t:"kw",v:"        return"},{t:"op",v:" "},{t:"kw",v:"False"}
+        ]},
+        { text: "    return is_palindrome(s[1:-1])", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" "},{t:"fn",v:"is_palindrome"},{t:"op",v:"(s["},{t:"num",v:"1"},{t:"op",v:":-"},{t:"num",v:"1"},{t:"op",v:"])"}
+        ]}
+      ],
+      classification: "base",
+      explanation: "This is the base case: a string with 0 or 1 characters is always a palindrome, so the function returns True without recursing."
+    },
+    {
+      functionName: "flatten(lst)",
+      codeLines: [
+        { text: "def flatten(lst):", tokens: [
+            {t:"kw",v:"def"},{t:"fn",v:" flatten"},{t:"op",v:"(lst):"}
+        ]},
+        { text: "    result = []", tokens: [
+            {t:"op",v:"    result = []"}
+        ]},
+        { text: "    for item in lst:", tokens: [
+            {t:"kw",v:"    for"},{t:"op",v:" item "},{t:"kw",v:"in"},{t:"op",v:" lst:"}
+        ]},
+        { text: "        if isinstance(item, list):", tokens: [
+            {t:"kw",v:"        if"},{t:"op",v:" isinstance(item, list):"}
+        ]},
+        { text: "            result += flatten(item)", masked: true, maskedLabel: "??? BASE or RECURSIVE ???",
+          revealedCode: "result += flatten(item)", tokens: [
+            {t:"op",v:"            result += "},{t:"fn",v:"flatten"},{t:"op",v:"(item)"}
+        ]},
+        { text: "        else:", tokens: [
+            {t:"kw",v:"        else:"}
+        ]},
+        { text: "            result.append(item)", tokens: [
+            {t:"op",v:"            result.append(item)"}
+        ]},
+        { text: "    return result", tokens: [
+            {t:"kw",v:"    return"},{t:"op",v:" result"}
+        ]}
+      ],
+      classification: "recursive",
+      explanation: "This is the recursive case: when an item is itself a list, flatten calls itself on that nested list to continue flattening deeper levels."
+    }
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+  //  GAME STATE
+  // ─────────────────────────────────────────────────────────────
+
+  let currentRoundIndex = 0;
+  let playerScore = 0;
+  let correctCount = 0;
+  let incorrectCount = 0;
+  let answered = false;
+
+  // Shuffle helper using Fisher-Yates
+  function shuffleArray(arr) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  let roundOrder = shuffleArray(ROUNDS.map((_, idx) => idx));
+
+  // ─────────────────────────────────────────────────────────────
+  //  RENDERING HELPERS
+  // ─────────────────────────────────────────────────────────────
+
+  function buildTokenSpans(tokens) {
+    return tokens.map(tok => {
+      const span = document.createElement("span");
+      span.className = tok.t;
+      span.textContent = tok.v;
+      return span.outerHTML;
+    }).join("");
+  }
+
+  function renderCodeDisplay(roundData, revealed, playerWasCorrect) {
+    const codeDisplay = document.getElementById("code-display");
+    codeDisplay.innerHTML = "";
+
+    roundData.codeLines.forEach(line => {
+      const lineSpan = document.createElement("span");
+      lineSpan.className = "code-line";
+
+      if (line.masked) {
+        if (!revealed) {
+          // Show masked placeholder
+          const indent = line.text.match(/^(\s*)/)[1];
+          lineSpan.innerHTML = indent + `<span class="masked-block">[ ${line.maskedLabel} ]</span>`;
+        } else {
+          // Show revealed code with color
+          const indent = line.text.match(/^(\s*)/)[1];
+          const revealClass = roundData.classification === "base" ? "revealed-base" : "revealed-recursive";
+          lineSpan.innerHTML = indent + `<span class="${revealClass}">${buildTokenSpans(line.tokens).trim()}</span>`;
+        }
+      } else {
+        lineSpan.innerHTML = buildTokenSpans(line.tokens);
+      }
+
+      codeDisplay.appendChild(lineSpan);
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  GAME LOGIC
+  // ─────────────────────────────────────────────────────────────
+
+  function loadRound(roundIndex) {
+    answered = false;
+    const roundData = ROUNDS[roundOrder[roundIndex]];
+
+    // Update round counter and progress
+    document.getElementById("round-display").textContent = `${roundIndex + 1} / 10`;
+    document.getElementById("progress-bar").style.width = `${(roundIndex / 10) * 100}%`;
+
+    // Render code
+    renderCodeDisplay(roundData, false, null);
+
+    // Reset UI
+    document.getElementById("feedback-panel").style.display = "none";
+    document.getElementById("next-btn").style.display = "none";
+    document.getElementById("question-prompt").style.display = "block";
+    document.getElementById("choice-buttons").style.display = "flex";
+
+    const btnBase = document.getElementById("btn-base");
+    const btnRecursive = document.getElementById("btn-recursive");
+    btnBase.disabled = false;
+    btnRecursive.disabled = false;
+    btnBase.className = "choice-btn";
+    btnRecursive.className = "choice-btn";
+  }
+
+  function submitAnswer(playerChoice) {
+    if (answered) return;
+    answered = true;
+
+    const roundData = ROUNDS[roundOrder[currentRoundIndex]];
+    const isCorrect = playerChoice === roundData.classification;
+
+    const btnBase = document.getElementById("btn-base");
+    const btnRecursive = document.getElementById("btn-recursive");
+    btnBase.disabled = true;
+    btnRecursive.disabled = true;
+
+    // Visual feedback on buttons
+    if (playerChoice === "base") {
+      btnBase.className = isCorrect ? "choice-btn btn-correct" : "choice-btn btn-wrong";
+      if (!isCorrect) btnRecursive.className = "choice-btn btn-correct";
+    } else {
+      btnRecursive.className = isCorrect ? "choice-btn btn-correct" : "choice-btn btn-wrong";
+      if (!isCorrect) btnBase.className = "choice-btn btn-correct";
+    }
+
+    // Update score
+    if (isCorrect) {
+      correctCount++;
+      playerScore += 10;
+    } else {
+      incorrectCount++;
+    }
+
+    updateScoreDisplay();
+
+    // Reveal the code block
+    renderCodeDisplay(roundData, true, isCorrect);
+
+    // Show feedback panel
+    const feedbackPanel = document.getElementById("feedback-panel");
+    feedbackPanel.style.display = "block";
+    feedbackPanel.className = isCorrect ? "feedback-correct" : "feedback-wrong";
+
+    const classificationLabel = roundData.classification === "base"
+      ? "🛑 Base Case"
+      : "🔁 Recursive Case";
+
+    feedbackPanel.innerHTML = `
+      <strong>${isCorrect ? "✔ Correct!" : "✘ Not quite — the answer is " + classificationLabel}</strong>
+      <span class="explanation">${roundData.explanation}</span>
+    `;
+
+    // Show next button
+    const nextBtn = document.getElementById("next-btn");
+    nextBtn.style.display = "block";
+    nextBtn.textContent = (currentRoundIndex + 1 < 10) ? "Next Round →" : "See Results →";
+  }
+
+  function advanceRound() {
+    currentRoundIndex++;
+    if (currentRoundIndex >= 10) {
+      showEndScreen();
+    } else {
+      loadRound(currentRoundIndex);
+    }
+  }
+
+  function updateScoreDisplay() {
+    document.getElementById("score-display").textContent = playerScore;
+    document.getElementById("correct-display").textContent = correctCount;
+    document.getElementById("incorrect-display").textContent = incorrectCount;
+  }
+
+  function showEndScreen() {
+    document.getElementById("game-card").style.display = "none";
+    const endScreen = document.getElementById("end-screen");
+    endScreen.style.display = "block";
+
+    document.getElementById("progress-bar").style.width = "100%";
+
+    const endTitle = document.getElementById("end-title");
+    const endMessage = document.getElementById("end-message");
+    const endScore = document.getElementById("end-score");
+
+    endScore.textContent = `${playerScore} / 100`;
+
+    if (playerScore >= 90) {
+      endScreen.className = "end-win";
+      endTitle.textContent = "🏆 Recursion Master!";
+      endMessage.textContent = `Outstanding work! You scored ${playerScore} out of 100. You clearly understand the difference between base cases (the stopping condition) and recursive cases (where the function calls itself).`;
+    } else if (playerScore >= 60) {
+      endScreen.className = "end-pass";
+      endTitle.textContent = "👍 Good Understanding!";
+      endMessage.textContent = `Nice job! You scored ${playerScore} out of 100. You're getting the hang of identifying base cases and recursive cases — keep practicing to sharpen your pattern recognition.`;
+    } else {
+      endScreen.className = "end-retry";
+      endTitle.textContent = "📚 Keep Practicing!";
+      endMessage.textContent = `You scored ${playerScore} out of 100. Remember: a base case returns a direct answer without any self-call, while a recursive case calls the function again with a smaller or simpler input. Try again!`;
+    }
+  }
+
+  function resetGame() {
+    currentRoundIndex = 0;
+    playerScore = 0;
+    correctCount = 0;
+    incorrectCount = 0;
+    answered = false;
+    roundOrder = shuffleArray(ROUNDS.map((_, idx) => idx));
+
+    updateScoreDisplay();
+    document.getElementById("end-screen").style.display = "none";
+    document.getElementById("game-card").style.display = "block";
+    document.getElementById("progress-bar").style.width = "0%";
+
+    loadRound(0);
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  //  INIT
+  // ─────────────────────────────────────────────────────────────
+  loadRound(0);
+</script>
+</body>
+</html>

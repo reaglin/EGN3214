@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "SourceType": "Prompt",
+    "Input": "Covers conditional statements, for and while loops, break and continue, and the range() function, then introduces Python\u0027s core data structures \u2014 lists, tuples, dictionaries, and sets \u2014 with guidance on selecting the right structure for engineering problems.",
+    "IsPrimary": true
+  }
+]

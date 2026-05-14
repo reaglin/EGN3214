@@ -1,10 +1,10 @@
 {
   "Id": "0e83e896-761d-4499-929b-2abda0e7fa3b",
-  "Name": "EGN3214  - Programming for Engineers",
+  "Name": "Egn3214",
   "Description": "",
   "CreatedBy": "",
   "CreatedDate": "2026-05-13T09:57:17.5523423-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.6751152-04:00",
+  "LastModifiedDate": "2026-05-14T10:28:39.7070126-04:00",
   "Modules": [
     {
       "ModuleName": "Python Environment Setup and Language Fundamentals",
