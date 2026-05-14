@@ -1,0 +1,9 @@
+{
+  "Id": "f0922f69-2742-4028-b578-5c0b044b17ae",
+  "Name": "Machine Learning, Automation, Version Control, and Responsible AI",
+  "Description": "Introduces supervised machine learning with scikit-learn for engineering regression and classification, covers engineering automation and parameter sweep pipelines, establishes Git and GitHub version control practices, and consolidates responsible AI integration including verification of AI-generated code and professional engineering accountability.",
+  "CreatedBy": "Ron",
+  "CreatedDate": "2026-05-13T09:57:17.6740155-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6747534-04:00",
+  "Actions": []
+}

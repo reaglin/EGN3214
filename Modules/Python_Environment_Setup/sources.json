@@ -1,0 +1,7 @@
+[
+  {
+    "SourceType": "Prompt",
+    "Input": "Introduces the Python programming environment including IDEs, Jupyter notebooks, and package management, then covers core language fundamentals: data types, variables, operators, type conversion, and the distinction between interactive and script execution.",
+    "IsPrimary": true
+  }
+]

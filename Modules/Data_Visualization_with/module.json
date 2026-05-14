@@ -1,0 +1,9 @@
+{
+  "Id": "88320f04-53d4-4ba0-91af-6ea949cc28e7",
+  "Name": "Data Visualization with Matplotlib and Intro to Pandas",
+  "Description": "Covers matplotlib\u0027s pyplot interface for producing line plots, scatter plots, bar charts, histograms, subplots, and publication-quality figures, then introduces pandas Series and DataFrames for reading, filtering, sorting, and performing descriptive statistics on engineering datasets.",
+  "CreatedBy": "Ron",
+  "CreatedDate": "2026-05-13T09:57:17.634641-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6358297-04:00",
+  "Actions": []
+}

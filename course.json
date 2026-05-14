@@ -1,0 +1,60 @@
+{
+  "Id": "0e83e896-761d-4499-929b-2abda0e7fa3b",
+  "Name": "EGN3214  - Programming for Engineers",
+  "Description": "",
+  "CreatedBy": "",
+  "CreatedDate": "2026-05-13T09:57:17.5523423-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6751152-04:00",
+  "Modules": [
+    {
+      "ModuleName": "Python Environment Setup and Language Fundamentals",
+      "FolderName": "Python_Environment_Setup",
+      "Order": 1
+    },
+    {
+      "ModuleName": "Control Flow and Python Data Structures",
+      "FolderName": "Control_Flow_and",
+      "Order": 2
+    },
+    {
+      "ModuleName": "Functions, Comprehensions, and Functional Patterns",
+      "FolderName": "Functions_Comprehensions_and",
+      "Order": 3
+    },
+    {
+      "ModuleName": "Modules, File I/O, and Error Handling",
+      "FolderName": "Modules_File_I",
+      "Order": 4
+    },
+    {
+      "ModuleName": "NumPy for Engineering Numerical Computation",
+      "FolderName": "NumPy_for_Engineering",
+      "Order": 5
+    },
+    {
+      "ModuleName": "Data Visualization with Matplotlib and Intro to Pandas",
+      "FolderName": "Data_Visualization_with",
+      "Order": 6
+    },
+    {
+      "ModuleName": "Object-Oriented Programming and AI-Assisted Coding Workflow",
+      "FolderName": "Object_Oriented_Programming",
+      "Order": 7
+    },
+    {
+      "ModuleName": "Numerical Methods with SciPy and Curve Fitting",
+      "FolderName": "Numerical_Methods_with",
+      "Order": 8
+    },
+    {
+      "ModuleName": "Engineering Data Analysis and Simulation",
+      "FolderName": "Engineering_Data_Analysis",
+      "Order": 9
+    },
+    {
+      "ModuleName": "Machine Learning, Automation, Version Control, and Responsible AI",
+      "FolderName": "Machine_Learning_Automation",
+      "Order": 10
+    }
+  ]
+}

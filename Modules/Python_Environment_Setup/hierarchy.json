@@ -1,0 +1,833 @@
+{
+  "ModuleFolderName": "Python_Environment_Setup",
+  "CourseName": "EGN3214  - Programming for Engineers",
+  "GeneratedDate": "2026-05-13T10:50:48.3383681-04:00",
+  "ModifiedDate": "2026-05-13T10:50:48.342836-04:00",
+  "Outcomes": [
+    {
+      "Id": "eb1c8385-7b56-4efa-8f60-c132cdeba455",
+      "Text": "Identify the key components of a Python programming environment, including IDEs and Jupyter notebooks.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "508f44db-a7d1-4729-af6d-a13e18b87c64",
+      "Text": "Explain how to manage Python packages using standard package management tools.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "c92b05d3-d37d-46bf-8337-77ed732cfaca",
+      "Text": "Demonstrate the use of Python\u0027s core data types and variable assignment conventions.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "920e0db2-4b03-4e7a-9ecf-a105ff5c0f2f",
+      "Text": "Apply arithmetic, comparison, and logical operators to construct valid Python expressions.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "5c08b4bc-7b8f-4667-95ce-c92176d2ac89",
+      "Text": "Explain the process of type conversion and when it is necessary in Python programs.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "328d6ce2-38ae-4d6c-9193-861751e6ee16",
+      "Text": "Analyze the differences between interactive Python execution and script-based execution.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "71b6221f-a113-4219-9e43-8d3f042aac4e",
+      "Title": "Python Programming Environments",
+      "Summary": "Covers the tools and interfaces used to write and run Python code, including IDEs and Jupyter notebooks. Learners will understand how to choose an appropriate environment for different tasks.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "7916cc88-299f-4645-b437-46eb7d1568a1",
+          "TopicId": "71b6221f-a113-4219-9e43-8d3f042aac4e",
+          "Title": "What Is a Python Environment?",
+          "BodyText": "A Python programming environment is the combination of tools, interpreters, and interfaces that allow a developer to write, run, and debug Python code.",
+          "Notes": "Environments can be local (installed on a machine) or cloud-based. The choice of environment often depends on the task \u2014 data analysis, scripting, or application development.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "2b8de5fc-e6f1-440f-af1d-904bcca5958a",
+              "Text": "A Python environment includes at minimum the Python interpreter and a way to enter and execute code.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "00508c59-3f5e-4fe7-9027-a7ccc2055c67",
+              "Text": "Different environments are optimized for different workflows, such as data science or software development.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9d243852-9099-4f8c-b4a9-01512678799f",
+              "Text": "Understanding your environment is the first step to writing and running Python effectively.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "dbc2d921-9e90-4bd3-bc32-c330420930bc",
+          "TopicId": "71b6221f-a113-4219-9e43-8d3f042aac4e",
+          "Title": "Integrated Development Environments (IDEs)",
+          "BodyText": "An IDE is a software application that provides comprehensive tools for writing and debugging code, typically including a code editor, debugger, and project manager in one interface.",
+          "Notes": "Popular Python IDEs include PyCharm, VS Code, and Spyder. VS Code is widely used for its extensibility, while PyCharm offers deep Python-specific features. Beginners often start with Thonny or IDLE, which ship with Python.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "a19a5456-b36d-4588-8554-69c6f303d61c",
+              "Text": "IDEs provide syntax highlighting, code completion, and error detection to speed up development.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1d4126a8-759b-4487-9082-b4895aff67f1",
+              "Text": "Most IDEs include an integrated terminal so you can run scripts without leaving the application.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8f62689b-7530-4560-a90d-dc9dc8975973",
+              "Text": "Choosing the right IDE can significantly improve productivity and reduce debugging time.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "f6f6c59c-bdd9-4cef-8a0f-6fbc2ba53ae0",
+          "TopicId": "71b6221f-a113-4219-9e43-8d3f042aac4e",
+          "Title": "Jupyter Notebooks",
+          "BodyText": "Jupyter Notebook is an open-source, browser-based environment that allows you to write and execute Python code in discrete, runnable cells alongside narrative text and visualizations.",
+          "Notes": "Jupyter is especially popular in data science, machine learning, and education because it enables exploratory, step-by-step execution. JupyterLab is the modern next-generation interface. Notebooks use the .ipynb file format.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "d0090211-311d-4ec1-818b-d2e2ff135e2a",
+              "Text": "Notebooks consist of cells that can contain either code or formatted Markdown text.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7297f831-504b-41f9-89ea-0b365f72c20a",
+              "Text": "Each code cell can be executed independently, making them ideal for iterative experimentation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9aa2854f-e195-46d7-a382-366e7190bc82",
+              "Text": "Outputs such as charts, tables, and printed values appear directly beneath the corresponding cell.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ce32beee-c5c6-4586-abfb-29f257eb3aea",
+              "Text": "Jupyter notebooks are widely used for sharing reproducible analyses and tutorials.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "45933162-221f-4808-aa32-fca55be7d360",
+          "TopicId": "71b6221f-a113-4219-9e43-8d3f042aac4e",
+          "Title": "The Python Interpreter and REPL",
+          "BodyText": "The Python interpreter is the program that reads and executes Python code. When launched interactively, it provides a Read-Eval-Print Loop (REPL) where each line of code is executed immediately.",
+          "Notes": "The REPL is accessed by typing \u0027python\u0027 or \u0027python3\u0027 in a terminal. It is useful for quick tests and exploration but is not intended for writing complete programs.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "f6c3c2c5-2cf3-40b3-9491-2880b42c38c9",
+              "Text": "The REPL displays results immediately after each expression is entered, supporting fast experimentation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "964ebe52-aa1c-4d8a-be86-4c551fd8b0b3",
+              "Text": "Interactive mode is launched from the terminal and indicated by the \u0027\u003E\u003E\u003E\u0027 prompt.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "588fa1cc-2369-4ddd-8436-232a67a0b6e0",
+              "Text": "The REPL does not save code between sessions, so it is best used for testing small snippets.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "821f597d-f28a-4519-875b-b54db3185684",
+      "Title": "Package Management in Python",
+      "Summary": "Explores how Python packages extend the language\u0027s capabilities and how to install, manage, and organize them using tools like pip and virtual environments.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "81c21b02-7016-4893-be7a-98567f277e2c",
+          "TopicId": "821f597d-f28a-4519-875b-b54db3185684",
+          "Title": "What Are Python Packages?",
+          "BodyText": "A Python package is a collection of modules that provide pre-written code for specific tasks, allowing developers to reuse functionality without writing it from scratch.",
+          "Notes": "The Python Package Index (PyPI) hosts hundreds of thousands of packages. Common examples include NumPy for numerical computing, Pandas for data analysis, and Requests for HTTP calls.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "720ea7a5-7f08-4b82-a8b2-9bdfaed9a884",
+              "Text": "Packages are imported into Python scripts using the \u0027import\u0027 statement.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ce7ee216-2f6f-497b-86c9-1013e17266dc",
+              "Text": "The Python Standard Library includes many built-in packages available without installation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ee2b48c2-2379-40b2-8de7-e4acc456ecf5",
+              "Text": "Third-party packages must be installed before they can be imported and used.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "518553a7-cf92-4b52-88bf-fbe647b51e88",
+          "TopicId": "821f597d-f28a-4519-875b-b54db3185684",
+          "Title": "Using pip to Install Packages",
+          "BodyText": "pip is the default package manager for Python and allows users to install, upgrade, and remove packages from the command line.",
+          "Notes": "The basic command is \u0027pip install package_name\u0027. To install a specific version, use \u0027pip install package_name==1.2.3\u0027. Running \u0027pip list\u0027 shows all currently installed packages. In some systems, \u0027pip3\u0027 must be used to target Python 3.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "95707dc8-bb76-45df-b93c-bda129eb20ed",
+              "Text": "pip downloads packages from PyPI and installs them into the current Python environment.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "df54643d-50c5-46cf-8d92-b6b04ec0f955",
+              "Text": "The command \u0027pip install -r requirements.txt\u0027 installs all packages listed in a requirements file.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "291885f8-c4bf-44ee-a7dd-c5829f6c9c18",
+              "Text": "Regularly updating packages with \u0027pip install --upgrade\u0027 helps maintain security and compatibility.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "9ec6df94-f3fe-43d3-b9dc-b94e31f43980",
+          "TopicId": "821f597d-f28a-4519-875b-b54db3185684",
+          "Title": "Virtual Environments",
+          "BodyText": "A virtual environment is an isolated Python environment that allows different projects to have their own dependencies without conflicting with one another.",
+          "Notes": "Virtual environments are created with \u0027python -m venv env_name\u0027 and activated with \u0027source env_name/bin/activate\u0027 on macOS/Linux or \u0027env_name\\Scripts\\activate\u0027 on Windows. Tools like conda also manage environments and packages together.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "b4354ed3-a46a-47ea-a0f3-addd28f4d828",
+              "Text": "Each virtual environment has its own Python interpreter and installed packages.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ce0844fd-cbfa-448d-993b-9aa6521dccca",
+              "Text": "Using virtual environments prevents version conflicts between packages required by different projects.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "741cf00e-3460-4177-9b6d-8ca6e63a8b2f",
+              "Text": "It is considered best practice to create a new virtual environment for every project.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "d3c26fc1-8c4d-46b5-b1ba-594617ce7962",
+      "Title": "Interactive vs. Script Execution",
+      "Summary": "Distinguishes between running Python code interactively in a REPL or notebook and executing standalone Python script files. Learners will understand when to use each approach.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "20c96f93-d6ca-4519-9c88-4323d09590d3",
+          "TopicId": "d3c26fc1-8c4d-46b5-b1ba-594617ce7962",
+          "Title": "Interactive Execution",
+          "BodyText": "Interactive execution allows a programmer to type Python statements one at a time and see results immediately, making it ideal for learning, testing, and data exploration.",
+          "Notes": "Interactive execution is available through the terminal REPL, Jupyter notebooks, and the interactive consoles built into IDEs like Spyder and PyCharm.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "9de7bf03-5c77-4643-94aa-257dd886a1af",
+              "Text": "Results are displayed instantly after each statement, supporting rapid feedback and experimentation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "420e9c55-b2d3-4beb-bd87-daa242b56a5c",
+              "Text": "Variables and objects persist in memory across statements within the same session.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ec592d18-a5aa-41a7-a4a9-c9a9a56cd253",
+              "Text": "Interactive mode is not suitable for automating repeatable tasks or deploying applications.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "5c08b3b1-4670-44c0-af58-4ecc7086ca7f",
+          "TopicId": "d3c26fc1-8c4d-46b5-b1ba-594617ce7962",
+          "Title": "Script Execution",
+          "BodyText": "A Python script is a plain-text file with a .py extension that contains a sequence of Python statements executed from top to bottom when the file is run.",
+          "Notes": "Scripts are run from the terminal with \u0027python script_name.py\u0027. They are the standard way to build reusable programs, automate workflows, and deploy applications. Scripts can accept command-line arguments via the sys.argv list.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "08e7bbfa-2820-4e66-b6d4-148d7823afa3",
+              "Text": "Scripts are saved to disk and can be re-executed as many times as needed without retyping code.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1b5999ce-05a5-48d7-9def-5fef0f977d71",
+              "Text": "All code in a script runs in sequence unless controlled by conditionals, loops, or functions.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "62f92aa5-5a7a-4d4b-86f6-a8b01a4a2330",
+              "Text": "Scripts are the foundation of automation, application development, and production deployment.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b5663bad-5c6b-4c76-a9a8-fa0f5612ca58",
+          "TopicId": "d3c26fc1-8c4d-46b5-b1ba-594617ce7962",
+          "Title": "Choosing the Right Execution Mode",
+          "BodyText": "Selecting between interactive and script execution depends on the goal: interactive mode suits exploration and learning, while script mode suits repeatable, structured programs.",
+          "Notes": "Many professional workflows combine both: exploratory analysis in a notebook, then refactored into a script for production. Understanding this distinction helps learners plan their workflow from the start.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "2250a59a-0b78-4e2e-864d-9db149f7d5eb",
+              "Text": "Use interactive mode when experimenting with new ideas or debugging a small piece of logic.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a770d3fd-8387-4456-828d-09a720abaf51",
+              "Text": "Use scripts when the code needs to be saved, shared, scheduled, or run repeatedly.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d22a280e-2363-40bf-b766-6b872538663e",
+              "Text": "Jupyter notebooks offer a middle ground by combining narrative, interactive cells, and exportable code.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "1968b81b-1a7f-43ef-bf09-28be0044cab0",
+      "Title": "Variables and Assignment",
+      "Summary": "Introduces how Python uses variables to store and reference data, covering naming conventions, assignment syntax, and how Python manages variable references in memory.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "4d4cd9e2-7310-430c-971f-b26c9df2a6d6",
+          "TopicId": "1968b81b-1a7f-43ef-bf09-28be0044cab0",
+          "Title": "What Is a Variable?",
+          "BodyText": "A variable is a named reference that points to a value stored in memory, allowing programmers to store, retrieve, and manipulate data throughout a program.",
+          "Notes": "Unlike some languages, Python variables do not require explicit type declarations. The variable\u0027s type is determined dynamically at runtime based on the value assigned to it.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "0ad27da1-d8da-4aee-a428-a3a71c28cf0e",
+              "Text": "Variables are created the moment a value is assigned to them using the \u0027=\u0027 operator.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6ec295ee-3dc9-4525-aab6-a0b84de81c63",
+              "Text": "The same variable can be reassigned to a different value or even a different type at any time.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "69006420-4e6c-4245-a9ca-0bda1c647ffa",
+              "Text": "Descriptive variable names make code more readable and easier to maintain.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "25d3b184-28f4-40fe-9493-89db7ab1832b",
+          "TopicId": "1968b81b-1a7f-43ef-bf09-28be0044cab0",
+          "Title": "Naming Rules and Conventions",
+          "BodyText": "Python enforces specific rules for variable names and follows community conventions documented in PEP 8 to promote readable, consistent code.",
+          "Notes": "PEP 8 recommends lowercase_with_underscores (snake_case) for variable names. Names like \u0027myVariable\u0027 (camelCase) are valid but not conventional in Python. Reserved keywords such as \u0027for\u0027, \u0027if\u0027, and \u0027class\u0027 cannot be used as variable names.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "947438c9-2698-41e4-bee9-d9b3c29fde63",
+              "Text": "Variable names must start with a letter or underscore and can contain letters, digits, and underscores.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "04a29e10-6d04-4aae-bccf-299eff334c9c",
+              "Text": "Names are case-sensitive, so \u0027score\u0027, \u0027Score\u0027, and \u0027SCORE\u0027 are three distinct variables.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "34e32e73-fb68-45cb-8c3f-c1f0b6abb312",
+              "Text": "Python keywords are reserved and cannot be used as variable names.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "46996cff-2075-4b50-a907-8a223b902ef2",
+          "TopicId": "1968b81b-1a7f-43ef-bf09-28be0044cab0",
+          "Title": "Multiple Assignment and Unpacking",
+          "BodyText": "Python supports assigning multiple variables at once, either to the same value or to individual values from a sequence, using concise syntax.",
+          "Notes": "Examples: \u0027x = y = z = 0\u0027 assigns zero to all three. \u0027a, b, c = 1, 2, 3\u0027 unpacks three values. Tuple unpacking is frequently used when functions return multiple values.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "74f65bda-9485-45ee-bc68-73c7b75f376e",
+              "Text": "Chained assignment sets multiple variables to the same value in a single line.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "234f3bbd-1fbd-493c-81ae-c7fc88376d8a",
+              "Text": "Tuple unpacking assigns each element of a sequence to a corresponding variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "55545310-c091-4271-a622-a34826b69924",
+              "Text": "Multiple assignment improves code conciseness but should be used carefully to maintain clarity.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+      "Title": "Core Data Types",
+      "Summary": "Covers Python\u0027s fundamental built-in data types including integers, floats, strings, and booleans, explaining their characteristics and appropriate use cases.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "3903a4c0-4aba-4230-b89e-9fe666014422",
+          "TopicId": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+          "Title": "Integers and Floating-Point Numbers",
+          "BodyText": "Python provides two primary numeric types: integers (int) for whole numbers and floating-point numbers (float) for decimals and numbers requiring fractional precision.",
+          "Notes": "Python integers have arbitrary precision \u2014 they can be as large as memory allows. Floats are implemented as IEEE 754 double-precision numbers and may introduce small rounding errors in arithmetic.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "735188ca-2cc7-42aa-a6a8-1e00786ec1ea",
+              "Text": "Integers represent exact whole numbers with no size limit in Python.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "236bb38c-85ff-4017-8cd3-2136009c6687",
+              "Text": "Floats can represent decimal values but may produce small rounding errors due to binary representation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6d8b5a9c-8d16-4fc8-9715-9a48171dae0e",
+              "Text": "Arithmetic between an int and a float produces a float result.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "15b217c7-e8e5-458e-ba49-5ef069fbe80c",
+          "TopicId": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+          "Title": "Strings",
+          "BodyText": "A string (str) is an ordered, immutable sequence of characters used to represent text in Python, enclosed in single or double quotation marks.",
+          "Notes": "Strings support many built-in methods such as .upper(), .lower(), .strip(), .split(), and .replace(). Multi-line strings use triple quotes. f-strings (f\u0027Hello {name}\u0027) provide a convenient way to embed expressions inside string literals.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "132ff7db-26aa-4ec4-8d34-a065a36aa682",
+              "Text": "Strings are immutable, meaning their contents cannot be changed after creation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c487888a-d993-4f39-a1d8-5c6a20dd2d11",
+              "Text": "Individual characters in a string can be accessed using index notation, e.g., text[0].",
+              "SortOrder": 1
+            },
+            {
+              "Id": "75056615-e5de-42ba-9fcc-0b84c9fc61fd",
+              "Text": "String concatenation combines strings using the \u0027\u002B\u0027 operator.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c3f3b82a-24e2-47dc-9c70-034d2c69eef4",
+              "Text": "f-strings allow variables and expressions to be embedded directly into string literals.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "9480e26b-6d6e-4015-b9f0-cdcbb569f211",
+          "TopicId": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+          "Title": "Booleans",
+          "BodyText": "The boolean (bool) type represents one of two truth values \u2014 True or False \u2014 and is fundamental to controlling program flow through conditionals and loops.",
+          "Notes": "In Python, bool is a subclass of int: True equals 1 and False equals 0. Many values are implicitly treated as boolean in conditionals \u2014 for example, 0, empty strings, and None are falsy, while non-zero numbers and non-empty sequences are truthy.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "38b3187c-123d-4970-8bbf-93155f80edb6",
+              "Text": "Boolean values are produced by comparison and logical operations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8b9880f5-2595-4d60-a387-16e47b8ddcac",
+              "Text": "True and False are Python keywords and must be capitalized.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "eac2178f-92f1-493a-b1b1-5ee27084e4f5",
+              "Text": "Any Python object can be evaluated as a boolean in a conditional context.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "3d3ea103-e6d0-415a-a431-2c2cab4ba314",
+          "TopicId": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+          "Title": "The None Type",
+          "BodyText": "None is a special singleton value in Python that represents the absence of a value or a null result, commonly used as a default or placeholder.",
+          "Notes": "None is the value returned by functions that do not explicitly return anything. It is best tested with \u0027is None\u0027 rather than \u0027== None\u0027 to avoid unexpected behavior with custom equality operators.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "dd5ded7c-7130-4087-b9ef-912cca214f81",
+              "Text": "None is the only value of the NoneType and is not the same as zero, False, or an empty string.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0e8a2d6d-59c3-4d2e-a5c8-b173085c58c1",
+              "Text": "Functions that lack a return statement implicitly return None.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7fcf41e0-1cf9-4df2-8950-a6bb359a7a4a",
+              "Text": "None is commonly used to initialize variables that will be assigned a real value later.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "d11c2b18-1705-4068-a507-ff9b8cec8236",
+          "TopicId": "0dbef3cd-907e-420e-8b6d-5dd75e4f4061",
+          "Title": "Checking Data Types with type()",
+          "BodyText": "The built-in type() function returns the type of any Python object, allowing programmers to inspect and verify the data type of a variable at runtime.",
+          "Notes": "Example: type(42) returns \u003Cclass \u0027int\u0027\u003E, type(3.14) returns \u003Cclass \u0027float\u0027\u003E. The isinstance() function is preferred when checking types in conditional logic because it respects inheritance.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "98f4c52a-db29-46e8-94c5-dee6bbc1be97",
+              "Text": "type() accepts any Python object and returns its class.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d3029bcc-15ad-43a4-94fd-5e4907733538",
+              "Text": "Knowing the type of a variable is essential before performing operations that require a specific type.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3d17188c-0224-47c4-8a4a-5fb39d8b458d",
+              "Text": "isinstance() is preferred over type() for type-checking in conditional statements.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+      "Title": "Operators in Python",
+      "Summary": "Introduces the main categories of Python operators \u2014 arithmetic, comparison, logical, and assignment \u2014 explaining their syntax, behavior, and precedence rules.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "106771f4-e366-4631-ac79-b586459cb5f2",
+          "TopicId": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+          "Title": "Arithmetic Operators",
+          "BodyText": "Arithmetic operators perform mathematical calculations on numeric values, including addition, subtraction, multiplication, division, and more specialized operations.",
+          "Notes": "Python arithmetic operators: \u002B (add), - (subtract), * (multiply), / (true division, always returns float), // (floor division), % (modulo/remainder), ** (exponentiation). Note that / always returns a float in Python 3, even if both operands are integers.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "c809a575-877a-48fb-b96b-048e10cadf14",
+              "Text": "The \u0027/\u0027 operator always returns a float, while \u0027//\u0027 performs integer (floor) division.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "596adfb5-1856-4c28-8af3-d5b30484ea96",
+              "Text": "The \u0027%\u0027 operator returns the remainder of a division, useful for checking divisibility.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7375b03a-32b6-4bb1-ab72-293e4665d6cb",
+              "Text": "The \u0027**\u0027 operator raises a number to a power, e.g., 2**8 evaluates to 256.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "2e34c556-8720-4dec-b05b-94efb3420eca",
+          "TopicId": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+          "Title": "Comparison Operators",
+          "BodyText": "Comparison operators evaluate the relationship between two values and return a boolean result, forming the basis of conditional logic in Python programs.",
+          "Notes": "Operators include: == (equal), != (not equal), \u003E (greater than), \u003C (less than), \u003E= (greater than or equal), \u003C= (less than or equal). Be careful not to confuse \u0027==\u0027 (comparison) with \u0027=\u0027 (assignment).",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "53443c4c-e3c2-4037-8f31-51748c765b87",
+              "Text": "Comparison operators always return either True or False.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9eb8f24a-95f5-4862-b2eb-e833b08f2f2a",
+              "Text": "The \u0027==\u0027 operator checks value equality, while \u0027is\u0027 checks object identity.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f80a1180-1595-4856-8a41-83a95a19c0dd",
+              "Text": "Comparisons can be chained in Python, e.g., 1 \u003C x \u003C 10 is valid and readable.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "3a62c18b-2af4-4d6a-888b-d0e0869f6b2d",
+          "TopicId": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+          "Title": "Logical Operators",
+          "BodyText": "Logical operators \u2014 and, or, and not \u2014 combine or invert boolean expressions and are central to building complex conditional statements.",
+          "Notes": "Python uses short-circuit evaluation: in \u0027A and B\u0027, if A is False, B is never evaluated. In \u0027A or B\u0027, if A is True, B is never evaluated. \u0027not\u0027 inverts a boolean value. Logical operators also work with truthy/falsy values, not just strict booleans.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "7e8942b0-6b1b-4823-b805-7250a1c56fa3",
+              "Text": "\u0027and\u0027 returns True only if both operands are true.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4ec169e2-08f8-448c-aa59-3db9027f2c65",
+              "Text": "\u0027or\u0027 returns True if at least one operand is true.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "95c8b8f1-3648-4f75-ae41-466a8bfee8f2",
+              "Text": "\u0027not\u0027 inverts a boolean expression, turning True to False and vice versa.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a6b2c2cf-5296-4d69-97f9-81fbcacf7267",
+              "Text": "Python uses short-circuit evaluation, stopping as soon as the result is determined.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "203b7e1c-8594-4d70-939b-3922e1804610",
+          "TopicId": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+          "Title": "Assignment Operators",
+          "BodyText": "Assignment operators store a value in a variable, with augmented assignment operators providing a shorthand for updating a variable\u0027s value in place.",
+          "Notes": "Augmented assignment operators include \u002B=, -=, *=, /=, //=, %=, and **=. For example, \u0027x \u002B= 5\u0027 is equivalent to \u0027x = x \u002B 5\u0027. These operators make code more concise and are especially common in loops.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "728f5f2b-bf4e-4742-b83b-f4647f54c47d",
+              "Text": "The \u0027=\u0027 operator assigns the value on the right to the variable on the left.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8c2335d2-bc9a-4d4f-84a3-0b43261129cb",
+              "Text": "Augmented operators like \u0027\u002B=\u0027 combine an arithmetic operation with assignment in one step.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "12cb33b8-847f-4e99-bbf0-7d5a793c8af3",
+              "Text": "Using augmented assignment operators improves code readability in iterative operations.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "711b6f66-3a0c-4540-8cba-095afef80b13",
+          "TopicId": "53f868fa-d61a-44ee-aa3d-f10b89f94efb",
+          "Title": "Operator Precedence",
+          "BodyText": "Python evaluates expressions according to a defined order of precedence, determining which operations are performed first when multiple operators appear in a single expression.",
+          "Notes": "The general order from highest to lowest precedence: parentheses, exponentiation, unary operators, multiplication/division/modulo, addition/subtraction, comparison operators, logical operators. Using parentheses to explicitly group operations is always recommended for clarity.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "b407a9d5-06ee-4a9b-b7dd-e38ad1b54b41",
+              "Text": "Expressions inside parentheses are always evaluated first, regardless of other operators.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "49de7134-196a-4f3d-a49a-98c474dc3382",
+              "Text": "Exponentiation has higher precedence than multiplication or division.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5aabe3f7-ca8b-476d-85fa-2d25c53d7a5e",
+              "Text": "When operators share the same precedence, they are evaluated left to right (left associativity).",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "15b06c36-9995-412d-9a0f-158bc1568f1d",
+      "Title": "Type Conversion",
+      "Summary": "Explains how Python handles conversion between data types, distinguishing between implicit coercion performed automatically by Python and explicit conversion performed by the programmer.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+      "Elements": [
+        {
+          "Id": "29513926-f347-4356-bdf6-72b70b63ac10",
+          "TopicId": "15b06c36-9995-412d-9a0f-158bc1568f1d",
+          "Title": "Implicit Type Conversion",
+          "BodyText": "Implicit type conversion, or coercion, occurs automatically when Python converts one data type to another to complete an operation without requiring any action from the programmer.",
+          "Notes": "Python promotes types from less precise to more precise to avoid data loss. For example, adding an int and a float automatically produces a float result. Implicit conversion does not occur between incompatible types such as str and int.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "d2e028da-64a4-4984-b580-619d26c37d06",
+              "Text": "Python automatically promotes int to float when they are used together in arithmetic.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "80a42326-7962-4196-ba78-de2c1b417081",
+              "Text": "Implicit conversion only occurs when it is safe and does not result in data loss.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "391e578e-a868-4959-96ce-ab1f7381d311",
+              "Text": "Incompatible type combinations, such as adding a string to a number, raise a TypeError.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "24ca08e5-604d-4233-a6c6-83025e1fb32a",
+          "TopicId": "15b06c36-9995-412d-9a0f-158bc1568f1d",
+          "Title": "Explicit Type Conversion with Built-in Functions",
+          "BodyText": "Explicit type conversion, also called casting, uses built-in functions such as int(), float(), str(), and bool() to deliberately convert a value from one type to another.",
+          "Notes": "Examples: int(\u002742\u0027) converts a string to an integer; float(\u00273.14\u0027) converts a string to a float; str(100) converts an integer to a string; int(True) returns 1. Converting a float to int truncates the decimal without rounding.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "5b198f91-0f22-4f80-8d4d-6ce3428352f0",
+              "Text": "int() converts a compatible string or float to an integer, truncating any decimal portion.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a88aafd7-9846-48b8-870c-55e600158747",
+              "Text": "float() converts an integer or numeric string to a floating-point number.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "bb4a418e-040a-4731-8965-cfbdc50e19a9",
+              "Text": "str() converts any value to its string representation.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "12a7bac8-b66e-4d6c-a797-b3c5fbb94902",
+              "Text": "bool() converts a value to True or False based on its truthiness.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "99367065-ae11-48dd-a44e-b3126838a6ee",
+          "TopicId": "15b06c36-9995-412d-9a0f-158bc1568f1d",
+          "Title": "Common Conversion Errors and How to Avoid Them",
+          "BodyText": "Incorrect type conversion attempts raise exceptions in Python, so understanding which conversions are valid and how to handle failures is an essential programming skill.",
+          "Notes": "Attempting int(\u0027hello\u0027) raises a ValueError. Trying to concatenate a string and an integer raises a TypeError. Using try/except blocks around conversion code is a best practice when the input type is uncertain, such as when processing user input.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "ModifiedDate": "2026-05-13T10:50:48.3383681-04:00",
+          "Items": [
+            {
+              "Id": "5ea1e560-73a2-48d1-ba3e-bdb4e6da438d",
+              "Text": "Converting a non-numeric string to int or float raises a ValueError.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3a0ad873-4749-498f-82f2-4500d275a387",
+              "Text": "Mixing incompatible types without conversion raises a TypeError.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "281afde3-c787-4cef-9928-7e13bb8a9847",
+              "Text": "Wrapping conversions in try/except blocks allows programs to handle invalid input gracefully.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 26
+}

@@ -1,0 +1,9 @@
+{
+  "Id": "b8dac106-3b03-43ac-b97c-824a4cf685ff",
+  "Name": "Engineering Data Analysis and Simulation",
+  "Description": "Covers the full engineering data workflow \u2014 loading, cleaning, and visualizing CSV and time-series data using pandas, NumPy, and matplotlib \u2014 then implements time-stepping simulation models for mechanical, electrical, and thermal systems, comparing results with analytical solutions.",
+  "CreatedBy": "Ron",
+  "CreatedDate": "2026-05-13T09:57:17.6638792-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6646715-04:00",
+  "Actions": []
+}

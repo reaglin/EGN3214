@@ -1,0 +1,9 @@
+{
+  "Id": "19c4da1a-a614-47cc-b294-6f5885113adb",
+  "Name": "Numerical Methods with SciPy and Curve Fitting",
+  "Description": "Applies SciPy for root finding, numerical integration, and ODE solving with solve_ivp, then covers linear and nonlinear curve fitting using numpy.polyfit and scipy.optimize.curve_fit with residuals analysis on real engineering datasets.",
+  "CreatedBy": "Ron",
+  "CreatedDate": "2026-05-13T09:57:17.6560457-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6576341-04:00",
+  "Actions": []
+}

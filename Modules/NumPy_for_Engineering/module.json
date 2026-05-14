@@ -1,0 +1,9 @@
+{
+  "Id": "4544fe1e-950a-45ee-8ae8-856b36321b5a",
+  "Name": "NumPy for Engineering Numerical Computation",
+  "Description": "Introduces NumPy arrays including creation, element-wise operations, broadcasting, indexing, slicing, reshape, and transpose, with emphasis on linear algebra, statistics, and mathematical functions as the foundation for all subsequent engineering computation.",
+  "CreatedBy": "Ron",
+  "CreatedDate": "2026-05-13T09:57:17.6236012-04:00",
+  "LastModifiedDate": "2026-05-13T09:57:17.6248436-04:00",
+  "Actions": []
+}
