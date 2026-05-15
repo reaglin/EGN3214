@@ -1,0 +1,1246 @@
+{
+  "ModuleFolderName": "Object_Oriented_Programming",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T21:36:04.7067111-04:00",
+  "ModifiedDate": "2026-05-14T21:36:04.7069073-04:00",
+  "Outcomes": [
+    {
+      "Id": "80d4fdc3-1f2b-46ad-ad40-cc7d1ec461d8",
+      "Text": "Explain the core principles of object-oriented programming including classes, instances, attributes, and methods.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "ceb11181-f7f0-4efb-8cf7-d75db0528fb2",
+      "Text": "Apply class definitions and inheritance to model engineering objects such as beams and sensors in Python.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "eda7f2f6-4d3c-4fbd-af15-b2b84a0a54d0",
+      "Text": "Identify appropriate use cases for inheritance and demonstrate how subclasses extend base class functionality.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "6c29d0b2-3c27-4aa8-b125-6dbf2fea6c8c",
+      "Text": "Demonstrate an AI-assisted coding workflow using GitHub Copilot and ChatGPT for code generation and debugging.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "6f9abeb5-075c-4580-928f-508a7940d9b9",
+      "Text": "Evaluate AI-generated code critically to verify correctness, safety, and suitability for engineering applications.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "8af4186c-32a2-4c7e-a756-0b12b92145c6",
+      "Text": "Analyze debugging scenarios and apply responsible verification practices when using AI coding tools.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+      "Title": "Foundations of Object-Oriented Programming",
+      "Summary": "Introduces the fundamental concepts of OOP, explaining why it is a powerful paradigm for structuring engineering software. Covers the building blocks of classes, objects, attributes, and methods.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "288b6624-63b7-4999-90ce-ed8728c56be7",
+          "TopicId": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+          "Title": "What Is Object-Oriented Programming?",
+          "BodyText": "Object-oriented programming (OOP) is a programming paradigm that organizes software around objects rather than functions and logic alone. It allows engineers to model real-world entities in code in an intuitive and reusable way.",
+          "Notes": "Contrast OOP with procedural programming to help learners appreciate the shift in thinking. Emphasize that OOP mirrors how engineers already think about physical systems as collections of interacting components.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "a08c65b8-5166-4e72-82f1-d6f43fefe0b6",
+              "Text": "OOP structures code around objects that combine data and behavior.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "02a38ddc-e50f-4ccf-a0a5-704ce02bed40",
+              "Text": "It promotes modularity, making large engineering programs easier to manage and maintain.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ab9f9c76-0a46-4cdd-b86b-f5fd82ea2b9f",
+              "Text": "OOP enables code reuse through well-defined interfaces and shared structures.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2e08b924-46a8-4945-867b-c5e3098d99eb",
+              "Text": "Python supports OOP natively and is widely used in engineering and scientific computing.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "6fd1b699-230b-481c-a402-75a9049b8b82",
+          "TopicId": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+          "Title": "Classes and Instances",
+          "BodyText": "A class is a blueprint that defines the structure and behavior of a type of object, while an instance is a specific object created from that blueprint. Understanding the distinction between a class definition and an instantiated object is foundational to OOP.",
+          "Notes": "Use an analogy such as an engineering drawing versus the physical beam fabricated from it. The drawing is the class; each fabricated beam is an instance with its own specific dimensions.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "cefe32a9-9355-412b-ac42-8c16d25b8993",
+              "Text": "A class defines shared structure and behavior for all objects of that type.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "5c130cc6-ce13-4524-9218-a7e9d8b21f2e",
+              "Text": "An instance is a unique object created from a class, holding its own specific data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "72f4d4c2-96d0-4b91-9a03-873c7212e420",
+              "Text": "Multiple instances can be created from a single class, each with different attribute values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2e047896-cce3-4aa3-a3d8-4f539977d4d7",
+              "Text": "Instantiation is performed by calling the class name as if it were a function.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "b7857398-9c54-49ca-9508-021133942041",
+          "TopicId": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+          "Title": "Attributes",
+          "BodyText": "Attributes are variables that belong to an object and store its state or properties. In engineering contexts, attributes might represent physical properties such as a beam\u0027s length, material, or cross-sectional area.",
+          "Notes": "Distinguish between instance attributes, which are unique to each object, and class attributes, which are shared across all instances. Warn learners that inadvertently modifying a mutable class attribute can cause unexpected behavior across all instances.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "ffd9e2b8-9631-402d-ad7d-b85b29118626",
+              "Text": "Instance attributes are defined inside the constructor and store object-specific data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "dcd5241b-ccb7-44ba-b670-113678d201df",
+              "Text": "Class attributes are defined at the class level and shared by all instances.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cc3d8233-a9ed-487f-b649-a2ffb4b4dcf7",
+              "Text": "Attributes are accessed using dot notation on the object or class.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "07782f45-4675-4dcd-9f70-0a89bede8332",
+              "Text": "Choosing meaningful attribute names improves code readability in engineering applications.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d4316e9c-9e32-46e7-9087-09e93648ea56",
+          "TopicId": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+          "Title": "Methods",
+          "BodyText": "Methods are functions defined inside a class that describe the behaviors or operations an object can perform. They allow objects to act on their own data and interact with other objects.",
+          "Notes": "Highlight that the first parameter of every instance method is self, which refers to the calling object. Show how methods encapsulate calculations, such as computing the moment of inertia from a beam\u0027s dimensions.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "d41c6b98-9bab-4554-b94d-c151e5fc7016",
+              "Text": "Methods are defined with def inside a class body and receive self as their first parameter.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b6420356-52f3-40ce-b4eb-6789dba26a15",
+              "Text": "Instance methods can read and modify the object\u0027s own attributes.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "caf73c35-e666-4a76-92d9-15a3d65556f5",
+              "Text": "Methods encapsulate logic so that calculations remain tied to the relevant object.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "98fea5a1-5dce-44ca-b02d-7931e97ca9be",
+              "Text": "Well-named methods make class interfaces self-documenting and easier to use.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "78046b3d-f885-47d5-852c-80d6acc68463",
+          "TopicId": "ee454e4e-4f1b-45bd-8123-974833b192c3",
+          "Title": "The Constructor Method __init__",
+          "BodyText": "The __init__ method is a special method automatically called when a new instance is created. It initializes the object\u0027s attributes, ensuring every instance starts in a valid, well-defined state.",
+          "Notes": "Emphasize that __init__ is not optional when attributes must be set at creation time. Show a concrete example such as a Beam class whose constructor accepts length, width, and material parameters.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "3e4b8b4d-a6d3-4afd-9fdb-28275d3b190b",
+              "Text": "__init__ is called automatically at the moment of object instantiation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "46dbb991-6a89-44b6-a48f-556a5808f86d",
+              "Text": "Parameters passed to __init__ allow each instance to be initialized with unique values.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7551bc8b-9a2d-4a65-a267-ed42379a26b4",
+              "Text": "All instance attributes should typically be declared inside __init__ for clarity.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1340cbf8-3165-408d-844c-8d1053bcfd3e",
+              "Text": "Providing default parameter values in __init__ makes a class more flexible and easier to use.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+      "Title": "Modeling Engineering Objects with Classes",
+      "Summary": "Demonstrates how OOP concepts are applied to represent real-world engineering entities such as structural beams and sensors as Python classes. Emphasizes practical class design for engineering problem-solving.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "7415c1a1-2cd9-449c-b148-5f48ac91099d",
+          "TopicId": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+          "Title": "Designing an Engineering Class",
+          "BodyText": "Good class design begins by identifying the properties and behaviors of the engineering object being modeled. A systematic design process leads to classes that are intuitive, reusable, and aligned with engineering domain knowledge.",
+          "Notes": "Encourage learners to sketch out the attributes and methods before writing any code. Ask: What data does this object need? What can it do? What does it need to compute or report?",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "d642e2af-1ab9-4842-ad6a-694cbb526ba8",
+              "Text": "Start by listing the physical properties the object must store as attributes.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b197212d-64c7-4d08-afc7-63a67b426012",
+              "Text": "Identify the calculations or actions the object should be able to perform as methods.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a35a388d-44bf-40e9-8eb0-fa2c10236317",
+              "Text": "Keep each class focused on a single engineering concept or component.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2a9ebd6d-0692-49f1-8450-115e8c005534",
+              "Text": "Document class purpose and expected attribute types using docstrings.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7254de5e-805b-4f48-abef-d96c4600b28b",
+          "TopicId": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+          "Title": "Implementing a Beam Class",
+          "BodyText": "A structural beam can be modeled as a Python class with attributes for geometry and material, and methods that compute engineering quantities such as moment of inertia or deflection. This example ties OOP syntax directly to familiar engineering concepts.",
+          "Notes": "Walk through a complete Beam class example: attributes might include length, width, height, and material; methods might include calculate_moment_of_inertia() and calculate_deflection(load). Reinforce that encapsulating these formulas in a class prevents repeated code.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "5c124139-d75a-4a4b-8c06-18bbff04b454",
+              "Text": "Geometric properties such as length, width, and height are natural instance attributes.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "58003cba-65e1-4c77-9443-be0c22245e3d",
+              "Text": "Engineering formulas become methods that operate on the beam\u0027s own stored data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "79ecd8ef-26c0-4dbc-b58f-55ee88f513c9",
+              "Text": "Encapsulating formulas inside a class reduces error-prone repetition across a project.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ed2acd36-ca54-436a-821f-119d833944d8",
+              "Text": "Returning computed values from methods allows results to be used in further calculations.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "54e8092a-47e5-45a9-bd7a-8f7aaaba9f1d",
+          "TopicId": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+          "Title": "Implementing a Sensor Class",
+          "BodyText": "Sensors in an engineering system can be modeled as objects with attributes describing their type, location, and measurement range, and methods for reading or validating data. Modeling sensors as classes supports scalable, maintainable monitoring system code.",
+          "Notes": "Example attributes: sensor_id, sensor_type, location, measurement_range. Example methods: read_value(), is_within_range(). Discuss how a fleet of sensors can be managed as a list of Sensor instances, each holding its own state.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "c3256f9d-3a4c-440a-962b-0ddf61f1a383",
+              "Text": "Sensor identity and configuration data are well-suited to instance attributes.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f26b5354-9aa5-4204-af39-f5f1c05c4ab3",
+              "Text": "A read_value() method can simulate or retrieve a measurement and return it for processing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "633e3b5a-9fba-4de4-bb12-215014fe8721",
+              "Text": "A validation method can check whether a reading falls within the sensor\u0027s specified range.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e328d8cb-a062-4c78-ae13-099d04e610b5",
+              "Text": "Managing multiple sensors as a list of instances simplifies iteration and data collection.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "b9f14be3-baa3-44ec-b8f1-bacc9161c8fb",
+          "TopicId": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+          "Title": "Using Objects Together in Engineering Systems",
+          "BodyText": "Real engineering programs often involve multiple interacting objects, such as sensors attached to beams or loads applied to structural members. Designing classes to work together models the relationships present in actual engineering systems.",
+          "Notes": "Show how a Beam instance might hold a list of Sensor instances as an attribute. Demonstrate a method that aggregates sensor readings to report on structural health. This introduces the concept of object composition.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "d4b2bd05-c62a-40d8-8232-2ae861aedf55",
+              "Text": "Objects can hold references to other objects as attributes, modeling real physical relationships.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8dd18c33-b5e3-4e4a-9111-a5229f7d6b58",
+              "Text": "Composition allows complex systems to be built from simple, well-tested component classes.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0690de52-1f7f-4888-adf0-4c25b0a4730e",
+              "Text": "Methods on one class can call methods on associated objects to coordinate behavior.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9375b37e-267e-498b-9dab-7c7a8fe84acc",
+              "Text": "This approach mirrors engineering systems thinking, where components interact in defined ways.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "94e14754-ea1c-4049-b934-75552ded66ac",
+          "TopicId": "cb5c86c1-7c5c-411d-baa5-f0fbbe981981",
+          "Title": "String Representation with __str__ and __repr__",
+          "BodyText": "Implementing __str__ and __repr__ methods gives objects meaningful text representations, making debugging and logging significantly more informative. For engineering objects, these methods can display key attribute values in a readable format.",
+          "Notes": "__str__ is intended for human-readable output, while __repr__ is intended for unambiguous developer-oriented output. A Beam\u0027s __str__ might return \u0027Beam: 5m x 0.3m x 0.5m, Steel\u0027, making print statements immediately informative during testing.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "e9e50abe-1986-4adc-8927-93b86206841b",
+              "Text": "__str__ defines how an object appears when printed or converted to a string.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9cbd3ec4-faa0-4a0f-a60a-0ef802ab0e17",
+              "Text": "__repr__ provides a detailed, unambiguous representation useful during debugging.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5f9b0c86-b313-41a3-8031-3f9030f8f15e",
+              "Text": "Informative string representations speed up development by making object state immediately visible.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f7835611-7786-42e8-a43b-cdbbc4e15368",
+              "Text": "Including key attribute values in these methods makes log output actionable.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+      "Title": "Inheritance and Class Hierarchies",
+      "Summary": "Explains how inheritance allows new classes to build upon and extend existing ones, reducing duplication and reflecting natural hierarchies in engineering domains. Covers single inheritance, method overriding, and the use of super().",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "653fea97-4ea7-459e-8456-20adb536adb6",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "The Concept of Inheritance",
+          "BodyText": "Inheritance allows a child class to automatically receive the attributes and methods of a parent class, then extend or modify them as needed. This mechanism captures the \u0027is-a\u0027 relationship between engineering object types.",
+          "Notes": "Use an analogy: a RectangularBeam and an IBeam are both types of Beam. They share common properties but differ in cross-sectional geometry and how moment of inertia is calculated. Inheritance lets both classes reuse the shared Beam logic.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "ebb4a5be-bd6a-4bf1-ae38-4af26d53e6e1",
+              "Text": "A child class inherits all attributes and methods of its parent class automatically.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "74932811-5ec7-417f-95e9-9ca10f21285f",
+              "Text": "Inheritance models \u0027is-a\u0027 relationships, such as RectangularBeam is a Beam.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "acfb5c8a-ca3b-44a8-b970-7a963193d6d7",
+              "Text": "Shared logic defined once in the parent class does not need to be repeated in child classes.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4d311320-6f3a-483f-84ab-11ef66b5b48b",
+              "Text": "Python uses parentheses in the class definition to specify the parent class.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "bde02a6a-60a2-4366-8c50-2ea3129c9801",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "Defining Subclasses",
+          "BodyText": "A subclass is defined by passing the parent class as an argument in the class declaration. The subclass can introduce new attributes and methods while inheriting everything already defined in the parent.",
+          "Notes": "Show a concrete example: class RectangularBeam(Beam): adds a width and height attribute and overrides calculate_moment_of_inertia(). Contrast with class IBeam(Beam): which needs flange and web dimensions and its own formula.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "f74a5a0f-4acd-4cc1-9e52-6f82e97908b5",
+              "Text": "Subclasses are declared by placing the parent class name in parentheses after the subclass name.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e095068e-3e1c-4265-bc96-5f0aa5fde146",
+              "Text": "New attributes unique to the subclass are added in the subclass __init__ method.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fb669984-0399-4806-bac1-9a95750ab761",
+              "Text": "New methods added to the subclass extend the functionality beyond what the parent provides.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a420f129-35ba-4897-9b10-aefb49c12d82",
+              "Text": "A subclass instance can be used anywhere the parent class is expected.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "e4b90b76-39f8-4ecb-a39c-df9112e58124",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "Calling the Parent Constructor with super()",
+          "BodyText": "The super() function allows a subclass to call the parent class\u0027s __init__ and other methods, ensuring parent initialization logic runs before the subclass adds its own setup. This prevents duplication and maintains proper object state.",
+          "Notes": "Emphasize that failing to call super().__init__() can leave parent-defined attributes uninitialized, causing subtle bugs. Show the pattern: def __init__(self, length, material, width, height): super().__init__(length, material) then set subclass-specific attributes.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "88913347-18d7-4eb1-8ffe-8932f93644eb",
+              "Text": "super().__init__() must be called to initialize attributes defined in the parent class.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d6d0ca18-3d8f-4502-b37d-67cf9802a788",
+              "Text": "super() makes the code robust if the inheritance hierarchy changes in the future.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5b6b3a0f-b816-40b9-b479-bf28189b350d",
+              "Text": "Arguments required by the parent constructor must be passed through super().__init__().",
+              "SortOrder": 2
+            },
+            {
+              "Id": "33a54c29-ee73-4e38-ba75-3a3d0350d9bc",
+              "Text": "super() can also be used to call overridden parent methods from within a subclass.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "c4f2045f-6272-49af-9c7b-bff6dc6eeb4b",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "Method Overriding",
+          "BodyText": "Method overriding allows a subclass to provide its own implementation of a method already defined in the parent class. This is how different beam types can each calculate moment of inertia using geometry-specific formulas.",
+          "Notes": "Stress that Python resolves method calls using the Method Resolution Order (MRO), always checking the most specific class first. Demonstrate that calling beam.calculate_moment_of_inertia() on an IBeam instance invokes the IBeam version, not the Beam version.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "850c3692-026b-4c9d-a237-50837294909a",
+              "Text": "A subclass overrides a parent method by defining a method with the identical name.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7e338a3d-02ec-43e1-982e-cb8bb9e19875",
+              "Text": "The subclass version completely replaces the parent version for instances of that subclass.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "73dec040-b443-44bd-9daa-4ae97d39c14a",
+              "Text": "Overriding enables specialized behavior while preserving a consistent interface across all subclasses.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "780b0f17-46df-4db2-85e8-8f1c204e254d",
+              "Text": "Python\u0027s MRO ensures the most specific implementation is always called first.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "944d39ec-de44-41c1-8484-05650703ffca",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "When to Use Inheritance Versus Composition",
+          "BodyText": "Choosing between inheritance and composition is an important design decision. Inheritance suits \u0027is-a\u0027 relationships, while composition suits \u0027has-a\u0027 relationships, and selecting the right approach keeps code maintainable and logically sound.",
+          "Notes": "A common guideline is to favor composition over inheritance when the relationship is ambiguous. A Sensor is not a type of Beam, so attaching a Sensor to a Beam via composition is correct. Overusing inheritance leads to fragile, tightly coupled code.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "92bf0dae-8d4f-48b2-a893-5f8eb6bc193e",
+              "Text": "Use inheritance when the subclass truly is a more specific version of the parent.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9c9e0fe5-15a0-47f5-bf00-04d5d7c30288",
+              "Text": "Use composition when one object contains or uses another without being a type of it.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "766cbbfe-20ec-43bf-923d-4f8232010a3d",
+              "Text": "Overusing inheritance creates rigid hierarchies that are difficult to modify later.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8c59d5ed-9e55-4eaf-868c-d18f1beab677",
+              "Text": "Well-chosen relationships make code easier to test, extend, and understand.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7342feae-fb82-4200-ada7-e7d3b71dc1b4",
+          "TopicId": "cdfe065c-e890-40fc-a22d-da3e2c2f4114",
+          "Title": "Practical Inheritance Example: Sensor Hierarchy",
+          "BodyText": "A sensor hierarchy illustrates inheritance in action: a base Sensor class defines common attributes and a read_value() method, while subclasses such as TemperatureSensor and StrainGaugeSensor override read_value() with type-specific logic.",
+          "Notes": "Highlight that code working with a generic Sensor reference can operate on any subclass instance transparently. This polymorphic behavior is one of the most powerful practical benefits of inheritance in engineering software.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "46c0ce3e-ee36-43af-8929-437e9f4a2918",
+              "Text": "A base Sensor class captures identity, location, and range attributes shared by all sensor types.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4dc3dd2c-9787-4da4-919b-d71687e5df40",
+              "Text": "Subclasses override read_value() to implement measurement logic specific to their sensor type.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "25276158-cfb9-4006-9410-1fdd92c1da88",
+              "Text": "Code written against the base Sensor interface works correctly with any subclass instance.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "aa3277e3-b12f-48b4-88db-71b33c69abbd",
+              "Text": "Adding a new sensor type requires only a new subclass, not changes to existing code.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "e56c48a4-f157-425c-8e52-b44897e7b66f",
+      "Title": "Introduction to AI-Assisted Coding Tools",
+      "Summary": "Introduces GitHub Copilot and ChatGPT as AI coding assistants and explains how they integrate into the engineering programming workflow. Establishes the capabilities and limitations of each tool.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "22cc99ee-ca66-45e9-8b83-e17d92e7f3f3",
+          "TopicId": "e56c48a4-f157-425c-8e52-b44897e7b66f",
+          "Title": "What Is GitHub Copilot?",
+          "BodyText": "GitHub Copilot is an AI-powered code completion tool integrated directly into code editors such as VS Code. It suggests code in real time as the programmer types, based on context from the current file and comments.",
+          "Notes": "Mention that Copilot is trained on large volumes of publicly available code. It works especially well when given clear comments or docstrings that describe the intended function or class behavior before any code is written.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "fdb9fb4b-5142-4243-854c-b3674cf4c1f6",
+              "Text": "Copilot integrates into the editor and provides inline code suggestions as you type.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fc6e64d9-0d9f-4f0a-931b-7afb6464bebc",
+              "Text": "It uses surrounding code and comments as context to generate relevant suggestions.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "39da78fe-00a7-47c7-a83c-9ceeb4523904",
+              "Text": "Suggestions can be accepted, rejected, or cycled through to find the best option.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "214bca4f-53df-4d80-b9c5-dd354d25fbea",
+              "Text": "Copilot is most effective when code intent is clearly expressed in comments or docstrings.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "6d0ecc15-ba58-4d96-add5-8ee15c858c68",
+          "TopicId": "e56c48a4-f157-425c-8e52-b44897e7b66f",
+          "Title": "What Is ChatGPT for Coding?",
+          "BodyText": "ChatGPT is a conversational AI that can generate code, explain concepts, suggest fixes, and answer programming questions in natural language. Unlike Copilot, it is used in a separate chat interface rather than within the editor.",
+          "Notes": "Highlight the complementary nature of the two tools: Copilot excels at inline, context-aware completion during active coding, while ChatGPT excels at explaining concepts, generating complete code blocks from prompts, and talking through debugging strategies.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "373e57f2-546a-4acc-91ab-e8e0391116cf",
+              "Text": "ChatGPT accepts natural language prompts and returns explanations, code, or step-by-step guidance.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c7735712-9c4a-4016-b477-125b956a32e9",
+              "Text": "It can generate complete class or function implementations from a plain English description.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "677b8189-8d8a-45f1-8aea-0abc2752c04a",
+              "Text": "ChatGPT is useful for understanding unfamiliar syntax or explaining error messages.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b91a9756-bbb8-46b3-a678-99f607b74e6a",
+              "Text": "Conversations can be refined iteratively to narrow in on the correct solution.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "76bdd17f-bbe0-4636-9476-64ba559b33cc",
+          "TopicId": "e56c48a4-f157-425c-8e52-b44897e7b66f",
+          "Title": "Capabilities and Limitations of AI Coding Assistants",
+          "BodyText": "AI coding assistants are powerful productivity tools but have well-documented limitations including generating plausible but incorrect code, using outdated library versions, and lacking domain-specific engineering judgment.",
+          "Notes": "Stress that AI tools do not verify correctness against engineering requirements or safety standards. They optimize for syntactic plausibility, not physical or numerical accuracy. Engineers must apply their domain expertise to evaluate every suggestion.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "850b1b94-1ed7-4454-b8d4-fe82cee53004",
+              "Text": "AI assistants can generate syntactically correct code that is logically or numerically wrong.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e4ab0aba-bbcb-4eff-9e0c-23760216612c",
+              "Text": "They may use deprecated APIs or library versions that no longer function correctly.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b2ac28ed-c6c8-4e33-a106-7b7bb0032d15",
+              "Text": "AI tools have no awareness of engineering safety standards, tolerances, or domain constraints.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4ddd63f2-14a9-4d37-8209-0b7109430494",
+              "Text": "Generated code should always be treated as a starting draft requiring human review.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "0d2a2099-30c7-42d8-958b-f8692eb17866",
+              "Text": "Ambiguous or vague prompts produce less reliable and less targeted suggestions.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "f9c6f0d8-4cd3-462d-a972-bed996e19880",
+          "TopicId": "e56c48a4-f157-425c-8e52-b44897e7b66f",
+          "Title": "Setting Up the AI-Assisted Coding Environment",
+          "BodyText": "Integrating AI tools into a development environment requires installing the appropriate extensions and configuring access credentials. A properly set-up environment allows seamless use of Copilot within the editor alongside ChatGPT in a browser or API.",
+          "Notes": "Guide learners through installing the GitHub Copilot extension in VS Code and signing in with a GitHub account. Note that institutional or student licenses may be available. Remind learners to be aware of any data privacy policies when pasting code into external chat tools.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "f7e38da0-1eca-496f-a3f4-9b5e815ba2a5",
+              "Text": "GitHub Copilot is installed as an extension in VS Code and activated with a GitHub account.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "55e22e74-0f3e-4799-8f51-5ef5c552d422",
+              "Text": "A GitHub Copilot subscription or student license is required to use the tool.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f71abea2-ffec-47bd-985d-ed955d702894",
+              "Text": "ChatGPT is accessed via a web browser or through the OpenAI API.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ad32b45b-751e-4b65-ba9e-5e7910bc3cc9",
+              "Text": "Avoid pasting sensitive, proprietary, or confidential code into external AI chat interfaces.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+      "Title": "AI-Assisted Code Generation Workflow",
+      "Summary": "Establishes a structured workflow for using AI tools to generate, refine, and integrate code for engineering programming tasks. Focuses on effective prompting strategies and iterative development practices.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "ee3c35bb-69cd-4925-83e8-afda7063b3a1",
+          "TopicId": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+          "Title": "Writing Effective Prompts for Code Generation",
+          "BodyText": "The quality of AI-generated code is directly tied to the quality of the prompt provided. Effective prompts are specific, include relevant context, state constraints, and describe expected inputs and outputs clearly.",
+          "Notes": "Compare a weak prompt (\u0027write a beam class\u0027) with a strong prompt (\u0027write a Python class called RectangularBeam that inherits from Beam, accepts length in meters and material as a string, and includes a method calculate_moment_of_inertia() using the formula bh^3/12\u0027). The difference in output quality is dramatic.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "cc5cb876-7fcf-4486-8405-fde2742964fc",
+              "Text": "Specify the programming language, class or function name, and expected behavior explicitly.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1710990d-d5bc-409f-8642-80cda3ae95e5",
+              "Text": "Include input parameter names, types, and units when prompting for engineering code.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f6066fa7-20f1-46d8-a7b7-c3268d680a01",
+              "Text": "State any constraints such as required method names, inherited classes, or output formats.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a3151324-84c2-47fd-b655-be461fa3759a",
+              "Text": "Providing a formula or algorithm in the prompt leads to more accurate implementation.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8959c225-a70d-433e-987e-6ca10ac7e04e",
+          "TopicId": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+          "Title": "Using Comments and Docstrings to Guide Copilot",
+          "BodyText": "GitHub Copilot uses inline comments and docstrings as high-quality contextual signals to generate relevant code suggestions. Writing descriptive comments before a function or method body is one of the most effective Copilot usage patterns.",
+          "Notes": "Demonstrate the pattern: write a class docstring and method signature with a docstring describing parameters and return values, then pause and let Copilot suggest the method body. This practice also encourages good documentation habits independent of AI use.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "3b1d9652-c3c5-4412-beba-1f06e79e62a6",
+              "Text": "Write a descriptive docstring before the method body to prime Copilot with intent.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "98b01420-a869-4a96-b157-b21378bd7bcf",
+              "Text": "Inline comments within a method guide Copilot to generate the correct next line of logic.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "682911ca-23e7-4860-a110-5fb4e8f62dbe",
+              "Text": "Including units and expected value ranges in comments improves suggestion relevance.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "11291c48-e904-43af-82f3-37f156940cfc",
+              "Text": "This workflow produces well-documented code as a natural byproduct.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "b2df4876-7af4-4259-989c-c2aac5f631ab",
+          "TopicId": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+          "Title": "Iterative Refinement of AI-Generated Code",
+          "BodyText": "AI-generated code rarely meets all requirements on the first attempt and should be treated as a draft to be iteratively refined. Reviewing, testing, and re-prompting are essential steps in the workflow.",
+          "Notes": "Encourage learners to run the generated code immediately, identify failures, and then re-prompt with specific corrections. For ChatGPT, follow-up messages in the same conversation allow the model to refine its output with additional context.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "5b81c339-9650-429d-a561-263e87970e2e",
+              "Text": "Run AI-generated code immediately to identify errors or unexpected behavior.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "433ed7c7-aa77-460e-8b88-39d4605892b1",
+              "Text": "Re-prompt with specific feedback describing what went wrong and what the correct behavior should be.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c836bc89-7c10-4e47-9819-71fc72ded445",
+              "Text": "For ChatGPT, follow-up messages in the same conversation preserve context and improve refinement.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "72d690cf-1dd9-4408-81d9-ffce858ef1c0",
+              "Text": "Iterative refinement typically converges on a correct solution faster than starting from scratch.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "3507b46b-bda3-4b0c-9693-b82618a36126",
+          "TopicId": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+          "Title": "Generating Boilerplate and Class Scaffolding",
+          "BodyText": "AI tools are especially effective at generating repetitive boilerplate code such as class definitions, __init__ methods, property accessors, and __str__ implementations. This accelerates the setup phase of engineering class design.",
+          "Notes": "Demonstrate generating a complete Beam class scaffold from a single prompt, then manually adding the domain-specific engineering formulas. This division of labor uses AI for what it does well while keeping engineer judgment where it matters most.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "71d3a3f4-2971-4333-88f2-9959a035c2fe",
+              "Text": "Use AI to generate class scaffolding including __init__, __str__, and placeholder methods.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0b6323c2-21e1-4a56-bd14-67c45c46d0d0",
+              "Text": "Fill in domain-specific formulas and logic manually to ensure engineering correctness.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a22681c7-af53-45e6-a926-ffd0863d4cf4",
+              "Text": "Generating boilerplate with AI frees engineering attention for higher-value design decisions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5b7c410d-3341-4ade-9488-25d4e907db8b",
+              "Text": "Review all generated scaffolding to ensure attribute names and types match requirements.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7b2000a4-dad1-454d-96ea-69fda506aa2c",
+          "TopicId": "c4ea679b-b1c2-4de0-b28c-a16dad1b09bf",
+          "Title": "Using AI for Test Case Generation",
+          "BodyText": "AI tools can generate unit test cases for engineering classes, helping engineers verify that methods return correct results across a range of inputs. Prompt the tool to create tests covering typical values, edge cases, and boundary conditions.",
+          "Notes": "Remind learners that AI-generated tests must still be validated: the expected values in tests need to be verified against hand calculations or authoritative references. A test with a wrong expected value provides false confidence.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "b6fed056-5315-42ed-a028-dc0ea2c73820",
+              "Text": "Prompt AI tools to generate unit tests for each method in a class.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9b2f1994-c530-4962-adc1-59127cee895d",
+              "Text": "Request tests for typical inputs, boundary values, and known edge cases.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5a17e192-3e09-4660-a978-3200beceff09",
+              "Text": "Verify expected test values against hand calculations or reference data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4b1afce0-1cde-4377-a60c-cbd3e36e68bf",
+              "Text": "AI-generated tests serve as a starting framework that engineers must validate before trusting.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ee555d71-cf84-4f16-9853-d5010d8c861c",
+      "Title": "AI-Assisted Debugging",
+      "Summary": "Covers how to use AI tools to interpret error messages, identify bugs, and reason through incorrect program behavior. Establishes a systematic debugging approach that combines AI assistance with engineer-led analysis.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "c6344f8e-64f6-4788-b566-de97acdce1d9",
+          "TopicId": "ee555d71-cf84-4f16-9853-d5010d8c861c",
+          "Title": "Reading and Interpreting Error Messages",
+          "BodyText": "Python error messages contain precise information about the type of error, the file, the line number, and a description of the problem. Learning to read tracebacks systematically is a prerequisite for effective debugging with or without AI assistance.",
+          "Notes": "Walk through a sample traceback for a common error such as AttributeError or TypeError occurring in an engineering class. Show learners how to locate the originating line and understand what the error message is communicating before turning to an AI tool.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "e8e1c750-a697-4883-8997-682d5f6ee81c",
+              "Text": "The last line of a traceback states the error type and a brief description of the problem.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "86225c12-4b68-4b22-a743-3d679bbe85d6",
+              "Text": "The traceback lists the chain of function calls that led to the error from outermost to innermost.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a928d965-d93f-4c0d-a9ef-2c04669a73b0",
+              "Text": "The file name and line number in the traceback pinpoint where to begin investigating.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2325c40e-628c-4780-b94f-376b14d37514",
+              "Text": "Understanding the error independently before using AI leads to better-targeted prompts.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "9b3d3b58-b512-4c32-8a83-4898ff0a727b",
+          "TopicId": "ee555d71-cf84-4f16-9853-d5010d8c861c",
+          "Title": "Prompting AI Tools to Explain Errors",
+          "BodyText": "Pasting an error message and the relevant code into ChatGPT and asking for an explanation is an effective first debugging step. AI tools can quickly identify common error patterns and suggest likely causes.",
+          "Notes": "Show the prompt pattern: paste the code, paste the full traceback, and ask \u0027What is causing this error and how should I fix it?\u0027 Remind learners that the AI explanation should be understood and verified, not blindly applied.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "0492732d-666b-4009-a675-af36d70891b3",
+              "Text": "Include both the relevant code and the full traceback when prompting for debugging help.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "02c5a6ee-8957-4d4d-b623-122e12e10879",
+              "Text": "Ask the AI to explain the cause of the error before asking for a fix.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "915a2ab0-8087-40c2-ae65-5b61213cd14d",
+              "Text": "Understanding the explanation ensures the fix addresses the root cause, not just the symptom.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e48201cd-122a-4632-81f0-4af203e72be4",
+              "Text": "Always test the suggested fix and confirm the error is resolved and no new errors are introduced.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "294defea-63e4-4c12-a33f-3ee6a1520509",
+          "TopicId": "ee555d71-cf84-4f16-9853-d5010d8c861c",
+          "Title": "Common OOP Errors in Engineering Code",
+          "BodyText": "Certain error types arise frequently when working with classes, including AttributeError from misspelled attribute names, TypeError from incorrect method signatures, and errors from failing to call super() in subclass constructors.",
+          "Notes": "Provide a table or list of common OOP errors, their typical causes, and how to diagnose them. AttributeError often points to a typo or missing self.; TypeError in __init__ often means the wrong number of arguments was passed during instantiation.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "e9d81c12-8d70-4c2b-b18e-d96153617772",
+              "Text": "AttributeError usually indicates an attribute was never defined or its name was misspelled.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f7b68389-de15-44c2-9bad-19e4e78481f4",
+              "Text": "TypeError in a method often means self was omitted from the definition or call arguments do not match.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ff9eb9d3-3ad5-4cc5-a4ba-e4354e063866",
+              "Text": "Forgetting super().__init__() leaves parent attributes undefined, causing errors later in execution.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2577e200-abbe-4274-a0fb-57537bed1ac1",
+              "Text": "IndentationError within a class body indicates code was not properly nested inside the class.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "ee2dcb63-7dcb-439d-8e3f-d9332735434c",
+          "TopicId": "ee555d71-cf84-4f16-9853-d5010d8c861c",
+          "Title": "Systematic Debugging Strategy",
+          "BodyText": "Effective debugging follows a systematic process: reproduce the error reliably, isolate the failing component, form a hypothesis about the cause, test the hypothesis, and apply and verify a fix. AI tools support but do not replace this process.",
+          "Notes": "Reinforce that randomly applying AI suggestions without a systematic process can introduce new bugs. Encourage learners to add print statements or use a debugger to inspect object state before involving AI, so they can provide better context in their prompt.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "cf3ebc37-504b-4996-93a5-331c9ccfc32c",
+              "Text": "Reproduce the error consistently before attempting any fix.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b5d6df55-2efb-44e9-93fd-8e72dd645019",
+              "Text": "Isolate the smallest code section that still produces the error.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2dde612a-a6b1-49fb-985a-23526056e49b",
+              "Text": "Form a specific hypothesis about the cause before applying any change.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "6fd932f1-0be2-478e-8fc9-9fc626a3826d",
+              "Text": "Verify that a fix resolves the error and does not break other parts of the program.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "fe57e0d9-9264-44b2-8b06-870d6d82b32f",
+              "Text": "Use AI to generate hypotheses when stuck, but evaluate each one critically before applying.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+      "Title": "Responsible Use and Verification of AI-Generated Code",
+      "Summary": "Establishes the ethical responsibilities and practical verification practices engineers must apply when using AI-generated code. Emphasizes that engineering judgment and accountability cannot be delegated to AI tools.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+      "Elements": [
+        {
+          "Id": "01a63dfc-e9c7-462f-8c0b-d9d01dcbffba",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Why Verification Is Non-Negotiable in Engineering",
+          "BodyText": "Engineering software underpins decisions about physical systems where errors can have safety, financial, or environmental consequences. AI-generated code must be rigorously verified because the tools have no awareness of engineering standards, safety factors, or physical constraints.",
+          "Notes": "Reference real engineering failures caused by software errors to ground the importance of verification. Emphasize that professional engineers are legally and ethically accountable for the correctness of code used in their work, regardless of how it was generated.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "61fb8f0a-82c9-4533-94f6-3f3cc5ced830",
+              "Text": "AI tools optimize for syntactic plausibility, not physical correctness or engineering safety.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b6621a58-6919-4551-85a2-bb078d2caeb9",
+              "Text": "Engineers are professionally accountable for all code used in their work, including AI-generated code.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f65a7ff0-1e91-498b-b80f-735f56cb5d66",
+              "Text": "A plausible-looking formula in generated code may be subtly wrong or applied out of context.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5ab95c78-b57f-44e0-9ae3-e6a5a0fddb77",
+              "Text": "Verification is a professional obligation, not an optional quality enhancement.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "18dbf6ec-e692-4042-b3b6-2aa7b1a74525",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Hand Calculation Verification",
+          "BodyText": "The most direct verification method is computing expected outputs by hand and comparing them against the program\u0027s results. Hand calculations catch numerical errors, wrong formulas, and incorrect unit handling in AI-generated engineering code.",
+          "Notes": "Recommend a specific workflow: before writing or generating any code, solve a representative problem by hand. Then run the code on the same inputs and compare results. Any discrepancy demands investigation before the code is used further.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "f98e3081-a654-415d-b9a3-f03d503e0abb",
+              "Text": "Solve representative problems by hand before running AI-generated code on the same inputs.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "15d85054-6377-4814-bcdf-187be2a54c3b",
+              "Text": "Compare hand-calculated results against program output for several test cases.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ca322835-bba9-4116-abba-22880290f50b",
+              "Text": "Discrepancies between hand and code results must be investigated and resolved before proceeding.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e9f77e10-7244-4285-b5e6-e236356a026c",
+              "Text": "Include the hand-calculation verification in project documentation as an audit trail.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d398c05c-419d-4e43-b79c-75580b2c97c8",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Code Review Practices for AI-Generated Code",
+          "BodyText": "Code review involves systematically reading through generated code line by line to understand what it does, checking for logical errors, inappropriate assumptions, and missing edge case handling. This is a critical quality gate before any code is integrated.",
+          "Notes": "Encourage peer code review even in educational settings. A second reader often catches issues that the original programmer misses because they are familiar with what the code is supposed to do rather than reading what it actually does.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "0e407288-c24c-467e-aef5-e1165ef2c69e",
+              "Text": "Read every line of AI-generated code before integrating it into a project.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "cfb5cfa9-48c7-4eca-a58c-b8c6fb86556e",
+              "Text": "Check that variable names, units, and formulas match the engineering problem statement.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ecada2cc-1562-4429-8f3b-8924d0ca87b9",
+              "Text": "Verify that edge cases such as zero inputs or negative values are handled appropriately.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "664029fc-14c3-4834-8dfc-268c7847841c",
+              "Text": "Peer review catches assumptions and errors that self-review may miss.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "cd2943c2-a938-461e-acb5-577c265e49a6",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Testing Strategies for Engineering Classes",
+          "BodyText": "Structured testing using Python\u0027s unittest or pytest frameworks provides systematic and repeatable verification of class behavior. Writing tests that cover typical values, boundary conditions, and known failure modes builds confidence in the code.",
+          "Notes": "Introduce the concept of assert statements and simple test functions before moving to a testing framework. Show that tests comparing floating-point results should use approximate comparison with a tolerance rather than exact equality.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "58485a31-3106-438d-b00d-3650b1815c31",
+              "Text": "Write test cases that cover typical inputs, boundary values, and known edge cases.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "dd61cff1-6b28-47fc-9122-ac2f3bc51597",
+              "Text": "Use approximate comparison with a tolerance when asserting floating-point results.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "684c3325-4a15-46b7-9669-22a952e9c4dc",
+              "Text": "Run the full test suite after any modification to catch regressions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e345f2e8-2f2a-4914-bfa9-a9d631e35c39",
+              "Text": "Test method outputs against independently verified reference values.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "1f6cfb7a-a83f-4dba-acde-5cea2db23dad",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Academic and Professional Integrity in AI-Assisted Coding",
+          "BodyText": "Using AI tools responsibly includes understanding and following institutional policies on academic integrity and professional standards on attribution. Representing AI-generated code as entirely one\u0027s own original work without disclosure may violate ethical obligations.",
+          "Notes": "Clarify the course or institutional policy on AI tool use. Stress that the learning objective is developing engineering judgment and coding skill, and that uncritical copying of AI output undermines both. Discuss how to appropriately acknowledge AI assistance in professional and academic contexts.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "05d27063-ce22-48a0-86fe-d4f98002218b",
+              "Text": "Follow institutional or workplace policies regarding disclosure of AI tool use.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d9cfc064-e1d8-4a90-aa6b-1e7449d80d2c",
+              "Text": "Understand that submitting AI-generated work as entirely original may violate integrity policies.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7b835fae-500b-4f02-bd48-9eac3ea8c5c2",
+              "Text": "Engaging critically with AI output is necessary to develop genuine engineering programming skill.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ae582aa6-cdcd-4b6f-ae74-b32fc1bb6f89",
+              "Text": "Documenting AI assistance is a professional transparency practice, not an admission of weakness.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "deb4310a-7eda-4590-8324-041395ae7bcf",
+          "TopicId": "88771695-4176-425b-9c5f-b1fc914b7d1c",
+          "Title": "Building a Responsible AI-Assisted Workflow Summary",
+          "BodyText": "A responsible AI-assisted engineering coding workflow integrates AI tools as productivity aids within a framework of human judgment, systematic verification, and professional accountability. The engineer remains the decision-maker throughout.",
+          "Notes": "Summarize the full workflow: plan and prompt, review and refine generated code, verify against hand calculations and reference data, test systematically, document the process. Present this as a repeatable professional practice rather than a one-off technique.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "ModifiedDate": "2026-05-14T21:36:04.7067111-04:00",
+          "Items": [
+            {
+              "Id": "6f448835-8c06-4968-b9b1-e3ecbb5b10ad",
+              "Text": "Plan the engineering problem and write a clear, specific prompt before engaging AI tools.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "79e1af04-8a43-4561-b78f-63dc5992a4af",
+              "Text": "Treat AI output as a draft and review every line before accepting it.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f5cd70f8-04d6-4dcf-8775-93cf302e955f",
+              "Text": "Verify correctness through hand calculations and structured tests using reference values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d2cd9dda-f986-4b3b-9ff4-9cec80719e75",
+              "Text": "Document the verification steps taken so that results can be audited and reproduced.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "bef75f95-c46c-4921-9a98-042124d761bd",
+              "Text": "Maintain full engineering accountability for all code regardless of how it was generated.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 35
+}

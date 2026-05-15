@@ -1,0 +1,22 @@
+﻿{
+  "ModuleFolderName": "Python_Environment_Setup",
+  "CourseName": "Egn3214",
+  "LastModified": "2026-05-14T21:03:34.306772-04:00",
+  "NextAssignmentNumber": 2,
+  "Assignments": [
+    {
+      "Id": "A001",
+      "Title": "Python Core Data Types \u0026 Operators: Engineering Problem-Solving Exercise",
+      "Type": "ProblemSolvingExercise",
+      "Level": "Medium",
+      "SubmissionFormat": "Website",
+      "TopicTitles": "Variables and Assignment, Core Data Types, Operators in Python, Type Conversion",
+      "ExtraInstructions": "The student will need to variables, the types of data, and operators to assign variables and solve a set of equations using the assigned variable values. This should cover an engineering scenario, should be completed in Colab,with text documentation in Colab, with a fulll description of the problem and the variables used, and the results and a conclusion of what the results mean. \r\n\r\nThis should be submitted as web link to a Colab site.",
+      "FileName": "A001_Problem_Solving__Python_Core_Data_Types.md",
+      "GeneratedDate": "2026-05-14T21:03:13.5139374-04:00",
+      "TypeDisplayName": "Problem-Solving Exercise",
+      "LevelDisplayName": "Medium  (2\u20134 hours)",
+      "FormatDisplayName": "Website / HTML"
+    }
+  ]
+}

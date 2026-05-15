@@ -1,0 +1,1009 @@
+{
+  "ModuleFolderName": "Machine_Learning_Automation",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T21:42:40.8944396-04:00",
+  "ModifiedDate": "2026-05-14T21:42:40.8947475-04:00",
+  "Outcomes": [
+    {
+      "Id": "4e360ff3-8919-42a0-be50-8a1941ef2642",
+      "Text": "Explain the principles of supervised machine learning and how regression and classification models are applied to engineering problems.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "9ad7aa8a-a913-4b4d-be02-ee016b260a98",
+      "Text": "Apply scikit-learn workflows to train, evaluate, and interpret machine learning models for engineering datasets.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "2e31c00b-6556-4dcd-b100-631bf8d261b3",
+      "Text": "Create engineering automation pipelines and parameter sweep scripts to systematically explore design or model parameters.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "9e5de2fc-5664-4708-b917-3b9ce3a2fa3d",
+      "Text": "Demonstrate proficiency in Git and GitHub version control practices including committing, branching, and collaborating on code repositories.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "b946a32c-dcfd-40b0-95bd-6a651b60b944",
+      "Text": "Identify the risks associated with AI-generated code and apply verification strategies to ensure correctness and safety.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "2d7d22b3-50d4-45ef-b349-e39f386d1da7",
+      "Text": "Evaluate professional engineering accountability obligations when integrating AI tools into technical workflows.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+      "Title": "Foundations of Supervised Machine Learning",
+      "Summary": "Introduces the core concepts of supervised learning, distinguishing between regression and classification tasks and explaining how labeled training data drives model development.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "Elements": [
+        {
+          "Id": "12a151b2-796d-4cca-8223-697afb9c984f",
+          "TopicId": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+          "Title": "What Is Supervised Learning?",
+          "BodyText": "Supervised learning is a machine learning paradigm in which a model is trained on labeled input-output pairs to learn a mapping from features to targets.",
+          "Notes": "Contrast with unsupervised and reinforcement learning to help learners place supervised learning in the broader ML landscape.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "655d6899-3d2c-4f7f-bd91-fa6925c97962",
+              "Text": "The algorithm learns by minimizing the error between its predictions and the known labels in the training data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ef4513b2-8e10-4689-a37c-8894df36586b",
+              "Text": "Labeled datasets are the essential ingredient that distinguishes supervised learning from other paradigms.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "687afca7-828e-4b55-b606-b3d1e089fc5e",
+              "Text": "The trained model can then generalize to make predictions on new, unseen data.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "ab8a1650-3ad8-45bc-8849-76f5cb9172b5",
+          "TopicId": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+          "Title": "Regression vs. Classification",
+          "BodyText": "Regression predicts a continuous numerical output, while classification predicts a discrete category or class label.",
+          "Notes": "Engineering examples help ground the distinction: predicting beam deflection is regression; predicting whether a material will fracture under load is classification.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "64715f24-ea37-4e51-a7d2-fc441455f05f",
+              "Text": "Regression models output a numeric value such as temperature, stress, or yield strength.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "5264941d-bea2-4d85-91a3-22941460e3eb",
+              "Text": "Classification models assign inputs to one of two or more predefined categories.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d44d576d-2169-48d6-aeeb-527c0b82faba",
+              "Text": "The choice between regression and classification is determined by the nature of the target variable in the dataset.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d6aac217-7cca-461d-99a7-fda984b98fe4",
+              "Text": "Both task types share the same fundamental training loop but use different loss functions and evaluation metrics.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7d392acb-0bf2-4893-b110-945a27cd2de3",
+          "TopicId": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+          "Title": "Features, Labels, and Training Data",
+          "BodyText": "Features are the measurable input variables used to make predictions, while labels are the corresponding known outputs used during training.",
+          "Notes": "Emphasize data quality: noisy, insufficient, or unrepresentative training data is the most common cause of poor model performance in engineering applications.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "c160334b-8467-48f6-a502-331059f49feb",
+              "Text": "Feature engineering\u2014selecting and transforming raw measurements\u2014significantly affects model accuracy.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "593ca4ce-324c-412f-9815-367bbda9e136",
+              "Text": "A well-constructed training dataset must be representative of the conditions the model will encounter in deployment.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "584892df-8f1c-47e6-aa94-2bf4fd5708d7",
+              "Text": "Splitting data into training and test sets prevents overfitting and provides an honest estimate of model performance.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "bf2e119c-bfb1-47bc-9982-0135c228f568",
+          "TopicId": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+          "Title": "Bias-Variance Trade-off",
+          "BodyText": "The bias-variance trade-off describes the tension between a model that is too simple (high bias) and one that is too complex (high variance).",
+          "Notes": "Use a learning curve or validation curve plot to visualize underfitting and overfitting in practice.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "079fcf27-cde4-4ac5-be2e-3875b4befc32",
+              "Text": "High bias leads to underfitting, where the model fails to capture the underlying pattern in the data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9a932e43-0dd0-41c2-94c0-b996d4e5a333",
+              "Text": "High variance leads to overfitting, where the model memorizes training data but performs poorly on new data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6f3add58-9a5e-4bb5-807a-ae3da1e5f757",
+              "Text": "Cross-validation is the standard technique for detecting and managing the bias-variance trade-off.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ab14c57d-b7a0-40c9-8e77-13c8a282b3d0",
+              "Text": "Regularization techniques can reduce variance by penalizing model complexity.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "15780ca9-bbdc-4138-995e-9bc294ddfb13",
+          "TopicId": "be4586dd-fc2c-47b2-abdd-97d08b5127b6",
+          "Title": "Model Evaluation Metrics",
+          "BodyText": "Selecting appropriate evaluation metrics is essential for understanding how well a model performs on the intended engineering task.",
+          "Notes": "For regression, common metrics include MAE, MSE, RMSE, and R-squared. For classification, accuracy, precision, recall, F1-score, and confusion matrices are standard.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "bebf9f47-99b6-4511-af9d-9da4f4e5dcf5",
+              "Text": "Mean Absolute Error and Root Mean Squared Error quantify average prediction error in regression tasks.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "074442c5-8012-4a1b-a1d7-5082d92631f5",
+              "Text": "R-squared indicates the proportion of variance in the target that is explained by the model.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "70a8b29b-ee0a-4065-a1fc-0f84906b3cf7",
+              "Text": "Accuracy alone can be misleading in imbalanced classification problems; precision and recall provide more insight.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f956d100-0b74-4b4e-ad2f-c72f4f238d58",
+              "Text": "A confusion matrix visualizes true positives, false positives, true negatives, and false negatives for classifiers.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+      "Title": "Machine Learning with scikit-learn",
+      "Summary": "Covers the practical use of the scikit-learn library to build, train, and evaluate regression and classification models in engineering contexts.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "Elements": [
+        {
+          "Id": "19eca6ae-7667-47f4-9d98-ed3707bd6d29",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "The scikit-learn API Design",
+          "BodyText": "scikit-learn provides a consistent estimator API in which every model object exposes fit, predict, and score methods, making it straightforward to swap algorithms.",
+          "Notes": "The uniformity of the API is one of scikit-learn\u0027s greatest strengths\u2014once learners understand the pattern for one model, they can apply it to any other.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "0bd20170-f11b-4d93-8a62-8276ddf864ec",
+              "Text": "The fit method trains the model on provided feature and label arrays.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f88211c9-f499-419d-a5cf-e9264bf3ac6c",
+              "Text": "The predict method generates output predictions for new input data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "eb170db5-7131-4a54-8e01-cc9f79679892",
+              "Text": "The score method returns a default performance metric appropriate to the estimator type.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "6db318df-f82e-477b-8e2a-308e46872aec",
+              "Text": "Consistent interfaces allow rapid experimentation by substituting different algorithm classes with minimal code changes.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "523959a7-77fb-4eac-91b4-af06683162b3",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "Data Preprocessing and Pipelines",
+          "BodyText": "Raw engineering data often requires scaling, encoding, or imputation before it can be fed into a machine learning model, and scikit-learn pipelines chain these steps with the estimator.",
+          "Notes": "Stress that preprocessing steps must be fit only on training data and then applied to test data to avoid data leakage, which inflates apparent model performance.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "091a7a3f-520e-49d9-8cfa-fbda0ec34ebc",
+              "Text": "StandardScaler normalizes features to zero mean and unit variance, which benefits gradient-based and distance-based algorithms.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "89ab0474-aeba-4fe5-95a1-5c1e8e94ba0b",
+              "Text": "Categorical variables must be encoded numerically using techniques such as one-hot encoding before most models can process them.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "82fea60b-5c83-46ab-990e-50b61df970cd",
+              "Text": "sklearn.pipeline.Pipeline chains preprocessing transformers and the final estimator into a single object.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "3cf54858-8167-454a-b683-5ce20ed8df67",
+              "Text": "Using a pipeline ensures that cross-validation correctly applies preprocessing within each fold.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "454c09b2-c0a7-4e81-a2f3-60240d465f0f",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "Regression Models in scikit-learn",
+          "BodyText": "scikit-learn offers a range of regression estimators suitable for engineering data, from linear models to ensemble methods.",
+          "Notes": "LinearRegression is a useful baseline. RandomForestRegressor and GradientBoostingRegressor often provide better accuracy on nonlinear engineering relationships but are less interpretable.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "15ced972-2a37-4516-80b7-8c0c8594cc54",
+              "Text": "LinearRegression fits a hyperplane to minimize the sum of squared residuals and is interpretable through its coefficients.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f47acdc4-c6e3-465a-ae54-60ade58df711",
+              "Text": "Ridge and Lasso regression add regularization terms to combat overfitting and can perform feature selection.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b3635155-57cb-413f-bec1-69c6d5b5a35a",
+              "Text": "Ensemble regressors such as Random Forest combine many decision trees to improve predictive accuracy on complex data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "212d829d-4963-4563-a471-ce0112fd21a7",
+              "Text": "Comparing multiple regression models on a held-out test set is best practice before selecting a final model.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "6e6860a3-8c49-4961-a001-bf86b942c24c",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "Classification Models in scikit-learn",
+          "BodyText": "Classification estimators in scikit-learn assign input samples to discrete classes and are evaluated using metrics such as accuracy, precision, and recall.",
+          "Notes": "Logistic Regression, despite its name, is a linear classifier and is a strong baseline for binary engineering classification problems.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "1db9fb6d-4fbd-480a-a554-479d3985285f",
+              "Text": "LogisticRegression models the probability that a sample belongs to each class using a logistic function.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9652e4b7-42b6-41ce-9fd6-c45cceea13c3",
+              "Text": "Decision tree classifiers produce interpretable rules that can be visualized, aiding engineering insight.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "55ff6afe-22bc-40c4-a6b3-e65189d8748e",
+              "Text": "Support Vector Machines find the maximum-margin hyperplane separating classes and work well in high-dimensional spaces.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a2004e0c-25f1-4cf9-b604-3d357229dddb",
+              "Text": "Class imbalance in engineering fault-detection datasets may require oversampling, undersampling, or adjusted class weights.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "e62186c6-df83-4dbf-9f63-ba18fa47183b",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "Hyperparameter Tuning",
+          "BodyText": "Hyperparameters are model configuration settings that are not learned from data and must be set before training; tuning them improves model performance.",
+          "Notes": "GridSearchCV exhaustively searches a specified parameter grid; RandomizedSearchCV is more efficient for large search spaces.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "bf3c893a-1645-4e0f-87fb-819bc985c4a6",
+              "Text": "Cross-validated grid search evaluates all combinations of specified hyperparameter values and selects the best-performing set.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "88ad16a7-5a51-452f-a63d-3088a8d85b2d",
+              "Text": "Randomized search samples parameter combinations probabilistically and is preferred when the search space is large.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e18b8646-7a0e-4cae-af86-562459a205c5",
+              "Text": "Hyperparameter tuning should always be performed on training or validation data, never on the final test set.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "70e40572-6325-4e1f-a347-94aa95206041",
+              "Text": "Documenting the tuning process and results is important for reproducibility and engineering records.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "3346d48a-baa4-4079-98cd-8491e7e986fb",
+          "TopicId": "e0bfc9c9-9db9-4520-9df4-ef586d44b18e",
+          "Title": "Model Interpretability and Feature Importance",
+          "BodyText": "Understanding which features drive model predictions is critical in engineering applications where decisions have physical and safety consequences.",
+          "Notes": "Tree-based models provide built-in feature importances. SHAP values offer model-agnostic, consistent explanations and are increasingly used in high-stakes engineering decisions.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "89f06321-921a-4efa-924d-01fa99f6f947",
+              "Text": "Feature importance scores from tree-based models rank input variables by their contribution to reducing prediction error.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "aa175ca1-419a-4647-9853-76adcd7f4b19",
+              "Text": "Permutation importance measures how much model performance drops when a single feature is randomly shuffled.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f47eb98c-7d7b-4264-bdda-8001a9e0cd03",
+              "Text": "Partial dependence plots show the marginal effect of one or two features on the predicted outcome.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "691ee43d-4782-44e8-8649-5d85d2603fe8",
+              "Text": "Interpretable models build stakeholder trust and satisfy regulatory requirements in safety-critical engineering domains.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+      "Title": "Engineering Automation and Parameter Sweep Pipelines",
+      "Summary": "Introduces strategies for automating repetitive engineering computations and systematically exploring parameter spaces using scripted pipelines.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "Elements": [
+        {
+          "Id": "1e948279-c6ba-44dc-8f48-2447e4e3e3e1",
+          "TopicId": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+          "Title": "Why Automate Engineering Workflows?",
+          "BodyText": "Automation replaces manual, error-prone repetition with reliable, reproducible scripts that can execute complex sequences of engineering tasks consistently.",
+          "Notes": "Connect to real engineering contexts such as running finite element simulations across a range of load cases or generating performance curves for multiple design variants.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "89ceb13e-61d7-473d-8912-00bdf49bc370",
+              "Text": "Automation reduces human error in tasks that involve many repetitive steps or large numbers of runs.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "18702042-8163-4949-ab56-92c728366343",
+              "Text": "Scripts provide a complete record of the computation, supporting reproducibility and auditing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5d5841db-1283-4dbf-97e3-561be83beed5",
+              "Text": "Automated pipelines free engineers to focus on analysis and decision-making rather than manual execution.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "abbd5f07-58d8-4ea3-8d9b-4445f22ba739",
+              "Text": "Well-structured automation scripts are easier to maintain, update, and share across a team.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "40262e34-05e5-47f7-b8d9-34bdb669f6be",
+          "TopicId": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+          "Title": "Designing a Parameter Sweep",
+          "BodyText": "A parameter sweep systematically varies one or more input parameters across a defined range and records the corresponding outputs to map system behavior.",
+          "Notes": "Parameter sweeps are analogous to design-of-experiments approaches and can inform sensitivity analyses, optimization, and model validation.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "db23bf28-cb5e-4ec7-8381-fa2d0aa40eca",
+              "Text": "Define the parameter space by specifying the variables to vary, their ranges, and the resolution or step size.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "60d78d70-6359-464b-b240-d4dc474a8b47",
+              "Text": "Use nested loops or vectorized operations to iterate over all parameter combinations efficiently.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "124a7270-0cb8-4e45-b43d-26dc7c8f0894",
+              "Text": "Store results in structured formats such as DataFrames or CSV files for subsequent analysis.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1dcf34ec-5b91-415a-bfd3-5c34e544f8ec",
+              "Text": "Visualizing sweep results as heatmaps, contour plots, or line plots reveals how outputs respond to input changes.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "55c1753a-3c7c-4341-8dee-dd694cb4a9b3",
+          "TopicId": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+          "Title": "Integrating ML Models into Automation Pipelines",
+          "BodyText": "Trained machine learning models can be embedded in automation pipelines to provide fast surrogate predictions in place of expensive simulations or experiments.",
+          "Notes": "A trained surrogate model can evaluate thousands of parameter combinations in seconds, enabling rapid design space exploration that would be impractical with high-fidelity simulation.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "ddbf15b4-33a3-465e-8c72-afe2f055bdb9",
+              "Text": "Save trained models using joblib or pickle so they can be loaded and reused without retraining.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7a9350e8-511a-4456-bdd6-c084b48f0b99",
+              "Text": "A pipeline that generates parameter combinations, queries the surrogate model, and records outputs can run fully automatically.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7196cdaa-f839-4fdc-8873-0eab6192959f",
+              "Text": "Validate surrogate model predictions against ground-truth simulation or experimental data before relying on them for design decisions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "cdf0213f-40be-4136-b349-d16cdafa074e",
+              "Text": "Document model version, training data provenance, and validation results alongside the automation pipeline.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d3ce451b-b15c-4868-8881-b2e003e5b055",
+          "TopicId": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+          "Title": "Handling Large Result Sets",
+          "BodyText": "Parameter sweeps can generate large volumes of output data that require efficient storage, querying, and summarization strategies.",
+          "Notes": "Pandas DataFrames with indexed columns work well for moderate result sets. For very large sweeps, HDF5 or database storage may be warranted.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "16f1b28f-b69e-4f27-ad2c-ed33baf6b26e",
+              "Text": "Use descriptive column names and include parameter values alongside results in every output row.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1c720edd-1a8b-4526-9d46-38798412e5b3",
+              "Text": "Pandas groupby and aggregation functions can summarize sweep results by parameter combinations.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d73cdb85-5a70-4e83-8442-da8461113e07",
+              "Text": "Export summary statistics and visualizations automatically at the end of the sweep script.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c259a6a1-4154-422a-866d-6659fe6c7a2d",
+              "Text": "Version the result files alongside the script in version control to maintain a clear record of which code produced which outputs.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "65dbb44e-1783-4ee2-8832-2aef7eb4c72b",
+          "TopicId": "2950ccea-70f9-45a6-bad0-81440d1295dc",
+          "Title": "Scheduling and Running Long Jobs",
+          "BodyText": "Engineering automation scripts that take significant time to run benefit from progress tracking, logging, and the ability to resume after interruption.",
+          "Notes": "tqdm provides a simple progress bar for loops. Python\u0027s logging module is preferable to print statements for production automation scripts because it supports log levels and file output.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "010fa598-2d02-4188-92c0-cae98f6f3bf1",
+              "Text": "Add progress indicators to long-running loops so engineers can monitor execution and estimate completion time.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c374da33-2cd8-4353-becd-200352d88ad4",
+              "Text": "Implement checkpointing by saving intermediate results so that a script can resume from the last completed step after a failure.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ed1959b8-3994-4f10-81ff-fe6f7a6dadae",
+              "Text": "Use structured logging to capture warnings, errors, and key milestones during automated runs.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f0e75f8f-5bea-434b-9316-979cfc5dbdae",
+              "Text": "Test automation scripts on a small parameter subset before launching full-scale runs to catch bugs early.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+      "Title": "Git and GitHub Version Control",
+      "Summary": "Establishes foundational and collaborative version control practices using Git locally and GitHub as a remote repository platform for engineering code projects.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "Elements": [
+        {
+          "Id": "8e8ecfe5-f493-4939-be4c-b3f18dd9ba85",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Why Version Control Matters for Engineers",
+          "BodyText": "Version control systems track every change made to a codebase, enabling engineers to review history, revert mistakes, and collaborate without overwriting each other\u0027s work.",
+          "Notes": "Analogize to engineering change orders or revision-controlled drawings\u2014version control is the software equivalent of a formal change management process.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "cf419205-410a-4af0-8fd8-b803e4e7a316",
+              "Text": "Every commit captures a snapshot of the project at a specific point in time with an associated message explaining the change.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "69a079c8-e85f-43b0-ac1b-9df3e1b81798",
+              "Text": "Version control eliminates the need for manual file naming conventions such as script_v2_final_FINAL.py.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "10be310d-72eb-4ecf-a96e-c8958a623e42",
+              "Text": "The complete history of a project is preserved, enabling audit trails that satisfy engineering documentation requirements.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "55bf6513-b29a-492d-9620-8cbf965e7085",
+              "Text": "Multiple team members can work concurrently on the same project without destructive conflicts when using branching workflows.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "19924398-2a5a-44ff-89ab-ef658e3de05f",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Core Git Concepts and Commands",
+          "BodyText": "Git operates through a staging area and a local repository; understanding the add, commit, status, and log commands forms the foundation of daily Git use.",
+          "Notes": "Walk through the basic cycle: make a change, git status to see it, git add to stage it, git commit to record it, git log to verify it.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "1f815055-32ce-4bcc-9856-9bd439fe6c78",
+              "Text": "git init creates a new local repository in the current directory.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "071ad0da-2d54-4c12-8fce-2e69d36af65b",
+              "Text": "git add stages changes, and git commit records them permanently with a descriptive message.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "17b921bf-9d64-4ec6-850b-016cba3a3414",
+              "Text": "git status shows which files have been modified, staged, or are untracked.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "39e48519-30ae-41d4-b018-2ea323812411",
+              "Text": "git log displays the commit history, including hashes, authors, dates, and messages.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "27ad4b5b-33ef-49af-8c00-6cd8481b6504",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Branching and Merging",
+          "BodyText": "Branches allow engineers to develop features or experiments in isolation from the main codebase, and merging integrates completed work back into the main branch.",
+          "Notes": "Feature branches prevent unstable or experimental code from breaking the main branch that other team members depend on.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "674eefeb-5f0b-4f94-b865-6e264936308e",
+              "Text": "git branch creates a new branch, and git checkout or git switch moves between branches.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8ce8cef5-3640-4cd4-a4ec-5b9d2356efe6",
+              "Text": "Changes on a feature branch do not affect the main branch until they are explicitly merged.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a304c4d3-fae0-4b9e-a0e5-f5d790721871",
+              "Text": "git merge combines the history of one branch into another and may require resolving conflicts.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8d95e974-f9eb-4e97-b3e6-1c918a974439",
+              "Text": "Descriptive branch names such as feature/add-regression-model communicate purpose clearly to collaborators.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "ab8b26c1-a151-46df-b542-aba31a0eff6f",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Working with GitHub Remote Repositories",
+          "BodyText": "GitHub hosts remote copies of Git repositories, enabling cloud backup, sharing, and team collaboration through push and pull operations.",
+          "Notes": "Distinguish between git push (local to remote) and git pull (remote to local). Explain that GitHub adds a web interface, issue tracking, and pull request workflows on top of the core Git protocol.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "f97c4944-b341-4f8d-a4d6-c742bd16cf6a",
+              "Text": "git remote add origin connects a local repository to a GitHub remote.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8bc78bad-4a27-4a20-ae5c-35f2395533b1",
+              "Text": "git push uploads local commits to the remote repository, making them accessible to collaborators.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5cb2e30b-8335-4fc5-8c36-45e6efbf6a19",
+              "Text": "git pull fetches and merges the latest remote changes into the current local branch.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c9c2cbe2-6822-46e0-8c32-937c58a4e866",
+              "Text": "SSH keys or personal access tokens are used to authenticate Git operations with GitHub securely.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "49cb9e8b-a2b3-4453-9782-b2096ee54fc9",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Pull Requests and Code Review",
+          "BodyText": "Pull requests on GitHub are a formal mechanism for proposing changes, inviting peer review, and merging approved work into a shared branch.",
+          "Notes": "Code review is a standard professional practice in software engineering that catches bugs, improves code quality, and transfers knowledge between team members.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "75550ff2-e4be-4ec8-9182-11e46d6710c4",
+              "Text": "A pull request compares a feature branch to a target branch and presents the differences for review.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1c27db63-d23a-4d9f-86a8-6bdbe15321cd",
+              "Text": "Reviewers can comment on specific lines, request changes, or approve the pull request.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "72a6408c-b185-40d5-ba5b-b6946102752e",
+              "Text": "Continuous integration checks can run automated tests automatically when a pull request is opened.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b311364d-54d3-494e-9c1d-b9935c5d7181",
+              "Text": "Merging only approved pull requests into the main branch enforces quality control on shared codebases.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2141a4ab-68b2-4d93-99f3-85bf18153bc2",
+          "TopicId": "46c8d754-1080-4650-9787-9ac007ae8d9f",
+          "Title": "Repository Hygiene and .gitignore",
+          "BodyText": "Good repository hygiene ensures that only relevant source files are tracked, avoiding clutter from generated outputs, credentials, or environment-specific files.",
+          "Notes": "A .gitignore file should be one of the first files created in any engineering project repository. Standard templates for Python projects are available at gitignore.io.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "1cdc2d4c-7387-4866-8d69-4241b137783a",
+              "Text": "A .gitignore file lists file patterns that Git should not track, such as __pycache__, .env, and large data files.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fd758950-0bf6-478c-bb5b-cdcd3ea9afc6",
+              "Text": "Credentials and API keys must never be committed to a repository, even a private one.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "1c6ccfa5-e1f6-41fa-9f11-6a7583b5ac44",
+              "Text": "Committing large binary files inflates repository size; use Git LFS or external storage for large datasets.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2d92035b-44d2-4955-956a-450a0f681325",
+              "Text": "A clear README.md describing the project, setup instructions, and usage is essential for any shared repository.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "16334e29-5d26-4094-9b1f-2778826ea1da",
+      "Title": "Responsible AI Integration in Engineering Practice",
+      "Summary": "Consolidates the ethical, professional, and technical obligations engineers must uphold when using AI tools, including verification of AI-generated code and accountability for outcomes.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+      "Elements": [
+        {
+          "Id": "996d7187-da03-43c1-8662-f6f6c053b63b",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "The Role of AI Tools in Engineering Workflows",
+          "BodyText": "AI coding assistants and generative tools can accelerate engineering software development, but they introduce new responsibilities around verification and professional judgment.",
+          "Notes": "Examples include GitHub Copilot, ChatGPT, and similar tools that generate code from natural language prompts. Emphasize that these tools produce plausible-sounding code that may contain subtle errors.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "d830ad9c-71f4-4eab-8de1-2c0d4130fe10",
+              "Text": "AI tools can generate boilerplate code, suggest algorithms, and explain unfamiliar library functions, increasing developer productivity.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "caed9b78-a65b-4a82-9ac2-4e38bfe7b28e",
+              "Text": "Generated code reflects patterns in training data and may incorporate outdated practices or deprecated APIs.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ddc0f6a2-e5fc-470b-93dd-c64d9645e14e",
+              "Text": "Engineers remain responsible for every line of code submitted under their name, regardless of how it was generated.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9e8902b4-a456-40e1-92cc-f31e6c0b8903",
+              "Text": "AI tools do not understand engineering context, physical constraints, or safety requirements unless explicitly provided.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "45c737a3-de87-4d37-9617-7099cd14ecd8",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Verification of AI-Generated Code",
+          "BodyText": "Every piece of code produced by an AI assistant must be critically reviewed, tested, and validated before it is used in any engineering computation or product.",
+          "Notes": "A structured verification checklist can include: Does the code do what it claims? Are the units correct? Does it handle edge cases? Have I tested it against a known result?",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "0e47f4ac-3a6a-4ab7-a7a2-86afeda7b66a",
+              "Text": "Read AI-generated code line by line and ensure you understand what each section does before executing it.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a1b2dd6c-fe65-447c-aae9-8bc658840a85",
+              "Text": "Test generated functions against known inputs and manually verified outputs, including boundary conditions.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "437a2df8-6287-490f-9d14-75be72811bbd",
+              "Text": "Check that numerical methods, formulas, and constants embedded in generated code are correct and appropriately sourced.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "6af14ccd-b150-42af-8dac-18069f19f1c6",
+              "Text": "Never deploy AI-generated code in safety-critical applications without independent review and validation testing.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "532e0d75-edbb-4e0a-b9a4-15b3004faaff",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Recognizing Hallucinations and Errors",
+          "BodyText": "AI language models can confidently produce incorrect code, fabricated function names, or physically unreasonable results\u2014a phenomenon known as hallucination.",
+          "Notes": "Common hallucination patterns include inventing library functions that do not exist, citing incorrect equation forms, and providing plausible but wrong numerical constants.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "321ee069-f101-405e-a8f8-e15691bfaafb",
+              "Text": "AI-generated code may reference functions or arguments that do not exist in the specified library version.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "32e9c163-71da-40d5-bc88-046cf6da3e5e",
+              "Text": "Physically unreasonable outputs such as negative absolute temperatures or efficiencies above 100% signal an error in the generated logic.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "74688769-04a2-4910-89ac-f90ad818ceae",
+              "Text": "Cross-check any domain-specific formula or constant against an authoritative engineering reference before use.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "24e8109d-bcf3-44ff-a344-23d45d46d5e2",
+              "Text": "Skepticism toward AI output is a professional competency, not a limitation of the tool.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d48f24e7-b3ee-4aaf-8f93-2bbb0f7e06ef",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Professional Engineering Accountability",
+          "BodyText": "Licensed and professional engineers bear legal and ethical responsibility for the work they produce and cannot transfer that responsibility to an AI tool.",
+          "Notes": "Reference professional codes of conduct such as those from NSPE, IEEE, or ASCE, which place public safety above efficiency or convenience.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "ab740990-4b5e-42bc-b913-6b08539844ee",
+              "Text": "Professional engineering codes require that engineers act in the interest of public health, safety, and welfare above all else.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "81172397-9920-4e15-b909-3485ff7e521f",
+              "Text": "Using AI to generate code does not constitute due diligence if the engineer has not verified its correctness.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "338c2675-30b7-44ae-b356-23b1ab6e30f7",
+              "Text": "Documentation of verification steps protects the engineer professionally and supports quality assurance audits.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "155b272f-cbf6-4cfb-965e-5b9eb98eb5fd",
+              "Text": "Employers and clients expect engineers to exercise independent judgment, even when AI tools are part of the workflow.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "ab2a211b-154d-4e98-a232-a2d6d34612d0",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Bias, Fairness, and Equity in Engineering ML Systems",
+          "BodyText": "Machine learning models trained on historical data can inherit and amplify societal biases, leading to unfair or discriminatory outcomes in engineering systems that affect people.",
+          "Notes": "Engineering applications such as predictive maintenance scheduling, resource allocation, and infrastructure prioritization can have disparate impacts if bias is not actively identified and mitigated.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "7f3539dd-97bc-422a-8f4d-9a23f08c74d2",
+              "Text": "Training data that underrepresents certain populations or conditions will produce models that perform poorly for those cases.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "dddaab2b-a876-4ff2-a7e7-f65b28f65a1d",
+              "Text": "Engineers must audit model predictions across relevant demographic or geographic subgroups before deployment.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9451a68f-19af-4f72-9386-90762ff8686f",
+              "Text": "Fairness metrics such as equalized odds or demographic parity can quantify disparate model performance.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "729d8ad1-ae88-47c3-9ee3-4269e121b1c9",
+              "Text": "Bias mitigation is an ongoing process requiring monitoring after deployment, not a one-time pre-launch check.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "da569dca-de77-43ed-87cc-9d10fd55c2cb",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Transparent Documentation and Reproducibility",
+          "BodyText": "Responsible AI practice requires that models, datasets, training procedures, and validation results be documented thoroughly so that others can understand, audit, and reproduce the work.",
+          "Notes": "Model cards, introduced by Google, are a standardized format for documenting model intended use, performance metrics, and limitations. Datasheets for Datasets provide equivalent documentation for training data.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "17e811bf-ebdf-4433-bd8a-6205d9ac5476",
+              "Text": "Document the source, collection method, preprocessing steps, and known limitations of every dataset used to train or evaluate a model.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2bac0e4b-3415-4f77-894c-fd5f8147381a",
+              "Text": "Record model architecture, hyperparameters, training environment, and performance metrics in a model card or equivalent artifact.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "570381fb-9d77-4419-83f1-6a98fb8785f7",
+              "Text": "Version control all training scripts, configuration files, and model artifacts to ensure any past result can be reproduced.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "881db32a-1a62-44d4-b3d0-e1ce23785924",
+              "Text": "Share documentation with stakeholders so they can make informed decisions about whether and how to rely on the model.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "c50024d7-6eb4-426e-9309-9a8b22f5cbc0",
+          "TopicId": "16334e29-5d26-4094-9b1f-2778826ea1da",
+          "Title": "Integrating Responsible AI Habits into Daily Practice",
+          "BodyText": "Responsible AI is not a separate checklist but a set of habits\u2014verification, documentation, skepticism, and ethical reflection\u2014that should be embedded in every engineering workflow.",
+          "Notes": "Encourage learners to develop personal checklists or team protocols that make responsible AI practices routine rather than exceptional.",
+          "SortOrder": 6,
+          "CreatedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "ModifiedDate": "2026-05-14T21:42:40.8944396-04:00",
+          "Items": [
+            {
+              "Id": "ffacb074-060c-4650-8703-a1d604f668ea",
+              "Text": "Make code review that includes AI-generated content a standard part of team pull request workflows.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "eeea0492-f13f-44a1-9f89-1484222de6fe",
+              "Text": "Set aside time to test and validate any AI-assisted computation before it influences a design decision.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0a90831f-3cdc-4466-a7b0-d863dce9d930",
+              "Text": "Raise concerns about AI-generated outputs that seem physically inconsistent or ethically problematic, even under time pressure.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "203de0b1-d347-4489-b7da-557993d339c9",
+              "Text": "Continuous learning about evolving AI capabilities and limitations is a professional obligation for practicing engineers.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 29
+}
