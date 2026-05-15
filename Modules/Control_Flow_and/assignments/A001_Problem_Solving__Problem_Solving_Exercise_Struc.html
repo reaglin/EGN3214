@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem-Solving Exercise: Structural Load Data Analyzer</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.6; }h1 { font-size: 1.8em; border-bottom: 2px solid #0054a6; padding-bottom: 8px; }h2 { font-size: 1.3em; color: #0054a6; margin-top: 28px; }h3 { font-size: 1.1em; }ul, ol { padding-left: 1.6em; }blockquote { border-left: 4px solid #0054a6; margin: 0; padding-left: 16px; color: #444; background: #f0f6ff; }code { background: #f4f4f4; padding: 1px 4px; border-radius: 3px; font-size: .9em; }strong { color: #111; }hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }.meta { color: #666; font-style: italic; font-size: .9em; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+<h1>Problem-Solving Exercise: Structural Load Data Analyzer</h1>
+
+<p><strong>Module:</strong> Control Flow and Data Structures</p>
+<p><strong>Estimated Time:</strong> 2–4 hours</p>
+<p><strong>Submission Format:</strong> Student's choice (see [Parameters & Constraints](#parameters--constraints))</p>
+
+<hr>
+
+<h2>Learning Outcomes</h2>
+
+<p>By the end of this assignment, you will be able to:</p>
+
+<p>1. <strong>Construct</strong> a Python program that uses <code>if</code>, <code>elif</code>, and <code>else</code> statements to classify engineering data according to defined threshold criteria.</p>
+<p>2. <strong>Apply</strong> <code>for</code> loops, <code>while</code> loops, and loop control statements (<code>break</code>, <code>continue</code>) to iterate over and filter structural load datasets.</p>
+<p>3. <strong>Select</strong> and <strong>implement</strong> appropriate Python data structures (lists, tuples, dictionaries, and/or sets) to organize, store, and retrieve labeled engineering data.</p>
+<p>4. <strong>Evaluate</strong> the correctness and efficiency of your solution by tracing program logic and justifying your data structure choices in a written reflection.</p>
+
+<hr>
+
+<h2>Purpose</h2>
+
+<h3>Why This Assignment Matters</h3>
+
+<p>Structural engineers routinely analyze large sets of load measurements collected from sensors embedded in bridges, buildings, and other infrastructure. These datasets must be processed automatically — validated for errors, classified by severity, and summarized — because doing so manually at scale is impractical and error-prone.</p>
+
+<p>This assignment simulates exactly that workflow. You will write a Python program that processes a list of simulated load readings from a structural monitoring system, applies engineering classification rules, and produces a summary report. The skills you practice here — conditional logic, iteration, and data structure selection — are foundational to computational engineering, data science, and scientific programming in Python.</p>
+
+<p>This exercise directly supports the module's learning goals by requiring you to integrate control flow constructs and data structures in a realistic, domain-relevant context.</p>
+
+<hr>
+
+<h2>Background and Scenario</h2>
+
+<p>You are a junior software engineer at a structural consulting firm. Your team has deployed strain-gauge sensors at five nodes along a bridge beam. Each sensor records a load value (in kilonewtons, kN) at regular intervals during a 24-hour monitoring period. You have been given the raw readings for one monitoring session and asked to build an automated analysis tool.</p>
+
+<p>The engineering classification rules your firm uses are as follows:</p>
+
+<p>| Classification | Load Range (kN) |</p>
+<p>|---|---|</p>
+<p>| <strong>Safe</strong> | Less than 150 kN |</p>
+<p>| <strong>Caution</strong> | 150 kN to less than 250 kN |</p>
+<p>| <strong>Critical</strong> | 250 kN or greater |</p>
+<p>| <strong>Invalid</strong> | Negative values (sensor error) |</p>
+
+<p>Your program must process the data, apply these rules, and produce a structured summary.</p>
+
+<hr>
+
+<h2>Task</h2>
+
+<h3>Overview</h3>
+
+<p>You will write a Python script (or Jupyter Notebook) that completes the following five steps. Each step is described in detail below. Read all steps before writing any code.</p>
+
+<p>> <strong>Definitions for this assignment:</strong></p>
+<p>> - <strong>Process</strong> means to read each value, apply logic to it, and store or display a result.</p>
+<p>> - <strong>Filter</strong> means to deliberately skip or exclude values that do not meet a criterion (e.g., invalid readings).</p>
+<p>> - <strong>Classify</strong> means to assign each valid reading to exactly one named category based on its numeric value.</p>
+<p>> - <strong>Summarize</strong> means to compute and display aggregate statistics across all readings.</p>
+
+<hr>
+
+<h3>Step 1 — Set Up Your Dataset (Suggested time: 15–20 minutes)</h3>
+
+<p>Create the following dataset directly in your Python script as a <strong>list of tuples</strong>. Each tuple represents one sensor reading in the format <code>(sensor_id, node_label, load_kN)</code>.</p>
+
+<p><code>`</code></p>
+<p>(1, "Node-A", 102.3)</p>
+<p>(2, "Node-B", 178.5)</p>
+<p>(3, "Node-C", 263.0)</p>
+<p>(4, "Node-D", -15.2)</p>
+<p>(5, "Node-E", 149.9)</p>
+<p>(6, "Node-A", 251.7)</p>
+<p>(7, "Node-B", 88.4)</p>
+<p>(8, "Node-C", -3.0)</p>
+<p>(9, "Node-D", 199.6)</p>
+<p>(10, "Node-E", 305.1)</p>
+<p>(11, "Node-A", 145.0)</p>
+<p>(12, "Node-B", 250.0)</p>
+<p>(13, "Node-C", 73.2)</p>
+<p>(14, "Node-D", 310.8)</p>
+<p>(15, "Node-E", 160.4)</p>
+<p><code>`</code></p>
+
+<p>Store this as a list of tuples named <code>sensor_readings</code>.</p>
+
+<p><strong>Why tuples?</strong> Each individual reading is a fixed record — the sensor ID, node label, and load value form a logically grouped, immutable unit. You should be prepared to briefly explain this choice in your reflection (Step 5).</p>
+
+<hr>
+
+<h3>Step 2 — Validate and Filter Readings (Suggested time: 20–30 minutes)</h3>
+
+<p>Using a <code>for</code> loop, iterate over <code>sensor_readings</code>. For each reading:</p>
+
+<p>1. <strong>Unpack</strong> the tuple into three separate variables (sensor ID, node label, load value).</p>
+<p>2. Use a conditional statement to check whether the load value is <strong>negative</strong> (invalid).</p>
+<p>3. If the reading is invalid:</p>
+<p>   - Print a warning message identifying the sensor ID and node label. Example: <code>WARNING: Sensor 4 (Node-D) recorded an invalid reading of -15.2 kN. Skipping.</code></p>
+<p>   - Use <code>continue</code> to skip all further processing for that iteration.</p>
+<p>4. If the reading is valid, append it to a new list called <code>valid_readings</code>.</p>
+
+<p>At the end of this step, print the total number of valid readings and the total number of invalid readings detected.</p>
+
+<hr>
+
+<h3>Step 3 — Classify Each Valid Reading (Suggested time: 30–40 minutes)</h3>
+
+<p>Using a <code>for</code> loop (with <code>enumerate()</code> to track position), iterate over <code>valid_readings</code>. For each valid reading:</p>
+
+<p>1. Apply the classification rules from the [Background and Scenario](#background-and-scenario) table using <code>if</code>, <code>elif</code>, and <code>else</code> statements.</p>
+<p>2. Store the classification result in a <strong>dictionary</strong> named <code>classification_report</code>. Use the sensor ID as the key and a <strong>dictionary</strong> as the value. The inner dictionary should contain:</p>
+<p>   - <code>"node"</code> — the node label string</p>
+<p>   - <code>"load_kN"</code> — the numeric load value</p>
+<p>   - <code>"status"</code> — the classification string (<code>"Safe"</code>, <code>"Caution"</code>, or <code>"Critical"</code>)</p>
+
+<p>   Example structure:</p>
+<p>   <code>`</code>python</p>
+<p>   classification_report = {</p>
+<p>       1: {"node": "Node-A", "load_kN": 102.3, "status": "Safe"},</p>
+<p>       ...</p>
+<p>   }</p>
+<p>   <code>`</code></p>
+
+<p>3. While iterating, also maintain three <strong>separate lists</strong>: <code>safe_loads</code>, <code>caution_loads</code>, and <code>critical_loads</code>. Append the <strong>load value</strong> (not the full tuple) to the appropriate list for each reading.</p>
+
+<p>At the end of this step, print the contents of <code>classification_report</code> in a readable format (one entry per line).</p>
+
+<hr>
+
+<h3>Step 4 — Generate a Summary Report (Suggested time: 30–45 minutes)</h3>
+
+<p>After processing all readings, produce a formatted summary report printed to the console. Your report must include all of the following:</p>
+
+<p>#### 4a — Category Counts and Statistics</p>
+
+<p>For each of the three categories (<code>safe_loads</code>, <code>caution_loads</code>, <code>critical_loads</code>):</p>
+<ul>
+<li>The number of readings in that category</li>
+<li>The minimum load value in that category (use <code>min()</code>)</li>
+<li>The maximum load value in that category (use <code>max()</code>)</li>
+<li>The average load value in that category (use <code>sum()</code> and <code>len()</code>)</li>
+</ul>
+
+<p>Handle the case where a category list is <strong>empty</strong> using a conditional check before calling <code>min()</code>, <code>max()</code>, or calculating the average. Print <code>"No readings in this category"</code> if the list is empty.</p>
+
+<p>#### 4b — Critical Node Identification</p>
+
+<p>Create a <strong>set</strong> named <code>critical_nodes</code>. Iterate over <code>classification_report</code> using <code>.items()</code> and add the node label to <code>critical_nodes</code> for every entry whose status is <code>"Critical"</code>.</p>
+
+<p>Print the set of critical nodes. Sets are appropriate here because the same node may appear multiple times in the data, and you want only <strong>unique</strong> node labels.</p>
+
+<p>#### 4c — Threshold Scan with Early Exit</p>
+
+<p>Write a <code>while</code> loop (or a <code>for</code> loop with <code>break</code>) that scans through the original <code>sensor_readings</code> list from the beginning and stops (using <code>break</code>) at the <strong>first</strong> reading whose load value meets or exceeds <strong>300 kN</strong>. Print a message identifying that sensor and its load value. If no such reading exists, use the loop's <code>else</code> clause to print <code>"No readings exceeded 300 kN."</code>.</p>
+
+<hr>
+
+<h3>Step 5 — Written Reflection (Suggested time: 20–30 minutes)</h3>
+
+<p>After completing your code, write a short reflection (approximately 200–350 words) addressing all of the following prompts. Your reflection may be included as a comment block at the bottom of your script, as a separate text or Markdown file, or as a cell in your Jupyter Notebook.</p>
+
+<p>1. <strong>Process:</strong> Briefly describe the steps you took to write and test your program. What did you do first? How did you verify that your output was correct?</p>
+<p>2. <strong>Data Structure Choices:</strong> Why did you use tuples to store raw readings, a dictionary to store the classification report, and a set to store critical nodes? Could you have used different structures? What would have been the trade-offs?</p>
+<p>3. <strong>Challenges:</strong> Describe at least one specific error or unexpected behavior you encountered while writing the code. How did you diagnose and fix it?</p>
+<p>4. <strong>Learning:</strong> What is one concept from this module that became clearer to you through this exercise?</p>
+
+<hr>
+
+<h2>Parameters & Constraints</h2>
+
+<p>| Parameter | Requirement |</p>
+<p>|---|---|</p>
+<p>| <strong>Language</strong> | Python 3.7 or later |</p>
+<p>| <strong>Submission format</strong> | Any format of your choice: <code>.py</code> script, <code>.ipynb</code> Jupyter Notebook, <code>.pdf</code> screenshot compilation, or equivalent. See accessibility note below. |</p>
+<p>| <strong>Dataset</strong> | You must use the provided dataset exactly as given. Do not modify, reorder, or add values. |</p>
+<p>| <strong>External libraries</strong> | You may <strong>not</strong> use external libraries (e.g., NumPy, Pandas). Use only Python built-in functions and data structures. |</p>
+<p>| <strong>Code comments</strong> | Include at least one comment per logical step (Steps 1–4) explaining what the code block is doing. Comments do not need to be lengthy — one clear sentence is sufficient. |</p>
+<p>| <strong>Reflection length</strong> | Approximately 200–350 words. Quality and specificity matter more than exact word count. |</p>
+<p>| <strong>Citation style</strong> | No external citations are required for this assignment. If you consult the Python documentation or module readings, note the source in a comment. |</p>
+
+<p>> <strong>Accessibility Note:</strong> If you require an alternative submission format due to a documented accommodation, please contact the instructor before the due date. All submitted code or screenshots must be legible at 100% zoom. Jupyter Notebooks should include text cells (not only code cells) for readability. Screen-reader-friendly plain text or PDF formats are fully acceptable.</p>
+
+<hr>
+
+<h2>Suggested Checkpoints</h2>
+
+<p>Use these milestones to pace your work and avoid last-minute problems.</p>
+
+<p>| Checkpoint | What to complete | Suggested timing |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Checkpoint 1</strong> | Step 1 complete; dataset created and printed to verify structure | First 20 minutes |</p>
+<p>| <strong>Checkpoint 2</strong> | Step 2 complete; invalid readings filtered and counted correctly | ~45 minutes in |</p>
+<p>| <strong>Checkpoint 3</strong> | Step 3 complete; classification dictionary populated and printed | ~90 minutes in |</p>
+<p>| <strong>Checkpoint 4</strong> | Step 4 (all three parts) complete; summary report printed correctly | ~2.5–3 hours in |</p>
+<p>| <strong>Checkpoint 5</strong> | Reflection written; full submission reviewed and formatted | Final 30 minutes |</p>
+
+<hr>
+
+<h2>AI Use Policy</h2>
+
+<p><strong>Generative AI tools (such as ChatGPT, GitHub Copilot, or equivalent) are permitted in a limited and transparent way for this assignment.</strong></p>
+
+<p>✅ <strong>Permitted uses:</strong></p>
+<ul>
+<li>Asking an AI to explain a Python concept or error message you do not understand (e.g., "What does <code>KeyError</code> mean?")</li>
+<li>Asking an AI to check the syntax of a specific line of code</li>
+<li>Using AI-generated examples from the module content to understand a construct before writing your own version</li>
+</ul>
+
+<p>🚫 <strong>Not permitted:</strong></p>
+<ul>
+<li>Submitting AI-generated code as your own solution, in whole or in part</li>
+<li>Asking an AI to complete any step of this assignment for you</li>
+<li>Using AI to write your reflection</li>
+</ul>
+
+<p><strong>Disclosure requirement:</strong> If you used an AI tool at any point, include a one- or two-sentence disclosure at the top of your submission stating which tool you used and for what purpose (e.g., "I used ChatGPT to clarify why <code>continue</code> skips to the next iteration after I read an explanation that confused me."). Undisclosed AI use will be treated as an academic integrity violation per course policy.</p>
+
+<hr>
+
+<h2>Evaluation Rubric</h2>
+
+<p>Total points: <strong>100</strong></p>
+
+<h3>Criterion 1 — Validation and Filtering Logic (Step 2) — 20 points</h3>
+
+<p>| Level | Points | Description |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Exemplary</strong> | 18–20 | All invalid readings are correctly identified using a conditional and skipped with <code>continue</code>. Warning messages are informative and correctly identify sensor ID, node, and load value. Valid readings are stored accurately in <code>valid_readings</code>. Counts of valid and invalid readings are printed and correct. |</p>
+<p>| <strong>Proficient</strong> | 13–17 | Invalid readings are identified and skipped. Minor issues (e.g., slightly malformed message, count off by one) that do not affect the overall logic. |</p>
+<p>| <strong>Developing</strong> | 7–12 | Invalid readings are partially filtered (e.g., <code>continue</code> missing or logic inverted). Some valid readings may be incorrectly excluded or included. |</p>
+<p>| <strong>Beginning</strong> | 0–6 | Validation logic is absent, substantially incorrect, or uses no <code>continue</code> statement. Invalid readings are passed into later steps. |</p>
+
+<hr>
+
+<h3>Criterion 2 — Classification Logic and Data Structure (Step 3) — 30 points</h3>
+
+<p>| Level | Points | Description |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Exemplary</strong> | 27–30 | All four classification thresholds are implemented precisely with correctly ordered <code>if</code>/<code>elif</code>/<code>else</code>. <code>classification_report</code> is correctly structured as a nested dictionary keyed by sensor ID. All three category lists are populated with correct load values. <code>enumerate()</code> is used in the loop. Output is printed readably. |</p>
+<p>| <strong>Proficient</strong> | 20–26 | Classification thresholds are largely correct with at most one boundary condition error. Dictionary structure is correct or very close. Category lists are mostly correct. <code>enumerate()</code> may be absent. |</p>
+<p>| <strong>Developing</strong> | 11–19 | One or more classification thresholds are incorrect or boundaries overlap. Dictionary may be keyed incorrectly or missing inner fields. Category lists may contain wrong values or be missing. |</p>
+<p>| <strong>Beginning</strong> | 0–10 | Classification logic is substantially incomplete or incorrect. Dictionary structure is not used as specified, or classification results are not stored. |</p>
+
+<hr>
+
+<h3>Criterion 3 — Summary Report and Loop Control (Step 4) — 30 points</h3>
+
+<p>| Level | Points | Description |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Exemplary</strong> | 27–30 | All three sub-tasks are fully implemented: statistics computed correctly for each category (with empty-list guard), <code>critical_nodes</code> set is correctly populated using <code>.items()</code> iteration, and early-exit scan uses <code>break</code> and the loop <code>else</code> clause correctly. Output is clearly formatted and human-readable. |</p>
+<p>| <strong>Proficient</strong> | 20–26 | Most of Step 4 is correct. Minor gaps such as missing empty-list guard, <code>else</code> clause on loop absent, or minor output formatting issues. Core logic for at least two of the three sub-tasks is correct. |</p>
+<p>| <strong>Developing</strong> | 11–19 | Step 4 is partially implemented. Statistics may be computed without empty-list protection causing potential errors. Set may be a list. <code>break</code>/<code>else</code> on loop may be missing or misused. Only one sub-task is fully correct. |</p>
+<p>| <strong>Beginning</strong> | 0–10 | Step 4 is largely not implemented or produces substantially incorrect output. Loop control statements are absent or fundamentally misapplied. |</p>
+
+<hr>
+
+<h3>Criterion 4 — Code Quality and Comments — 10 points</h3>
+
+<p>| Level | Points | Description |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Exemplary</strong> | 9–10 | Code is consistently indented and easy to read. Each logical step has at least one clear, accurate comment. Variable names are descriptive and meaningful. No commented-out dead code or redundant logic. |</p>
+<p>| <strong>Proficient</strong> | 6–8 | Code is mostly readable with mostly adequate comments. Minor inconsistencies in naming or commenting that do not impede understanding. |</p>
+<p>| <strong>Developing</strong> | 3–5 | Code is readable in places but comments are sparse, absent in key areas, or inaccurate. Variable names may be single letters or unclear. |</p>
+<p>| <strong>Beginning</strong> |</p>
+
+</body>
+</html>

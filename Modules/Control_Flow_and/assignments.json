@@ -1,0 +1,23 @@
+﻿{
+  "ModuleFolderName": "Control_Flow_and",
+  "CourseName": "Egn3214",
+  "LastModified": "2026-05-15T05:34:15.2148303-04:00",
+  "NextAssignmentNumber": 2,
+  "Assignments": [
+    {
+      "Id": "A001",
+      "Title": "Problem-Solving Exercise: Structural Load Data Analyzer",
+      "Type": "ProblemSolvingExercise",
+      "Level": "Medium",
+      "SubmissionFormat": "Any",
+      "TopicTitles": "Conditional Statements, for Loops and the range() Function, while Loops, Loop Control: break and continue, Lists, Tuples, Dictionaries, Sets and Choosing the Right Data Structure",
+      "ExtraInstructions": "Create an engineering type problem that uses at least some of thes topics.",
+      "OutputFormat": "Html",
+      "FileName": "A001_Problem_Solving__Problem_Solving_Exercise_Struc.html",
+      "GeneratedDate": "2026-05-15T05:33:35.8764267-04:00",
+      "TypeDisplayName": "Problem-Solving Exercise",
+      "LevelDisplayName": "Medium  (2\u20134 hours)",
+      "FormatDisplayName": "Any format (student\u0027s choice)"
+    }
+  ]
+}
