@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functions_Comprehensions_and</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Functions_Comprehensions_and</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Defining Functions</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Functions are one of the most fundamental building blocks in Python. They allow you to group reusable logic under a single name, making programs easier to read, test, and maintain. Understanding how to define and call functions correctly — and how to document them well — is essential for writing clean, professional Python code.</p>
+
+<ul>
+  <li><strong>The <code>def</code> keyword signals the start of a function definition.</strong> When Python encounters <code>def</code>, it creates a new function object and binds it to the name you provide, but does not execute the body yet.</li>
+  <li><strong>The function name should follow <em>snake_case</em> naming conventions per Python style guides.</strong> This means using all lowercase letters with words separated by underscores, for example <code>calculate_total</code> or <code>get_user_input</code>.</li>
+  <li><strong>The colon at the end of the signature is required and introduces the indented body block.</strong> Every statement belonging to the function must be consistently indented beneath the <code>def</code> line, and Python will raise an <code>IndentationError</code> if this rule is violated.</li>
+  <li><strong>Defining a function with the same name twice in the same scope silently overwrites the first definition.</strong> This can be a subtle source of bugs, especially in larger files, so it is important to keep function names unique within a given scope.</li>
+</ul>
+
+<ul>
+  <li><strong><code>return</code> ends function execution and passes the specified value to the caller.</strong> As soon as a <code>return</code> statement is reached, the function stops running and control is handed back to wherever the function was called from.</li>
+  <li><strong>Omitting <code>return</code> or writing <code>return</code> alone causes the function to return <code>None</code>.</strong> This is Python's way of representing the absence of a meaningful value, and it is easy to accidentally use such a function's result as if it were a real value.</li>
+  <li><strong>A function can contain multiple <code>return</code> statements to handle different conditions.</strong> For example, an early <code>return</code> can be used to exit quickly when input is invalid, keeping the main logic uncluttered.</li>
+  <li><strong>The returned value can be assigned to a variable or used directly in an expression.</strong> For instance, you can write <code>total = add(3, 4)</code> or embed the call inside a larger expression like <code>print(add(3, 4) * 2)</code>.</li>
+</ul>
+
+<ul>
+  <li><strong>Docstrings are written as triple-quoted strings immediately after the <code>def</code> line.</strong> They are the standard way to embed documentation directly into the function itself, rather than relying solely on comments elsewhere in the file.</li>
+  <li><strong>They describe the function's purpose, parameters, and return value.</strong> A well-structured docstring answers the questions: what does this function do, what does it expect, and what does it give back?</li>
+  <li><strong>The built-in <code>help()</code> function displays a function's docstring interactively.</strong> Calling <code>help(my_function)</code> in the Python REPL renders the docstring in a readable format, making it invaluable during exploration and debugging.</li>
+  <li><strong>Well-written docstrings improve code maintainability and team collaboration.</strong> When you or a colleague returns to a function weeks later, a clear docstring removes the need to reverse-engineer the code's intent.</li>
+</ul>
+
+<ul>
+  <li><strong>Parentheses after the function name trigger execution; without them, the name refers to the function object itself.</strong> Writing <code>greet()</code> calls the function, while writing <code>greet</code> without parentheses simply references the object, which can be stored, passed, or printed.</li>
+  <li><strong>Arguments supplied at the call site are matched to the function's parameters.</strong> Python takes the values you provide inside the parentheses and maps them onto the corresponding parameter names defined in the function signature.</li>
+  <li><strong>The call expression evaluates to whatever the function returns.</strong> This means a function call can appear anywhere a value is expected — in assignments, conditions, print statements, or other function calls.</li>
+  <li><strong>Functions can call other functions, enabling modular and layered program design.</strong> Breaking a complex task into smaller functions that call one another keeps each piece focused and independently testable.</li>
+</ul>
+
+<pre><code># Basic function definition with a docstring
+def greet_user(name):
+    """Return a personalised greeting string for the given name."""
+    return f"Hello, {name}!"
+
+# Calling the function and using its return value
+message = greet_user("Alice")
+print(message)   # Hello, Alice!
+
+# help() displays the docstring
+help(greet_user)
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Introduces the syntax and mechanics of creating reusable functions in Python. Covers the def keyword, naming conventions, and the role of the return statement. Emphasise to students that forgetting the colon or inconsistent indentation are the most common early mistakes. The silent overwrite of a function name is worth a live demonstration.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Parameters and Arguments</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Once you know how to define a function, the next step is understanding the many ways Python lets you supply values to it. Python offers positional arguments, keyword arguments, and default parameter values — each with its own rules and best-use scenarios. Getting the terminology straight between <em>parameters</em> and <em>arguments</em> also helps you read error messages accurately.</p>
+
+<ul>
+  <li><strong>Positional arguments must be supplied in the exact order the parameters are declared.</strong> Python assigns each argument to the parameter at the same position in the signature, so swapping the order of your values changes what each parameter receives.</li>
+  <li><strong>Too few or too many positional arguments raise a <code>TypeError</code> at runtime.</strong> Python's error message will tell you how many arguments were expected versus how many were given, making these mistakes easy to diagnose.</li>
+  <li><strong>Positional parameters are the most common and simplest form of argument passing.</strong> They work well when the meaning of each argument is obvious from context or when the function has only one or two parameters.</li>
+  <li><strong>The number of positional arguments must match the number of non-default parameters.</strong> Any parameter that does not have a default value <em>must</em> receive an argument at every call site, or Python will raise an error.</li>
+</ul>
+
+<ul>
+  <li><strong>Keyword arguments use the syntax <code>parameter_name=value</code> at the call site.</strong> By naming the parameter you are targeting, you make the intent of each argument explicit without the reader needing to check the function signature.</li>
+  <li><strong>They can be supplied in any order regardless of the parameter declaration order.</strong> This flexibility is especially valuable when a function has many parameters and you only need to specify a few of them by name.</li>
+  <li><strong>Mixing positional and keyword arguments is allowed, but positional must precede keyword.</strong> Writing <code>func(10, y=20)</code> is valid, but <code>func(x=10, 20)</code> is a <code>SyntaxError</code> because a positional argument cannot follow a keyword argument.</li>
+  <li><strong>Keyword arguments make function calls self-documenting and reduce reliance on documentation.</strong> A call like <code>connect(host="localhost", port=8080)</code> communicates its meaning immediately, even without reading the function definition.</li>
+</ul>
+
+<ul>
+  <li><strong>Default values are assigned with the syntax <code>parameter=value</code> in the function signature.</strong> For example, <code>def send(message, retries=3)</code> means <code>retries</code> will be <code>3</code> unless the caller provides a different value.</li>
+  <li><strong>Parameters with defaults must appear after all parameters without defaults.</strong> Placing a defaulted parameter before a required one is a <code>SyntaxError</code>, because Python would have no way to determine which arguments were intended for which parameters.</li>
+  <li><strong>Default values are evaluated at definition time, not at each call.</strong> This means a mutable default like a list is created once and shared across all calls, which can lead to unexpected behaviour if it is modified inside the function.</li>
+  <li><strong>Using <code>None</code> as a default and initialising mutable defaults inside the body avoids shared-state bugs.</strong> The idiom <code>if items is None: items = []</code> inside the function body ensures a fresh list is created on every call that does not supply one.</li>
+  <li><strong>Callers can override a default by supplying the argument explicitly.</strong> Defaults represent sensible fallback values, but they should never prevent a caller from customising behaviour when needed.</li>
+</ul>
+
+<ul>
+  <li><strong>Parameters live in the function signature and act as placeholders for incoming values.</strong> They are local variable names that only exist within the function's scope and receive their values when the function is called.</li>
+  <li><strong>Arguments are the concrete values provided at the call site.</strong> They are the actual data — numbers, strings, objects — that the function will work with during that particular execution.</li>
+  <li><strong>A function may have zero or more parameters and is called with a matching set of arguments.</strong> A function with no parameters, like <code>def say_hello():</code>, must always be called with empty parentheses and no arguments.</li>
+  <li><strong>Error messages from Python typically refer to <em>arguments</em> when describing call mismatches.</strong> For example, <em>"takes 2 positional arguments but 3 were given"</em> — understanding this terminology helps you locate and fix the mistake quickly.</li>
+</ul>
+
+<pre><code># Positional arguments — order matters
+def describe_pet(animal, name):
+    """Print a simple description of a pet."""
+    print(f"I have a {animal} named {name}.")
+
+describe_pet("dog", "Rex")          # positional
+describe_pet(name="Rex", animal="dog")  # keyword — order swapped, still works
+
+# Default parameter value
+def power(base, exponent=2):
+    """Return base raised to exponent (default: squared)."""
+    return base ** exponent
+
+print(power(5))       # uses default → 25
+print(power(5, 3))    # overrides default → 125
+
+# Avoiding the mutable default trap
+def append_item(item, collection=None):
+    """Append item to collection safely."""
+    if collection is None:
+        collection = []
+    collection.append(item)
+    return collection
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Explores the different ways values can be passed into functions, including positional, keyword, and default parameters. Establishes clear terminology between parameters and arguments. The mutable default argument trap is worth a live demonstration — show what happens with &lt;code&gt;def bad(x, items=[])&lt;/code&gt; called multiple times. Reinforce the parameter vs. argument distinction early, as students often use the terms interchangeably when asking for help.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>

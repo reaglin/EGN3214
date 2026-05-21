@@ -1,0 +1,56 @@
+﻿{
+  "ModuleName": "Control Flow and Python Data Structures",
+  "CourseName": "Egn3214",
+  "ModuleFolderName": "Control_Flow_and",
+  "GeneratedUtc": "2026-05-19T01:27:27.5319656Z",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "A structured list of the key concepts and subjects covered in this module that learners and instructors can reference to understand the scope of the content.",
+      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
+      "SourceModifiedTicks": 639145417110625903
+    },
+    {
+      "Name": "Quiz Question Bank (10 questions)",
+      "Type": "Quiz",
+      "FileType": ".json",
+      "Description": "A bank of ten quiz questions on control flow and Python data structures that instructors can draw from to assess learner comprehension and that learners use to test their knowledge.",
+      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\quiz_questions.json",
+      "ViewerKind": 3,
+      "WebHref": "quiz/index.html",
+      "LocalHref": "module_quiz.html",
+      "RawHref": "../quiz_questions.json",
+      "SourceModifiedTicks": 639145554679965935
+    },
+    {
+      "Name": "Problem-Solving Exercise: Structural Load Data Analyzer",
+      "Type": "Assignment",
+      "FileType": ".html",
+      "Description": "A hands-on coding assignment in which learners write a Python program to analyze structural load data, applying control flow logic and data structures to solve a realistic engineering problem.",
+      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\assignments\\A001_Problem_Solving__Problem_Solving_Exercise_Struc.html",
+      "ViewerKind": 1,
+      "WebHref": "assignments/index.html",
+      "LocalHref": "../assignments/A001_Problem_Solving__Problem_Solving_Exercise_Struc.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639145417110615833
+    },
+    {
+      "Name": "Drag-and-Drop Match",
+      "Type": "Interactive Activity",
+      "FileType": ".html",
+      "Description": "An interactive drag-and-drop activity where learners match control flow concepts or Python data structures to their definitions or examples, reinforcing understanding through active recall.",
+      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\interactive\\drag-and-drop-match.html",
+      "ViewerKind": 1,
+      "WebHref": "interactive/drag-and-drop-match.html",
+      "LocalHref": "interactive/drag-and-drop-match.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639145556837776449
+    }
+  ]
+}

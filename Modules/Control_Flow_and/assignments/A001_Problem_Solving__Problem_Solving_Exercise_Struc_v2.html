@@ -1,0 +1,686 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem-Solving Exercise: Structural Load Data Analyzer</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 1.8em; border-bottom: 2px solid #0054a6; padding-bottom: 8px; }
+    h2 { font-size: 1.3em; color: #0054a6; margin-top: 28px; }
+    h3 { font-size: 1.1em; }
+    h4 { font-size: 1.0em; color: #333; margin-top: 18px; }
+    ul, ol { padding-left: 1.6em; }
+    blockquote { border-left: 4px solid #0054a6; margin: 0; padding: 10px 16px; color: #444; background: #f0f6ff; border-radius: 0 4px 4px 0; }
+    code { background: #f4f4f4; padding: 1px 4px; border-radius: 3px; font-size: .9em; font-family: 'Consolas', 'Courier New', monospace; }
+    strong { color: #111; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+    .meta { color: #666; font-style: italic; font-size: .9em; margin-bottom: 24px; }
+
+    /* Colab cell simulation */
+    .colab-cell { border: 1px solid #dadce0; border-radius: 6px; margin: 20px 0; overflow: hidden; }
+    .colab-cell-label { font-size: 0.72em; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; }
+    .colab-text-label { background: #e8f0fe; color: #1a73e8; border-bottom: 1px solid #c5d4fb; }
+    .colab-code-label { background: #f1f3f4; color: #5f6368; border-bottom: 1px solid #dadce0; }
+    .colab-cell-body { padding: 14px 18px; }
+    .colab-code-body { background: #f8f9fa; padding: 14px 18px; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.88em; line-height: 1.7; white-space: pre; overflow-x: auto; }
+
+    /* Tables */
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.93em; }
+    th { background: #0054a6; color: #fff; text-align: left; padding: 8px 12px; }
+    td { padding: 7px 12px; border-bottom: 1px solid #ddd; }
+    tr:nth-child(even) td { background: #f5f8ff; }
+    tr:last-child td { border-bottom: none; }
+    .tag-safe { color: #188038; font-weight: 600; }
+    .tag-caution { color: #b45309; font-weight: 600; }
+    .tag-critical { color: #c5221f; font-weight: 600; }
+    .tag-invalid { color: #5f6368; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<h1>Problem-Solving Exercise: Structural Load Data Analyzer</h1>
+
+<p><strong>Module:</strong> Control Flow and Data Structures</p>
+<p><strong>Estimated Time:</strong> 2–4 hours</p>
+<p><strong>Submission Format:</strong> Google Colab Notebook (<code>.ipynb</code>)</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: How to Use This Document
+     ============================================================ -->
+<h2>How to Use This Document</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Instructions</div>
+  <div class="colab-cell-body">
+    <p>This worksheet is structured as a Colab notebook. Each section below corresponds to a cell you will create in your own Colab notebook. For every step:</p>
+    <ul>
+      <li><strong>Text cells</strong> (shown with a blue header above) contain the problem description, definitions, and your written explanations. Write in Markdown inside these cells.</li>
+      <li><strong>Code cells</strong> (shown with a grey header) contain the Python code you write to complete each step.</li>
+    </ul>
+    <p>Your submitted notebook must alternate text and code cells so that someone reading it top-to-bottom can follow your reasoning <em>and</em> your implementation without any prior context.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Learning Outcomes
+     ============================================================ -->
+<h2>Learning Outcomes</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Paste into your notebook's first text cell</div>
+  <div class="colab-cell-body">
+    <p>By the end of this assignment, you will be able to:</p>
+    <ol>
+      <li><strong>Construct</strong> a Python program that uses <code>if</code>, <code>elif</code>, and <code>else</code> statements to classify engineering data according to defined threshold criteria.</li>
+      <li><strong>Apply</strong> <code>for</code> loops, <code>while</code> loops, and loop control statements (<code>break</code>, <code>continue</code>) to iterate over and filter structural load datasets.</li>
+      <li><strong>Select</strong> and <strong>implement</strong> appropriate Python data structures (lists, tuples, dictionaries, and/or sets) to organize, store, and retrieve labeled engineering data.</li>
+      <li><strong>Evaluate</strong> the correctness and efficiency of your solution by tracing program logic and justifying your data structure choices in a written reflection.</li>
+    </ol>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Purpose
+     ============================================================ -->
+<h2>Purpose</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell</div>
+  <div class="colab-cell-body">
+    <h3>Why This Assignment Matters</h3>
+    <p>Structural engineers routinely analyze large sets of load measurements collected from sensors embedded in bridges, buildings, and other infrastructure. These datasets must be processed automatically — validated for errors, classified by severity, and summarized — because doing so manually at scale is impractical and error-prone.</p>
+    <p>This assignment simulates exactly that workflow. You will write a Python program that processes a list of simulated load readings from a structural monitoring system, applies engineering classification rules, and produces a summary report. The skills you practice here — conditional logic, iteration, and data structure selection — are foundational to computational engineering, data science, and scientific programming in Python.</p>
+    <p>This exercise directly supports the module's learning goals by requiring you to integrate control flow constructs and data structures in a realistic, domain-relevant context.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Background and Scenario
+     ============================================================ -->
+<h2>Background and Scenario</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell</div>
+  <div class="colab-cell-body">
+    <p>You are a junior software engineer at a structural consulting firm. Your team has deployed strain-gauge sensors at five nodes along a bridge beam. Each sensor records a load value (in kilonewtons, kN) at regular intervals during a 24-hour monitoring period. You have been given the raw readings for one monitoring session and asked to build an automated analysis tool.</p>
+    <p>The engineering classification rules your firm uses are as follows:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Classification</th>
+          <th>Load Range (kN)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag-safe">Safe</span></td><td>Less than 150 kN</td></tr>
+        <tr><td><span class="tag-caution">Caution</span></td><td>150 kN to less than 250 kN</td></tr>
+        <tr><td><span class="tag-critical">Critical</span></td><td>250 kN or greater</td></tr>
+        <tr><td><span class="tag-invalid">Invalid</span></td><td>Negative values (sensor error)</td></tr>
+      </tbody>
+    </table>
+
+    <p>Your program must process the data, apply these rules, and produce a structured summary.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Task Overview
+     ============================================================ -->
+<h2>Task Overview</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell</div>
+  <div class="colab-cell-body">
+    <p>You will complete the following five steps in your Colab notebook. Each step requires at least one text cell (explaining your approach and choices) and at least one code cell (your implementation). Read all steps before writing any code.</p>
+
+    <blockquote>
+      <strong>Definitions for this assignment:</strong>
+      <ul>
+        <li><strong>Process</strong> — read each value, apply logic to it, and store or display a result.</li>
+        <li><strong>Filter</strong> — deliberately skip or exclude values that do not meet a criterion (e.g., invalid readings).</li>
+        <li><strong>Classify</strong> — assign each valid reading to exactly one named category based on its numeric value.</li>
+        <li><strong>Summarize</strong> — compute and display aggregate statistics across all readings.</li>
+      </ul>
+    </blockquote>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     STEP 1
+     ============================================================ -->
+<h2>Step 1 — Set Up Your Dataset</h2>
+<p class="meta">Suggested time: 15–20 minutes</p>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Write this in your notebook before your Step 1 code cell</div>
+  <div class="colab-cell-body">
+    <h3>Approach and Data Structure Choice</h3>
+    <p>In this step I create the raw dataset as a <strong>list of tuples</strong>. The outer <code>list</code> is the appropriate container because the collection of readings is ordered and needs to be iterable in sequence. Each individual reading is stored as a <strong>tuple</strong> because it represents a fixed, logically grouped record — the sensor ID, node label, and load value are related pieces of information that belong together and should not be modified after creation. Tuples signal immutability clearly to any reader of the code.</p>
+    <p>Each tuple follows the format: <code>(sensor_id, node_label, load_kN)</code></p>
+
+    <table>
+      <thead>
+        <tr><th>sensor_id</th><th>node_label</th><th>load_kN</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Node-A</td><td>102.3</td></tr>
+        <tr><td>2</td><td>Node-B</td><td>178.5</td></tr>
+        <tr><td>3</td><td>Node-C</td><td>263.0</td></tr>
+        <tr><td>4</td><td>Node-D</td><td>-15.2</td></tr>
+        <tr><td>5</td><td>Node-E</td><td>149.9</td></tr>
+        <tr><td>6</td><td>Node-A</td><td>251.7</td></tr>
+        <tr><td>7</td><td>Node-B</td><td>88.4</td></tr>
+        <tr><td>8</td><td>Node-C</td><td>-3.0</td></tr>
+        <tr><td>9</td><td>Node-D</td><td>199.6</td></tr>
+        <tr><td>10</td><td>Node-E</td><td>305.1</td></tr>
+        <tr><td>11</td><td>Node-A</td><td>145.0</td></tr>
+        <tr><td>12</td><td>Node-B</td><td>250.0</td></tr>
+        <tr><td>13</td><td>Node-C</td><td>73.2</td></tr>
+        <tr><td>14</td><td>Node-D</td><td>310.8</td></tr>
+        <tr><td>15</td><td>Node-E</td><td>160.4</td></tr>
+      </tbody>
+    </table>
+
+    <p>After defining the list I will print it to confirm that all 15 records are present and correctly structured before moving on.</p>
+  </div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 1</div>
+  <div class="colab-code-body"># Step 1: Define the dataset as a list of tuples.
+# Format: (sensor_id, node_label, load_kN)
+# Tuples are used because each reading is a fixed, immutable record.
+
+sensor_readings = [
+    (1,  "Node-A", 102.3),
+    (2,  "Node-B", 178.5),
+    (3,  "Node-C", 263.0),
+    (4,  "Node-D", -15.2),
+    (5,  "Node-E", 149.9),
+    (6,  "Node-A", 251.7),
+    (7,  "Node-B",  88.4),
+    (8,  "Node-C",  -3.0),
+    (9,  "Node-D", 199.6),
+    (10, "Node-E", 305.1),
+    (11, "Node-A", 145.0),
+    (12, "Node-B", 250.0),
+    (13, "Node-C",  73.2),
+    (14, "Node-D", 310.8),
+    (15, "Node-E", 160.4),
+]
+
+# Verify: print total record count and the full list
+print(f"Total records loaded: {len(sensor_readings)}")
+for reading in sensor_readings:
+    print(reading)</div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     STEP 2
+     ============================================================ -->
+<h2>Step 2 — Validate and Filter Readings</h2>
+<p class="meta">Suggested time: 20–30 minutes</p>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Write this in your notebook before your Step 2 code cell</div>
+  <div class="colab-cell-body">
+    <h3>Approach</h3>
+    <p>I iterate over <code>sensor_readings</code> with a <code>for</code> loop and unpack each tuple into three named variables: <code>sensor_id</code>, <code>node</code>, and <code>load</code>. Using tuple unpacking keeps the code readable and avoids magic index numbers like <code>reading[2]</code>.</p>
+    <p>For each reading I check whether <code>load &lt; 0</code>. If so, the reading is invalid (sensor error). I print a descriptive warning message and then use <code>continue</code> to skip the rest of the loop body for that iteration — this is the correct tool here because I want to move to the next record without executing any further processing on the bad value. If the reading is valid I append the whole tuple to <code>valid_readings</code>.</p>
+    <p>At the end of the loop I report how many readings were valid and how many were invalid, which lets me sanity-check the results against the dataset I inspected in Step 1 (I can see that sensors 4 and 8 have negative values, so I expect 2 invalid and 13 valid).</p>
+  </div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 2</div>
+  <div class="colab-code-body"># Step 2: Validate and filter sensor readings.
+# Invalid readings are those with a negative load value (sensor error).
+# 'continue' skips further processing for each invalid record.
+
+valid_readings = []
+invalid_count = 0
+
+for sensor_id, node, load in sensor_readings:          # unpack each tuple
+    if load < 0:                                        # check for invalid reading
+        print(f"WARNING: Sensor {sensor_id} ({node}) recorded an invalid "
+              f"reading of {load} kN. Skipping.")
+        invalid_count += 1
+        continue                                        # skip to the next iteration
+    valid_readings.append((sensor_id, node, load))     # store valid reading
+
+# Report totals
+print(f"\nValid readings:   {len(valid_readings)}")
+print(f"Invalid readings: {invalid_count}")</div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     STEP 3
+     ============================================================ -->
+<h2>Step 3 — Classify Each Valid Reading</h2>
+<p class="meta">Suggested time: 30–40 minutes</p>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Write this in your notebook before your Step 3 code cell</div>
+  <div class="colab-cell-body">
+    <h3>Approach and Data Structure Choices</h3>
+    <p>I iterate over <code>valid_readings</code> using <code>enumerate()</code> so that I have access to a positional index if needed for debugging, while the sensor ID from the tuple serves as the dictionary key.</p>
+    <p>I apply the classification thresholds with an <code>if</code> / <code>elif</code> / <code>else</code> chain. The order matters: I check for <code>&lt; 150</code> first (Safe), then <code>&lt; 250</code> (Caution — which implicitly means ≥ 150 because the first branch did not match), and the final <code>else</code> catches everything ≥ 250 (Critical). This ordering avoids overlapping conditions and is both correct and efficient.</p>
+    <p><strong>Why a nested dictionary for <code>classification_report</code>?</strong> Keying by sensor ID gives O(1) lookup for any specific sensor. The inner dictionary makes each record self-describing — the keys <code>"node"</code>, <code>"load_kN"</code>, and <code>"status"</code> are explicit labels, which is much clearer than positional indexing into a tuple.</p>
+    <p>I also maintain three separate flat lists — <code>safe_loads</code>, <code>caution_loads</code>, <code>critical_loads</code> — containing only the numeric load values. These will make the statistical calculations in Step 4 straightforward using <code>min()</code>, <code>max()</code>, and <code>sum()</code>.</p>
+  </div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 3</div>
+  <div class="colab-code-body"># Step 3: Classify each valid reading and store results.
+# classification_report: nested dict keyed by sensor_id.
+# safe_loads / caution_loads / critical_loads: flat lists of numeric values.
+
+classification_report = {}
+safe_loads     = []
+caution_loads  = []
+critical_loads = []
+
+for index, (sensor_id, node, load) in enumerate(valid_readings):
+
+    # Apply classification thresholds in ascending order
+    if load < 150:
+        status = "Safe"
+        safe_loads.append(load)
+    elif load < 250:
+        status = "Caution"
+        caution_loads.append(load)
+    else:                                   # load >= 250
+        status = "Critical"
+        critical_loads.append(load)
+
+    # Store the full classified record in the report dictionary
+    classification_report[sensor_id] = {
+        "node":    node,
+        "load_kN": load,
+        "status":  status,
+    }
+
+# Print classification report — one entry per line for readability
+print("=== Classification Report ===")
+for sid, record in classification_report.items():
+    print(f"  Sensor {sid:>2} | {record['node']} | "
+          f"{record['load_kN']:>6.1f} kN | {record['status']}")</div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     STEP 4
+     ============================================================ -->
+<h2>Step 4 — Generate a Summary Report</h2>
+<p class="meta">Suggested time: 30–45 minutes</p>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Write this in your notebook before your Step 4 code cell</div>
+  <div class="colab-cell-body">
+    <h3>Approach</h3>
+    <p>This step has three distinct sub-tasks, each covered in its own code cell below.</p>
+
+    <h4>4a — Category Counts and Statistics</h4>
+    <p>For each category list I check whether the list is empty before calling <code>min()</code>, <code>max()</code>, or computing an average. Calling these functions on an empty list raises a <code>ValueError</code>, so the guard is necessary for robustness — even if the current dataset always produces at least one reading per category, a production tool must not crash on edge cases.</p>
+
+    <h4>4b — Critical Node Identification</h4>
+    <p>I use a <strong>set</strong> (<code>critical_nodes</code>) to collect node labels whose status is <code>"Critical"</code>. A set is the right choice here because the same node (e.g., Node-A) can appear multiple times in the dataset across different time intervals, and I want only unique node names. Sets automatically deduplicate, so I never need to check for membership before adding.</p>
+
+    <h4>4c — Threshold Scan with Early Exit</h4>
+    <p>I use a <code>for</code> loop with <code>break</code> to scan <code>sensor_readings</code> from the beginning and stop at the first reading that meets or exceeds 300 kN. Using <code>break</code> is more efficient than iterating the entire list when I only need the first match. Python's loop <code>else</code> clause runs only if the loop completes without hitting a <code>break</code>, which is the correct way to handle the "no match found" case — cleaner than a separate boolean flag.</p>
+  </div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 4a: Category Statistics</div>
+  <div class="colab-code-body"># Step 4a: Compute and print statistics for each classification category.
+# Guard against empty lists before calling min(), max(), or computing average.
+
+def print_category_stats(label, values):
+    print(f"\n  {label}:")
+    if not values:                          # guard: skip stats if list is empty
+        print("    No readings in this category.")
+    else:
+        print(f"    Count:   {len(values)}")
+        print(f"    Min:     {min(values):.1f} kN")
+        print(f"    Max:     {max(values):.1f} kN")
+        print(f"    Average: {sum(values)/len(values):.1f} kN")
+
+print("=== Category Statistics ===")
+print_category_stats("Safe",     safe_loads)
+print_category_stats("Caution",  caution_loads)
+print_category_stats("Critical", critical_loads)</div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 4b: Critical Node Identification</div>
+  <div class="colab-code-body"># Step 4b: Collect unique node labels that have at least one Critical reading.
+# A set is used because nodes can appear multiple times; sets deduplicate automatically.
+
+critical_nodes = set()
+
+for sid, record in classification_report.items():
+    if record["status"] == "Critical":
+        critical_nodes.add(record["node"])
+
+print("\n=== Critical Nodes ===")
+if critical_nodes:
+    print(f"  Nodes with at least one Critical reading: {critical_nodes}")
+else:
+    print("  No critical nodes detected.")</div>
+</div>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-code-label">💻 Code Cell — Step 4c: Threshold Scan with Early Exit</div>
+  <div class="colab-code-body"># Step 4c: Scan sensor_readings for the FIRST reading >= 300 kN, then stop.
+# 'break' exits the loop early once a match is found.
+# The loop's 'else' clause runs only if no break occurred (i.e., no match found).
+
+THRESHOLD = 300  # kN
+
+print("\n=== Threshold Scan (>= 300 kN) ===")
+for sensor_id, node, load in sensor_readings:
+    if load >= THRESHOLD:
+        print(f"  ALERT: Sensor {sensor_id} ({node}) recorded {load} kN "
+              f"— meets or exceeds {THRESHOLD} kN threshold. Stopping scan.")
+        break
+else:
+    # Only executes if the loop finished without a 'break'
+    print(f"  No readings exceeded {THRESHOLD} kN.")</div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     STEP 5
+     ============================================================ -->
+<h2>Step 5 — Written Reflection</h2>
+<p class="meta">Suggested time: 20–30 minutes</p>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Complete this reflection in a text cell at the end of your notebook</div>
+  <div class="colab-cell-body">
+    <p>After completing your code, write a short reflection (approximately 200–350 words) addressing all of the following prompts directly in this text cell of your Colab notebook. Use Markdown headings to separate each prompt.</p>
+
+    <h4>Prompt 1 — Process</h4>
+    <p>Briefly describe the steps you took to write and test your program. What did you do first? How did you verify that your output was correct?</p>
+
+    <h4>Prompt 2 — Data Structure Choices</h4>
+    <p>Why did you use tuples to store raw readings, a dictionary to store the classification report, and a set to store critical nodes? Could you have used different structures? What would have been the trade-offs?</p>
+
+    <h4>Prompt 3 — Challenges</h4>
+    <p>Describe at least one specific error or unexpected behavior you encountered while writing the code. How did you diagnose and fix it?</p>
+
+    <h4>Prompt 4 — Learning</h4>
+    <p>What is one concept from this module that became clearer to you through this exercise?</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Parameters & Constraints
+     ============================================================ -->
+<h2>Parameters &amp; Constraints</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Reference</div>
+  <div class="colab-cell-body">
+    <table>
+      <thead>
+        <tr><th>Parameter</th><th>Requirement</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Language</strong></td><td>Python 3.7 or later</td></tr>
+        <tr><td><strong>Submission format</strong></td><td>Google Colab Notebook (<code>.ipynb</code>). See accessibility note below.</td></tr>
+        <tr><td><strong>Dataset</strong></td><td>You must use the provided dataset exactly as given. Do not modify, reorder, or add values.</td></tr>
+        <tr><td><strong>External libraries</strong></td><td>You may <strong>not</strong> use external libraries (e.g., NumPy, Pandas). Use only Python built-in functions and data structures.</td></tr>
+        <tr><td><strong>Code comments</strong></td><td>Include at least one comment per logical step (Steps 1–4) explaining what the code block is doing. One clear sentence is sufficient.</td></tr>
+        <tr><td><strong>Text cells</strong></td><td>Each code cell must be preceded by a text cell explaining your approach and data structure choices for that step.</td></tr>
+        <tr><td><strong>Reflection length</strong></td><td>Approximately 200–350 words. Quality and specificity matter more than exact word count.</td></tr>
+        <tr><td><strong>Citation style</strong></td><td>No external citations required. If you consult the Python documentation or module readings, note the source in a comment or text cell.</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <strong>Accessibility Note:</strong> If you require an alternative submission format due to a documented accommodation, please contact the instructor before the due date. All submitted code must be legible at 100% zoom. Text cells (not only code cells) must be used throughout the notebook for readability. Screen-reader-friendly plain text or PDF exports are fully acceptable alternatives.
+    </blockquote>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Suggested Checkpoints
+     ============================================================ -->
+<h2>Suggested Checkpoints</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Reference</div>
+  <div class="colab-cell-body">
+    <p>Use these milestones to pace your work and avoid last-minute problems.</p>
+    <table>
+      <thead>
+        <tr><th>Checkpoint</th><th>What to complete</th><th>Suggested timing</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Checkpoint 1</strong></td><td>Step 1 complete; dataset created and printed to verify structure</td><td>First 20 minutes</td></tr>
+        <tr><td><strong>Checkpoint 2</strong></td><td>Step 2 complete; invalid readings filtered and counted correctly</td><td>~45 minutes in</td></tr>
+        <tr><td><strong>Checkpoint 3</strong></td><td>Step 3 complete; classification dictionary populated and printed</td><td>~90 minutes in</td></tr>
+        <tr><td><strong>Checkpoint 4</strong></td><td>Step 4 (all three parts) complete; summary report printed correctly</td><td>~2.5–3 hours in</td></tr>
+        <tr><td><strong>Checkpoint 5</strong></td><td>Reflection written; full notebook reviewed, text cells complete, and file submitted</td><td>Final 30 minutes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: AI Use Policy
+     ============================================================ -->
+<h2>AI Use Policy</h2>
+
+<div class="colab-cell">
+  <div class="colab-cell-label colab-text-label">📄 Text Cell — Reference</div>
+  <div class="colab-cell-body">
+    <p><strong>Generative AI tools (such as ChatGPT, GitHub Copilot, or equivalent) are permitted in a limited and transparent way for this assignment.</strong></p>
+
+    <h4>✅ Permitted uses</h4>
+    <ul>
+      <li>Asking an AI to explain a Python concept or error message you do not understand (e.g., "What does <code>KeyError</code> mean?")</li>
+      <li>Asking an AI to check the syntax of a specific line of code</li>
+      <li>Using AI-generated examples from the module content to understand a construct before writing your own version</li>
+    </ul>
+
+    <h4>🚫 Not permitted</h4>
+    <ul>
+      <li>Submitting AI-generated code as your own solution, in whole or in part</li>
+      <li>Asking an AI to complete any step of this assignment for you</li>
+      <li>Using AI to write your reflection</li>
+    </ul>
+
+    <p><strong>Disclosure requirement:</strong> If you used an AI tool at any point, include a one- or two-sentence disclosure at the top of your notebook (in the first text cell) stating which tool you used and for what purpose. Example: <em>"I used ChatGPT to clarify why <code>continue</code> skips to the next iteration after I read an explanation that confused me."</em> Undisclosed AI use will be treated as an academic integrity violation per course policy.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION: Evaluation Rubric
+     ============================================================ -->
+<h2>Evaluation Rubric</h2>
+<p><strong>Total points: 100</strong></p>
+
+<h3>Criterion 1 — Validation and Filtering Logic (Step 2) — 20 points</h3>
+
+<table>
+  <thead>
+    <tr><th>Level</th><th>Points</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exemplary</strong></td>
+      <td>18–20</td>
+      <td>All invalid readings are correctly identified using a conditional and skipped with <code>continue</code>. Warning messages are informative and correctly identify sensor ID, node, and load value. Valid readings are stored accurately in <code>valid_readings</code>. Counts of valid and invalid readings are printed and correct.</td>
+    </tr>
+    <tr>
+      <td><strong>Proficient</strong></td>
+      <td>13–17</td>
+      <td>Invalid readings are identified and skipped. Minor issues (e.g., slightly malformed message, count off by one) that do not affect the overall logic.</td>
+    </tr>
+    <tr>
+      <td><strong>Developing</strong></td>
+      <td>7–12</td>
+      <td>Invalid readings are partially filtered (e.g., <code>continue</code> missing or logic inverted). Some valid readings may be incorrectly excluded or included.</td>
+    </tr>
+    <tr>
+      <td><strong>Beginning</strong></td>
+      <td>0–6</td>
+      <td>Validation logic is absent, substantially incorrect, or uses no <code>continue</code> statement. Invalid readings are passed into later steps.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Criterion 2 — Classification Logic and Data Structure (Step 3) — 30 points</h3>
+
+<table>
+  <thead>
+    <tr><th>Level</th><th>Points</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exemplary</strong></td>
+      <td>27–30</td>
+      <td>All four classification thresholds are implemented precisely with correctly ordered <code>if</code>/<code>elif</code>/<code>else</code>. <code>classification_report</code> is correctly structured as a nested dictionary keyed by sensor ID. All three category lists are populated with correct load values. <code>enumerate()</code> is used in the loop. Output is printed readably.</td>
+    </tr>
+    <tr>
+      <td><strong>Proficient</strong></td>
+      <td>20–26</td>
+      <td>Classification thresholds are largely correct with at most one boundary condition error. Dictionary structure is correct or very close. Category lists are mostly correct. <code>enumerate()</code> may be absent.</td>
+    </tr>
+    <tr>
+      <td><strong>Developing</strong></td>
+      <td>11–19</td>
+      <td>One or more classification thresholds are incorrect or boundaries overlap. Dictionary may be keyed incorrectly or missing inner fields. Category lists may contain wrong values or be missing.</td>
+    </tr>
+    <tr>
+      <td><strong>Beginning</strong></td>
+      <td>0–10</td>
+      <td>Classification logic is substantially incomplete or incorrect. Dictionary structure is not used as specified, or classification results are not stored.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Criterion 3 — Summary Report and Loop Control (Step 4) — 30 points</h3>
+
+<table>
+  <thead>
+    <tr><th>Level</th><th>Points</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exemplary</strong></td>
+      <td>27–30</td>
+      <td>All three sub-tasks are fully implemented: statistics computed correctly for each category (with empty-list guard), <code>critical_nodes</code> set is correctly populated using <code>.items()</code> iteration, and early-exit scan uses <code>break</code> and the loop <code>else</code> clause correctly. Output is clearly formatted and human-readable.</td>
+    </tr>
+    <tr>
+      <td><strong>Proficient</strong></td>
+      <td>20–26</td>
+      <td>Most of Step 4 is correct. Minor gaps such as missing empty-list guard, <code>else</code> clause on loop absent, or minor output formatting issues. Core logic for at least two of the three sub-tasks is correct.</td>
+    </tr>
+    <tr>
+      <td><strong>Developing</strong></td>
+      <td>11–19</td>
+      <td>Step 4 is partially implemented. Statistics may be computed without empty-list protection causing potential errors. Set may be a list. <code>break</code>/<code>else</code> on loop may be missing or misused. Only one sub-task is fully correct.</td>
+    </tr>
+    <tr>
+      <td><strong>Beginning</strong></td>
+      <td>0–10</td>
+      <td>Step 4 is largely not implemented or produces substantially incorrect output. Loop control statements are absent or fundamentally misapplied.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Criterion 4 — Code Quality and Comments — 10 points</h3>
+
+<table>
+  <thead>
+    <tr><th>Level</th><th>Points</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exemplary</strong></td>
+      <td>9–10</td>
+      <td>Code is consistently indented and easy to read. Each logical step has at least one clear, accurate comment. Variable names are descriptive and meaningful. No commented-out dead code or redundant logic. Text cells provide clear explanations of approach and data structure choices.</td>
+    </tr>
+    <tr>
+      <td><strong>Proficient</strong></td>
+      <td>6–8</td>
+      <td>Code is mostly readable with mostly adequate comments and text cells. Minor inconsistencies in naming or commenting that do not impede understanding.</td>
+    </tr>
+    <tr>
+      <td><strong>Developing</strong></td>
+      <td>3–5</td>
+      <td>Code is readable in places but comments are sparse, absent in key areas, or inaccurate. Text cells are missing or provide little explanation. Variable names may be single letters or unclear.</td>
+    </tr>
+    <tr>
+      <td><strong>Beginning</strong></td>
+      <td>0–2</td>
+      <td>Code has little or no commenting. Text cells are absent. Variable names are cryptic or misleading. Code is difficult to follow without significant effort.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Criterion 5 — Written Reflection (Step 5) — 10 points</h3>
+
+<table>
+  <thead>
+    <tr><th>Level</th><th>Points</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Exemplary</strong></td>
+      <td>9–10</td>
+      <td>All four prompts are addressed specifically and thoughtfully. Data structure justifications reference concrete trade-offs. At least one real error or debugging experience is described. Writing is clear and within the target length.</td>
+    </tr>
+    <tr>
+      <td><strong>Proficient</strong></td>
+      <td>6–8</td>
+      <td>All four prompts are addressed. Some responses are general rather than specific to this assignment. Reflection demonstrates genuine engagement with the exercise.</td>
+    </tr>
+    <tr>
+      <td><strong>Developing</strong></td>
+      <td>3–5</td>
+      <td>One or two prompts are addressed superficially or skipped. Reflection is vague or mostly restates the problem description without analysis.</td>
+    </tr>
+    <tr>
+      <td><strong>Beginning</strong></td>
+      <td>0–2</td>
+      <td>Reflection is absent, extremely brief, or does not address the prompts. No meaningful self-analysis is present.</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "activities": [
+    {
+      "id": "efca5ec0-fbb2-41fd-9616-f02f3c04cf65",
+      "title": "Drag-and-Drop Match",
+      "fileName": "drag-and-drop-match.html",
+      "templateName": "Drag-and-Drop Match",
+      "objective": "Practice Nested Conditionals",
+      "currentVersion": 1,
+      "totalVersions": 1,
+      "createdDate": "2026-05-16T15:14:43.7825757-04:00",
+      "modifiedDate": "2026-05-16T15:14:43.7826715-04:00"
+    }
+  ]
+}

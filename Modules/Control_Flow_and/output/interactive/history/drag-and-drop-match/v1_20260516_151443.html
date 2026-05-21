@@ -1,0 +1,867 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag-and-Drop Match: Nested Conditionals</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #e0e0e0;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .page-header h1 {
+    font-size: 1.8rem;
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0,212,255,0.4);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  .page-header .subtitle {
+    font-size: 0.95rem;
+    color: #a0c4d8;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: #c8dde9;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .score-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 14px 0;
+    background: rgba(255,255,255,0.08);
+    border-radius: 30px;
+    padding: 10px 28px;
+    border: 1px solid rgba(0,212,255,0.2);
+    width: fit-content;
+  }
+
+  .score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .score-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #88aabb;
+  }
+
+  .score-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00d4ff;
+  }
+
+  .score-value.correct-score { color: #4ecdc4; }
+  .score-value.incorrect-score { color: #ff8c69; }
+
+  .game-area {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .column-wrapper {
+    flex: 1;
+    min-width: 260px;
+    max-width: 400px;
+  }
+
+  .column-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #88aabb;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0,212,255,0.2);
+  }
+
+  .source-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .draggable-item {
+    background: linear-gradient(135deg, #1e3a5f, #1a2f4e);
+    border: 2px solid #00a8cc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: grab;
+    font-size: 0.88rem;
+    font-family: 'Courier New', monospace;
+    color: #cce7f5;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    user-select: none;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .draggable-item:hover:not(.locked):not(.invisible) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,212,255,0.25);
+    border-color: #00d4ff;
+  }
+
+  .draggable-item.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+  }
+
+  .draggable-item.locked {
+    opacity: 0;
+    pointer-events: none;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .draggable-item.bounce-back {
+    animation: bounceBack 0.5s ease;
+  }
+
+  @keyframes bounceBack {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-12px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .target-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .drop-zone {
+    background: rgba(255,255,255,0.04);
+    border: 2px dashed #3a5a7a;
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .drop-zone .zone-definition {
+    font-size: 0.88rem;
+    color: #a8c8dd;
+    line-height: 1.45;
+    flex: 1;
+  }
+
+  .drop-zone.drag-over {
+    background: rgba(0,212,255,0.1);
+    border-color: #00d4ff;
+    border-style: solid;
+  }
+
+  .drop-zone.correct-drop {
+    background: rgba(78,205,196,0.15);
+    border-color: #4ecdc4;
+    border-style: solid;
+  }
+
+  .drop-zone.incorrect-drop {
+    background: rgba(255,140,105,0.15);
+    border-color: #ff8c69;
+    border-style: solid;
+    animation: shakeZone 0.4s ease;
+  }
+
+  @keyframes shakeZone {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+  }
+
+  .matched-label {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #1a3d3a, #0f2b28);
+    border: 1px solid #4ecdc4;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.82rem;
+    font-family: 'Courier New', monospace;
+    color: #7ff0e8;
+    margin-right: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .checkmark {
+    color: #4ecdc4;
+    font-size: 1.1rem;
+    margin-left: 6px;
+    font-weight: bold;
+  }
+
+  .feedback-message {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-height: 24px;
+    margin: 8px 0;
+    padding: 6px 16px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .feedback-message.correct-msg {
+    color: #4ecdc4;
+    background: rgba(78,205,196,0.12);
+    border: 1px solid rgba(78,205,196,0.3);
+  }
+
+  .feedback-message.incorrect-msg {
+    color: #ff8c69;
+    background: rgba(255,140,105,0.12);
+    border: 1px solid rgba(255,140,105,0.3);
+  }
+
+  .feedback-message.empty-msg {
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  .win-state, .completion-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(15, 30, 50, 0.97);
+    border: 2px solid #00d4ff;
+    border-radius: 20px;
+    padding: 36px 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 0 60px rgba(0,212,255,0.2), 0 20px 60px rgba(0,0,0,0.6);
+    max-width: 480px;
+    width: 90%;
+    animation: fadeInScale 0.4s ease;
+  }
+
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .win-state.visible, .completion-state.visible {
+    display: flex;
+  }
+
+  .win-state .trophy {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .win-state h2 {
+    font-size: 1.8rem;
+    color: #00d4ff;
+    margin-bottom: 8px;
+  }
+
+  .win-state .final-score {
+    font-size: 1.1rem;
+    color: #a0c4d8;
+    margin-bottom: 6px;
+  }
+
+  .win-state .perfect-badge {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #1a1a2e;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .reset-button {
+    background: linear-gradient(135deg, #00a8cc, #0077aa);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.5px;
+    min-height: 48px;
+    box-shadow: 0 4px 15px rgba(0,168,204,0.3);
+  }
+
+  .reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,168,204,0.45);
+  }
+
+  .reset-button:active {
+    transform: translateY(0);
+  }
+
+  .top-reset-button {
+    background: rgba(255,255,255,0.08);
+    color: #a0c4d8;
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    min-height: 40px;
+  }
+
+  .top-reset-button:hover {
+    background: rgba(0,212,255,0.12);
+    border-color: #00d4ff;
+    color: #00d4ff;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+  }
+
+  .overlay.visible { display: block; }
+
+  /* Mobile touch drag ghost */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.85;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #1e3a5f, #1a2f4e);
+    border: 2px solid #00d4ff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    font-family: 'Courier New', monospace;
+    color: #cce7f5;
+    max-width: 220px;
+    box-shadow: 0 8px 24px rgba(0,212,255,0.3);
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>🧩 Drag-and-Drop Match</h1>
+  <div class="subtitle">Topic: Nested Conditionals — Control Flow & Python Data Structures</div>
+  <div class="instructions">
+    <strong>Instructions:</strong> Drag each code snippet or keyword on the left to its correct description on the right.
+    Correct matches lock in place ✓. Incorrect matches bounce back. Match all pairs to win!
+  </div>
+  <button class="top-reset-button" onclick="resetGame()">↺ Restart</button>
+</div>
+
+<div class="score-bar">
+  <div class="score-item">
+    <span class="score-label">Correct</span>
+    <span class="score-value correct-score" id="correctCount">0</span>
+  </div>
+  <div class="score-item">
+    <span class="score-label">Total</span>
+    <span class="score-value" id="totalCount">8</span>
+  </div>
+  <div class="score-item">
+    <span class="score-label">Attempts</span>
+    <span class="score-value incorrect-score" id="attemptCount">0</span>
+  </div>
+</div>
+
+<div class="feedback-message empty-msg" id="feedbackMessage">&nbsp;</div>
+
+<div class="game-area">
+  <div class="column-wrapper">
+    <div class="column-title">Code Snippets / Keywords</div>
+    <div class="source-column" id="sourceColumn"></div>
+  </div>
+  <div class="column-wrapper">
+    <div class="column-title">Descriptions</div>
+    <div class="target-column" id="targetColumn"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="win-state" id="winState">
+  <div class="trophy">🏆</div>
+  <h2>Excellent Work!</h2>
+  <p class="final-score" id="winMessage"></p>
+  <div class="perfect-badge" id="perfectBadge" style="display:none;">⭐ Perfect Score! ⭐</div>
+  <p style="color:#7a9db0; font-size:0.88rem; margin-bottom:20px;">You've mastered Nested Conditionals!</p>
+  <button class="reset-button" onclick="resetGame()">Play Again</button>
+</div>
+
+<div class="drag-ghost" id="dragGhost"></div>
+
+<script>
+  // ─── Game Data ──────────────────────────────────────────────────────────────
+  const MATCH_PAIRS = [
+    {
+      id: 'pair1',
+      label: 'if x > 0:\n  if x < 100:\n    print("ok")',
+      description: 'A nested conditional that checks two conditions on the same variable in sequence'
+    },
+    {
+      id: 'pair2',
+      label: 'if grade >= 90:\n  if perfect == True:\n    rank = "A+"',
+      description: 'Assigns a rank only when both a grade threshold AND a perfect flag are satisfied'
+    },
+    {
+      id: 'pair3',
+      label: 'elif',
+      description: 'Keyword used to check an additional condition when the previous if was False'
+    },
+    {
+      id: 'pair4',
+      label: 'else:',
+      description: 'Catches all cases not handled by the preceding if or elif branches'
+    },
+    {
+      id: 'pair5',
+      label: 'if a and b:',
+      description: 'Evaluates True only when both operands are True simultaneously'
+    },
+    {
+      id: 'pair6',
+      label: 'if not flag:',
+      description: 'Inverts the Boolean value of the condition before evaluating the branch'
+    },
+    {
+      id: 'pair7',
+      label: 'Indentation',
+      description: 'Python uses this — not braces — to define which statements belong inside a conditional block'
+    },
+    {
+      id: 'pair8',
+      label: 'if temp > 100:\n  if pressure > 5:\n    alarm()',
+      description: 'Triggers an alarm function only when temperature AND pressure exceed separate thresholds'
+    }
+  ];
+
+  // ─── State Variables ─────────────────────────────────────────────────────────
+  let correctCount = 0;
+  let attemptCount = 0;
+  let matchedPairIds = new Set();
+
+  // Mouse/touch drag state
+  let draggedPairId = null;
+  let draggedElement = null;
+  let touchGhost = null;
+  let touchOffsetX = 0;
+  let touchOffsetY = 0;
+
+  // ─── Shuffle Utility ─────────────────────────────────────────────────────────
+  function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // ─── Build Game Board ─────────────────────────────────────────────────────────
+  function buildGameBoard() {
+    const sourceColumn = document.getElementById('sourceColumn');
+    const targetColumn = document.getElementById('targetColumn');
+    sourceColumn.innerHTML = '';
+    targetColumn.innerHTML = '';
+
+    const shuffledLabels = shuffleArray(MATCH_PAIRS);
+    const shuffledTargets = shuffleArray(MATCH_PAIRS);
+
+    // Create draggable source items
+    shuffledLabels.forEach(pair => {
+      const item = createDraggableItem(pair);
+      sourceColumn.appendChild(item);
+    });
+
+    // Create drop zone targets
+    shuffledTargets.forEach(pair => {
+      const zone = createDropZone(pair);
+      targetColumn.appendChild(zone);
+    });
+  }
+
+  function createDraggableItem(pair) {
+    const item = document.createElement('div');
+    item.classList.add('draggable-item');
+    item.setAttribute('draggable', 'true');
+    item.dataset.pairId = pair.id;
+    item.id = 'drag-' + pair.id;
+
+    // Preserve line breaks for multi-line labels
+    const lines = pair.label.split('\n');
+    if (lines.length > 1) {
+      lines.forEach((line, idx) => {
+        const span = document.createElement('span');
+        span.textContent = line;
+        item.appendChild(span);
+        if (idx < lines.length - 1) item.appendChild(document.createElement('br'));
+      });
+    } else {
+      item.textContent = pair.label;
+    }
+
+    // Mouse drag events
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragend', handleDragEnd);
+
+    // Touch events
+    item.addEventListener('touchstart', handleTouchStart, { passive: false });
+    item.addEventListener('touchmove', handleTouchMove, { passive: false });
+    item.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    return item;
+  }
+
+  function createDropZone(pair) {
+    const zone = document.createElement('div');
+    zone.classList.add('drop-zone');
+    zone.dataset.pairId = pair.id;
+    zone.id = 'zone-' + pair.id;
+
+    const defText = document.createElement('span');
+    defText.classList.add('zone-definition');
+    defText.textContent = pair.description;
+    zone.appendChild(defText);
+
+    // Mouse drop events
+    zone.addEventListener('dragover', handleDragOver);
+    zone.addEventListener('dragleave', handleDragLeave);
+    zone.addEventListener('drop', handleDrop);
+
+    return zone;
+  }
+
+  // ─── Mouse Drag Handlers ──────────────────────────────────────────────────────
+  function handleDragStart(event) {
+    const item = event.currentTarget;
+    draggedPairId = item.dataset.pairId;
+    draggedElement = item;
+    setTimeout(() => item.classList.add('dragging'), 0);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', draggedPairId);
+  }
+
+  function handleDragEnd(event) {
+    const item = event.currentTarget;
+    item.classList.remove('dragging');
+  }
+
+  function handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    event.currentTarget.classList.add('drag-over');
+  }
+
+  function handleDragLeave(event) {
+    event.currentTarget.classList.remove('drag-over');
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    const zone = event.currentTarget;
+    zone.classList.remove('drag-over');
+    const targetPairId = zone.dataset.pairId;
+    processDropAttempt(draggedPairId, targetPairId, zone);
+    draggedPairId = null;
+    draggedElement = null;
+  }
+
+  // ─── Touch Drag Handlers ──────────────────────────────────────────────────────
+  function handleTouchStart(event) {
+    const item = event.currentTarget;
+    if (item.classList.contains('locked')) return;
+    draggedPairId = item.dataset.pairId;
+    draggedElement = item;
+
+    const touch = event.touches[0];
+    const rect = item.getBoundingClientRect();
+    touchOffsetX = touch.clientX - rect.left - rect.width / 2;
+    touchOffsetY = touch.clientY - rect.top - rect.height / 2;
+
+    // Build ghost for touch drag
+    const ghost = document.getElementById('dragGhost');
+    ghost.innerHTML = item.innerHTML;
+    ghost.style.display = 'block';
+    ghost.style.left = touch.clientX + 'px';
+    ghost.style.top = touch.clientY + 'px';
+    touchGhost = ghost;
+
+    item.classList.add('dragging');
+    event.preventDefault();
+  }
+
+  function handleTouchMove(event) {
+    if (!draggedPairId) return;
+    const touch = event.touches[0];
+    if (touchGhost) {
+      touchGhost.style.left = touch.clientX + 'px';
+      touchGhost.style.top = touch.clientY + 'px';
+    }
+
+    // Highlight drop zone under finger
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+    if (elementBelow) {
+      const zone = elementBelow.closest('.drop-zone');
+      if (zone) zone.classList.add('drag-over');
+    }
+
+    event.preventDefault();
+  }
+
+  function handleTouchEnd(event) {
+    if (!draggedPairId) return;
+    const touch = event.changedTouches[0];
+
+    // Hide ghost
+    if (touchGhost) {
+      touchGhost.style.display = 'none';
+      touchGhost = null;
+    }
+
+    if (draggedElement) draggedElement.classList.remove('dragging');
+
+    // Find drop zone under finger
+    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (elementBelow) {
+      const zone = elementBelow.closest('.drop-zone');
+      if (zone) {
+        const targetPairId = zone.dataset.pairId;
+        processDropAttempt(draggedPairId, targetPairId, zone);
+      }
+    }
+
+    draggedPairId = null;
+    draggedElement = null;
+    event.preventDefault();
+  }
+
+  // ─── Drop Logic ───────────────────────────────────────────────────────────────
+  function processDropAttempt(sourcePairId, targetPairId, zoneElement) {
+    if (!sourcePairId || matchedPairIds.has(sourcePairId)) return;
+    if (matchedPairIds.has(targetPairId)) return; // zone already occupied
+
+    attemptCount++;
+    document.getElementById('attemptCount').textContent = attemptCount;
+
+    if (sourcePairId === targetPairId) {
+      // Correct match!
+      correctCount++;
+      matchedPairIds.add(sourcePairId);
+      document.getElementById('correctCount').textContent = correctCount;
+
+      lockMatch(sourcePairId, zoneElement);
+      showFeedback('✓ Correct! Great match.', 'correct-msg');
+
+      if (correctCount === MATCH_PAIRS.length) {
+        setTimeout(showWinState, 600);
+      }
+    } else {
+      // Incorrect match
+      showFeedback('✗ Not quite — try again!', 'incorrect-msg');
+
+      // Bounce back the source item
+      const sourceItem = document.getElementById('drag-' + sourcePairId);
+      if (sourceItem) {
+        sourceItem.classList.add('bounce-back');
+        setTimeout(() => sourceItem.classList.remove('bounce-back'), 600);
+      }
+
+      // Shake the drop zone
+      zoneElement.classList.add('incorrect-drop');
+      setTimeout(() => zoneElement.classList.remove('incorrect-drop'), 500);
+    }
+  }
+
+  function lockMatch(pairId, zoneElement) {
+    // Lock source item (hide it)
+    const sourceItem = document.getElementById('drag-' + pairId);
+    if (sourceItem) {
+      sourceItem.classList.add('locked');
+    }
+
+    // Update zone to show matched label
+    const pair = MATCH_PAIRS.find(p => p.id === pairId);
+    zoneElement.classList.add('correct-drop');
+    zoneElement.innerHTML = ''; // Clear existing content
+
+    const matchedLabel = document.createElement('span');
+    matchedLabel.classList.add('matched-label');
+    const lines = pair.label.split('\n');
+    if (lines.length > 1) {
+      lines.forEach((line, idx) => {
+        const s = document.createElement('span');
+        s.textContent = line;
+        matchedLabel.appendChild(s);
+        if (idx < lines.length - 1) matchedLabel.appendChild(document.createElement('br'));
+      });
+    } else {
+      matchedLabel.textContent = pair.label;
+    }
+
+    const defText = document.createElement('span');
+    defText.classList.add('zone-definition');
+    defText.textContent = pair.description;
+
+    const checkmark = document.createElement('span');
+    checkmark.classList.add('checkmark');
+    checkmark.textContent = '✓';
+
+    zoneElement.appendChild(matchedLabel);
+    zoneElement.appendChild(defText);
+    zoneElement.appendChild(checkmark);
+
+    // Remove drag event listeners since zone is filled
+    zoneElement.removeEventListener('dragover', handleDragOver);
+    zoneElement.removeEventListener('dragleave', handleDragLeave);
+    zoneElement.removeEventListener('drop', handleDrop);
+  }
+
+  // ─── Feedback Message ─────────────────────────────────────────────────────────
+  let feedbackTimer = null;
+  function showFeedback(message, cssClass) {
+    const el = document.getElementById('feedbackMessage');
+    el.textContent = message;
+    el.className = 'feedback-message ' + cssClass;
+
+    if (feedbackTimer) clearTimeout(feedbackTimer);
+    feedbackTimer = setTimeout(() => {
+      el.textContent = '\u00A0';
+      el.className = 'feedback-message empty-msg';
+    }, 2200);
+  }
+
+  // ─── Win State ────────────────────────────────────────────────────────────────
+  function showWinState() {
+    const winState = document.getElementById('winState');
+    const overlay = document.getElementById('overlay');
+    const winMessage = document.getElementById('winMessage');
+    const perfectBadge = document.getElementById('perfectBadge');
+
+    winMessage.textContent = `You matched all ${MATCH_PAIRS.length} pairs in ${attemptCount} attempt${attemptCount !== 1 ? 's' : ''}.`;
+
+    if (attemptCount === MATCH_PAIRS.length) {
+      perfectBadge.style.display = 'inline-block';
+    } else {
+      perfectBadge.style.display = 'none';
+    }
+
+    overlay.classList.add('visible');
+    winState.classList.add('visible');
+  }
+
+  // ─── Reset Game ───────────────────────────────────────────────────────────────
+  function resetGame() {
+    // Reset state
+    correctCount = 0;
+    attemptCount = 0;
+    matchedPairIds = new Set();
+    draggedPairId = null;
+    draggedElement = null;
+
+    // Reset score display
+    document.getElementById('correctCount').textContent = '0';
+    document.getElementById('attemptCount').textContent = '0';
+    document.getElementById('totalCount').textContent = MATCH_PAIRS.length;
+
+    // Clear feedback
+    const feedbackEl = document.getElementById('feedbackMessage');
+    feedbackEl.textContent = '\u00A0';
+    feedbackEl.className = 'feedback-message empty-msg';
+
+    // Hide overlays
+    document.getElementById('winState').classList.remove('visible');
+    document.getElementById('overlay').classList.remove('visible');
+
+    // Hide ghost
+    const ghost = document.getElementById('dragGhost');
+    ghost.style.display = 'none';
+
+    // Rebuild board
+    buildGameBoard();
+  }
+
+  // ─── Initialize ───────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('totalCount').textContent = MATCH_PAIRS.length;
+    buildGameBoard();
+  });
+</script>
+</body>
+</html>

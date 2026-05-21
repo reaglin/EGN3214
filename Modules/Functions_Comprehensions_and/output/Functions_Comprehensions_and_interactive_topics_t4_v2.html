@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functions_Comprehensions_and</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Functions_Comprehensions_and</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Scope and Variable Visibility</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Understanding how Python finds and resolves variable names is fundamental to writing correct, predictable functions. Python follows a strict four-level hierarchy called the <strong>LEGB rule</strong>, and two special keywords — <code>global</code> and <code>nonlocal</code> — let functions reach into outer scopes when necessary.</p>
+
+<ul>
+  <li><strong>The LEGB Scope Rule</strong></li>
+  <ul>
+    <li><strong>Local scope</strong> contains names assigned within the current function. This is the first place Python looks when a name is referenced inside a function body.<pre><code>def greet():
+    message = "hello"   # local to greet()
+    print(message)      # found in local scope
+
+greet()                 # hello</code></pre></li>
+    <li><strong>Enclosing scope</strong> covers variables in any outer function when functions are nested. Python walks outward through each enclosing function in order, from innermost to outermost.<pre><code>def outer():
+    city = "Paris"          # enclosing variable
+
+    def inner():
+        print(city)         # found in enclosing scope
+
+    inner()                 # Paris</code></pre></li>
+    <li><strong>Global scope</strong> holds names defined at the top level of the module. These names are visible throughout the entire file unless shadowed by a more local definition.<pre><code>language = "Python"         # global variable
+
+def show_language():
+    print(language)         # found in global scope
+
+show_language()             # Python</code></pre></li>
+    <li><strong>Built-in scope</strong> contains Python's pre-defined names such as <code>len</code>, <code>range</code>, and <code>print</code>. This is the last place Python checks and is always available without any import.<pre><code>numbers = [3, 1, 4, 1, 5]
+print(len(numbers))         # len found in built-in scope
+print(max(numbers))         # max found in built-in scope</code></pre></li>
+    <li><strong>Name resolution stops at the first scope where the name is found.</strong> If a name is discovered in the local scope, Python never inspects the enclosing, global, or built-in scopes for that same lookup.<pre><code>len = "oops"                # shadows built-in len in global scope
+
+def check():
+    len = 42                # shadows both global and built-in
+    print(len)              # 42 — stopped at local scope
+
+check()
+del len                     # restore built-in access</code></pre></li>
+  </ul>
+
+  <li><strong>Local Variables</strong></li>
+  <ul>
+    <li><strong>Assignment inside a function creates a new local variable</strong> rather than modifying a global one. Even if a global variable with the same name exists, the assignment targets the local scope exclusively.<pre><code>colour = "red"              # global
+
+def paint():
+    colour = "blue"         # new local variable, not the global
+    print(colour)           # blue
+
+paint()
+print(colour)               # red — global unchanged</code></pre></li>
+    <li><strong>Local variables are created when the function is called and destroyed when it returns.</strong> They have no existence outside of a single function invocation, keeping memory usage efficient and state isolated.<pre><code>def calculate():
+    result = 100 * 2        # exists only during this call
+    return result
+
+print(calculate())          # 200
+# print(result)             # NameError — result does not exist here</code></pre></li>
+    <li><strong>Reading a local variable before assigning it raises an <code>UnboundLocalError</code>.</strong> This happens because Python determines at compile time that any name assigned anywhere in a function is local to that function, even if the assignment appears later in the code.<pre><code>total = 10
+
+def broken():
+    print(total)            # UnboundLocalError!
+    total = total + 1       # assignment makes total local throughout
+
+# broken()                  # uncommenting raises UnboundLocalError</code></pre></li>
+    <li><strong>Local scope provides encapsulation,</strong> preventing accidental modification of outer variables. Functions that rely only on local variables and their parameters are easier to test and reason about in isolation.<pre><code>def area(width, height):
+    surface = width * height    # fully local, no side effects
+    return surface
+
+print(area(5, 3))               # 15</code></pre></li>
+  </ul>
+
+  <li><strong>The <code>global</code> Keyword</strong></li>
+  <ul>
+    <li><strong>Declaring <code>global variable_name</code> inside a function</strong> binds that name to the module-level variable. Any subsequent assignment or mutation of that name then affects the global object directly.<pre><code>score = 0
+
+def add_points(n):
+    global score
+    score += n              # modifies the global score
+
+add_points(10)
+add_points(5)
+print(score)                # 15</code></pre></li>
+    <li><strong>Without <code>global</code>, assigning to a name inside a function always creates a local variable.</strong> This is a common source of confusion when a developer intends to update a global counter or flag but inadvertently creates a separate local binding instead.<pre><code>counter = 0
+
+def try_increment():
+    counter = counter + 1   # UnboundLocalError — counter treated as local
+    # fix: add  global counter  above this line</code></pre></li>
+    <li><strong>The <code>global</code> keyword should be used sparingly</strong> to avoid hidden side effects. Functions that silently alter global state are harder to debug, test, and reuse because their behaviour depends on external context.<pre><code># Prefer returning values over mutating globals
+def increment(value):
+    return value + 1        # no global state touched
+
+counter = 0
+counter = increment(counter)
+print(counter)              # 1</code></pre></li>
+    <li><strong>Accessing a global variable for <em>reading</em> does not require the <code>global</code> keyword.</strong> Python will naturally find the name in the global scope through normal LEGB lookup as long as no local assignment of the same name exists in the function.<pre><code>app_name = "MyApp"
+
+def show_banner():
+    print(f"Welcome to {app_name}")   # reads global — no keyword needed
+
+show_banner()               # Welcome to MyApp</code></pre></li>
+  </ul>
+
+  <li><strong>The <code>nonlocal</code> Keyword</strong></li>
+  <ul>
+    <li><strong><code>nonlocal</code> binds a name to the nearest enclosing scope</strong> that contains that variable. Python searches outward through nested function layers until it finds the first enclosing function where the name is defined.<pre><code>def outer():
+    level = "outer"
+
+    def inner():
+        nonlocal level          # binds to outer()'s level
+        level = "changed"
+        print(level)            # changed
+
+    inner()
+    print(level)                # changed
+
+outer()</code></pre></li>
+    <li><strong>It enables nested functions to <em>update</em>, not just read, variables from an outer function.</strong> Without <code>nonlocal</code>, an assignment in the inner function would create a new local variable, leaving the outer function's variable unchanged.<pre><code>def outer():
+    value = 10
+
+    def without_nonlocal():
+        value = 99              # new local — outer's value untouched
+        print(value)            # 99
+
+    without_nonlocal()
+    print(value)                # 10 — unchanged</code></pre></li>
+    <li><strong><code>nonlocal</code> does not reach all the way to the global scope;</strong> use <code>global</code> for that. The two keywords are distinct tools for distinct situations — <code>nonlocal</code> is strictly for enclosing function scopes.<pre><code>x = "global"
+
+def outer():
+    x = "enclosing"
+
+    def inner():
+        nonlocal x              # reaches enclosing, NOT global
+        x = "inner"
+
+    inner()
+    print(x)                    # inner
+
+outer()
+print(x)                        # global — untouched</code></pre></li>
+    <li><strong>This keyword is essential for implementing closures that maintain mutable state.</strong> A classic example is a counter factory where the inner function increments a count variable defined in the outer function, preserving the value across multiple calls to the inner function.<pre><code>def make_counter():
+    count = 0
+
+    def increment():
+        nonlocal count
+        count += 1
+        return count
+
+    return increment
+
+counter = make_counter()
+print(counter())            # 1
+print(counter())            # 2
+print(counter())            # 3</code></pre></li>
+  </ul>
+</ul>
+
+<pre><code># LEGB and keyword demonstration
+
+x = "global"
+
+def outer():
+    x = "enclosing"
+
+    def inner():
+        nonlocal x          # binds to outer()'s x
+        x = "modified by inner"
+        print(x)            # modified by inner
+
+    inner()
+    print(x)                # modified by inner
+
+outer()
+print(x)                    # global  (unchanged)
+
+# global keyword example
+count = 0
+
+def increment():
+    global count
+    count += 1
+
+increment()
+increment()
+print(count)                # 2
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Explains how Python resolves variable names using the LEGB rule and how the global and nonlocal keywords allow functions to modify variables in enclosing scopes. Slides: 1, 2, 3, 4.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>
