@@ -1,0 +1,1126 @@
+{
+  "ModuleFolderName": "Functions_Comprehensions_and",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T12:21:13.1458611-04:00",
+  "ModifiedDate": "2026-05-14T12:21:13.1468084-04:00",
+  "Outcomes": [
+    {
+      "Id": "fd22129a-1901-4d37-87b6-e5aec5c47f65",
+      "Text": "Explain how Python functions are defined and how positional, keyword, and default parameters control argument passing.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "4b2f2b28-a17f-4ac9-83db-a0423892641e",
+      "Text": "Apply *args and **kwargs to write flexible functions that accept variable numbers of arguments.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "976c5a25-d377-4167-94f1-1217aa732013",
+      "Text": "Identify how Python\u0027s scoping rules determine variable visibility inside and outside functions.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "ab55a4fb-c530-48ce-87fc-3f1aba624d1c",
+      "Text": "Demonstrate recursive function design by breaking problems into base cases and recursive steps.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "329d69a9-a11a-44ae-9903-5034ea56a48b",
+      "Text": "Create list, dict, and set comprehensions to transform and filter data concisely.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "b4c585f1-2589-4615-8fbb-212074ad7675",
+      "Text": "Apply lambda functions and the map and filter patterns to implement functional programming techniques in Python.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "e4509d1a-1e77-4cb3-bddc-f4e8836ae88c",
+      "Title": "Defining Functions",
+      "Summary": "Introduces the syntax and mechanics of creating reusable functions in Python. Covers the def keyword, naming conventions, and the role of the return statement.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "83f94aac-7bed-4032-8ed1-867625c6c86d",
+          "TopicId": "e4509d1a-1e77-4cb3-bddc-f4e8836ae88c",
+          "Title": "The def Statement",
+          "BodyText": "Functions in Python are defined using the def keyword followed by a name and a parenthesized parameter list. The indented block beneath the signature forms the function body.",
+          "Notes": "Remind learners that a function definition does not execute the body; it only creates the function object. Execution happens at call time.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "6ab3f0c4-59ad-40f6-a2ec-59f7dea2b896",
+              "Text": "The def keyword signals the start of a function definition.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "32055d43-e573-4068-8239-a2d0fab58419",
+              "Text": "The function name should follow snake_case naming conventions by Python style guides.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3d779c8f-e860-4714-a807-b23a2a253a52",
+              "Text": "The colon at the end of the signature is required and introduces the indented body block.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5f599ca9-3498-464e-adc8-0de4d1d96900",
+              "Text": "Defining a function with the same name twice in the same scope silently overwrites the first definition.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8a0511f8-76dc-4949-b796-39b15c1ca651",
+          "TopicId": "e4509d1a-1e77-4cb3-bddc-f4e8836ae88c",
+          "Title": "The return Statement",
+          "BodyText": "The return statement sends a value back to the caller and immediately exits the function. A function without an explicit return statement implicitly returns None.",
+          "Notes": "Multiple return statements are allowed in one function, often used in conditional branches. Early returns can simplify logic by avoiding deeply nested if-else chains.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "4423fa8d-f718-4327-96da-3ccc49d31b8a",
+              "Text": "return ends function execution and passes the specified value to the caller.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9a8b8bee-3e25-43bc-b47a-175fd722d541",
+              "Text": "Omitting return or writing return alone causes the function to return None.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8f496585-00d9-4b74-88c7-8067681a8feb",
+              "Text": "A function can contain multiple return statements to handle different conditions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0a493171-e221-450b-bb60-9c2eb56c59e1",
+              "Text": "The returned value can be assigned to a variable or used directly in an expression.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "0eedd0cd-0666-481a-b97e-8571975f5435",
+          "TopicId": "e4509d1a-1e77-4cb3-bddc-f4e8836ae88c",
+          "Title": "Docstrings and Function Documentation",
+          "BodyText": "A docstring is a string literal placed as the first statement inside a function body and serves as built-in documentation. It is accessible at runtime via the function\u0027s __doc__ attribute or the help() function.",
+          "Notes": "Following the PEP 257 convention, single-line docstrings are enclosed in triple quotes on one line. Multi-line docstrings include a summary line, a blank line, and then elaborated description.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "7394f91f-45cf-4635-8bf1-683bed31e1b5",
+              "Text": "Docstrings are written as triple-quoted strings immediately after the def line.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "db417c4b-07f1-47d7-8ddc-24b75c3893c3",
+              "Text": "They describe the function\u0027s purpose, parameters, and return value.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5b32af89-0bda-4064-b48d-b481d79ad242",
+              "Text": "The built-in help() function displays a function\u0027s docstring interactively.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4185cf88-acee-4873-b593-5074804b26bd",
+              "Text": "Well-written docstrings improve code maintainability and team collaboration.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "e1484ff1-848c-4531-89d2-6e11c64fff24",
+          "TopicId": "e4509d1a-1e77-4cb3-bddc-f4e8836ae88c",
+          "Title": "Calling a Function",
+          "BodyText": "A function is invoked by writing its name followed by parentheses containing any required arguments. The interpreter jumps to the function body, executes it, and resumes at the call site with the returned value.",
+          "Notes": "Functions can be called from anywhere in a program as long as the definition is in scope at call time. In Python scripts, this typically means the function must be defined before the line that calls it.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "f250a140-7a3b-4eea-8509-718585cd89cb",
+              "Text": "Parentheses after the function name trigger execution; without them, the name refers to the function object itself.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "68220ab0-7650-4452-8d10-063425553c71",
+              "Text": "Arguments supplied at the call site are matched to the function\u0027s parameters.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "24997136-8a8f-4e7f-b475-6e30d6e22dd1",
+              "Text": "The call expression evaluates to whatever the function returns.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "3b99918d-2e1b-4cb0-9035-81128a7d8c48",
+              "Text": "Functions can call other functions, enabling modular and layered program design.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "10199c7c-ea34-4c61-a9bd-b75a276f4901",
+      "Title": "Parameters and Arguments",
+      "Summary": "Explores the different ways values can be passed into functions, including positional, keyword, and default parameters. Establishes clear terminology between parameters and arguments.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "a8cef4c1-89ea-41db-93bd-351377831701",
+          "TopicId": "10199c7c-ea34-4c61-a9bd-b75a276f4901",
+          "Title": "Positional Parameters",
+          "BodyText": "Positional parameters are matched to arguments in the order they appear in the function signature. The first argument maps to the first parameter, the second to the second, and so on.",
+          "Notes": "Mixing up the order of positional arguments is a common source of bugs. Type hints on parameters can help editors and linters catch mismatches early.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "76c9ee28-0114-402d-b0fe-4f2df09633a5",
+              "Text": "Positional arguments must be supplied in the exact order the parameters are declared.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "bb85c39b-eebb-41ca-bf03-76b06f24cf43",
+              "Text": "Too few or too many positional arguments raise a TypeError at runtime.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d6cbb39e-d7c8-4d21-ba90-6b578033b347",
+              "Text": "Positional parameters are the most common and simplest form of argument passing.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "76f127f4-580d-401c-9b13-ed6979632e92",
+              "Text": "The number of positional arguments must match the number of non-default parameters.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2ed902b7-3043-4655-986f-6d849c662402",
+          "TopicId": "10199c7c-ea34-4c61-a9bd-b75a276f4901",
+          "Title": "Keyword Arguments",
+          "BodyText": "Keyword arguments are passed by explicitly naming the parameter they correspond to, allowing arguments to be supplied in any order. This improves readability, especially in functions with many parameters.",
+          "Notes": "A caller can mix positional and keyword arguments in a single call, but positional arguments must always come before keyword arguments. Duplicate keyword arguments in one call are a SyntaxError.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "a1706b0b-3a2e-4e8e-90a1-be295ad5809a",
+              "Text": "Keyword arguments use the syntax parameter_name=value at the call site.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4170b03b-acab-41fd-b89a-fc44ddb4221e",
+              "Text": "They can be supplied in any order regardless of the parameter declaration order.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cabd36fd-21e1-4172-bcdc-0f4d497c6d89",
+              "Text": "Mixing positional and keyword arguments is allowed, but positional must precede keyword.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "bd960bce-0e1a-41af-b7aa-2ca856f06861",
+              "Text": "Keyword arguments make function calls self-documenting and reduce reliance on documentation.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "88e99c77-8404-48e9-93b9-96e2c2892d7d",
+          "TopicId": "10199c7c-ea34-4c61-a9bd-b75a276f4901",
+          "Title": "Default Parameter Values",
+          "BodyText": "A parameter can be assigned a default value in the function signature, making the argument optional at the call site. If the caller does not supply that argument, the default is used.",
+          "Notes": "A critical caveat: default values are evaluated once when the function is defined, not each time it is called. Using mutable objects like lists or dicts as defaults can cause subtle shared-state bugs; use None as the default and create the mutable object inside the function body instead.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "2e14c5b2-a4b3-4cc9-b85e-78746cbbdc64",
+              "Text": "Default values are assigned with the syntax parameter=value in the function signature.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b19dd699-a231-4736-8c24-7d322bb24715",
+              "Text": "Parameters with defaults must appear after all parameters without defaults.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6fd84cf5-ccb4-4590-8597-97f924f4f9d9",
+              "Text": "Default values are evaluated at definition time, not at each call.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0cb10817-6fae-46b6-ba2c-def33c470477",
+              "Text": "Using None as a default and initializing mutable defaults inside the body avoids shared-state bugs.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "11c80990-af84-48f2-81b7-366ba479edf7",
+              "Text": "Callers can override a default by supplying the argument explicitly.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "af9a488c-1fda-4d5e-8bee-6e1386dc44db",
+          "TopicId": "10199c7c-ea34-4c61-a9bd-b75a276f4901",
+          "Title": "Parameters vs. Arguments Terminology",
+          "BodyText": "Parameters are the variable names listed in the function definition, while arguments are the actual values passed when the function is called. Keeping this distinction clear helps in reading error messages and documentation.",
+          "Notes": "Python\u0027s TypeError messages use the word \u0027argument\u0027 when reporting mismatches, which can be confusing if learners conflate the two terms.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "7bc7fdc1-20fb-44de-b00c-4c0631701c9d",
+              "Text": "Parameters live in the function signature and act as placeholders for incoming values.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1e53f2b4-8a33-4d50-a6db-59e706793070",
+              "Text": "Arguments are the concrete values provided at the call site.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fb8ef302-0387-4178-b1c3-04ce4f013746",
+              "Text": "A function may have zero or more parameters and is called with a matching set of arguments.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "294c7fe4-a05b-4ff6-850d-14c0527ed1a5",
+              "Text": "Error messages from Python typically refer to \u0027arguments\u0027 when describing call mismatches.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "bb79e542-110e-40cf-8d92-b45e6a3db508",
+      "Title": "Variable-Length Arguments: *args and **kwargs",
+      "Summary": "Covers the special *args and **kwargs syntax that allows functions to accept an arbitrary number of positional or keyword arguments. Explains how these mechanisms support flexible and reusable API design.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "de0532c6-3187-4326-b439-2666564ca9a4",
+          "TopicId": "bb79e542-110e-40cf-8d92-b45e6a3db508",
+          "Title": "Collecting Positional Arguments with *args",
+          "BodyText": "Prefixing a parameter name with an asterisk (*) causes Python to collect all extra positional arguments into a tuple assigned to that parameter. By convention the name args is used, though any valid identifier works.",
+          "Notes": "The *args parameter must come after any regular positional parameters and before any keyword-only or **kwargs parameters in the signature.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "b51471de-fd29-4a18-9841-9bedf8c66b9d",
+              "Text": "The * prefix collects remaining positional arguments into an immutable tuple.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f0c87a2c-a949-4616-82df-2debc817bb97",
+              "Text": "The conventional name is args, but the asterisk is what activates the behavior.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3fe15676-0820-4eba-a222-ecf0aa9d5c99",
+              "Text": "*args allows a function to accept any number of positional arguments, including zero.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "93192563-6f9f-4b33-b08c-033d89077198",
+              "Text": "Inside the function, args can be iterated, indexed, or passed to other functions.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2a292d7a-ea01-444f-aec0-2d3e2ddc5a7d",
+          "TopicId": "bb79e542-110e-40cf-8d92-b45e6a3db508",
+          "Title": "Collecting Keyword Arguments with **kwargs",
+          "BodyText": "Prefixing a parameter name with two asterisks (**) causes Python to collect all extra keyword arguments into a dictionary. The keys are the argument names and the values are the supplied values.",
+          "Notes": "**kwargs must be the last parameter in the function signature. It is commonly used when building wrapper functions or when forwarding arguments to another function with **kwargs.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "1958e613-749e-465f-a7ae-410035cd2029",
+              "Text": "The ** prefix collects remaining keyword arguments into a regular dictionary.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1912333c-0778-45fc-a7cc-4601860c6f88",
+              "Text": "The conventional name is kwargs, but only the double asterisk is syntactically required.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6b546752-0fe5-4fe9-8801-8813ddbca5c1",
+              "Text": "**kwargs allows callers to pass any named arguments not explicitly declared.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9a58bb0f-7062-4b59-8d71-6b01164f7ed6",
+              "Text": "The resulting dictionary can be iterated with .items() to process each key-value pair.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2eb98f31-ca45-4962-a7d2-8cfac026bf2d",
+          "TopicId": "bb79e542-110e-40cf-8d92-b45e6a3db508",
+          "Title": "Combining *args and **kwargs",
+          "BodyText": "A function can declare both *args and **kwargs together to accept any combination of positional and keyword arguments. This pattern is common in decorators and generic wrapper functions.",
+          "Notes": "The required order in a full signature is: regular positional parameters, *args, keyword-only parameters, **kwargs. Violating this order raises a SyntaxError.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "140c2142-1d5e-43e0-9e08-0113bda22f39",
+              "Text": "Regular parameters, *args, and **kwargs can all appear in a single function signature.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4b7785b0-ccfa-4c07-ab96-c6f997c095f3",
+              "Text": "The required declaration order is: positional, *args, keyword-only, **kwargs.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d75f25f1-a759-4061-baa8-f33e8f7f6697",
+              "Text": "This pattern is heavily used in decorator and middleware design.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5ba04542-2bf5-43f6-9db5-d7c4d342be97",
+              "Text": "Callers can still supply regular positional and keyword arguments alongside variadic ones.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "9ba01ddf-4ca1-4fa3-89c3-894e5198cb34",
+          "TopicId": "bb79e542-110e-40cf-8d92-b45e6a3db508",
+          "Title": "Unpacking Arguments at the Call Site",
+          "BodyText": "The * and ** operators can also be used at the call site to unpack a list or tuple into positional arguments and a dictionary into keyword arguments respectively. This is the inverse of the collection behavior in definitions.",
+          "Notes": "Unpacking at the call site is particularly useful when arguments are stored in a data structure and need to be forwarded to another function without manually indexing each element.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "ceaa44c9-fd9e-4cb0-b70e-e2103c1be4f7",
+              "Text": "Using *iterable in a call unpacks the iterable into individual positional arguments.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c8b5c591-a8c6-4d2d-9aa8-58bd194991c3",
+              "Text": "Using **mapping in a call unpacks the dictionary into individual keyword arguments.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cb7536cc-8924-4679-88a8-d40c100ccdc6",
+              "Text": "Both operators can be combined in a single call for maximum flexibility.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1de0d22b-e9d3-44a4-a65f-aed4aee72379",
+              "Text": "This technique is commonly used to forward arguments from one function to another.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "e4350512-e1af-41d4-83a1-c60b06b3a02b",
+      "Title": "Scope and Variable Visibility",
+      "Summary": "Explains how Python resolves variable names using the LEGB rule and how the global and nonlocal keywords allow functions to modify variables in enclosing scopes.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "8685b8de-ee2a-4517-837e-b5fadb6ddf05",
+          "TopicId": "e4350512-e1af-41d4-83a1-c60b06b3a02b",
+          "Title": "The LEGB Scope Rule",
+          "BodyText": "Python resolves names by searching four scopes in order: Local, Enclosing, Global, and Built-in. The first scope in which the name is found wins.",
+          "Notes": "LEGB is a useful mnemonic. Emphasize that Local means the current function\u0027s namespace, Enclosing applies to nested functions, Global means the module level, and Built-in refers to Python\u0027s built-in names like len and print.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "d3c5252f-c179-4386-9fa2-ed5152a2f7e9",
+              "Text": "Local scope contains names assigned within the current function.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c2ffd7ae-3b42-4b88-8593-6d2021fa47e0",
+              "Text": "Enclosing scope covers variables in any outer function when functions are nested.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7b5b859c-dce4-4b7e-9367-8e060832fbc7",
+              "Text": "Global scope holds names defined at the top level of the module.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4d52cc1a-b77c-4d23-b233-e14a744876c8",
+              "Text": "Built-in scope contains Python\u0027s pre-defined names such as len, range, and print.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "8713eba9-1daa-4785-8849-b78b117f4d18",
+              "Text": "Name resolution stops at the first scope where the name is found.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "e79d2f59-9ae0-4ffc-9a42-cf394a648762",
+          "TopicId": "e4350512-e1af-41d4-83a1-c60b06b3a02b",
+          "Title": "Local Variables",
+          "BodyText": "Any name assigned inside a function is treated as local to that function by default, even if a global variable with the same name exists. Local variables do not affect the outer scope.",
+          "Notes": "A common mistake is assigning to a name inside a function and also trying to read the global version of that name above the assignment within the same function. Python raises an UnboundLocalError because the entire function body is analyzed and the name is deemed local.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "1a1f39cc-32d6-43e9-ad62-7ccfc6d4e881",
+              "Text": "Assignment inside a function creates a new local variable rather than modifying a global one.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4289920f-2365-42b6-8b4b-87fd95cc1e3b",
+              "Text": "Local variables are created when the function is called and destroyed when it returns.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "410bec65-9f0f-4f79-8dd7-5df5f0f39e06",
+              "Text": "Reading a local variable before assigning it raises an UnboundLocalError.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "bebba07c-4674-4336-9859-fd1c9fdbbcae",
+              "Text": "Local scope provides encapsulation, preventing accidental modification of outer variables.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "cae7e34c-0e66-4ad9-b821-faa5dd300af3",
+          "TopicId": "e4350512-e1af-41d4-83a1-c60b06b3a02b",
+          "Title": "The global Keyword",
+          "BodyText": "The global keyword declares that a name inside a function refers to a module-level variable rather than creating a new local one. This allows the function to read and modify the global variable.",
+          "Notes": "Overuse of global is considered poor practice because it creates hidden dependencies between functions and the module state, making code harder to test and reason about. Prefer passing values as arguments and returning results.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "c8aef638-1860-41df-abbf-65ce41902282",
+              "Text": "Declaring global variable_name inside a function binds that name to the module-level variable.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e7186726-0dc7-4ac3-b371-63849e6e8dee",
+              "Text": "Without global, assigning to a name inside a function always creates a local variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "85f461e3-cdd7-44cc-b013-9818cd89ec87",
+              "Text": "The global keyword should be used sparingly to avoid hidden side effects.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "fb5b7abe-2929-45dd-a809-aa7e2e722d8c",
+              "Text": "Accessing a global variable for reading does not require the global keyword.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "dc7d8d23-c070-4fbc-8a10-969bc713c06d",
+          "TopicId": "e4350512-e1af-41d4-83a1-c60b06b3a02b",
+          "Title": "The nonlocal Keyword",
+          "BodyText": "The nonlocal keyword is used inside a nested function to refer to a variable in the nearest enclosing function scope that is not global. It enables inner functions to modify variables from their enclosing scope.",
+          "Notes": "nonlocal was introduced in Python 3. It is most commonly encountered in closures and factory functions where inner functions need to maintain and update state from the outer function.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "57fd25fa-f40c-42ee-bb6b-e705960a07cb",
+              "Text": "nonlocal binds a name to the nearest enclosing scope that contains that variable.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e8ae75f6-0763-46ee-ab12-875afcf6ff2c",
+              "Text": "It enables nested functions to update, not just read, variables from an outer function.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "46a46749-23fd-47ce-b3de-b847de8f9d6f",
+              "Text": "nonlocal does not reach all the way to the global scope; use global for that.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1f55756a-0e33-484c-9687-07930c0fb438",
+              "Text": "This keyword is essential for implementing closures that maintain mutable state.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "0fb4ed96-b627-4802-8147-e40a6e251d4b",
+      "Title": "Recursion",
+      "Summary": "Introduces recursion as a technique where a function calls itself to solve a problem by reducing it to smaller instances. Covers base cases, recursive cases, and practical considerations like stack depth.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "d673f593-c1f5-4293-a04f-c50353657788",
+          "TopicId": "0fb4ed96-b627-4802-8147-e40a6e251d4b",
+          "Title": "What Is Recursion?",
+          "BodyText": "Recursion is a programming technique in which a function calls itself as part of its own definition. It is a natural fit for problems that can be broken into smaller versions of the same problem.",
+          "Notes": "Classic examples include computing factorials, Fibonacci numbers, tree traversal, and directory listing. Help learners see that the key insight is expressing a solution in terms of a simpler version of itself.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "f0a4a8fb-f491-4e09-8ade-16e413a2dd7d",
+              "Text": "A recursive function is one that calls itself within its own body.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "688e8f19-3e1e-4fb4-b2c6-28625e766d2c",
+              "Text": "Each recursive call should work on a smaller or simpler version of the original problem.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3539bca0-9ec5-4e5e-8a9e-9cce2beef952",
+              "Text": "Recursion trades explicit loop constructs for a call-stack-based repetition mechanism.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a2b25f6a-59c0-4b82-9144-5e1942102314",
+              "Text": "Many algorithms on tree-shaped data structures are expressed most naturally with recursion.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "91164556-5993-4732-9c40-dc8a31636749",
+          "TopicId": "0fb4ed96-b627-4802-8147-e40a6e251d4b",
+          "Title": "Base Cases",
+          "BodyText": "A base case is a condition under which the recursive function returns a result directly without making another recursive call. Every recursive function must have at least one base case to eventually terminate.",
+          "Notes": "Forgetting the base case results in infinite recursion and eventually a RecursionError when the call stack is exhausted. Encourage learners to identify the base case first before writing the recursive step.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "bbdc15d9-91aa-41f1-ae49-19d9ed2d95a1",
+              "Text": "The base case provides a direct answer for the simplest input and stops the recursion.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7e6db0da-527e-48fb-a458-6690422f0f95",
+              "Text": "Without a base case, the function recurses infinitely and raises a RecursionError.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "bae705fd-788e-44e9-a62e-1590048896e3",
+              "Text": "There can be more than one base case if the problem has multiple trivial inputs.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "3ea6f627-59ce-4a21-b0aa-e0bf73e6c4c6",
+              "Text": "Identifying the base case first is a recommended strategy when designing recursive solutions.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "f5cd8e71-ac70-497e-ba79-3aeaa0ac1f72",
+          "TopicId": "0fb4ed96-b627-4802-8147-e40a6e251d4b",
+          "Title": "Recursive Cases",
+          "BodyText": "The recursive case defines how the function calls itself with a modified argument that moves closer to the base case. The result of the recursive call is typically combined with additional computation to produce the answer.",
+          "Notes": "In a factorial function, the recursive case is n * factorial(n-1), with n decreasing by 1 on each call, ensuring the base case of n == 0 or n == 1 is eventually reached.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "d07f9439-2df5-4bb8-a290-604c168408fc",
+              "Text": "The recursive case breaks the current problem into a smaller sub-problem.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0f69190b-67f0-4a69-b5e1-421ac6bfd53d",
+              "Text": "The argument passed to the recursive call must progress toward the base case.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fe3037c9-e583-4b5d-bdb5-2b67781dbe2d",
+              "Text": "The return value of a recursive call is often combined with additional logic.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b3771726-e0be-4b7f-a8aa-5fdf3c3293c2",
+              "Text": "Each level of recursion adds a new frame to the call stack.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "5d62581e-bcfb-4eeb-aa50-fb14a2216ab5",
+          "TopicId": "0fb4ed96-b627-4802-8147-e40a6e251d4b",
+          "Title": "Recursion Depth and Limitations",
+          "BodyText": "Python enforces a maximum recursion depth, defaultable around 1000 calls, to prevent call stack overflow. Very deep recursion will raise a RecursionError even when the logic is correct.",
+          "Notes": "The recursion limit can be inspected with sys.getrecursionlimit() and changed with sys.setrecursionlimit(), though this is rarely advisable. For deeply recursive problems, an iterative approach or explicit stack is more practical in Python.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "c3641bc2-c2f2-444b-8ac2-3d0064a68036",
+              "Text": "Python\u0027s default recursion limit is approximately 1000 nested calls.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a36b1a0b-6e0a-4a3b-8534-bc078b771040",
+              "Text": "Exceeding the limit raises a RecursionError regardless of logical correctness.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c9517135-9458-4a06-b4e9-10c82855e0d2",
+              "Text": "sys.getrecursionlimit() and sys.setrecursionlimit() can inspect and adjust the limit.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "bcf390a0-e3dc-4c0c-8794-45e18fe97941",
+              "Text": "Iterative solutions or explicit stacks are preferred for very deep recursion in Python.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "23e701fc-e2f2-468b-adc7-edfb7f1610e3",
+              "Text": "Tail recursion is not optimized by CPython, unlike some other languages.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+      "Title": "Comprehensions",
+      "Summary": "Teaches the concise comprehension syntax for building lists, dictionaries, and sets from iterables. Covers optional filtering conditions and nested comprehensions.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "f23a938a-05e4-48cd-8b8d-07c5630e4eb1",
+          "TopicId": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+          "Title": "List Comprehensions",
+          "BodyText": "A list comprehension provides a compact syntax for creating a new list by applying an expression to each item in an iterable. It replaces many common for-loop patterns with a single readable line.",
+          "Notes": "The general form is [expression for item in iterable if condition]. The optional if clause filters items. Comprehensions return a fully evaluated list object, not a generator.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "71f3933a-eb4d-44ed-92f0-c1ea72e681a3",
+              "Text": "The syntax is [expression for item in iterable], optionally followed by if condition.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9b45e085-27af-49db-8082-edb11891f9a7",
+              "Text": "They produce a new list without mutating the original iterable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d4720e66-d4ae-4b61-9217-c0afae27a36b",
+              "Text": "List comprehensions are generally faster than equivalent for-loop constructions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0c7ec681-985c-45b9-93cf-89f91db7f353",
+              "Text": "The optional if clause filters which items from the iterable are included.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "6b19f087-98fd-4ae6-bd0d-721cb07a8a4f",
+              "Text": "Comprehensions can call functions or perform calculations in the expression part.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "30c689a1-5e3e-40a1-a6e1-d80994cf26e9",
+          "TopicId": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+          "Title": "Dictionary Comprehensions",
+          "BodyText": "Dictionary comprehensions build a new dictionary by specifying a key-value expression iterated over a source iterable. They are the dict equivalent of list comprehensions.",
+          "Notes": "The general form is {key_expr: value_expr for item in iterable if condition}. A common use case is inverting a dictionary by swapping keys and values.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "7c7e72dd-801d-475c-80da-fa05407af7d2",
+              "Text": "The syntax is {key_expr: value_expr for item in iterable}.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1f3dec00-9cb3-4a44-8b02-57db7d239536",
+              "Text": "Both the key and value expressions are evaluated for each item in the iterable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ee4f60f9-bc46-4a6b-ba08-88a9e8dad27e",
+              "Text": "An optional if clause filters which items are included in the resulting dictionary.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "af3260be-dfda-496f-a669-d4c181567255",
+              "Text": "If duplicate keys are produced, later iterations overwrite earlier ones.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "61bc29e0-2dba-4242-9513-2fa918ea2c25",
+              "Text": "Dictionary comprehensions can transform keys, values, or both simultaneously.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "4b5aa463-56bf-48d7-a142-64adb23f353f",
+          "TopicId": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+          "Title": "Set Comprehensions",
+          "BodyText": "Set comprehensions use curly braces without a colon to produce a set of unique values derived from an iterable. Duplicate expressions are automatically discarded because sets do not allow repeated elements.",
+          "Notes": "The syntax is {expression for item in iterable if condition}. Because the result is a set, order is not preserved. Set comprehensions are useful for quickly deduplicating processed data.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "37290467-d6be-4150-82d1-9a6693f2c724",
+              "Text": "The syntax is {expression for item in iterable}, resembling a list comprehension with curly braces.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "768dad6d-c8ea-4c80-adff-86c85fff63f4",
+              "Text": "Duplicate values produced by the expression are automatically removed.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d04c64fc-4ac9-4589-8b1f-1bf26c311300",
+              "Text": "The resulting set is unordered, so iteration order is not guaranteed.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a4a68d13-a7db-4899-bcca-ceee5fcc21ac",
+              "Text": "An optional if clause filters the source items before the expression is evaluated.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "9864f966-b9b3-4361-831b-7c7c1b53edd0",
+              "Text": "Set comprehensions are efficient for producing unique collections from transformations.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "c9c54553-e0b5-410c-899c-264205cad896",
+          "TopicId": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+          "Title": "Filtering in Comprehensions",
+          "BodyText": "All three comprehension types support an optional if clause that acts as a filter, including only items for which the condition evaluates to True. Filtering replaces a nested if statement inside a for loop.",
+          "Notes": "The filter condition has access to the loop variable and any variables in the enclosing scope. Multiple conditions can be chained with and or or, or multiple if clauses can be stacked in nested comprehensions.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "d9cec294-08ae-4b30-95e2-17b18ea1923b",
+              "Text": "The if clause appears after the for clause and tests each item before the expression is evaluated.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4ca04d8a-7d50-413e-adde-b9b47d588a4b",
+              "Text": "Only items for which the condition is True are included in the result.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2c5cc2c7-085e-4369-a2d8-8c8e8664459a",
+              "Text": "The condition can reference the loop variable, outer variables, or call functions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0df1e983-1b10-4cb5-9bad-d7ad5a872af6",
+              "Text": "Multiple conditions can be combined with logical operators in a single if clause.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8af4d2d8-aad9-47b9-8030-861b0a6053b8",
+          "TopicId": "f3c949d7-d704-4dec-a981-a925c68d1c85",
+          "Title": "Nested Comprehensions",
+          "BodyText": "Comprehensions can contain multiple for clauses to iterate over nested iterables, effectively flattening or combining data from multiple sequences. The leftmost for clause is the outermost loop.",
+          "Notes": "Deeply nested comprehensions can become hard to read. When more than two for clauses are needed, a regular nested loop or a helper function often improves clarity.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "1bb73ed6-b5bd-4696-ad43-77ee196f1fda",
+              "Text": "Multiple for clauses in a comprehension act like nested for loops.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "cb0b80f8-b6a3-4c17-b5a0-1b6262cb9236",
+              "Text": "The leftmost for clause is the outer loop; subsequent ones are inner loops.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d3b40ecf-4df6-4c49-96a6-e55a1dd16704",
+              "Text": "Nested comprehensions are commonly used to flatten 2D lists or compute Cartesian products.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1ff268e6-e3d9-4e50-993e-1867320e0ced",
+              "Text": "Each for clause can have its own optional if clause for filtering.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "68f4a842-16f7-4053-a327-6bfe122c9830",
+              "Text": "Limit nesting depth to two levels to maintain readability.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "15526e12-53ce-49dd-aa7a-102763063919",
+      "Title": "Lambda Functions and Functional Patterns",
+      "Summary": "Introduces anonymous lambda functions and the map and filter built-ins as tools for applying functional programming patterns in Python. Explains when to use these tools versus comprehensions or named functions.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+      "Elements": [
+        {
+          "Id": "acbeada4-0dbd-423d-93fd-da63ed7f0be5",
+          "TopicId": "15526e12-53ce-49dd-aa7a-102763063919",
+          "Title": "Lambda Functions",
+          "BodyText": "A lambda function is an anonymous function defined with the lambda keyword in a single expression. It is used when a small throwaway function is needed without the overhead of a full def statement.",
+          "Notes": "The syntax is lambda parameters: expression. Lambdas are limited to a single expression and cannot contain statements, assignments, or multi-line logic. They are most commonly passed as arguments to higher-order functions.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "3fbeab3c-810e-4acc-9f0b-268a05aac1b6",
+              "Text": "Lambda functions are defined with the syntax lambda parameters: expression.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3a444680-ba3c-4e0a-9557-85434235cafb",
+              "Text": "They are anonymous: the function has no name unless assigned to a variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5be47379-8361-4647-a244-96896a3b95b8",
+              "Text": "A lambda body is a single expression whose value is automatically returned.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9e3058f4-104f-48fa-8a96-22c74d213c7a",
+              "Text": "Lambdas cannot contain statements, loops, or multiple lines of logic.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "b71b1807-bf5d-4409-b0ab-a017fd9d35e8",
+              "Text": "They are most useful as short-lived arguments to functions like sorted, map, or filter.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "7cda4b24-abcb-473d-be05-4fa8ff0278ea",
+          "TopicId": "15526e12-53ce-49dd-aa7a-102763063919",
+          "Title": "The map() Function",
+          "BodyText": "The built-in map() applies a function to every item in an iterable and returns a map object, a lazy iterator, that yields the transformed values. It is the functional equivalent of a transformation comprehension.",
+          "Notes": "map() is lazy and does not compute values until iterated. Wrap it in list() to get an immediate list. In many modern Python style guides, a list comprehension is preferred over map() for readability, but map() is more concise when a named function already exists.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "68a5900b-70c0-406f-bdf1-8df96868d3d6",
+              "Text": "map(function, iterable) applies function to each element of iterable.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2a1f6412-1ba8-4b08-bc1e-986d552aa3c5",
+              "Text": "It returns a lazy map object that computes values on demand.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "380e022f-4794-47a1-861d-8f1f5f8d3908",
+              "Text": "Wrap the result in list() or another collection constructor to materialize the values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c03b082f-f287-4e01-a8f9-df3a5fb51f97",
+              "Text": "map() is equivalent to a list comprehension with no filter clause.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "52e56758-0a7f-4547-9aae-52a18438e171",
+              "Text": "It accepts multiple iterables; the function receives one argument from each iterable per step.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "dd95deae-a4b9-4a7b-b72f-45f103592694",
+          "TopicId": "15526e12-53ce-49dd-aa7a-102763063919",
+          "Title": "The filter() Function",
+          "BodyText": "The built-in filter() applies a predicate function to each element of an iterable and returns only the elements for which the predicate returns True. It is the functional equivalent of a comprehension with an if clause.",
+          "Notes": "Like map(), filter() returns a lazy iterator. Passing None as the function removes falsy values from the iterable, equivalent to filtering on the identity of each item.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "6f0bc242-fd69-4afc-813e-f823a2babf76",
+              "Text": "filter(function, iterable) keeps elements for which function returns True.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fbe25d78-9b99-4ad0-ab08-f1770934f36c",
+              "Text": "It returns a lazy filter object that yields matching elements on demand.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "83545482-52fa-4a48-8671-87e6455e8494",
+              "Text": "Wrap the result in list() to produce an immediate list of filtered values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c60bd0ea-174c-41b3-b7b5-9037781c6f97",
+              "Text": "Passing None as the function filters out all falsy values from the iterable.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "eed5d296-d3bb-4a1f-88b4-59b76ddab87e",
+              "Text": "filter() is equivalent to the if clause in a comprehension without a transformation expression.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "85e201bc-d72b-4c38-9e30-f21a5b4c7194",
+          "TopicId": "15526e12-53ce-49dd-aa7a-102763063919",
+          "Title": "Combining map and filter",
+          "BodyText": "map() and filter() can be composed by nesting calls, applying filtering first and then transformation, or vice versa. This chains functional operations without creating intermediate lists.",
+          "Notes": "Composed map and filter chains can become hard to read. A single list comprehension with both a transformation expression and an if clause is often clearer and is generally preferred in idiomatic Python.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "44805cdf-80c1-4a95-a6e5-50dc871820cd",
+              "Text": "Nesting filter() inside map() or vice versa chains two functional operations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3d999e35-b166-40e0-9905-271065f4c748",
+              "Text": "Because both return lazy iterators, chaining avoids creating intermediate lists.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "73b21f13-f71c-4e3c-bed6-e53260c6d213",
+              "Text": "The order of composition matters: filter then map transforms only the kept items.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b80dec3e-3bc7-4825-97c0-47d8913c44db",
+              "Text": "A list comprehension with both an expression and an if clause is often more readable than nested map and filter.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7646ee45-733c-4c6b-9659-11d8af1e4045",
+          "TopicId": "15526e12-53ce-49dd-aa7a-102763063919",
+          "Title": "Choosing Between Comprehensions and Functional Tools",
+          "BodyText": "Python offers both comprehensions and map/filter as ways to transform and filter data. Choosing between them depends on readability, the existence of a named function, and team conventions.",
+          "Notes": "PEP 8 and common Python style guides generally favor comprehensions for their readability. map() and filter() shine when a named function is already defined, as they avoid writing a redundant lambda.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "ModifiedDate": "2026-05-14T12:21:13.1458611-04:00",
+          "Items": [
+            {
+              "Id": "4d89c328-f0f5-4b1f-8417-70cded2988dc",
+              "Text": "Comprehensions are generally preferred for their explicit and readable syntax in idiomatic Python.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b91ee81d-4838-4a3e-a605-f0730d832ac7",
+              "Text": "map() is advantageous when a named function already exists and avoids a throwaway lambda.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e140947c-5eac-4c26-b1df-d6f43c9c4e42",
+              "Text": "Lambdas inside map() or filter() often signal that a comprehension would be cleaner.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d9319438-3b61-427b-a340-71880b79a20f",
+              "Text": "filter() with None is a concise idiom for removing falsy values with no comprehension equivalent.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "91c64d6d-379e-40cf-b23a-e13adcea768a",
+              "Text": "Consistency with team or project style conventions should guide the final choice.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 30
+}

@@ -1,0 +1,955 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Data Structures – Drag-and-Drop Match</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1e2a3a;
+    color: #e8edf3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    color: #7ec8e3;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  header p.subtitle {
+    font-size: 0.95rem;
+    color: #a0b4c8;
+  }
+
+  #instructions {
+    background: #263447;
+    border-left: 4px solid #7ec8e3;
+    border-radius: 6px;
+    padding: 12px 18px;
+    max-width: 820px;
+    width: 100%;
+    font-size: 0.95rem;
+    color: #cddae6;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  #score-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 820px;
+    width: 100%;
+    margin-bottom: 18px;
+    background: #263447;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  #score-bar span { color: #7ec8e3; font-weight: 700; font-size: 1.1rem; }
+
+  #reset-btn {
+    background: #3a8fb5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 22px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    min-height: 40px;
+    transition: background 0.2s;
+  }
+  #reset-btn:hover { background: #2d7a9e; }
+
+  #game-area {
+    display: flex;
+    gap: 24px;
+    max-width: 820px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .column {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .column-title {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #7ec8e3;
+    background: #263447;
+    border-radius: 6px;
+    padding: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* DRAGGABLE LABELS */
+  .drag-label {
+    background: #2e4460;
+    border: 2px solid #4a7fa5;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    text-align: center;
+    color: #dceaf6;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .drag-label:hover:not(.exhausted) { background: #3a5a7a; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+  .drag-label.dragging { opacity: 0.45; cursor: grabbing; }
+  .drag-label.exhausted {
+    background: #1e4030;
+    border-color: #4caf82;
+    color: #7ee8b4;
+    cursor: default;
+    opacity: 0.7;
+  }
+  .drag-label.bounce {
+    animation: bounceBack 0.4s ease;
+  }
+
+  .uses-badge {
+    display: inline-block;
+    background: #3a8fb5;
+    color: #fff;
+    border-radius: 12px;
+    padding: 1px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .drag-label.exhausted .uses-badge {
+    background: #4caf82;
+    color: #0e2a1c;
+  }
+
+  /* DROP ZONES */
+  .drop-zone {
+    background: #1e2e42;
+    border: 2px dashed #4a7fa5;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: #a8c0d6;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .drop-zone .scenario-text {
+    font-style: italic;
+    font-size: 0.87rem;
+    line-height: 1.45;
+  }
+  .drop-zone .matched-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #7ee8b4;
+    margin-top: 6px;
+    text-align: center;
+    padding: 4px 8px;
+    background: #1a3d2c;
+    border-radius: 5px;
+    border: 1px solid #4caf82;
+  }
+  .drop-zone.drag-over {
+    background: #2a3f58;
+    border-color: #7ec8e3;
+    border-style: solid;
+  }
+  .drop-zone.correct-flash {
+    animation: correctFlash 0.5s ease;
+  }
+  .drop-zone.incorrect-flash {
+    animation: incorrectFlash 0.4s ease;
+  }
+  .drop-zone.locked-zone {
+    border-color: #4caf82;
+    border-style: solid;
+    background: #162c22;
+  }
+
+  /* FEEDBACK MESSAGE */
+  #feedback-msg {
+    max-width: 820px;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    min-height: 32px;
+    margin-top: 14px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: opacity 0.3s;
+  }
+  #feedback-msg.positive { background: #1a3d2c; color: #7ee8b4; }
+  #feedback-msg.negative { background: #3d1a1a; color: #e8a0a0; }
+  #feedback-msg.hidden { opacity: 0; }
+
+  /* WIN OVERLAY */
+  #end-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,18,28,0.88);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+  }
+  #end-overlay.show { display: flex; }
+
+  .end-box {
+    background: #1c2d40;
+    border-radius: 14px;
+    padding: 40px 48px;
+    text-align: center;
+    max-width: 440px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+  .end-box h2 { font-size: 2rem; margin-bottom: 12px; }
+  .end-box.win h2 { color: #7ee8b4; }
+  .end-box p { font-size: 1.05rem; color: #cddae6; margin-bottom: 24px; line-height: 1.6; }
+  .end-box .final-score { font-size: 1.4rem; color: #7ec8e3; font-weight: 700; margin-bottom: 20px; }
+
+  .play-again-btn {
+    background: #3a8fb5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 36px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    min-height: 48px;
+    transition: background 0.2s;
+  }
+  .play-again-btn:hover { background: #2d7a9e; }
+
+  /* CORRECT POPUP OVERLAY */
+  #correct-popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,18,28,0.75);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+  }
+  #correct-popup-overlay.show { display: flex; }
+
+  .correct-popup {
+    background: #1c2d40;
+    border: 2px solid #4caf82;
+    border-radius: 14px;
+    padding: 28px 32px;
+    max-width: 520px;
+    width: 92%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .correct-popup-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .correct-popup-header h3 {
+    font-size: 1.25rem;
+    color: #7ee8b4;
+    margin: 0;
+  }
+
+  .correct-popup-badge {
+    background: #4caf82;
+    color: #0e2a1c;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .correct-popup-hint {
+    font-size: 0.93rem;
+    color: #cddae6;
+    line-height: 1.55;
+    background: #22384f;
+    border-radius: 6px;
+    padding: 10px 14px;
+    border-left: 3px solid #7ec8e3;
+  }
+
+  .correct-popup-code-label {
+    font-size: 0.82rem;
+    color: #7ec8e3;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: -6px;
+  }
+
+  .correct-popup-code {
+    background: #0f1c2a;
+    border: 1px solid #2e4460;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #c9e0f5;
+    line-height: 1.6;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Syntax highlight colours */
+  .code-kw   { color: #c792ea; font-weight: 700; }
+  .code-fn   { color: #82aaff; }
+  .code-str  { color: #c3e88d; }
+  .code-num  { color: #f78c6c; }
+  .code-cmt  { color: #546e7a; font-style: italic; }
+  .code-var  { color: #eefff0; }
+  .code-punc { color: #89ddff; }
+  .code-key  { color: #ffcb6b; }
+
+  .correct-popup-close {
+    align-self: flex-end;
+    background: #3a8fb5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 28px;
+    font-size: 0.97rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-height: 40px;
+  }
+  .correct-popup-close:hover { background: #2d7a9e; }
+
+  /* ANIMATIONS */
+  @keyframes bounceBack {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-14px); }
+    50%  { transform: translateX(10px); }
+    75%  { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+  @keyframes correctFlash {
+    0%   { background: #1e4a30; }
+    50%  { background: #2a7a50; }
+    100% { background: #162c22; }
+  }
+  @keyframes incorrectFlash {
+    0%   { background: #1e2e42; }
+    50%  { background: #4a1a1a; }
+    100% { background: #1e2e42; }
+  }
+
+  /* Touch ghost */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.75;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background: #3a5a7a;
+    border: 2px solid #7ec8e3;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #dceaf6;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.3rem; }
+    .column { min-width: 200px; }
+    #game-area { gap: 12px; }
+    .correct-popup { padding: 20px 16px; }
+    .correct-popup-code { font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+<div class="pm-injected-nav"><a href="../index.html">← Back to Module</a><span class="sep">|</span><span style="color:#555">Drag-Drop Data Structure Match</span></div>
+<div class="pm-injected-spacer"></div>
+
+<header>
+  <h1>🐍 Python Data Structures Match</h1>
+  <p class="subtitle">Control Flow and Python Data Structures – Module Activity</p>
+</header>
+
+<div id="instructions">
+  <strong>Instructions:</strong> Drag each <em>data structure name</em> from the left column and drop it onto the <em>engineering scenario</em> on the right that best fits its use. If a structure is used for multiple scenarios, its remaining uses are shown in brackets. Correct matches lock in place and decrement the use count. Incorrect matches bounce back. Match all 8 scenarios to win!
+</div>
+
+<div id="score-bar">
+  <div>Score: <span id="score-display">0</span> / <span id="total-display">8</span></div>
+  <div>Mistakes: <span id="mistake-display">0</span></div>
+  <button id="reset-btn" onclick="initGame()">↺ Reset</button>
+</div>
+
+<div id="game-area">
+  <div class="column" id="labels-column">
+    <div class="column-title">Data Structures</div>
+  </div>
+  <div class="column" id="zones-column">
+    <div class="column-title">Engineering Scenarios</div>
+  </div>
+</div>
+
+<div id="feedback-msg" class="hidden"></div>
+
+<!-- CORRECT ANSWER POPUP -->
+<div id="correct-popup-overlay">
+  <div class="correct-popup">
+    <div class="correct-popup-header">
+      <h3>✔ Correct!</h3>
+      <span class="correct-popup-badge" id="popup-structure-badge"></span>
+    </div>
+    <div class="correct-popup-hint" id="popup-hint"></div>
+    <div class="correct-popup-code-label">Example Code</div>
+    <div class="correct-popup-code" id="popup-code"></div>
+    <button class="correct-popup-close" onclick="closeCorrectPopup()">Got it →</button>
+  </div>
+</div>
+
+<!-- WIN OVERLAY -->
+<div id="end-overlay">
+  <div class="end-box" id="end-box">
+    <h2 id="end-title"></h2>
+    <p id="end-message"></p>
+    <div class="final-score" id="end-score"></div>
+    <button class="play-again-btn" onclick="initGame()">Play Again</button>
+  </div>
+</div>
+
+<script>
+  // ─── CODE EXAMPLES PER PAIR ───────────────────────────────────────────────────
+  // Each entry contains HTML with syntax-highlighted code for the popup.
+  // We use a simple span-based approach.
+
+  function hl(code) {
+    // Returns the code string as-is (plain text) inside the pre block.
+    // We build HTML strings directly in the data below.
+    return code;
+  }
+
+  const CODE_EXAMPLES = {
+    // key: structure + '|' + scenarioIndex (we use pairIndex from ALL_PAIRS order)
+    0: `<span class="code-cmt"># List: store and sort sensor readings</span>
+<span class="code-var">sensor_readings</span> <span class="code-punc">=</span> <span class="code-punc">[]</span>
+
+<span class="code-kw">for</span> <span class="code-var">i</span> <span class="code-kw">in</span> <span class="code-fn">range</span><span class="code-punc">(</span><span class="code-num">5</span><span class="code-punc">):</span>
+    <span class="code-var">sensor_readings</span><span class="code-punc">.</span><span class="code-fn">append</span><span class="code-punc">(</span><span class="code-fn">read_sensor</span><span class="code-punc">(</span><span class="code-var">i</span><span class="code-punc">))</span>
+
+<span class="code-var">sensor_readings</span><span class="code-punc">.</span><span class="code-fn">sort</span><span class="code-punc">()</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-var">sensor_readings</span><span class="code-punc">)</span>
+<span class="code-cmt"># [12.1, 14.3, 15.0, 18.7, 22.4]</span>`,
+
+    1: `<span class="code-cmt"># Tuple: fixed calibration coordinates</span>
+<span class="code-var">calibration_point</span> <span class="code-punc">=</span> <span class="code-punc">(</span><span class="code-num">3.5</span><span class="code-punc">,</span> <span class="code-num">7.2</span><span class="code-punc">,</span> <span class="code-num">0.0</span><span class="code-punc">)</span>
+
+<span class="code-var">x</span><span class="code-punc">,</span> <span class="code-var">y</span><span class="code-punc">,</span> <span class="code-var">z</span> <span class="code-punc">=</span> <span class="code-var">calibration_point</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-str">f"X: <span class="code-punc">{</span><span class="code-var">x</span><span class="code-punc">}</span>, Y: <span class="code-punc">{</span><span class="code-var">y</span><span class="code-punc">}</span>, Z: <span class="code-punc">{</span><span class="code-var">z</span><span class="code-punc">}</span>"</span><span class="code-punc">)</span>
+
+<span class="code-cmt"># Attempting to change raises TypeError:</span>
+<span class="code-cmt"># calibration_point[0] = 9.9  ← not allowed</span>`,
+
+    2: `<span class="code-cmt"># Dictionary: component ID → resistance</span>
+<span class="code-var">resistance_map</span> <span class="code-punc">=</span> <span class="code-punc">{</span>
+    <span class="code-str">"R101"</span><span class="code-punc">:</span> <span class="code-num">470</span><span class="code-punc">,</span>
+    <span class="code-str">"R102"</span><span class="code-punc">:</span> <span class="code-num">1000</span><span class="code-punc">,</span>
+    <span class="code-str">"R103"</span><span class="code-punc">:</span> <span class="code-num">220</span>
+<span class="code-punc">}</span>
+
+<span class="code-var">comp</span> <span class="code-punc">=</span> <span class="code-str">"R102"</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-str">f"<span class="code-punc">{</span><span class="code-var">comp</span><span class="code-punc">}</span> → <span class="code-punc">{</span><span class="code-var">resistance_map</span><span class="code-punc">[</span><span class="code-var">comp</span><span class="code-punc">]</span><span class="code-punc">}</span> Ω"</span><span class="code-punc">)</span>
+<span class="code-cmt"># R102 → 1000 Ω</span>`,
+
+    3: `<span class="code-cmt"># Set: collect unique fault codes</span>
+<span class="code-var">raw_faults</span> <span class="code-punc">=</span> <span class="code-punc">[</span><span class="code-str">"E01"</span><span class="code-punc">,</span> <span class="code-str">"E03"</span><span class="code-punc">,</span> <span class="code-str">"E01"</span><span class="code-punc">,</span> <span class="code-str">"E07"</span><span class="code-punc">,</span> <span class="code-str">"E03"</span><span class="code-punc">]</span>
+
+<span class="code-var">unique_faults</span> <span class="code-punc">=</span> <span class="code-fn">set</span><span class="code-punc">(</span><span class="code-var">raw_faults</span><span class="code-punc">)</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-var">unique_faults</span><span class="code-punc">)</span>
+<span class="code-cmt"># {'E01', 'E03', 'E07'}</span>
+
+<span class="code-kw">for</span> <span class="code-var">code</span> <span class="code-kw">in</span> <span class="code-var">unique_faults</span><span class="code-punc">:</span>
+    <span class="code-fn">handle_fault</span><span class="code-punc">(</span><span class="code-var">code</span><span class="code-punc">)</span>`,
+
+    4: `<span class="code-cmt"># List: ordered task queue with insertions</span>
+<span class="code-var">pipeline</span> <span class="code-punc">=</span> <span class="code-punc">[</span><span class="code-str">"parse"</span><span class="code-punc">,</span> <span class="code-str">"validate"</span><span class="code-punc">,</span> <span class="code-str">"transform"</span><span class="code-punc">]</span>
+
+<span class="code-var">pipeline</span><span class="code-punc">.</span><span class="code-fn">insert</span><span class="code-punc">(</span><span class="code-num">1</span><span class="code-punc">,</span> <span class="code-str">"sanitise"</span><span class="code-punc">)</span>
+
+<span class="code-kw">for</span> <span class="code-var">task</span> <span class="code-kw">in</span> <span class="code-var">pipeline</span><span class="code-punc">:</span>
+    <span class="code-fn">run_task</span><span class="code-punc">(</span><span class="code-var">task</span><span class="code-punc">)</span>
+<span class="code-cmt"># parse → sanitise → validate → transform</span>`,
+
+    5: `<span class="code-cmt"># Dictionary: config parameter lookup</span>
+<span class="code-var">config</span> <span class="code-punc">=</span> <span class="code-punc">{</span>
+    <span class="code-str">"sample_rate"</span><span class="code-punc">:</span> <span class="code-num">1000</span><span class="code-punc">,</span>
+    <span class="code-str">"timeout"</span><span class="code-punc">:</span> <span class="code-num">30</span><span class="code-punc">,</span>
+    <span class="code-str">"mode"</span><span class="code-punc">:</span> <span class="code-str">"continuous"</span>
+<span class="code-punc">}</span>
+
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-var">config</span><span class="code-punc">[</span><span class="code-str">"sample_rate"</span><span class="code-punc">]</span><span class="code-punc">)</span>  <span class="code-cmt"># 1000</span>
+<span class="code-var">config</span><span class="code-punc">[</span><span class="code-str">"timeout"</span><span class="code-punc">]</span> <span class="code-punc">=</span> <span class="code-num">60</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-var">config</span><span class="code-punc">[</span><span class="code-str">"mode"</span><span class="code-punc">]</span><span class="code-punc">)</span>    <span class="code-cmt"># continuous</span>`,
+
+    6: `<span class="code-cmt"># Tuple: immutable RGB colour constant</span>
+<span class="code-var">HIGHLIGHT_COLOUR</span> <span class="code-punc">=</span> <span class="code-punc">(</span><span class="code-num">255</span><span class="code-punc">,</span> <span class="code-num">128</span><span class="code-punc">,</span> <span class="code-num">0</span><span class="code-punc">)</span>
+
+<span class="code-var">r</span><span class="code-punc">,</span> <span class="code-var">g</span><span class="code-punc">,</span> <span class="code-var">b</span> <span class="code-punc">=</span> <span class="code-var">HIGHLIGHT_COLOUR</span>
+<span class="code-fn">draw_marker</span><span class="code-punc">(</span><span class="code-var">x</span><span class="code-punc">,</span> <span class="code-var">y</span><span class="code-punc">,</span> <span class="code-var">colour</span><span class="code-punc">=</span><span class="code-var">HIGHLIGHT_COLOUR</span><span class="code-punc">)</span>
+
+<span class="code-cmt"># Tuple used as dict key (hashable):</span>
+<span class="code-var">palette</span> <span class="code-punc">=</span> <span class="code-punc">{</span><span class="code-var">HIGHLIGHT_COLOUR</span><span class="code-punc">:</span> <span class="code-str">"warning"</span><span class="code-punc">}</span>`,
+
+    7: `<span class="code-cmt"># Set: intersection of approved & experimental</span>
+<span class="code-var">approved</span> <span class="code-punc">=</span> <span class="code-punc">{</span><span class="code-str">"steel"</span><span class="code-punc">,</span> <span class="code-str">"aluminium"</span><span class="code-punc">,</span> <span class="code-str">"carbon"</span><span class="code-punc">}</span>
+<span class="code-var">experimental</span> <span class="code-punc">=</span> <span class="code-punc">{</span><span class="code-str">"carbon"</span><span class="code-punc">,</span> <span class="code-str">"graphene"</span><span class="code-punc">,</span> <span class="code-str">"aluminium"</span><span class="code-punc">}</span>
+
+<span class="code-var">overlap</span> <span class="code-punc">=</span> <span class="code-var">approved</span> <span class="code-punc">&</span> <span class="code-var">experimental</span>
+<span class="code-fn">print</span><span class="code-punc">(</span><span class="code-var">overlap</span><span class="code-punc">)</span>
+<span class="code-cmt"># {'carbon', 'aluminium'}</span>`
+  };
+
+  // ─── DATA ────────────────────────────────────────────────────────────────────
+  const ALL_PAIRS = [
+    {
+      structure: "List",
+      scenario: "Storing a sequence of sensor readings over time that you need to sort and update continuously.",
+      hint: "Lists are ordered, mutable, and great for sequences you need to modify."
+    },
+    {
+      structure: "Tuple",
+      scenario: "Recording the fixed (x, y, z) coordinates of a calibration point that must never change.",
+      hint: "Tuples are immutable — perfect for fixed, read-only data like coordinates."
+    },
+    {
+      structure: "Dictionary",
+      scenario: "Mapping each component ID to its measured resistance value for quick lookup.",
+      hint: "Dictionaries store key-value pairs for fast, label-based retrieval."
+    },
+    {
+      structure: "Set",
+      scenario: "Collecting the unique fault codes reported by a machine to avoid processing duplicates.",
+      hint: "Sets automatically eliminate duplicates and support fast membership testing."
+    },
+    {
+      structure: "List",
+      scenario: "Maintaining an ordered queue of tasks to process in a pipeline simulation, allowing insertions.",
+      hint: "Lists support ordered, mutable sequences — ideal for dynamic queues."
+    },
+    {
+      structure: "Dictionary",
+      scenario: "Storing configuration settings where each parameter name maps to its current value.",
+      hint: "Dictionaries let you look up a value instantly by its descriptive key."
+    },
+    {
+      structure: "Tuple",
+      scenario: "Representing an RGB colour code (255, 128, 0) that should remain constant throughout the program.",
+      hint: "Tuples are immutable groupings — use them when the data must stay fixed."
+    },
+    {
+      structure: "Set",
+      scenario: "Finding which materials appear in both the approved list and the experimental list using intersection.",
+      hint: "Sets support set operations like intersection, union, and difference."
+    }
+  ];
+
+  const TOTAL_QUESTIONS = 8;
+
+  // ─── STATE ───────────────────────────────────────────────────────────────────
+  let score = 0;
+  let mistakes = 0;
+  let draggedLabelId = null;
+  let lockedZones = new Set();
+  let touchGhost = null;
+  let touchDragId = null;
+
+  let labelUsageMap = {};
+  let pairIndexToStructure = {};
+  let activePairs = [];
+  let activePairOriginalIndices = []; // maps activePairs index → ALL_PAIRS index
+
+  // ─── UTILITY ─────────────────────────────────────────────────────────────────
+  function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function showFeedback(message, type) {
+    const el = document.getElementById('feedback-msg');
+    el.textContent = message;
+    el.className = type;
+    clearTimeout(el._timeout);
+    el._timeout = setTimeout(() => { el.className = 'hidden'; }, 2200);
+  }
+
+  function updateScoreDisplay() {
+    document.getElementById('score-display').textContent = score;
+    document.getElementById('mistake-display').textContent = mistakes;
+  }
+
+  // ─── CORRECT POPUP ────────────────────────────────────────────────────────────
+  let pendingWin = false;
+
+  function showCorrectPopup(structure, hint, originalPairIndex) {
+    document.getElementById('popup-structure-badge').textContent = structure;
+    document.getElementById('popup-hint').textContent = hint;
+    const codeEl = document.getElementById('popup-code');
+    codeEl.innerHTML = CODE_EXAMPLES[originalPairIndex] || '<span class="code-cmt"># No example available.</span>';
+    document.getElementById('correct-popup-overlay').classList.add('show');
+  }
+
+  function closeCorrectPopup() {
+    document.getElementById('correct-popup-overlay').classList.remove('show');
+    if (pendingWin) {
+      pendingWin = false;
+      setTimeout(showWinState, 200);
+    }
+  }
+
+  // ─── INIT ─────────────────────────────────────────────────────────────────────
+  function initGame() {
+    score = 0;
+    mistakes = 0;
+    lockedZones = new Set();
+    draggedLabelId = null;
+    touchDragId = null;
+    labelUsageMap = {};
+    pairIndexToStructure = {};
+    activePairs = [];
+    activePairOriginalIndices = [];
+    pendingWin = false;
+    removeGhost();
+
+    updateScoreDisplay();
+    document.getElementById('end-overlay').classList.remove('show');
+    document.getElementById('correct-popup-overlay').classList.remove('show');
+    document.getElementById('feedback-msg').className = 'hidden';
+
+    // Use all 8 pairs (they are exactly TOTAL_QUESTIONS)
+    const shuffledIndices = shuffleArray(ALL_PAIRS.map((_, i) => i)).slice(0, TOTAL_QUESTIONS);
+    activePairs = shuffledIndices.map(i => ALL_PAIRS[i]);
+    activePairOriginalIndices = shuffledIndices;
+
+    document.getElementById('total-display').textContent = TOTAL_QUESTIONS;
+
+    activePairs.forEach((pair, idx) => {
+      pairIndexToStructure[idx] = pair.structure;
+      if (!labelUsageMap[pair.structure]) {
+        labelUsageMap[pair.structure] = { remainingUses: 0, totalUses: 0 };
+      }
+      labelUsageMap[pair.structure].remainingUses++;
+      labelUsageMap[pair.structure].totalUses++;
+    });
+
+    buildLabels();
+    buildZones(activePairs);
+  }
+
+  function buildLabels() {
+    const col = document.getElementById('labels-column');
+    Array.from(col.querySelectorAll('.drag-label')).forEach(el => el.remove());
+
+    const uniqueStructures = shuffleArray(Object.keys(labelUsageMap));
+
+    uniqueStructures.forEach(structureName => {
+      const usage = labelUsageMap[structureName];
+      const el = document.createElement('div');
+      el.className = 'drag-label';
+      el.id = `label-${structureName}`;
+      el.draggable = true;
+      el.dataset.structure = structureName;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'label-name';
+      nameSpan.textContent = structureName;
+      el.appendChild(nameSpan);
+
+      if (usage.totalUses > 1) {
+        const badge = document.createElement('span');
+        badge.className = 'uses-badge';
+        badge.id = `badge-${structureName}`;
+        badge.textContent = `${usage.remainingUses} uses`;
+        el.appendChild(badge);
+      }
+
+      el.addEventListener('dragstart', onDragStart);
+      el.addEventListener('dragend', onDragEnd);
+      el.addEventListener('touchstart', onTouchStart, { passive: false });
+      el.addEventListener('touchmove', onTouchMove, { passive: false });
+      el.addEventListener('touchend', onTouchEnd);
+
+      col.appendChild(el);
+    });
+  }
+
+  function buildZones(pairs) {
+    const col = document.getElementById('zones-column');
+    Array.from(col.querySelectorAll('.drop-zone')).forEach(el => el.remove());
+
+    const zoneOrder = shuffleArray(pairs.map((p, i) => i));
+
+    zoneOrder.forEach(pairIndex => {
+      const pair = pairs[pairIndex];
+      const el = document.createElement('div');
+      el.className = 'drop-zone';
+      el.id = `zone-${pairIndex}`;
+      el.dataset.pairIndex = pairIndex;
+
+      const scenarioText = document.createElement('div');
+      scenarioText.className = 'scenario-text';
+      scenarioText.textContent = pair.scenario;
+      el.appendChild(scenarioText);
+
+      el.addEventListener('dragover', onDragOver);
+      el.addEventListener('dragleave', onDragLeave);
+      el.addEventListener('drop', onDrop);
+
+      col.appendChild(el);
+    });
+  }
+
+  // ─── LABEL BADGE UPDATE ───────────────────────────────────────────────────────
+  function decrementLabelUses(structureName) {
+    const usage = labelUsageMap[structureName];
+    if (!usage) return;
+    usage.remainingUses--;
+
+    const label = document.getElementById(`label-${structureName}`);
+    if (!label) return;
+
+    if (usage.totalUses > 1) {
+      const badge = document.getElementById(`badge-${structureName}`);
+      if (badge) {
+        badge.textContent = `${usage.remainingUses} uses`;
+      }
+    }
+
+    if (usage.remainingUses <= 0) {
+      label.classList.add('exhausted');
+      label.draggable = false;
+      const badge = document.getElementById(`badge-${structureName}`);
+      if (badge) badge.textContent = '✔ done';
+    }
+  }
+
+  // ─── DESKTOP DRAG ─────────────────────────────────────────────────────────────
+  function onDragStart(e) {
+    const label = e.currentTarget;
+    if (label.classList.contains('exhausted')) { e.preventDefault(); return; }
+    draggedLabelId = label.id;
+    label.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', label.id);
+  }
+
+  function onDragEnd(e) {
+    e.currentTarget.classList.remove('dragging');
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+    const zone = e.currentTarget;
+    if (!zone.classList.contains('locked-zone')) {
+      zone.classList.add('drag-over');
+    }
+    e.dataTransfer.dropEffect = 'move';
+  }
+
+  function onDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    const zone = e.currentTarget;
+    zone.classList.remove('drag-over');
+    if (zone.classList.contains('locked-zone')) return;
+
+    const labelId = e.dataTransfer.getData('text/plain') || draggedLabelId;
+    if (!labelId) return;
+
+    const label = document.getElementById(labelId);
+    if (!label || label.classList.contains('exhausted')) return;
+
+    evaluateDrop(label, zone);
+  }
+
+  // ─── TOUCH DRAG ───────────────────────────────────────────────────────────────
+  function onTouchStart(e) {
+    const label = e.currentTarget;
+    if (label.classList.contains('exhausted')) return;
+    touchDragId = label.id;
+    const nameSpan = label.querySelector('.label-name');
+    createGhost(nameSpan ? nameSpan.textContent : label.dataset.structure, e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  }
+
+  function onTouchMove(e) {
+    if (!touchDragId) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    moveGhost(touch.clientX, touch.clientY);
+    highlightZoneUnderTouch(touch.clientX, touch.clientY);
+  }
+
+  function onTouchEnd(e) {
+    if (!touchDragId) return;
+    const touch = e.changedTouches[0];
+    removeGhost();
+
+    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+    const zone = target ? target.closest('.drop-zone') : null;
+
+    const label = document.getElementById(touchDragId);
+    touchDragId = null;
+
+    if (zone && label && !zone.classList.contains('locked-zone')) {
+      evaluateDrop(label, zone);
+    }
+  }
+
+  function highlightZoneUnderTouch(x, y) {
+    document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+    const el = document.elementFromPoint(x, y);
+    if (!el) return;
+    const zone = el.closest('.drop-zone');
+    if (zone && !zone.classList.contains('locked-zone')) {
+      zone.classList.add('drag-over');
+    }
+  }
+
+  function createGhost(text, x, y) {
+    removeGhost();
+    touchGhost = document.createElement('div');
+    touchGhost.className = 'drag-ghost';
+    touchGhost.textContent = text;
+    touchGhost.style.left = x + 'px';
+    touchGhost.style.top = y + 'px';
+    document.body.appendChild(touchGhost);
+  }
+
+  function moveGhost(x, y) {
+    if (!touchGhost) return;
+    touchGhost.style.left = x + 'px';
+    touchGhost.style.top = y + 'px';
+  }
+
+  function removeGhost() {
+    if (touchGhost) { touchGhost.remove(); touchGhost = null; }
+  }
+
+  // ─── EVALUATION ───────────────────────────────────────────────────────────────
+  function evaluateDrop(label, zone) {
+    const droppedStructure = label.dataset.structure;
+    const zonePairIndex = parseInt(zone.dataset.pairIndex, 10);
+    const correctStructure = pairIndexToStructure[zonePairIndex];
+
+    if (droppedStructure === correctStructure) {
+      // CORRECT
+      score++;
+      lockedZones.add(zone.id);
+
+      zone.classList.add('locked-zone', 'correct-flash');
+
+      const matchedBadge = document.createElement('div');
+      matchedBadge.className = 'matched-label';
+      matchedBadge.textContent = '✔ ' + droppedStructure;
+      zone.appendChild(matchedBadge);
+
+      decrementLabelUses(droppedStructure);
+      updateScoreDisplay();
+
+      const matchedPair = activePairs[zonePairIndex];
+      const originalIndex = activePairOriginalIndices[zonePairIndex];
+
+      // Show correct popup
+      const isLastMatch = (score === TOTAL_QUESTIONS);
+      if (isLastMatch) pendingWin = true;
+
+      setTimeout(() => {
+        showCorrectPopup(
+          droppedStructure,
+          matchedPair ? matchedPair.hint : '',
+          originalIndex
+        );
+      }, 300);
+
+    } else {
+      // INCORRECT
+      mistakes++;
+      updateScoreDisplay();
+
+      zone.classList.add('incorrect-flash');
+      label.classList.add('bounce');
+
+      showFeedback('✗ Not quite — think about what ' + correctStructure + ' does best.', 'negative');
+
+      setTimeout(() => {
+        label.classList.remove('bounce');
+        zone.classList.remove('incorrect-flash');
+      }, 500);
+    }
+  }
+
+  // ─── END STATE ────────────────────────────────────────────────────────────────
+  function showWinState() {
+    const overlay = document.getElementById('end-overlay');
+    const box = document.getElementById('end-box');
+    document.getElementById('end-title').textContent = '🎉 Excellent Work!';
+    document.getElementById('end-message').textContent =
+      'You successfully matched all Python data structures to their ideal engineering scenarios. You understand when to use lists, tuples, dictionaries, and sets!';
+    document.getElementById('end-score').textContent =
+      `Final Score: ${score} / ${TOTAL_QUESTIONS}  |  Mistakes: ${mistakes}`;
+    box.className = 'end-box win';
+    overlay.classList.add('show');
+  }
+
+  // ─── START ───────────────────────────────────────────────────────────────────
+  initGame();
+</script>
+</body>
+</html>

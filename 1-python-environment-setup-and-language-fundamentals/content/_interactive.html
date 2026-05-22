@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python_Environment_Setup</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Python_Environment_Setup</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Variables and Assignment</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Variables are one of the most fundamental building blocks in any programming language. In Python, variables act as named references that point to values stored in memory, and they can be created, updated, and reused throughout a program with minimal ceremony.</p><ul><li><strong>What Is a Variable?</strong> <em>Variables are created the moment a value is assigned to them using the <code>=</code> operator</em> — there is no need for a separate declaration step as in some other languages. <em>The same variable can be reassigned to a different value or even a different type at any time</em>, because Python is dynamically typed and does not lock a variable to a specific data type. <em>Descriptive variable names make code more readable and easier to maintain</em>, helping both the original author and future collaborators understand the purpose of stored data at a glance.</li><li><strong>Naming Rules and Conventions</strong> <em>Variable names must start with a letter or underscore and can contain letters, digits, and underscores</em> — names beginning with a digit are invalid and will cause a syntax error. <em>Names are case-sensitive, so <code>score</code>, <code>Score</code>, and <code>SCORE</code> are three distinct variables</em>, each capable of holding a completely independent value. <em>Python keywords such as <code>if</code>, <code>for</code>, and <code>return</code> are reserved and cannot be used as variable names</em>, as doing so would conflict with the language's own syntax and raise an error.</li><li><strong>Multiple Assignment and Unpacking</strong> <em>Chained assignment sets multiple variables to the same value in a single line</em>, for example <code>x = y = z = 0</code> initialises all three to zero simultaneously. <em>Tuple unpacking assigns each element of a sequence to a corresponding variable</em>, as in <code>a, b, c = 1, 2, 3</code>, which is both concise and expressive. <em>Multiple assignment improves code conciseness but should be used carefully to maintain clarity</em>, since assigning too many variables on one line can make the code harder to read and debug.</li></ul><pre><code># Simple assignment
+name = "Alice"
+score = 42
+
+# Reassignment to a different type
+score = "forty-two"
+
+# Chained assignment
+x = y = z = 0
+
+# Tuple unpacking
+first, second, third = 10, 20, 30
+print(first, second, third)  # 10 20 30</code></pre>
+        <div class="notes"><strong>Notes</strong>Introduces how Python uses variables to store and reference data, covering naming conventions, assignment syntax, and how Python manages variable references in memory.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Core Data Types</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Python provides a rich set of built-in data types that cover the most common needs in everyday programming. Understanding the characteristics of each type — and when to use it — is essential for writing correct, efficient, and readable code.</p><ul><li><strong>Integers and Floating-Point Numbers</strong> <em>Integers represent exact whole numbers with no size limit in Python</em>, so there is no overflow for extremely large values the way there is in languages with fixed-width integers. <em>Floats can represent decimal values but may produce small rounding errors due to binary representation</em>, which is why financial applications often use the <code>decimal</code> module instead. <em>Arithmetic between an <code>int</code> and a <code>float</code> produces a <code>float</code> result</em>, as Python automatically widens the result to preserve precision.</li><li><strong>Strings</strong> <em>Strings are immutable, meaning their contents cannot be changed after creation</em> — any operation that appears to modify a string actually produces a brand-new string object. <em>Individual characters in a string can be accessed using index notation, e.g., <code>text[0]</code></em>, and negative indices count from the end, so <code>text[-1]</code> retrieves the last character. <em>String concatenation combines strings using the <code>+</code> operator</em>, though for joining many strings together the <code>join()</code> method is far more efficient. <em>f-strings allow variables and expressions to be embedded directly into string literals</em> using curly-brace syntax, making formatted output concise and readable.</li><li><strong>Booleans</strong> <em>Boolean values are produced by comparison and logical operations</em>, and they form the backbone of all conditional branching and loop control in Python. <em><code>True</code> and <code>False</code> are Python keywords and must be capitalized</em> — writing <code>true</code> or <code>false</code> in lowercase will raise a <code>NameError</code>. <em>Any Python object can be evaluated as a boolean in a conditional context</em>, with empty containers, zero, and <code>None</code> being treated as falsy and most other values as truthy.</li><li><strong>The None Type</strong> <em><code>None</code> is the only value of <code>NoneType</code> and is not the same as zero, <code>False</code>, or an empty string</em> — it explicitly represents the absence of a value. <em>Functions that lack a return statement implicitly return <code>None</code></em>, so calling such a function and using its return value without checking can lead to subtle bugs. <em><code>None</code> is commonly used to initialize variables that will be assigned a real value later</em>, signalling clearly that the variable is intentionally empty at that point in the program.</li><li><strong>Checking Data Types with <code>type()</code></strong> <em><code>type()</code> accepts any Python object and returns its class</em>, for example <code>type(3.14)</code> returns <code>&lt;class 'float'&gt;</code>. <em>Knowing the type of a variable is essential before performing operations that require a specific type</em>, since Python will raise a <code>TypeError</code> if incompatible types are used together without conversion. <em><code>isinstance()</code> is preferred over <code>type()</code> for type-checking in conditional statements</em>, because it correctly handles inheritance and is considered more Pythonic.</li></ul><pre><code># Integers and floats
+whole = 100
+decimal = 3.14
+print(whole + decimal)      # 103.14  (float result)
+
+# Strings
+greeting = "Hello"
+print(greeting[0])          # H
+name = "World"
+print(f"{greeting}, {name}!")
+
+# Booleans
+print(type(True))           # &lt;class 'bool'&gt;
+print(bool(""))             # False
+print(bool(42))             # True
+
+# None
+result = None
+print(type(result))         # &lt;class 'NoneType'&gt;
+
+# Type checking
+print(isinstance(3.14, float))  # True</code></pre>
+        <div class="notes"><strong>Notes</strong>Covers Python&#39;s fundamental built-in data types including integers, floats, strings, and booleans, explaining their characteristics and appropriate use cases.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">3</span><h2>Operators in Python</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Operators are the symbols that tell Python how to process and combine values. From basic arithmetic to logical decision-making, a solid understanding of Python's operator categories and precedence rules is essential for writing expressions that behave exactly as intended.</p><ul><li><strong>Arithmetic Operators</strong> <em>The <code>/</code> operator always returns a float, while <code>//</code> performs integer (floor) division</em>, discarding any remainder and returning the largest whole number not exceeding the result. <em>The <code>%</code> operator returns the remainder of a division</em>, making it especially useful for checking whether a number is even, odd, or divisible by some value. <em>The <code>**</code> operator raises a number to a power</em>, so <code>2**8</code> evaluates to <code>256</code> and can be combined with fractional exponents to compute roots.</li><li><strong>Comparison Operators</strong> <em>Comparison operators always return either <code>True</code> or <code>False</code></em>, making them the natural tool for building conditions in <code>if</code> statements and <code>while</code> loops. <em>The <code>==</code> operator checks value equality, while <code>is</code> checks object identity</em> — two objects can be equal in value yet reside at different memory addresses. <em>Comparisons can be chained in Python</em>, so an expression like <code>1 &lt; x &lt; 10</code> is valid, readable, and equivalent to <code>1 &lt; x and x &lt; 10</code>.</li><li><strong>Logical Operators</strong> <em><code>and</code> returns <code>True</code> only if both operands are true</em>, so a single falsy operand is enough to make the entire expression falsy. <em><code>or</code> returns <code>True</code> if at least one operand is true</em>, and stops evaluating as soon as a truthy value is found. <em><code>not</code> inverts a boolean expression</em>, turning <code>True</code> to <code>False</code> and vice versa, and is often used to make conditional checks read more naturally. <em>Python uses short-circuit evaluation</em>, stopping as soon as the outcome is determined, which can also be used deliberately to avoid errors in compound conditions.</li><li><strong>Assignment Operators</strong> <em>The <code>=</code> operator assigns the value on the right to the variable on the left</em> and is not to be confused with the <code>==</code> equality check. <em>Augmented operators like <code>+=</code> combine an arithmetic operation with assignment in one step</em>, so <code>count += 1</code> is a concise equivalent of <code>count = count + 1</code>. <em>Using augmented assignment operators improves code readability in iterative operations</em>, such as accumulating totals or building strings in a loop.</li><li><strong>Operator Precedence</strong> <em>Expressions inside parentheses are always evaluated first</em>, regardless of any other operators present, making parentheses the safest tool for enforcing a desired evaluation order. <em>Exponentiation has higher precedence than multiplication or division</em>, so <code>2 * 3**2</code> evaluates as <code>2 * 9 = 18</code>, not <code>6**2 = 36</code>. <em>When operators share the same precedence level, they are evaluated left to right</em> (left associativity), with the notable exception of the exponentiation operator, which is right-associative.</li></ul><pre><code># Arithmetic
+print(7 / 2)      # 3.5
+print(7 // 2)     # 3
+print(7 % 2)      # 1
+print(2 ** 8)     # 256
+
+# Comparison
+x = 5
+print(1 &lt; x &lt; 10)   # True
+print(x == 5)        # True
+
+# Logical with short-circuit
+print(True or 1/0)   # True  (right side never evaluated)
+
+# Augmented assignment
+count = 0
+count += 1
+print(count)  # 1
+
+# Precedence
+print(2 * 3 ** 2)    # 18
+print((2 * 3) ** 2)  # 36</code></pre>
+        <div class="notes"><strong>Notes</strong>Introduces the main categories of Python operators — arithmetic, comparison, logical, and assignment — explaining their syntax, behavior, and precedence rules.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">4</span><h2>Type Conversion</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Data in real programs rarely arrives in exactly the type needed for a given operation. Python handles many type mismatches automatically, but programmers must also know how and when to convert types explicitly — and how to deal gracefully with conversions that can go wrong.</p><ul><li><strong>Implicit Type Conversion</strong> <em>Python automatically promotes <code>int</code> to <code>float</code> when they are used together in arithmetic</em>, ensuring that no precision is lost in the resulting value. <em>Implicit conversion only occurs when it is safe and does not result in data loss</em>, so Python will never silently truncate or corrupt a value behind the scenes. <em>Incompatible type combinations, such as adding a string to a number, raise a <code>TypeError</code></em>, because Python cannot make a safe assumption about the programmer's intent in such cases.</li><li><strong>Explicit Type Conversion with Built-in Functions</strong> <em><code>int()</code> converts a compatible string or float to an integer, truncating any decimal portion</em> — so <code>int(3.9)</code> yields <code>3</code>, not <code>4</code>. <em><code>float()</code> converts an integer or numeric string to a floating-point number</em>, enabling decimal arithmetic even when the original value was whole. <em><code>str()</code> converts any value to its string representation</em>, which is essential when concatenating numbers with text or writing output to a file. <em><code>bool()</code> converts a value to <code>True</code> or <code>False</code> based on its truthiness</em>, following the same rules that Python applies when evaluating any object in a conditional context.</li><li><strong>Common Conversion Errors and How to Avoid Them</strong> <em>Converting a non-numeric string to <code>int</code> or <code>float</code> raises a <code>ValueError</code></em>, because Python cannot interpret arbitrary text as a number. <em>Mixing incompatible types without conversion raises a <code>TypeError</code></em>, which is Python's way of signalling that the operation is not defined for the given combination of types. <em>Wrapping conversions in <code>try</code>/<code>except</code> blocks allows programs to handle invalid input gracefully</em>, displaying a helpful error message rather than crashing unexpectedly.</li></ul><pre><code># Implicit conversion
+result = 4 + 1.5
+print(result)         # 5.5  (float)
+print(type(result))   # &lt;class 'float'&gt;
+
+# Explicit conversion
+print(int(3.9))       # 3
+print(float(7))       # 7.0
+print(str(100))       # '100'
+print(bool(0))        # False
+print(bool("hello"))  # True
+
+# Handling conversion errors
+user_input = "abc"
+try:
+    number = int(user_input)
+except ValueError:
+    print(f"Cannot convert '{user_input}' to an integer.")
+
+# TypeError example
+try:
+    result = "age: " + 30
+except TypeError as e:
+    print(e)  # can only concatenate str (not "int") to str</code></pre>
+        <div class="notes"><strong>Notes</strong>Explains how Python handles conversion between data types, distinguishing between implicit coercion performed automatically by Python and explicit conversion performed by the programmer.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>
