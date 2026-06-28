@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numerical Methods with SciPy and Curve Fitting — EGN3214</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      background: #f4f6f9;
+      color: #1e2430;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header / Hero ── */
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
+      color: #ffffff;
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+
+    header .course-label {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    header p.intro {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    /* ── Main Content ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .section-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #5b6987;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #dde3ee;
+    }
+
+    /* ── Artifact Grid ── */
+    .artifact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── Artifact Card ── */
+    .artifact-card {
+      background: #ffffff;
+      border: 1px solid #dde3ee;
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .artifact-card:hover {
+      box-shadow: 0 6px 20px rgba(37, 99, 168, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Card top row: type badge + file-type pill */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-type {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: #e8f0fb;
+      color: #1a5299;
+      border-radius: 4px;
+      padding: 0.18rem 0.55rem;
+    }
+
+    .badge-filetype {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: #f0f3f8;
+      color: #5b6987;
+      border-radius: 4px;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid #dde3ee;
+    }
+
+    /* Card title row */
+    .card-title-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e2430;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+
+    a.card-name {
+      color: #1a5299;
+    }
+
+    a.card-name:hover {
+      color: #0e3570;
+      text-decoration: underline;
+    }
+
+    .source-link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #2563a8;
+      text-decoration: none;
+      white-space: nowrap;
+      background: #f0f6ff;
+      border: 1px solid #b8d0f0;
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      transition: background 0.15s ease;
+    }
+
+    .source-link:hover {
+      background: #ddeafc;
+      color: #0e3570;
+    }
+
+    /* Card description */
+    .card-description {
+      font-size: 0.9rem;
+      color: #444c60;
+      line-height: 1.55;
+      flex-grow: 1;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #8892a8;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #dde3ee;
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 480px) {
+      header { padding: 2rem 1rem 1.75rem; }
+      .artifact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="course-label">EGN3214</div>
+    <h1>Numerical Methods with SciPy and Curve Fitting</h1>
+    <p class="intro">
+      This module introduces students to practical numerical computing using Python's
+      SciPy library. Topics span root finding, numerical integration, interpolation,
+      and curve fitting — equipping learners with essential tools for engineering
+      problem-solving and data analysis.
+    </p>
+  </header>
+
+  <main>
+    <h2 class="section-heading">Module Artifacts</h2>
+
+    <div class="artifact-grid">
+
+      <!-- Artifact: Module Topics -->
+      <div class="artifact-card">
+        <div class="card-meta">
+          <span class="badge-type">Module Topics</span>
+          <span class="badge-filetype">.json</span>
+        </div>
+        <div class="card-title-row">
+          <a class="card-name" href="module_topics.html">Module Topics</a>
+          <a class="source-link" href="../hierarchy.json">source file</a>
+        </div>
+        <p class="card-description">
+          Outlines the full sequence of topics covered in the module — including SciPy
+          fundamentals, root finding, numerical integration, interpolation, and curve
+          fitting — serving as a syllabus-style reference that helps learners and
+          instructors navigate the module's content and progression.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    EGN3214 &mdash; Numerical Methods with SciPy and Curve Fitting &nbsp;|&nbsp; Course Module Index
+  </footer>
+
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

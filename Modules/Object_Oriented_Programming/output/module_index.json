@@ -1,0 +1,35 @@
+﻿{
+  "ModuleName": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow",
+  "CourseName": "EGN3214",
+  "ModuleFolderName": "Object_Oriented_Programming",
+  "GeneratedUtc": "2026-06-28T16:45:42.1030509Z",
+  "HtmlIndexSignature": "F774B1CE5A7F62F1721840111093B9EA784518FFA2A55EB0CB468A1F66ADF0DE",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "Outlines the module\u0027s learning topics across four areas \u2014 OOP fundamentals (classes, instances, attributes), modeling engineering objects (Beam and Sensor classes), inheritance and subclasses, and AI-assisted coding tools \u2014 serving as a roadmap for learners and instructors to navigate the module\u0027s scope and sequence.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Object_Oriented_Programming\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
+      "SourceModifiedTicks": 639144057647075309
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "This page lists and briefly describes the major topics covered in Module 7, including OOP fundamentals (classes, objects, attributes, and methods) and AI-assisted coding workflows, giving learners and instructors an overview of what the module covers before diving into individual lessons.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Object_Oriented_Programming\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182612029481259
+    }
+  ]
+}

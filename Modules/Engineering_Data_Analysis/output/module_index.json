@@ -1,0 +1,35 @@
+﻿{
+  "ModuleName": "Engineering Data Analysis and Simulation",
+  "CourseName": "EGN3214",
+  "ModuleFolderName": "Engineering_Data_Analysis",
+  "GeneratedUtc": "2026-06-28T16:46:49.8564759Z",
+  "HtmlIndexSignature": "13AA40EC80A34A4154E101151E652B140F0D86A9004EA66AD8EEF509804A2FBE",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "A structured outline of the module\u0027s learning topics\u2014covering the engineering data pipeline, pandas and NumPy basics, data loading and inspection, cleaning and preprocessing, and matplotlib visualization\u2014used by learners to navigate the course content and by instructors to sequence instruction.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Engineering_Data_Analysis\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
+      "SourceModifiedTicks": 639144060588762373
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "An overview page listing and briefly describing each topic in the Engineering Data Analysis and Simulation module\u2014from data acquisition pipelines and Python libraries to analysis and insight\u2014used by learners to orient themselves to the module\u0027s scope and sequence before diving into individual lessons.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Engineering_Data_Analysis\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182612709841864
+    }
+  ]
+}

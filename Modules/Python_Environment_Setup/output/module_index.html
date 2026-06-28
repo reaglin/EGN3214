@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 1 – Python Environment Setup and Language Fundamentals | EGN3214</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f4f6f9;
+      color: #1e2a3a;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ── Header Banner ── */
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #25587e 60%, #1e7aa0 100%);
+      color: #ffffff;
+      padding: 2.8rem 2rem 2.2rem;
+      text-align: center;
+    }
+
+    header .course-label {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.85rem;
+      margin-bottom: 0.85rem;
+      color: #cde8f5;
+    }
+
+    header h1 {
+      font-size: clamp(1.45rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 0.9rem;
+    }
+
+    header p {
+      max-width: 660px;
+      margin: 0 auto;
+      font-size: 0.97rem;
+      color: #d4eaf6;
+      line-height: 1.7;
+    }
+
+    /* ── Main Content ── */
+    main {
+      max-width: 1060px;
+      margin: 2.4rem auto 3.5rem;
+      padding: 0 1.25rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5a7a96;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #dde5ee;
+    }
+
+    /* ── Card Grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #dde5ee;
+      border-radius: 10px;
+      padding: 1.35rem 1.4rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      transition: box-shadow 0.18s ease, transform 0.18s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 22px rgba(30, 80, 130, 0.11);
+      transform: translateY(-2px);
+    }
+
+    /* ── Card Top Row ── */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 0.18rem 0.55rem;
+    }
+
+    .badge-type {
+      background: #e8f0fa;
+      color: #2d5f99;
+      border: 1px solid #c5d8f5;
+    }
+
+    .badge-filetype {
+      background: #eef7ee;
+      color: #2d7a3a;
+      border: 1px solid #b8dfc0;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ── Card Name / Title ── */
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #1a3a5c;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      line-height: 1.35;
+    }
+
+    .card-title a.primary-link {
+      color: #1a5fa8;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .card-title a.primary-link:hover {
+      color: #0d3f7a;
+      border-bottom-color: #1a5fa8;
+    }
+
+    .card-title span.plain-name {
+      color: #1a3a5c;
+    }
+
+    /* ── Source File Link ── */
+    a.source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #5a7a96;
+      background: #f0f5fb;
+      border: 1px solid #c8d8ea;
+      border-radius: 4px;
+      padding: 0.15rem 0.48rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.14s, color 0.14s;
+    }
+
+    a.source-link::before {
+      content: "⬡";
+      font-size: 0.65rem;
+    }
+
+    a.source-link:hover {
+      background: #d9e8f8;
+      color: #1a3a5c;
+    }
+
+    /* ── Description ── */
+    .card-description {
+      font-size: 0.875rem;
+      color: #3e5268;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* ── Divider accent ── */
+    .card::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(180deg, #1a5fa8, #1e9fc4);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.4rem 1rem 2rem;
+      font-size: 0.78rem;
+      color: #8a9eb5;
+    }
+
+    footer span {
+      font-weight: 600;
+      color: #5a7a96;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      header { padding: 2rem 1.25rem 1.75rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .card { padding: 1.15rem 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="course-label">EGN3214</div>
+    <h1>Module 1 &mdash; Python Environment Setup and Language Fundamentals</h1>
+    <p>
+      This module introduces the Python ecosystem, guiding you through selecting and configuring
+      development environments, managing packages and virtual environments, and building a solid
+      foundation in core language concepts including variables, assignment, and execution modes.
+    </p>
+  </header>
+
+  <main>
+    <p class="section-label">Module Artifacts &mdash; 5 items</p>
+
+    <div class="card-grid">
+
+      <!-- Artifact 1: Module Topics -->
+      <div class="card">
+        <div class="card-meta">
+          <span class="badge badge-type">Module Topics</span>
+          <span class="badge badge-filetype">.json</span>
+        </div>
+        <div class="card-title">
+          <a class="primary-link" href="module_topics.html">Module Topics</a>
+          <a class="source-link" href="../hierarchy.json">source file</a>
+        </div>
+        <p class="card-description">
+          A structured outline of the module's topics, covering Python environments (IDEs, Jupyter Notebooks),
+          package management (pip, virtual environments), execution modes (interactive vs. script), and variables —
+          used by instructors to plan lessons and by learners to preview what will be covered.
+        </p>
+      </div>
+
+      <!-- Artifact 2: Python_Environment_Setup v2 -->
+      <div class="card">
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <div class="card-title">
+          <a class="primary-link" href="_interactive_v2.html">Python_Environment_Setup</a>
+        </div>
+        <p class="card-description">
+          This interactive HTML page introduces learners to Python environments and tools, explaining what a
+          Python environment is (interpreter plus supporting tools), why choosing the right one matters, and
+          guiding them through the options available before writing their first code; instructors would assign
+          it as a foundational reading or orientation resource at the start of the course.
+        </p>
+      </div>
+
+      <!-- Artifact 3: Python_Environment_Setup v3 -->
+      <div class="card">
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <div class="card-title">
+          <a class="primary-link" href="_interactive_v3.html">Python_Environment_Setup</a>
+        </div>
+        <p class="card-description">
+          This interactive HTML page introduces learners to Python environments and tools, explaining what a
+          Python environment is and guiding them through selecting and setting up an appropriate interpreter
+          and editor so they can begin writing, running, and debugging Python code.
+        </p>
+      </div>
+
+      <!-- Artifact 4: Python_Environment_Setup interactive -->
+      <div class="card">
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <div class="card-title">
+          <a class="primary-link" href="_interactive.html">Python_Environment_Setup</a>
+        </div>
+        <p class="card-description">
+          An interactive HTML lesson that explains Python fundamentals — starting with variables and assignment,
+          including what variables are, naming conventions, and how values are stored and updated — used by
+          learners to read explanations and engage with examples directly in a browser.
+        </p>
+      </div>
+
+      <!-- Artifact 5: Python_Environment_Setup topics -->
+      <div class="card">
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <div class="card-title">
+          <a class="primary-link" href="Python_Environment_Setup_interactive_topics.html">Python_Environment_Setup</a>
+        </div>
+        <p class="card-description">
+          An interactive HTML page mirroring the main lesson content on Python variables and assignment,
+          serving as a topic-level entry point that lets learners navigate directly to specific subtopics
+          within the module.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>EGN3214</span> &mdash; Module 1: Python Environment Setup and Language Fundamentals
+  </footer>
+
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

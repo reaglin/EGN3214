@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Learning, Automation, Version Control, and Responsible AI — EGN3214</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f4f6f9;
+      color: #2c3e50;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header / Hero ────────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2e6da4 100%);
+      color: #fff;
+      padding: 3rem 2rem 2.5rem;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .course-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    header p {
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.88);
+      max-width: 720px;
+      line-height: 1.7;
+    }
+
+    /* ── Main Content ─────────────────────────────────────────── */
+    main {
+      max-width: 960px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem 3rem;
+    }
+
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #6b7c93;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #dde3ec;
+    }
+
+    /* ── Artifact Card Grid ───────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #dde3ec;
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+
+    /* ── Card Header Row ──────────────────────────────────────── */
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .card-name-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a3a5c;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+
+    .card-name:hover {
+      color: #2e6da4;
+      text-decoration: underline;
+    }
+
+    .card-name.plain {
+      color: #2c3e50;
+      cursor: default;
+    }
+
+    .source-link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #5a82aa;
+      text-decoration: none;
+      border: 1px solid #aac4df;
+      border-radius: 4px;
+      padding: 0.15rem 0.45rem;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .source-link:hover {
+      background: #2e6da4;
+      color: #fff;
+      border-color: #2e6da4;
+    }
+
+    /* ── Badges ───────────────────────────────────────────────── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 0.18rem 0.5rem;
+    }
+
+    .badge-type {
+      background: #eaf1fb;
+      color: #2e6da4;
+      border: 1px solid #c0d8f0;
+    }
+
+    .badge-filetype {
+      background: #f0f4f0;
+      color: #3a6b3a;
+      border: 1px solid #b8d4b8;
+    }
+
+    /* ── Description ──────────────────────────────────────────── */
+    .card-description {
+      font-size: 0.88rem;
+      color: #4a5568;
+      line-height: 1.65;
+      flex-grow: 1;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #8a99ad;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #dde3ec;
+    }
+
+    /* ── Responsive tweaks ────────────────────────────────────── */
+    @media (max-width: 520px) {
+      header { padding: 2rem 1.25rem 1.75rem; }
+      main { margin-top: 1.75rem; padding: 0 1rem 2.5rem; }
+      .card { padding: 1.1rem 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════════════════════ -->
+  <header>
+    <div class="header-inner">
+      <span class="course-label">EGN3214</span>
+      <h1>Machine Learning, Automation, Version Control, and Responsible AI</h1>
+      <p>
+        This module introduces engineering students to foundational and applied topics at
+        the intersection of data-driven methods and professional practice. Topics span
+        supervised machine learning with scikit-learn, engineering automation and parameter
+        sweeps, version control workflows, and the ethical considerations central to
+        responsible AI deployment in real-world systems.
+      </p>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN
+  ════════════════════════════════════════════════════════════ -->
+  <main>
+    <p class="section-title">Module Artifacts</p>
+
+    <div class="card-grid">
+
+      <!-- ── Artifact: Module Topics ───────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name-row">
+            <!-- viewHref is non-empty → linked name -->
+            <a class="card-name" href="module_topics.html">Module Topics</a>
+            <!-- sourceHref is non-empty → secondary "source file" link -->
+            <a class="source-link" href="../hierarchy.json">source file</a>
+          </div>
+          <div class="badge-row">
+            <span class="badge badge-type">Module Topics</span>
+            <span class="badge badge-filetype">.json</span>
+          </div>
+        </div>
+        <p class="card-description">
+          Outlines the module's core topics—supervised machine learning concepts,
+          scikit-learn workflows, engineering automation and parameter sweeps, version
+          control, and responsible AI—serving as a navigation guide for learners to
+          understand what will be covered and for instructors to align their teaching
+          materials.
+        </p>
+      </div>
+
+    </div><!-- /.card-grid -->
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════════ -->
+  <footer>
+    EGN3214 &mdash; Machine Learning, Automation, Version Control, and Responsible AI
+  </footer>
+
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

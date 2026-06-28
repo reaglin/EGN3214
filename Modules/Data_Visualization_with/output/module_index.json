@@ -1,9 +1,9 @@
 ﻿{
-  "ModuleName": "Data_Visualization_with",
+  "ModuleName": "6 - Data Visualization with Matplotlib and Intro to Pandas",
   "CourseName": "EGN3214",
   "ModuleFolderName": "Data_Visualization_with",
-  "GeneratedUtc": "2026-06-28T15:49:22.4806426Z",
-  "HtmlIndexSignature": "",
+  "GeneratedUtc": "2026-06-28T16:44:52.5489395Z",
+  "HtmlIndexSignature": "5E6DEE2E5D934512A9ED567B1935FF9F5C3F064899FADB60B09E60D808A025B2",
   "Artifacts": [
     {
       "Name": "Module Topics",
@@ -13,10 +13,23 @@
       "CustomName": null,
       "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Data_Visualization_with\\hierarchy.json",
       "ViewerKind": 2,
-      "WebHref": "",
-      "LocalHref": "../hierarchy.json",
-      "RawHref": "",
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
       "SourceModifiedTicks": 639144056089459250
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "Lists the topics covered in the module\u2014including the Matplotlib/pyplot interface, figure and axes objects, and an introduction to Pandas\u2014serving as a navigational overview that helps learners and instructors see what concepts will be taught and in what order.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Data_Visualization_with\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182611550354461
     },
     {
       "Name": "Descriptive Statistics with Pandas",

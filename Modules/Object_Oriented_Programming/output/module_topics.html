@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 - Object-Oriented Programming and AI-Assisted Coding Workflow — Module Topics</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.2rem;margin-top:28px;color:#1a3c6e}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<h1>7 - Object-Oriented Programming and AI-Assisted Coding Workflow — Module Topics</h1>
+<h2>Foundations of Object-Oriented Programming</h2>
+<div class="summary">Introduces the fundamental concepts of OOP, explaining why it is a powerful paradigm for structuring engineering software. Covers the building blocks of classes, objects, attributes, and methods.</div>
+<ul>
+<li><strong>What Is Object-Oriented Programming?</strong> <span class="el-body">— Object-oriented programming (OOP) is a programming paradigm that organizes software around objects rather than functions and logic alone. It allows engineers to model real-world entities in code in an intuitive and reusable way.</span></li>
+<li><strong>Classes and Instances</strong> <span class="el-body">— A class is a blueprint that defines the structure and behavior of a type of object, while an instance is a specific object created from that blueprint. Understanding the distinction between a class definition and an instantiated object is foundational to OOP.</span></li>
+<li><strong>Attributes</strong> <span class="el-body">— Attributes are variables that belong to an object and store its state or properties. In engineering contexts, attributes might represent physical properties such as a beam&#39;s length, material, or cross-sectional area.</span></li>
+<li><strong>Methods</strong> <span class="el-body">— Methods are functions defined inside a class that describe the behaviors or operations an object can perform. They allow objects to act on their own data and interact with other objects.</span></li>
+<li><strong>The Constructor Method __init__</strong> <span class="el-body">— The __init__ method is a special method automatically called when a new instance is created. It initializes the object&#39;s attributes, ensuring every instance starts in a valid, well-defined state.</span></li>
+</ul>
+<h2>Modeling Engineering Objects with Classes</h2>
+<div class="summary">Demonstrates how OOP concepts are applied to represent real-world engineering entities such as structural beams and sensors as Python classes. Emphasizes practical class design for engineering problem-solving.</div>
+<ul>
+<li><strong>Designing an Engineering Class</strong> <span class="el-body">— Good class design begins by identifying the properties and behaviors of the engineering object being modeled. A systematic design process leads to classes that are intuitive, reusable, and aligned with engineering domain knowledge.</span></li>
+<li><strong>Implementing a Beam Class</strong> <span class="el-body">— A structural beam can be modeled as a Python class with attributes for geometry and material, and methods that compute engineering quantities such as moment of inertia or deflection. This example ties OOP syntax directly to familiar engineering concepts.</span></li>
+<li><strong>Implementing a Sensor Class</strong> <span class="el-body">— Sensors in an engineering system can be modeled as objects with attributes describing their type, location, and measurement range, and methods for reading or validating data. Modeling sensors as classes supports scalable, maintainable monitoring system code.</span></li>
+<li><strong>Using Objects Together in Engineering Systems</strong> <span class="el-body">— Real engineering programs often involve multiple interacting objects, such as sensors attached to beams or loads applied to structural members. Designing classes to work together models the relationships present in actual engineering systems.</span></li>
+<li><strong>String Representation with __str__ and __repr__</strong> <span class="el-body">— Implementing __str__ and __repr__ methods gives objects meaningful text representations, making debugging and logging significantly more informative. For engineering objects, these methods can display key attribute values in a readable format.</span></li>
+</ul>
+<h2>Inheritance and Class Hierarchies</h2>
+<div class="summary">Explains how inheritance allows new classes to build upon and extend existing ones, reducing duplication and reflecting natural hierarchies in engineering domains. Covers single inheritance, method overriding, and the use of super().</div>
+<ul>
+<li><strong>The Concept of Inheritance</strong> <span class="el-body">— Inheritance allows a child class to automatically receive the attributes and methods of a parent class, then extend or modify them as needed. This mechanism captures the &#39;is-a&#39; relationship between engineering object types.</span></li>
+<li><strong>Defining Subclasses</strong> <span class="el-body">— A subclass is defined by passing the parent class as an argument in the class declaration. The subclass can introduce new attributes and methods while inheriting everything already defined in the parent.</span></li>
+<li><strong>Calling the Parent Constructor with super()</strong> <span class="el-body">— The super() function allows a subclass to call the parent class&#39;s __init__ and other methods, ensuring parent initialization logic runs before the subclass adds its own setup. This prevents duplication and maintains proper object state.</span></li>
+<li><strong>Method Overriding</strong> <span class="el-body">— Method overriding allows a subclass to provide its own implementation of a method already defined in the parent class. This is how different beam types can each calculate moment of inertia using geometry-specific formulas.</span></li>
+<li><strong>When to Use Inheritance Versus Composition</strong> <span class="el-body">— Choosing between inheritance and composition is an important design decision. Inheritance suits &#39;is-a&#39; relationships, while composition suits &#39;has-a&#39; relationships, and selecting the right approach keeps code maintainable and logically sound.</span></li>
+<li><strong>Practical Inheritance Example: Sensor Hierarchy</strong> <span class="el-body">— A sensor hierarchy illustrates inheritance in action: a base Sensor class defines common attributes and a read_value() method, while subclasses such as TemperatureSensor and StrainGaugeSensor override read_value() with type-specific logic.</span></li>
+</ul>
+<h2>Introduction to AI-Assisted Coding Tools</h2>
+<div class="summary">Introduces GitHub Copilot and ChatGPT as AI coding assistants and explains how they integrate into the engineering programming workflow. Establishes the capabilities and limitations of each tool.</div>
+<ul>
+<li><strong>What Is GitHub Copilot?</strong> <span class="el-body">— GitHub Copilot is an AI-powered code completion tool integrated directly into code editors such as VS Code. It suggests code in real time as the programmer types, based on context from the current file and comments.</span></li>
+<li><strong>What Is ChatGPT for Coding?</strong> <span class="el-body">— ChatGPT is a conversational AI that can generate code, explain concepts, suggest fixes, and answer programming questions in natural language. Unlike Copilot, it is used in a separate chat interface rather than within the editor.</span></li>
+<li><strong>Capabilities and Limitations of AI Coding Assistants</strong> <span class="el-body">— AI coding assistants are powerful productivity tools but have well-documented limitations including generating plausible but incorrect code, using outdated library versions, and lacking domain-specific engineering judgment.</span></li>
+<li><strong>Setting Up the AI-Assisted Coding Environment</strong> <span class="el-body">— Integrating AI tools into a development environment requires installing the appropriate extensions and configuring access credentials. A properly set-up environment allows seamless use of Copilot within the editor alongside ChatGPT in a browser or API.</span></li>
+</ul>
+<h2>AI-Assisted Code Generation Workflow</h2>
+<div class="summary">Establishes a structured workflow for using AI tools to generate, refine, and integrate code for engineering programming tasks. Focuses on effective prompting strategies and iterative development practices.</div>
+<ul>
+<li><strong>Writing Effective Prompts for Code Generation</strong> <span class="el-body">— The quality of AI-generated code is directly tied to the quality of the prompt provided. Effective prompts are specific, include relevant context, state constraints, and describe expected inputs and outputs clearly.</span></li>
+<li><strong>Using Comments and Docstrings to Guide Copilot</strong> <span class="el-body">— GitHub Copilot uses inline comments and docstrings as high-quality contextual signals to generate relevant code suggestions. Writing descriptive comments before a function or method body is one of the most effective Copilot usage patterns.</span></li>
+<li><strong>Iterative Refinement of AI-Generated Code</strong> <span class="el-body">— AI-generated code rarely meets all requirements on the first attempt and should be treated as a draft to be iteratively refined. Reviewing, testing, and re-prompting are essential steps in the workflow.</span></li>
+<li><strong>Generating Boilerplate and Class Scaffolding</strong> <span class="el-body">— AI tools are especially effective at generating repetitive boilerplate code such as class definitions, __init__ methods, property accessors, and __str__ implementations. This accelerates the setup phase of engineering class design.</span></li>
+<li><strong>Using AI for Test Case Generation</strong> <span class="el-body">— AI tools can generate unit test cases for engineering classes, helping engineers verify that methods return correct results across a range of inputs. Prompt the tool to create tests covering typical values, edge cases, and boundary conditions.</span></li>
+</ul>
+<h2>AI-Assisted Debugging</h2>
+<div class="summary">Covers how to use AI tools to interpret error messages, identify bugs, and reason through incorrect program behavior. Establishes a systematic debugging approach that combines AI assistance with engineer-led analysis.</div>
+<ul>
+<li><strong>Reading and Interpreting Error Messages</strong> <span class="el-body">— Python error messages contain precise information about the type of error, the file, the line number, and a description of the problem. Learning to read tracebacks systematically is a prerequisite for effective debugging with or without AI assistance.</span></li>
+<li><strong>Prompting AI Tools to Explain Errors</strong> <span class="el-body">— Pasting an error message and the relevant code into ChatGPT and asking for an explanation is an effective first debugging step. AI tools can quickly identify common error patterns and suggest likely causes.</span></li>
+<li><strong>Common OOP Errors in Engineering Code</strong> <span class="el-body">— Certain error types arise frequently when working with classes, including AttributeError from misspelled attribute names, TypeError from incorrect method signatures, and errors from failing to call super() in subclass constructors.</span></li>
+<li><strong>Systematic Debugging Strategy</strong> <span class="el-body">— Effective debugging follows a systematic process: reproduce the error reliably, isolate the failing component, form a hypothesis about the cause, test the hypothesis, and apply and verify a fix. AI tools support but do not replace this process.</span></li>
+</ul>
+<h2>Responsible Use and Verification of AI-Generated Code</h2>
+<div class="summary">Establishes the ethical responsibilities and practical verification practices engineers must apply when using AI-generated code. Emphasizes that engineering judgment and accountability cannot be delegated to AI tools.</div>
+<ul>
+<li><strong>Why Verification Is Non-Negotiable in Engineering</strong> <span class="el-body">— Engineering software underpins decisions about physical systems where errors can have safety, financial, or environmental consequences. AI-generated code must be rigorously verified because the tools have no awareness of engineering standards, safety factors, or physical constraints.</span></li>
+<li><strong>Hand Calculation Verification</strong> <span class="el-body">— The most direct verification method is computing expected outputs by hand and comparing them against the program&#39;s results. Hand calculations catch numerical errors, wrong formulas, and incorrect unit handling in AI-generated engineering code.</span></li>
+<li><strong>Code Review Practices for AI-Generated Code</strong> <span class="el-body">— Code review involves systematically reading through generated code line by line to understand what it does, checking for logical errors, inappropriate assumptions, and missing edge case handling. This is a critical quality gate before any code is integrated.</span></li>
+<li><strong>Testing Strategies for Engineering Classes</strong> <span class="el-body">— Structured testing using Python&#39;s unittest or pytest frameworks provides systematic and repeatable verification of class behavior. Writing tests that cover typical values, boundary conditions, and known failure modes builds confidence in the code.</span></li>
+<li><strong>Academic and Professional Integrity in AI-Assisted Coding</strong> <span class="el-body">— Using AI tools responsibly includes understanding and following institutional policies on academic integrity and professional standards on attribution. Representing AI-generated code as entirely one&#39;s own original work without disclosure may violate ethical obligations.</span></li>
+<li><strong>Building a Responsible AI-Assisted Workflow Summary</strong> <span class="el-body">— A responsible AI-assisted engineering coding workflow integrates AI tools as productivity aids within a framework of human judgment, systematic verification, and professional accountability. The engineer remains the decision-maker throughout.</span></li>
+</ul>
+</body>
+</html>

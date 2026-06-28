@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 2 – Control Flow and Python Data Structures | EGN3214</title>
+  <title>EGN3214 – Module 2: Control Flow and Python Data Structures</title>
   <style>
-    /* ── Reset & Base ── */
+    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: #f4f6f9;
-      color: #1e2533;
+      color: #1e2535;
       min-height: 100vh;
-      padding-bottom: 3rem;
     }
 
-    /* ── Header Banner ── */
+    /* ── Header banner ── */
     header {
       background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
       color: #fff;
       padding: 2.5rem 2rem 2rem;
+      border-bottom: 4px solid #f0a500;
     }
 
     .header-inner {
@@ -37,332 +37,333 @@
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.3);
       border-radius: 4px;
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 0.85rem;
+      padding: 0.2rem 0.65rem;
+      margin-bottom: 0.75rem;
     }
 
     header h1 {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-size: clamp(1.4rem, 3vw, 2rem);
       font-weight: 700;
       line-height: 1.25;
       margin-bottom: 0.75rem;
     }
 
-    header h1 span {
-      opacity: 0.65;
-      font-weight: 400;
-      font-size: 0.85em;
-    }
-
     header p {
-      font-size: 1rem;
+      font-size: 0.97rem;
       line-height: 1.65;
       max-width: 780px;
-      opacity: 0.9;
+      color: rgba(255,255,255,0.88);
     }
 
-    /* ── Main Content ── */
+    /* ── Main content ── */
     main {
       max-width: 1100px;
-      margin: 2.5rem auto 0;
-      padding: 0 1.5rem;
+      margin: 2.25rem auto 3rem;
+      padding: 0 1.25rem;
     }
 
-    .section-heading {
-      font-size: 0.8rem;
+    .section-label {
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #5a6780;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #dde3ed;
+      color: #2563a8;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #d6e4f7;
     }
 
-    /* ── Card Grid ── */
+    /* ── Card grid ── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.25rem;
     }
 
     .card {
-      background: #fff;
-      border: 1px solid #dde3ed;
+      background: #ffffff;
+      border: 1px solid #dde4ef;
       border-radius: 10px;
-      padding: 1.35rem 1.5rem 1.25rem;
+      padding: 1.35rem 1.4rem 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
+      box-shadow: 0 2px 8px rgba(30,37,53,0.06);
       transition: box-shadow 0.2s ease, transform 0.2s ease;
     }
 
     .card:hover {
-      box-shadow: 0 6px 22px rgba(37, 99, 168, 0.12);
+      box-shadow: 0 6px 20px rgba(30,37,53,0.11);
       transform: translateY(-2px);
     }
 
-    /* ── Card Meta Row ── */
-    .card-meta {
+    /* ── Card top row: type badge + file-type chip ── */
+    .card-meta-top {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
     }
 
     .badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       border-radius: 4px;
       padding: 0.2rem 0.55rem;
-      white-space: nowrap;
     }
 
-    .badge-type {
-      background: #e8f0fb;
-      color: #2563a8;
-    }
+    .badge-type-module    { background: #e8f0fb; color: #1d4f99; }
+    .badge-type-text      { background: #eaf5ea; color: #236b23; }
+    .badge-type-quiz      { background: #fef3e2; color: #a05c00; }
+    .badge-type-activity  { background: #f2ebfb; color: #5a2d9e; }
 
-    .badge-filetype {
-      background: #eef2f8;
+    .filetype-chip {
+      font-size: 0.65rem;
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      background: #f1f3f7;
       color: #4a5568;
-      border: 1px solid #d1d9e6;
+      border: 1px solid #d0d7e4;
+      border-radius: 4px;
+      padding: 0.18rem 0.45rem;
     }
 
-    /* ── Card Title ── */
-    .card-title {
-      font-size: 1.02rem;
-      font-weight: 700;
-      color: #1a2e4a;
+    /* ── Card title row ── */
+    .card-title-row {
       display: flex;
       align-items: baseline;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      gap: 0.55rem;
     }
 
-    .card-title a.primary-link {
+    .card-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #1e2535;
+      line-height: 1.3;
+    }
+
+    .card-name a {
       color: #1a5bb5;
       text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.15s, color 0.15s;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
     }
 
-    .card-title a.primary-link:hover {
-      color: #0f3d80;
-      border-bottom-color: #0f3d80;
+    .card-name a:hover {
+      color: #0e3d82;
+      border-bottom-color: #0e3d82;
     }
 
-    .card-title span.plain-name {
-      color: #1a2e4a;
-    }
-
-    /* ── Source Link ── */
-    a.source-link {
+    .source-link {
       font-size: 0.72rem;
       font-weight: 600;
-      color: #5a6780;
+      color: #5a7fa8;
       text-decoration: none;
-      border: 1px solid #c6cedc;
-      border-radius: 4px;
-      padding: 0.15rem 0.45rem;
+      border: 1px solid #b8cfe8;
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
       white-space: nowrap;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      align-self: flex-start;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    a.source-link:hover {
-      background: #f0f4fb;
-      color: #2563a8;
+    .source-link:hover {
+      background: #ddeaf8;
+      color: #1a3a5c;
       border-color: #2563a8;
     }
 
-    /* ── Description ── */
+    /* ── Card description ── */
     .card-description {
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: #3d4a5c;
-      flex: 1;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: #4a5568;
+      flex-grow: 1;
     }
 
     /* ── Footer ── */
     footer {
-      margin-top: 3rem;
       text-align: center;
       font-size: 0.78rem;
-      color: #8a96a8;
+      color: #8a95a8;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #dde4ef;
     }
 
-    footer span {
-      margin: 0 0.3rem;
-    }
-
-    /* ── Responsive Tweaks ── */
-    @media (max-width: 540px) {
-      header { padding: 2rem 1.25rem 1.75rem; }
-      main { padding: 0 1rem; }
-      .card { padding: 1.1rem 1.15rem; }
+    /* ── Responsive tweaks ── */
+    @media (max-width: 480px) {
+      header { padding: 1.75rem 1.1rem 1.5rem; }
+      .card  { padding: 1.1rem 1.1rem 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══════════ HEADER ═══════════ -->
   <header>
     <div class="header-inner">
-      <div class="course-label">EGN3214</div>
-      <h1>
-        Module 2 &mdash; Control Flow and Python Data Structures
-        <br /><span>Course Resource Index</span>
-      </h1>
+      <span class="course-label">EGN3214</span>
+      <h1>Module 2 – Control Flow and Python Data Structures</h1>
       <p>
-        This module explores how Python programs make decisions and repeat actions, covering
-        conditional statements (<code>if</code> / <code>elif</code> / <code>else</code>),
-        <code>for</code> and <code>while</code> loops, loop control with <code>break</code>
-        and <code>continue</code>, and foundational data structures such as lists.
-        Use the artifacts below to read, interact with, and assess your understanding of these concepts.
+        This module builds your foundation in writing programs that make decisions and repeat tasks.
+        You will explore conditional statements (<code>if</code>, <code>elif</code>, <code>else</code>),
+        <code>for</code> and <code>while</code> loops, loop control with <code>break</code> and
+        <code>continue</code>, and core Python data structures including lists. Work through the
+        readings, interactive activities, and quiz below to reinforce each concept.
       </p>
     </div>
   </header>
 
-  <!-- ═══════════ MAIN ═══════════ -->
   <main>
-    <p class="section-heading">Module Artifacts &mdash; 7 items</p>
+    <p class="section-label">Module Artifacts &nbsp;—&nbsp; 7 items</p>
 
     <div class="card-grid">
 
-      <!-- ── Card 1: Module Topics ── -->
+      <!-- 1 · Module Topics -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Module Topics</span>
-          <span class="badge badge-filetype">.json</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-module">Module Topics</span>
+          <span class="filetype-chip">.json</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="module_topics.html">Module Topics</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="module_topics.html">Module Topics</a>
+          </span>
           <a class="source-link" href="../hierarchy.json">source file</a>
         </div>
         <p class="card-description">
           An outline of all topics covered in the module, including conditional statements
-          (if/elif/else), for and while loops, loop control with break and continue, and Python
-          data structures such as lists, serving as a navigation guide for learners and a planning
-          reference for instructors.
+          (<code>if</code>/<code>elif</code>/<code>else</code>), <code>for</code> and
+          <code>while</code> loops, loop control with <code>break</code> and
+          <code>continue</code>, and Python data structures such as lists, serving as a
+          navigation guide for learners and a planning reference for instructors.
         </p>
       </div>
 
-      <!-- ── Card 2: Interactive HTML (topics t1-4 via _interactive) ── -->
+      <!-- 2 · Control_Flow_and (interactive, no topic suffix) -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-text">Text Content</span>
+          <span class="filetype-chip">.html</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="_interactive.html">Interactive HTML</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="_interactive.html">Control_Flow_and</a>
+          </span>
         </div>
         <p class="card-description">
-          An interactive reading module covering Python control flow with if, elif, and else
-          conditional statements, explaining Boolean evaluation and branching logic; learners read
-          through explanations and examples to understand how programs make decisions.
+          An interactive reading module covering Python control flow with <code>if</code>,
+          <code>elif</code>, and <code>else</code> conditional statements, explaining Boolean
+          evaluation and branching logic; learners read through explanations and examples to
+          understand how programs make decisions.
         </p>
       </div>
 
-      <!-- ── Card 3: Interactive HTML (Control Flow topics t1-4) ── -->
+      <!-- 3 · Control_Flow_and (topics t1-4) -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-text">Text Content</span>
+          <span class="filetype-chip">.html</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="Control_Flow_and_interactive_topics_t1-4.html">Interactive HTML</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="Control_Flow_and_interactive_topics_t1-4.html">Control_Flow_and</a>
+          </span>
         </div>
         <p class="card-description">
-          An interactive reading module covering Python control flow with if, elif, and else
-          conditional statements, explaining Boolean evaluation and branching logic; learners read
-          through explanations and examples to understand how programs make decisions.
+          An interactive reading module covering Python control flow with <code>if</code>,
+          <code>elif</code>, and <code>else</code> conditional statements, explaining Boolean
+          evaluation and branching logic; learners read through explanations and examples to
+          understand how programs make decisions.
         </p>
       </div>
 
-      <!-- ── Card 4: Interactive HTML (Control Flow topics t5-8) ── -->
+      <!-- 4 · Control_Flow_and (topics t5-8) -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-text">Text Content</span>
+          <span class="filetype-chip">.html</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="Control_Flow_and_interactive_topics_t5-8.html">Interactive HTML</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="Control_Flow_and_interactive_topics_t5-8.html">Control_Flow_and</a>
+          </span>
         </div>
         <p class="card-description">
-          An interactive reading module introducing Python lists as a core data structure, covering
-          how to create, access, and manipulate ordered collections using square-bracket syntax;
-          learners read through explanations and examples to build foundational knowledge of list
-          operations.
+          An interactive reading module introducing Python lists as a core data structure,
+          covering how to create, access, and manipulate ordered collections using
+          square-bracket syntax; learners read through explanations and examples to build
+          foundational knowledge of list operations.
         </p>
       </div>
 
-      <!-- ── Card 5: Quiz Question Bank ── -->
+      <!-- 5 · Quiz Question Bank -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Quiz</span>
-          <span class="badge badge-filetype">.json</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-quiz">Quiz</span>
+          <span class="filetype-chip">.json</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="module_quiz.html">Quiz Question Bank (10 questions)</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="module_quiz.html">Quiz Question Bank (10 questions)</a>
+          </span>
           <a class="source-link" href="../quiz_questions.json">source file</a>
         </div>
         <p class="card-description">
-          A 10-question quiz bank assessing learners&#x27; understanding of conditional statements,
-          the elif clause, the range() function, loop selection, and break behavior in nested loops,
-          used to test comprehension of core control flow concepts.
+          A 10-question quiz bank assessing learners' understanding of conditional statements,
+          the <code>elif</code> clause, the <code>range()</code> function, loop selection, and
+          <code>break</code> behavior in nested loops, used to test comprehension of core
+          control flow concepts.
         </p>
       </div>
 
-      <!-- ── Card 6: Drag-Drop Code Use Match ── -->
+      <!-- 6 · Drag-Drop Code Use Match -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Interactive Activity</span>
-          <span class="badge badge-filetype">.html</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-activity">Interactive Activity</span>
+          <span class="filetype-chip">.html</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="interactive/drag-and-drop-match.html">Drag-Drop Code Use Match</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="interactive/drag-and-drop-match.html">Drag-Drop Code Use Match</a>
+          </span>
         </div>
         <p class="card-description">
-          An interactive drag-and-drop activity covering nested conditionals in which learners match
-          8 code snippets or keywords to their correct descriptions, with correct answers locking in
-          place and incorrect ones bouncing back, used to reinforce understanding of nested
-          conditional syntax and logic.
+          An interactive drag-and-drop activity covering nested conditionals in which learners
+          match 8 code snippets or keywords to their correct descriptions, with correct answers
+          locking in place and incorrect ones bouncing back, used to reinforce understanding of
+          nested conditional syntax and logic.
         </p>
       </div>
 
-      <!-- ── Card 7: Drag-Drop Data Structure Match ── -->
+      <!-- 7 · Drag-Drop Data Structure Match -->
       <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Interactive Activity</span>
-          <span class="badge badge-filetype">.html</span>
+        <div class="card-meta-top">
+          <span class="badge badge-type-activity">Interactive Activity</span>
+          <span class="filetype-chip">.html</span>
         </div>
-        <div class="card-title">
-          <a class="primary-link" href="interactive/drag-and-drop-match_20260522113839.html">Drag-Drop Data Structure Match</a>
+        <div class="card-title-row">
+          <span class="card-name">
+            <a href="interactive/drag-and-drop-match_20260522113839.html">Drag-Drop Data Structure Match</a>
+          </span>
         </div>
         <p class="card-description">
-          An interactive drag-and-drop activity in which learners match Python data structure names
-          (e.g., list, tuple, dictionary) to 8 engineering scenarios that best illustrate their use,
-          used to practice selecting the appropriate data structure for real-world engineering
-          contexts.
+          An interactive drag-and-drop activity in which learners match Python data structure
+          names (e.g., <code>list</code>, <code>tuple</code>, <code>dictionary</code>) to 8
+          engineering scenarios that best illustrate their use, helping learners practice
+          selecting the appropriate data structure for real-world engineering contexts.
         </p>
       </div>
 
     </div><!-- /.card-grid -->
   </main>
 
-  <!-- ═══════════ FOOTER ═══════════ -->
   <footer>
-    <p>
-      EGN3214
-      <span>&middot;</span>
-      Module 2: Control Flow and Python Data Structures
-      <span>&middot;</span>
-      Course Resource Index
-    </p>
+    EGN3214 &nbsp;·&nbsp; Module 2 – Control Flow and Python Data Structures &nbsp;·&nbsp; Course Module Index
   </footer>
 
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
 </body>
 </html>

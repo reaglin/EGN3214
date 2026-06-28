@@ -1,0 +1,35 @@
+﻿{
+  "ModuleName": "Machine Learning, Automation, Version Control, and Responsible AI",
+  "CourseName": "EGN3214",
+  "ModuleFolderName": "Machine_Learning_Automation",
+  "GeneratedUtc": "2026-06-28T16:47:20.5542782Z",
+  "HtmlIndexSignature": "70FB8DB8D74DF793C255E26196A6C21D87746706B14527BDFEB50203A187391C",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "Outlines the module\u0027s core topics\u2014supervised machine learning concepts, scikit-learn workflows, engineering automation and parameter sweeps, version control, and responsible AI\u2014serving as a navigation guide for learners to understand what will be covered and for instructors to align their teaching materials.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Machine_Learning_Automation\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
+      "SourceModifiedTicks": 639144061608968531
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "A topic outline for the module that lists and briefly introduces each major subject area\u2014supervised machine learning, automation, version control, and responsible AI\u2014giving learners and instructors an overview of what will be covered and how the concepts relate to one another.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Machine_Learning_Automation\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182613092510547
+    }
+  ]
+}

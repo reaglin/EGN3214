@@ -2,8 +2,8 @@
   "ModuleName": "5 - NumPy for Engineering Numerical Computation",
   "CourseName": "EGN3214",
   "ModuleFolderName": "NumPy_for_Engineering",
-  "GeneratedUtc": "2026-06-28T15:36:58.4758925Z",
-  "HtmlIndexSignature": "",
+  "GeneratedUtc": "2026-06-28T16:43:54.6141041Z",
+  "HtmlIndexSignature": "C3EA8C2C9A83E4998628FF5DFF6C768BA9A84FA53A3765938F2B3DC1AA46D7EF",
   "Artifacts": [
     {
       "Name": "Module Topics",
@@ -13,10 +13,23 @@
       "CustomName": null,
       "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\hierarchy.json",
       "ViewerKind": 2,
-      "WebHref": "",
-      "LocalHref": "../hierarchy.json",
-      "RawHref": "",
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
       "SourceModifiedTicks": 639161959424787993
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "Outlines the module\u0027s coverage of NumPy functions for engineering computation, including element-wise mathematical and arithmetic operations using universal functions (ufuncs), and serves as a navigational overview for learners to see what topics will be addressed.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182611158871067
     },
     {
       "Name": "NumPy_for_Engineering",

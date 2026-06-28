@@ -1,0 +1,35 @@
+﻿{
+  "ModuleName": "Numerical Methods with SciPy and Curve Fitting",
+  "CourseName": "EGN3214",
+  "ModuleFolderName": "Numerical_Methods_with",
+  "GeneratedUtc": "2026-06-28T16:46:21.1240528Z",
+  "HtmlIndexSignature": "23E3292E6EA52069EE75DB8A16C9078870F64907C1C4DBBD43C97CD7187A8DB7",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "Outlines the full sequence of topics covered in the module\u2014including SciPy fundamentals, root finding, numerical integration, interpolation, and curve fitting\u2014serving as a syllabus-style reference that helps learners and instructors navigate the module\u0027s content and progression.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Numerical_Methods_with\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "content/module_topics.html",
+      "LocalHref": "module_topics.html",
+      "RawHref": "../hierarchy.json",
+      "SourceModifiedTicks": 639144058881414042
+    },
+    {
+      "Name": "Module Topics (HTML)",
+      "Type": "Module Topics (HTML)",
+      "FileType": ".html",
+      "Description": "An HTML page listing and briefly explaining all topics covered in the module\u2014including SciPy\u0027s ecosystem, numerical methods, and curve fitting\u2014that learners can use as a navigable overview and instructors can use as a syllabus reference for the unit.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Numerical_Methods_with\\output\\module_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "",
+      "LocalHref": "module_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639182612393868984
+    }
+  ]
+}

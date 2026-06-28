@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning, Automation, Version Control, and Responsible AI — Module Topics</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.2rem;margin-top:28px;color:#1a3c6e}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<h1>Machine Learning, Automation, Version Control, and Responsible AI — Module Topics</h1>
+<h2>Foundations of Supervised Machine Learning</h2>
+<div class="summary">Introduces the core concepts of supervised learning, distinguishing between regression and classification tasks and explaining how labeled training data drives model development.</div>
+<ul>
+<li><strong>What Is Supervised Learning?</strong> <span class="el-body">— Supervised learning is a machine learning paradigm in which a model is trained on labeled input-output pairs to learn a mapping from features to targets.</span></li>
+<li><strong>Regression vs. Classification</strong> <span class="el-body">— Regression predicts a continuous numerical output, while classification predicts a discrete category or class label.</span></li>
+<li><strong>Features, Labels, and Training Data</strong> <span class="el-body">— Features are the measurable input variables used to make predictions, while labels are the corresponding known outputs used during training.</span></li>
+<li><strong>Bias-Variance Trade-off</strong> <span class="el-body">— The bias-variance trade-off describes the tension between a model that is too simple (high bias) and one that is too complex (high variance).</span></li>
+<li><strong>Model Evaluation Metrics</strong> <span class="el-body">— Selecting appropriate evaluation metrics is essential for understanding how well a model performs on the intended engineering task.</span></li>
+</ul>
+<h2>Machine Learning with scikit-learn</h2>
+<div class="summary">Covers the practical use of the scikit-learn library to build, train, and evaluate regression and classification models in engineering contexts.</div>
+<ul>
+<li><strong>The scikit-learn API Design</strong> <span class="el-body">— scikit-learn provides a consistent estimator API in which every model object exposes fit, predict, and score methods, making it straightforward to swap algorithms.</span></li>
+<li><strong>Data Preprocessing and Pipelines</strong> <span class="el-body">— Raw engineering data often requires scaling, encoding, or imputation before it can be fed into a machine learning model, and scikit-learn pipelines chain these steps with the estimator.</span></li>
+<li><strong>Regression Models in scikit-learn</strong> <span class="el-body">— scikit-learn offers a range of regression estimators suitable for engineering data, from linear models to ensemble methods.</span></li>
+<li><strong>Classification Models in scikit-learn</strong> <span class="el-body">— Classification estimators in scikit-learn assign input samples to discrete classes and are evaluated using metrics such as accuracy, precision, and recall.</span></li>
+<li><strong>Hyperparameter Tuning</strong> <span class="el-body">— Hyperparameters are model configuration settings that are not learned from data and must be set before training; tuning them improves model performance.</span></li>
+<li><strong>Model Interpretability and Feature Importance</strong> <span class="el-body">— Understanding which features drive model predictions is critical in engineering applications where decisions have physical and safety consequences.</span></li>
+</ul>
+<h2>Engineering Automation and Parameter Sweep Pipelines</h2>
+<div class="summary">Introduces strategies for automating repetitive engineering computations and systematically exploring parameter spaces using scripted pipelines.</div>
+<ul>
+<li><strong>Why Automate Engineering Workflows?</strong> <span class="el-body">— Automation replaces manual, error-prone repetition with reliable, reproducible scripts that can execute complex sequences of engineering tasks consistently.</span></li>
+<li><strong>Designing a Parameter Sweep</strong> <span class="el-body">— A parameter sweep systematically varies one or more input parameters across a defined range and records the corresponding outputs to map system behavior.</span></li>
+<li><strong>Integrating ML Models into Automation Pipelines</strong> <span class="el-body">— Trained machine learning models can be embedded in automation pipelines to provide fast surrogate predictions in place of expensive simulations or experiments.</span></li>
+<li><strong>Handling Large Result Sets</strong> <span class="el-body">— Parameter sweeps can generate large volumes of output data that require efficient storage, querying, and summarization strategies.</span></li>
+<li><strong>Scheduling and Running Long Jobs</strong> <span class="el-body">— Engineering automation scripts that take significant time to run benefit from progress tracking, logging, and the ability to resume after interruption.</span></li>
+</ul>
+<h2>Git and GitHub Version Control</h2>
+<div class="summary">Establishes foundational and collaborative version control practices using Git locally and GitHub as a remote repository platform for engineering code projects.</div>
+<ul>
+<li><strong>Why Version Control Matters for Engineers</strong> <span class="el-body">— Version control systems track every change made to a codebase, enabling engineers to review history, revert mistakes, and collaborate without overwriting each other&#39;s work.</span></li>
+<li><strong>Core Git Concepts and Commands</strong> <span class="el-body">— Git operates through a staging area and a local repository; understanding the add, commit, status, and log commands forms the foundation of daily Git use.</span></li>
+<li><strong>Branching and Merging</strong> <span class="el-body">— Branches allow engineers to develop features or experiments in isolation from the main codebase, and merging integrates completed work back into the main branch.</span></li>
+<li><strong>Working with GitHub Remote Repositories</strong> <span class="el-body">— GitHub hosts remote copies of Git repositories, enabling cloud backup, sharing, and team collaboration through push and pull operations.</span></li>
+<li><strong>Pull Requests and Code Review</strong> <span class="el-body">— Pull requests on GitHub are a formal mechanism for proposing changes, inviting peer review, and merging approved work into a shared branch.</span></li>
+<li><strong>Repository Hygiene and .gitignore</strong> <span class="el-body">— Good repository hygiene ensures that only relevant source files are tracked, avoiding clutter from generated outputs, credentials, or environment-specific files.</span></li>
+</ul>
+<h2>Responsible AI Integration in Engineering Practice</h2>
+<div class="summary">Consolidates the ethical, professional, and technical obligations engineers must uphold when using AI tools, including verification of AI-generated code and accountability for outcomes.</div>
+<ul>
+<li><strong>The Role of AI Tools in Engineering Workflows</strong> <span class="el-body">— AI coding assistants and generative tools can accelerate engineering software development, but they introduce new responsibilities around verification and professional judgment.</span></li>
+<li><strong>Verification of AI-Generated Code</strong> <span class="el-body">— Every piece of code produced by an AI assistant must be critically reviewed, tested, and validated before it is used in any engineering computation or product.</span></li>
+<li><strong>Recognizing Hallucinations and Errors</strong> <span class="el-body">— AI language models can confidently produce incorrect code, fabricated function names, or physically unreasonable results—a phenomenon known as hallucination.</span></li>
+<li><strong>Professional Engineering Accountability</strong> <span class="el-body">— Licensed and professional engineers bear legal and ethical responsibility for the work they produce and cannot transfer that responsibility to an AI tool.</span></li>
+<li><strong>Bias, Fairness, and Equity in Engineering ML Systems</strong> <span class="el-body">— Machine learning models trained on historical data can inherit and amplify societal biases, leading to unfair or discriminatory outcomes in engineering systems that affect people.</span></li>
+<li><strong>Transparent Documentation and Reproducibility</strong> <span class="el-body">— Responsible AI practice requires that models, datasets, training procedures, and validation results be documented thoroughly so that others can understand, audit, and reproduce the work.</span></li>
+<li><strong>Integrating Responsible AI Habits into Daily Practice</strong> <span class="el-body">— Responsible AI is not a separate checklist but a set of habits—verification, documentation, skepticism, and ethical reflection—that should be embedded in every engineering workflow.</span></li>
+</ul>
+</body>
+</html>

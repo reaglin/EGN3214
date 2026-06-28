@@ -2,8 +2,8 @@
   "ModuleName": "3 - Functions, Comprehensions, and Functional Patterns",
   "CourseName": "EGN3214",
   "ModuleFolderName": "Functions_Comprehensions_and",
-  "GeneratedUtc": "2026-06-28T15:36:11.7957508Z",
-  "HtmlIndexSignature": "",
+  "GeneratedUtc": "2026-06-28T16:42:56.1701957Z",
+  "HtmlIndexSignature": "55266F69A6A5AEA9436FAAA5F85AC5AD57A5D644534CB029A550F9646153D8B1",
   "Artifacts": [
     {
       "Name": "Module Topics",
@@ -35,7 +35,7 @@
       "Name": "Functions_Comprehensions_and",
       "Type": "Text Content",
       "FileType": ".html",
-      "Description": "",
+      "Description": "A reading page covering Python\u0027s variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.",
       "CustomName": "Scope and Visibility",
       "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Functions_Comprehensions_and\\output\\_interactive.html",
       "ViewerKind": 1,
@@ -74,7 +74,7 @@
       "Name": "Functions_Comprehensions_and",
       "Type": "Text Content",
       "FileType": ".html",
-      "Description": "",
+      "Description": "A reading page covering Python\u0027s variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.",
       "CustomName": null,
       "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Functions_Comprehensions_and\\output\\Functions_Comprehensions_and_interactive_topics_t3_v2.html",
       "ViewerKind": 1,
@@ -82,6 +82,19 @@
       "LocalHref": "Functions_Comprehensions_and_interactive_topics_t3_v2.html",
       "RawHref": "",
       "SourceModifiedTicks": 639150737819652308
+    },
+    {
+      "Name": "Functions_Comprehensions_and",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "A reading page covering Python\u0027s variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\Functions_Comprehensions_and\\output\\Functions_Comprehensions_and_interactive_topics_t3.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Functions_Comprehensions_and_interactive_topics_t3.html",
+      "LocalHref": "Functions_Comprehensions_and_interactive_topics_t3.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150736430305853
     },
     {
       "Name": "Functions_Comprehensions_and",
