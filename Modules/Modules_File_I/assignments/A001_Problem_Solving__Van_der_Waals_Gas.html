@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Van der Waals Gas Analysis: Evaluating Equation-of-State Models with Real Experimental Data</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.6; }h1 { font-size: 1.8em; border-bottom: 2px solid #0054a6; padding-bottom: 8px; }h2 { font-size: 1.3em; color: #0054a6; margin-top: 28px; }h3 { font-size: 1.1em; }ul, ol { padding-left: 1.6em; }blockquote { border-left: 4px solid #0054a6; margin: 0; padding-left: 16px; color: #444; background: #f0f6ff; }code { background: #f4f4f4; padding: 1px 4px; border-radius: 3px; font-size: .9em; }strong { color: #111; }hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }.meta { color: #666; font-style: italic; font-size: .9em; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+<h1>Van der Waals Gas Analysis: Evaluating Equation-of-State Models with Real Experimental Data</h1>
+
+<p><strong>Module:</strong> Modules_File_I</p>
+<p><strong>Assignment Type:</strong> Problem-Solving Exercise</p>
+<p><strong>Estimated Time:</strong> 2–4 hours</p>
+<p><strong>Submission Format:</strong> Google Colab notebook link (shared with comment access) <strong>or</strong> a written report (PDF or DOCX) that includes all code, outputs, and written responses</p>
+
+<hr>
+
+<h2>Purpose</h2>
+
+<h3>Why This Assignment Matters</h3>
+
+<p>Real engineering and scientific data is rarely perfect. Instruments introduce measurement error, and theoretical models make simplifying assumptions that may or may not hold under real conditions. In this exercise, you will act as a data analyst examining experimentally collected gas-behavior data to evaluate two models of gas behavior:</p>
+
+<p>1. <strong>The Ideal Gas Law:</strong> PV = nRT (simplified model)</p>
+<p>2. <strong>The Van der Waals Equation:</strong> (P + a·n²/V²)(V − n·b) = nRT (corrected model)</p>
+
+<p>You will use Python's standard library modules and file I/O tools — exactly the skills covered in this module — to load, process, analyze, and report on the data. This workflow mirrors what engineers and scientists do daily: load data from instruments, apply a model, visualize agreement (or disagreement), and draw defensible conclusions.</p>
+
+<h3>Connection to Course Goals</h3>
+
+<p>This assignment directly practices:</p>
+<ul>
+<li>Importing and using standard library modules (<code>math</code>, <code>csv</code>, <code>os</code>, <code>datetime</code>, <code>sys</code>, <code>pathlib</code>)</li>
+<li>Reading structured data from CSV files</li>
+<li>Writing processed results back to CSV files</li>
+<li>Using the <code>with</code> statement for safe file handling</li>
+<li>Applying quantitative reasoning to evaluate model accuracy</li>
+</ul>
+
+<hr>
+
+<h2>Learning Outcomes</h2>
+
+<p>By the end of this assignment, you will be able to:</p>
+
+<p>1. <strong>Construct</strong> a Python script that reads experimental data from a CSV file and writes processed results to a new CSV file using <code>csv.DictReader</code>, <code>csv.DictWriter</code>, and the <code>with</code> statement.</p>
+<p>2. <strong>Apply</strong> standard library modules (<code>math</code>, <code>os</code>, <code>datetime</code>, <code>pathlib</code>) to perform engineering calculations and manage file paths in a cross-platform manner.</p>
+<p>3. <strong>Analyze</strong> the deviation between experimentally observed pressure values and values predicted by both the Ideal Gas Law and the Van der Waals equation by calculating and interpreting percent error.</p>
+<p>4. <strong>Evaluate</strong> the relative accuracy of the Ideal Gas Law versus the Van der Waals equation for a real gas by interpreting visual plots and numerical error metrics, and construct a written argument that accounts for measurement uncertainty.</p>
+
+<hr>
+
+<h2>Background</h2>
+
+<h3>The Ideal Gas Law</h3>
+
+<p>The Ideal Gas Law assumes gas molecules have no volume and exert no intermolecular forces:</p>
+
+<p><code>`</code></p>
+<p>P = nRT / V</p>
+<p><code>`</code></p>
+
+<p>Where:</p>
+<ul>
+<li><strong>P</strong> = pressure (Pa)</li>
+<li><strong>n</strong> = amount of substance (mol)</li>
+<li><strong>R</strong> = universal gas constant = 8.314 J·mol⁻¹·K⁻¹</li>
+<li><strong>T</strong> = temperature (K)</li>
+<li><strong>V</strong> = volume (m³)</li>
+</ul>
+
+<h3>The Van der Waals Equation</h3>
+
+<p>The Van der Waals equation corrects the Ideal Gas Law for two physical realities:</p>
+<ul>
+<li>Gas molecules have a finite volume (the <strong>volume correction</strong>, constant <strong>b</strong>)</li>
+<li>Gas molecules attract one another (the <strong>pressure correction</strong>, constant <strong>a</strong>)</li>
+</ul>
+
+<p><code>`</code></p>
+<p>P = nRT / (V - n<em>b)  -  a </em> n² / V²</p>
+<p><code>`</code></p>
+
+<p>Where <strong>a</strong> and <strong>b</strong> are gas-specific constants. For this assignment, you are analyzing <strong>carbon dioxide (CO₂)</strong>:</p>
+
+<p>| Constant | Value | Units |</p>
+<p>|---|---|---|</p>
+<p>| a | 0.3658 | Pa·m⁶·mol⁻² |</p>
+<p>| b | 4.286 × 10⁻⁵ | m³·mol⁻¹ |</p>
+
+<p>> <strong>Note:</strong> These constants have known accepted (theoretical/literature) values. Your job is to use these accepted values to generate predicted pressures and compare them to the measured data.</p>
+
+<h3>Percent Error</h3>
+
+<p>Percent error quantifies how far a model's prediction is from the measured value:</p>
+
+<p><code>`</code></p>
+<p>percent_error = ((predicted - measured) / measured) * 100</p>
+<p><code>`</code></p>
+
+<p>A value near zero indicates good agreement. A positive value means the model over-predicts; a negative value means it under-predicts.</p>
+
+<h3>Measurement Error</h3>
+
+<p>No instrument reads perfectly. Assume the pressure sensor used to collect this data has a manufacturer-specified accuracy of <strong>±1.5%</strong> of the measured value. This means any percent error within ±1.5% may be attributable to instrument error alone, not model error. You must address this in your conclusions.</p>
+
+<hr>
+
+<h2>Provided Data and Starter Materials</h2>
+
+<h3>Experimental CSV Data File</h3>
+
+<p>Copy the data below into a plain text file named <code>co2_experimental_data.csv</code> and upload it to your Colab session, <strong>or</strong> create the file programmatically in Colab using the code provided in the starter notebook.</p>
+
+<p>The dataset contains measurements taken on CO₂ at varying temperatures and volumes. The number of moles <strong>n = 1.000 mol</strong> is held constant across all trials.</p>
+
+<p><code>`</code></p>
+<p>trial_id,temperature_K,volume_m3,n_mol,measured_pressure_Pa</p>
+<p>1,300.0,0.002500,1.000,997200</p>
+<p>2,300.0,0.003000,1.000,829500</p>
+<p>3,300.0,0.004000,1.000,621800</p>
+<p>4,300.0,0.005000,1.000,497100</p>
+<p>5,325.0,0.002500,1.000,1079600</p>
+<p>6,325.0,0.003000,1.000,898200</p>
+<p>7,325.0,0.004000,1.000,673100</p>
+<p>8,325.0,0.005000,1.000,538500</p>
+<p>9,350.0,0.002500,1.000,1161400</p>
+<p>10,350.0,0.003000,1.000,967100</p>
+<p>11,350.0,0.004000,1.000,724700</p>
+<p>12,350.0,0.005000,1.000,579600</p>
+<p>13,375.0,0.002500,1.000,1243700</p>
+<p>14,375.0,0.003000,1.000,1036100</p>
+<p>15,375.0,0.004000,1.000,776600</p>
+<p>16,375.0,0.005000,1.000,620900</p>
+<p>17,400.0,0.002500,1.000,1325600</p>
+<p>18,400.0,0.003000,1.000,1105300</p>
+<p>19,400.0,0.004000,1.000,828700</p>
+<p>20,400.0,0.005000,1.000,662400</p>
+<p><code>`</code></p>
+
+<h3>Starter Colab Notebook</h3>
+
+<p>A starter notebook with scaffolding code is provided below. Copy this into a new Colab notebook. Sections marked <code># TODO</code> require you to write the code. Sections marked <code># PROVIDED</code> are complete and should not be modified.</p>
+
+<p><code>`</code>python</p>
+<h1>============================================================</h1>
+<h1>Van der Waals Gas Analysis — Starter Notebook</h1>
+<h1>Module: Modules_File_I</h1>
+<h1>============================================================</h1>
+
+<h1>── PROVIDED: Import all required modules ───────────────────</h1>
+<p>import math</p>
+<p>import csv</p>
+<p>import os</p>
+<p>import sys</p>
+<p>from datetime import datetime</p>
+<p>from pathlib import Path</p>
+<p>import matplotlib.pyplot as plt   # available in Colab by default</p>
+
+<h1>── PROVIDED: Constants ──────────────────────────────────────</h1>
+<p>R = 8.314          # Universal gas constant, J·mol⁻¹·K⁻¹</p>
+<p>A_VDW = 0.3658     # Van der Waals constant a for CO₂, Pa·m⁶·mol⁻²</p>
+<p>B_VDW = 4.286e-5   # Van der Waals constant b for CO₂, m³·mol⁻¹</p>
+<p>SENSOR_ERROR_PCT = 1.5  # Instrument accuracy ±1.5%</p>
+
+<h1>── PROVIDED: File paths using pathlib ──────────────────────</h1>
+<p>INPUT_FILE  = Path("co2_experimental_data.csv")</p>
+<p>OUTPUT_FILE = Path("co2_analysis_results.csv")</p>
+
+<h1>============================================================</h1>
+<h1>STEP 1 — Create the input CSV file (run this cell once)</h1>
+<h1>PROVIDED: You do not need to modify this cell.</h1>
+<h1>============================================================</h1>
+<p>raw_data = """trial_id,temperature_K,volume_m3,n_mol,measured_pressure_Pa</p>
+<p>1,300.0,0.002500,1.000,997200</p>
+<p>2,300.0,0.003000,1.000,829500</p>
+<p>3,300.0,0.004000,1.000,621800</p>
+<p>4,300.0,0.005000,1.000,497100</p>
+<p>5,325.0,0.002500,1.000,1079600</p>
+<p>6,325.0,0.003000,1.000,898200</p>
+<p>7,325.0,0.004000,1.000,673100</p>
+<p>8,325.0,0.005000,1.000,538500</p>
+<p>9,350.0,0.002500,1.000,1161400</p>
+<p>10,350.0,0.003000,1.000,967100</p>
+<p>11,350.0,0.004000,1.000,724700</p>
+<p>12,350.0,0.005000,1.000,579600</p>
+<p>13,375.0,0.002500,1.000,1243700</p>
+<p>14,375.0,0.003000,1.000,1036100</p>
+<p>15,375.0,0.004000,1.000,776600</p>
+<p>16,375.0,0.005000,1.000,620900</p>
+<p>17,400.0,0.002500,1.000,1325600</p>
+<p>18,400.0,0.003000,1.000,1105300</p>
+<p>19,400.0,0.004000,1.000,828700</p>
+<p>20,400.0,0.005000,1.000,662400"""</p>
+
+<p>with open(INPUT_FILE, 'w', newline='') as f:</p>
+<p>    f.write(raw_data)</p>
+
+<p>print(f"Input file created: {INPUT_FILE}")</p>
+<p>print(f"File exists: {INPUT_FILE.exists()}")</p>
+<p>print(f"Working directory: {os.getcwd()}")</p>
+<p>print(f"Python version: {sys.version}")</p>
+
+<h1>============================================================</h1>
+<h1>STEP 2 — Define calculation functions</h1>
+<h1>============================================================</h1>
+
+<p>def ideal_gas_pressure(n, R, T, V):</p>
+<p>    """</p>
+<p>    PROVIDED: Calculate pressure using the Ideal Gas Law.</p>
+<p>    Returns pressure in Pa.</p>
+<p>    """</p>
+<p>    return (n <em> R </em> T) / V</p>
+
+
+<p>def vdw_pressure(n, R, T, V, a, b):</p>
+<p>    """</p>
+<p>    TODO: Calculate pressure using the Van der Waals equation.</p>
+
+<p>    The Van der Waals equation solved for P is:</p>
+<p>        P = nRT / (V - n<em>b)  -  a </em> n<strong>2 / V</strong>2</p>
+
+<p>    Parameters</p>
+<p>    ----------</p>
+<p>    n : float  — moles of gas</p>
+<p>    R : float  — gas constant (8.314 J/mol/K)</p>
+<p>    T : float  — temperature in Kelvin</p>
+<p>    V : float  — volume in m³</p>
+<p>    a : float  — Van der Waals constant a</p>
+<p>    b : float  — Van der Waals constant b</p>
+
+<p>    Returns</p>
+<p>    -------</p>
+<p>    float — predicted pressure in Pa</p>
+<p>    """</p>
+<p>    # TODO: Replace 'pass' with your implementation.</p>
+<p>    pass</p>
+
+
+<p>def percent_error(predicted, measured):</p>
+<p>    """</p>
+<p>    TODO: Calculate percent error between predicted and measured values.</p>
+
+<p>    Formula: ((predicted - measured) / measured) * 100</p>
+
+<p>    Parameters</p>
+<p>    ----------</p>
+<p>    predicted : float</p>
+<p>    measured  : float</p>
+
+<p>    Returns</p>
+<p>    -------</p>
+<p>    float — percent error (positive = over-prediction)</p>
+<p>    """</p>
+<p>    # TODO: Replace 'pass' with your implementation.</p>
+<p>    pass</p>
+
+
+<h1>============================================================</h1>
+<h1>STEP 3 — Read the CSV file and compute results</h1>
+<h1>============================================================</h1>
+
+<p>results = []   # This list will hold one dictionary per trial.</p>
+
+<h1>TODO: Open INPUT_FILE for reading using the with statement and</h1>
+<h1>      csv.DictReader. For each row:</h1>
+<h1>      1. Convert temperature_K, volume_m3, and n_mol to float,</h1>
+<h1>         and measured_pressure_Pa to float.</h1>
+<h1>      2. Call ideal_gas_pressure() to get p_ideal.</h1>
+<h1>      3. Call vdw_pressure() to get p_vdw.</h1>
+<h1>      4. Call percent_error() twice: once for ideal vs measured,</h1>
+<h1>         once for vdw vs measured.</h1>
+<h1>      5. Append a dictionary to <code>results</code> containing all original</h1>
+<h1>         fields plus: p_ideal, p_vdw, pct_err_ideal, pct_err_vdw.</h1>
+<p>#</p>
+<h1>HINT: Remember that csv.DictReader returns all values as strings.</h1>
+<h1>      You must explicitly convert numeric columns with float().</h1>
+
+<h1>--- Write your Step 3 code below this line ---</h1>
+
+
+<h1>============================================================</h1>
+<h1>STEP 4 — Write results to a new CSV file</h1>
+<h1>============================================================</h1>
+
+<h1>TODO: Define the fieldnames list for csv.DictWriter.</h1>
+<h1>      It should include all original column names plus:</h1>
+<h1>      'p_ideal_Pa', 'p_vdw_Pa', 'pct_err_ideal', 'pct_err_vdw'</h1>
+
+<p>fieldnames = []  # TODO: Replace [] with your list of field names.</p>
+
+<h1>TODO: Open OUTPUT_FILE for writing using the with statement,</h1>
+<h1>      newline='', and csv.DictWriter.</h1>
+<h1>      Write the header row, then write all rows from <code>results</code>.</h1>
+<h1>      After writing, print a confirmation message that includes</h1>
+<h1>      the output file name and the current date/time using datetime.now().</h1>
+
+<h1>--- Write your Step 4 code below this line ---</h1>
+
+
+<h1>============================================================</h1>
+<h1>STEP 5 — Visualize the results</h1>
+<h1>============================================================</h1>
+
+<h1>PROVIDED: Extract data for plotting once results list is populated.</h1>
+<h1>Run this cell after Step 3 and 4 are complete.</h1>
+
+<p>trial_ids       = [r['trial_id'] for r in results]</p>
+<p>measured        = [r['measured_pressure_Pa'] for r in results]</p>
+<p>p_ideal_list    = [r['p_ideal_Pa'] for r in results]</p>
+<p>p_vdw_list      = [r['p_vdw_Pa'] for r in results]</p>
+<p>pct_ideal_list  = [r['pct_err_ideal'] for r in results]</p>
+<p>pct_vdw_list    = [r['pct_err_vdw'] for r in results]</p>
+
+<h1>── Plot 1: Predicted vs Measured Pressure ───────────────────</h1>
+<p>fig, ax = plt.subplots(figsize=(10, 5))</p>
+<p>ax.plot(trial_ids, measured,     'ko-', label='Measured', linewidth=2)</p>
+<p>ax.plot(trial_ids, p_ideal_list, 'b^--', label='Ideal Gas Law')</p>
+<p>ax.plot(trial_ids, p_vdw_list,   'rs--', label='Van der Waals')</p>
+<p>ax.set_xlabel('Trial ID')</p>
+<p>ax.set_ylabel('Pressure (Pa)')</p>
+<p>ax.set_title('Predicted vs Measured Pressure — CO₂')</p>
+<p>ax.legend()</p>
+<p>ax.grid(True)</p>
+<p>plt.tight_layout()</p>
+<p>plt.savefig('pressure_comparison.png', dpi=150)</p>
+<p>plt.show()</p>
+<p>print("Plot 1 saved.")</p>
+
+<h1>── Plot 2: Percent Error by Trial ───────────────────────────</h1>
+<p>fig, ax = plt.subplots(figsize=(10, 5))</p>
+<p>ax.plot(trial_ids, pct_ideal_list, 'b^--', label='Ideal Gas Law % Error')</p>
+<p>ax.plot(trial_ids, pct_vdw_list,   'rs--', label='Van der Waals % Error')</p>
+<p>ax.axhline(y= SENSOR_ERROR_PCT, color='gray', linestyle=':', label='+1.5% sensor limit')</p>
+<p>ax.axhline(y=-SENSOR_ERROR_PCT, color='gray', linestyle=':',  label='−1.5% sensor limit')</p>
+<p>ax.axhline(y=0, color='black', linewidth=0.8)</p>
+<p>ax.set_xlabel('Trial ID')</p>
+<p>ax.set_ylabel('Percent Error (%)')</p>
+<p>ax.set_title('Model Percent Error vs Sensor Accuracy Band — CO₂')</p>
+<p>ax.legend()</p>
+<p>ax.grid(True)</p>
+<p>plt.tight_layout()</p>
+<p>plt.savefig('percent_error_comparison.png', dpi=150)</p>
+<p>plt.show()</p>
+<p>print("Plot 2 saved.")</p>
+
+<h1>============================================================</h1>
+<h1>STEP 6 — Summary</h1>
+
+</body>
+</html>

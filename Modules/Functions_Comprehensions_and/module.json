@@ -1,9 +1,9 @@
 {
   "Id": "38c13970-fb8d-4991-ae40-da124700d901",
-  "Name": "Functions, Comprehensions, and Functional Patterns",
+  "Name": "3 - Functions, Comprehensions, and Functional Patterns",
   "Description": "Covers function definition, positional and keyword parameters, default values, *args/**kwargs, scope, and recursion, then introduces list, dict, and set comprehensions alongside lambda functions and the map/filter functional programming patterns.",
   "CreatedBy": "Ron",
   "CreatedDate": "2026-05-13T09:57:17.6053814-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.6069713-04:00",
+  "LastModifiedDate": "2026-05-22T12:17:13.3146692-04:00",
   "Actions": []
 }

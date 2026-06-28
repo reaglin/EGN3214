@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Pandas: Series and DataFrames</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+  <header>
+    <h1>Introduction to Pandas: Series and DataFrames</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Introduction to Pandas: Series and DataFrames</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Pandas is one of the most widely used libraries in the Python data science ecosystem. Built on top of NumPy, it provides high-level, flexible data structures and a rich set of tools designed specifically for data manipulation, cleaning, analysis, and exploration. The name "Pandas" is derived from "Panel Data," a term from econometrics referring to multidimensional structured data sets. Whether you are working with financial time series, survey results, machine learning feature tables, or database exports, Pandas gives you a consistent and expressive interface for getting the job done.</p>
+
+<p>To use Pandas, you import it with the conventional alias <code>pd</code>:</p>
+
+<pre><code>import pandas as pd
+import numpy as np  # often used alongside pandas
+</code></pre>
+
+<p>Understanding Pandas begins with understanding its two core data structures: the <strong>Series</strong> and the <strong>DataFrame</strong>. Every other capability in the library — grouping, merging, pivoting, time-series resampling — is built on top of these two objects.</p>
+
+<p><strong>What is Pandas?</strong></p>
+
+<p>At its heart, Pandas is a library for working with <em>labeled</em>, <em>heterogeneous</em>, and often <em>incomplete</em> tabular data. Unlike a plain NumPy array, which requires all data to share the same type and uses only integer positions to reference values, Pandas attaches meaningful labels — called an <strong>index</strong> — to every row and every column. This labeling is what makes Pandas so powerful: you always know which observation or variable you are operating on, even after sorting, filtering, or merging.</p>
+
+<p>One of the most practically important features of Pandas is its graceful handling of <strong>missing data</strong>. In the real world, data sets almost always have gaps — a sensor reading that failed, a survey question left blank, a database join that found no match. Pandas represents missing values using the special floating-point sentinel <code>NaN</code> (Not a Number, from NumPy) or the newer <code>pd.NA</code> for nullable integer and boolean types. Crucially, most Pandas operations simply skip over <code>NaN</code> values by default rather than propagating errors or silently producing wrong answers. You can then explicitly decide to fill those gaps with a meaningful substitute using <code>.fillna()</code>, or to remove incomplete rows or columns entirely using <code>.dropna()</code>.</p>
+
+<pre><code>s = pd.Series([1.0, float('nan'), 3.0, float('nan'), 5.0])
+print(s.sum())       # 9.0  — NaN is skipped
+print(s.fillna(0))   # replaces NaN with 0
+print(s.dropna())    # removes NaN entries
+</code></pre>
+
+<p>Pandas also integrates seamlessly with <strong>Matplotlib</strong>, Python's primary plotting library. Every Series and DataFrame exposes a <code>.plot()</code> method that internally calls Matplotlib, so you can produce line charts, bar charts, histograms, scatter plots, and more in a single line of code without manually extracting arrays and passing them to a plotting function. This tight integration makes exploratory data analysis (EDA) extremely fast.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    'year': [2019, 2020, 2021, 2022, 2023],
+    'revenue': [120, 135, 98, 160, 175]
+})
+df.plot(x='year', y='revenue', kind='line', marker='o')
+plt.show()
+</code></pre>
+
+<p>Beyond analysis and plotting, Pandas is a first-class <strong>I/O library</strong>. It can read data from and write data to an enormous range of formats. The most commonly used functions include <code>pd.read_csv()</code> and <code>df.to_csv()</code> for comma-separated files, <code>pd.read_excel()</code> and <code>df.to_excel()</code> for spreadsheets, <code>pd.read_json()</code> for JSON documents, and <code>pd.read_sql()</code> or <code>pd.read_sql_query()</code> for pulling query results directly from a relational database via a SQLAlchemy connection. This means that whatever your data source, Pandas can likely consume it and hand you back a ready-to-use DataFrame in just one or two lines.</p>
+
+<pre><code># Reading different file formats
+df_csv   = pd.read_csv('sales_data.csv')
+df_excel = pd.read_excel('report.xlsx', sheet_name='Q1')
+df_json  = pd.read_json('records.json')
+
+# Writing back out
+df_csv.to_csv('cleaned_sales.csv', index=False)
+</code></pre>
+
+<p><strong>The Pandas Series</strong></p>
+
+<p>A <strong>Series</strong> is a one-dimensional labeled array. You can think of it as a supercharged Python list or a single column from a spreadsheet — it holds a sequence of values, but each value is associated with a label from the index. A Series has two main components: its <em>values</em> (a NumPy array under the hood) and its <em>index</em> (the array of labels).</p>
+
+<p>You create a Series with <code>pd.Series(data, index=labels)</code>. The <code>data</code> argument can be a Python list, a NumPy array, a scalar value, or a dictionary. When you supply a dictionary, the dictionary keys automatically become the index labels.</p>
+
+<pre><code># From a list with an explicit index
+temperatures = pd.Series([22.1, 18.4, 25.0, 30.2], index=['Mon', 'Tue', 'Wed', 'Thu'])
+print(temperatures)
+# Mon    22.1
+# Tue    18.4
+# Wed    25.0
+# Thu    30.2
+# dtype: float64
+
+# From a dictionary — keys become the index
+population = pd.Series({'Tokyo': 13_960_000, 'Delhi': 30_290_000, 'Lagos': 14_860_000})
+print(population)
+</code></pre>
+
+<p>Accessing elements in a Series is done with two primary indexers. <strong><code>.loc[]</code></strong> uses label-based access — you refer to elements by their index label, exactly as they appear. <strong><code>.iloc[]</code></strong> uses integer position-based access — you refer to elements by their numerical position (0, 1, 2, …), regardless of what the labels are. This distinction becomes critically important when your index contains integers, because direct bracket access <code>s[0]</code> can behave ambiguously. It is always safer and clearer to use <code>.loc[]</code> or <code>.iloc[]</code> explicitly.</p>
+
+<pre><code>print(temperatures.loc['Wed'])    # 25.0  — access by label
+print(temperatures.iloc[2])       # 25.0  — access by position (same element here)
+
+# Slicing with loc (inclusive on both ends)
+print(temperatures.loc['Mon':'Wed'])
+
+# Slicing with iloc (exclusive on the right end, like Python lists)
+print(temperatures.iloc[0:3])
+</code></pre>
+
+<p>One of the most elegant behaviors of a Pandas Series is <strong>index alignment during arithmetic</strong>. When you add, subtract, multiply, or divide two Series, Pandas automatically aligns them by their index labels before performing the operation. If a label exists in one Series but not the other, the result for that label is <code>NaN</code>. This behavior is a safeguard against accidentally combining data that belongs to different observations.</p>
+
+<pre><code>sales_q1 = pd.Series({'Alice': 340, 'Bob': 280, 'Carol': 410})
+sales_q2 = pd.Series({'Alice': 390, 'Carol': 365, 'Dave': 450})
+
+total = sales_q1 + sales_q2
+print(total)
+# Alice    730.0
+# Bob        NaN   <-- Bob has no Q2 data
+# Carol    775.0
+# Dave       NaN   <-- Dave has no Q1 data
+# dtype: float64
+</code></pre>
+
+<p><strong>The Pandas DataFrame</strong></p>
+
+<p>A <strong>DataFrame</strong> is a two-dimensional labeled data structure — a table with named columns and a shared row index. You can think of it as a dictionary of Series objects that all share the same index, or as a spreadsheet or SQL table brought into Python. Each column in a DataFrame is itself a Series, and they can each hold a different data type (integers in one column, floats in another, strings in a third).</p>
+
+<p>The most common way to create a DataFrame is from a <strong>dictionary of lists</strong>, where each key is a column name and each list contains the values for that column:</p>
+
+<pre><code>data = {
+    'name':   ['Alice', 'Bob', 'Carol', 'Dave'],
+    'age':    [29, 34, 22, 45],
+    'salary': [72000.0, 85000.0, 61000.0, 98000.0],
+    'dept':   ['Engineering', 'Marketing', 'Engineering', 'Finance']
+}
+df = pd.DataFrame(data)
+print(df)
+#     name  age   salary         dept
+# 0  Alice   29  72000.0  Engineering
+# 1    Bob   34  85000.0    Marketing
+# 2  Carol   22  61000.0  Engineering
+# 3   Dave   45  98000.0      Finance
+</code></pre>
+
+<p>You can also create a DataFrame from a <strong>2D NumPy array</strong>, in which case you typically supply column names explicitly. Or you can pass another DataFrame — for example, a subset of columns from an existing one — as the source. Pandas also accepts lists of dictionaries, where each dictionary represents a single row.</p>
+
+<pre><code># From a 2D NumPy array
+arr = np.array([[1, 0.5, True], [2, 1.5, False], [3, 2.5, True]])
+df_np = pd.DataFrame(arr, columns=['id', 'score', 'active'])
+
+# From a list of dicts (each dict is one row)
+records = [
+    {'city': 'Paris',  'country': 'France',  'pop': 2161000},
+    {'city': 'Berlin', 'country': 'Germany', 'pop': 3645000},
+]
+df_cities = pd.DataFrame(records)
+</code></pre>
+
+<p>Once you have a DataFrame, two attributes give you immediate structural information. <strong><code>df.shape</code></strong> returns a tuple <code>(rows, columns)</code> and is the fastest way to gauge the size of a dataset — knowing you have 1,200,000 rows and 47 columns before you begin analysis is essential for choosing the right approach.</p>
+
+<pre><code>print(df.shape)   # (4, 4) for our employees example
+rows, cols = df.shape
+print(f"Dataset has {rows} rows and {cols} columns.")
+</code></pre>
+
+<p><strong><code>df.dtypes</code></strong> returns a Series mapping each column name to its Pandas data type. This is not merely informational — data types determine which operations are valid. You cannot compute the mean of a column of strings; you cannot do string slicing on an integer column. Common Pandas dtypes include <code>int64</code>, <code>float64</code>, <code>object</code> (typically used for strings), <code>bool</code>, <code>datetime64[ns]</code>, and <code>category</code>. Seeing an expected numeric column listed as <code>object</code> is a classic sign that it contains mixed types or hidden non-numeric characters that need cleaning.</p>
+
+<pre><code>print(df.dtypes)
+# name       object
+# age         int64
+# salary    float64
+# dept       object
+# dtype: object
+</code></pre>
+
+<p><strong>Inspecting a DataFrame</strong></p>
+
+<p>Before diving into analysis, it is essential to understand the shape, completeness, and statistical character of your data. Pandas provides several methods purpose-built for this initial inspection phase.</p>
+
+<p><strong><code>df.head(n)</code></strong> returns the first <code>n</code> rows of the DataFrame (default <code>n=5</code>). <strong><code>df.tail(n)</code></strong> returns the last <code>n</code> rows. These are your first look at the raw data — column names, value formats, and any obvious anomalies. You use <code>head()</code> constantly: after loading a file, after a merge, after a transformation, to confirm things look as expected without printing the entire dataset.</p>
+
+<pre><code>large_df = pd.read_csv('transactions.csv')
+print(large_df.head())      # first 5 rows
+print(large_df.head(10))    # first 10 rows
+print(large_df.tail(3))     # last 3 rows
+</code></pre>
+
+<p><strong><code>df.info()</code></strong> prints a concise technical summary of the DataFrame to the console. It tells you the total number of rows (the RangeIndex), lists every column with its non-null count and dtype, and reports the total memory usage. The non-null count is particularly valuable: if a column has 10,000 rows but only 8,432 non-null values, you immediately know there are 1,568 missing entries that will need to be addressed before further analysis.</p>
+
+<pre><code>df.info()
+# &lt;class 'pandas.core.frame.DataFrame'&gt;
+# RangeIndex: 4 entries, 0 to 3
+# Data columns (total 4 columns):
+#  #   Column  Non-Null Count  Dtype
+# ---  ------  --------------  -----
+#  0   name    4 non-null      object
+#  1   age     4 non-null      int64
+#  2   salary  4 non-null      float64
+#  3   dept    4 non-null      object
+# dtypes: float64(1), int64(1), object(2)
+# memory usage: 256.0+ bytes
+</code></pre>
+
+<p><strong><code>df.describe()</code></strong> generates a table of summary statistics for every numeric column in the DataFrame. By default it computes the count of non-null values, mean, standard deviation, minimum, the three quartiles (25th, 50th, and 75th percentile), and the maximum. This single call gives you a statistical fingerprint of your numeric data and is invaluable for spotting outliers (a maximum salary of 9,999,999 when the mean is 75,000 suggests an error), skewed distributions (mean much higher than median), or scale differences between features (relevant before machine learning).</p>
+
+<pre><code>print(df.describe())
+#              age         salary
+# count   4.000000       4.000000
+# mean   32.500000   79000.000000
+# std     9.707253   15491.933385
+# min    22.000000   61000.000000
+# 25%    27.250000   69750.000000
+# 50%    31.500000   78500.000000
+# 75%    36.750000   87750.000000
+# max    45.000000   98000.000000
+</code></pre>
+
+<p>You can also pass <code>include='all'</code> to <code>describe()</code> to include statistics for non-numeric (<code>object</code>) columns as well. For string columns this shows count, the number of unique values, the most frequent value (<em>top</em>), and its frequency (<em>freq</em>) — helpful for understanding categorical columns at a glance.</p>
+
+<pre><code>print(df.describe(include='all'))
+</code></pre>
+
+<p>Together, <code>head()</code>, <code>info()</code>, and <code>describe()</code> form the standard opening trio of any Pandas workflow. They answer the three most immediate questions about a new dataset: <em>What does the data look like?</em>, <em>How complete and correctly typed is it?</em>, and <em>What are its statistical properties?</em> Developing the habit of running these three commands every time you load a new dataset will save you from countless downstream errors and surprises.</p>
+
+<p>Putting it all together, a typical Pandas workflow begins by importing the library, loading data from a file, and then immediately inspecting it to understand its structure before any manipulation begins:</p>
+
+<pre><code>import pandas as pd
+
+# Load data
+df = pd.read_csv('employee_records.csv')
+
+# Structural inspection
+print(df.shape)
+print(df.dtypes)
+
+# Content preview
+print(df.head())
+
+# Completeness and type summary
+df.info()
+
+# Statistical summary
+print(df.describe())
+
+# Handle missing values
+df['salary'] = df['salary'].fillna(df['salary'].median())
+df = df.dropna(subset=['name'])
+
+# Quick visualization
+df['salary'].plot(kind='hist', bins=20, title='Salary Distribution')
+</code></pre>
+
+<p>This pattern — load, inspect, clean, analyze, visualize — is the heartbeat of data work with Pandas, and every step relies on the Series and DataFrame structures introduced here.</p>
+        <div class="notes"><strong>Notes</strong>Introduces the pandas library and its two primary data structures — Series and DataFrame — which form the foundation for data manipulation and analysis in Python.</div>
+      </div>
+    </details>
+  </main>
+</body></html>

@@ -1,9 +1,9 @@
 {
   "Id": "841830a6-57b3-452a-b3b6-2f04ba60d490",
-  "Name": "Modules, File I/O, and Error Handling",
+  "Name": "4 - Modules, File I/O, and Error Handling",
   "Description": "Covers writing and importing custom modules, using standard library modules, reading and writing text and CSV files with the with-statement context manager, working with JSON, and applying try-except patterns for graceful error handling in engineering scripts.",
   "CreatedBy": "Ron",
   "CreatedDate": "2026-05-13T09:57:17.6131401-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.6143613-04:00",
+  "LastModifiedDate": "2026-05-22T15:14:19.029644-04:00",
   "Actions": []
 }

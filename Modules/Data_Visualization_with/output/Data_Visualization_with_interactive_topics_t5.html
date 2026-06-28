@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publication-Quality Figure Styling</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+  <header>
+    <h1>Publication-Quality Figure Styling</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Publication-Quality Figure Styling</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Creating a plot that communicates data clearly is one thing; creating a plot that meets the rigorous aesthetic and technical standards of a journal article, conference poster, or professional report is another challenge entirely. Publication-quality figures require deliberate control over every visual element — typography, color, line weight, tick marks, whitespace, and export resolution — so that the final output is both beautiful and precisely reproducible. Matplotlib provides a rich, layered system for achieving this level of control, ranging from high-level style sheets that transform an entire figure's look in a single line, down to low-level <code>rcParams</code> settings and <code>Axes</code> methods that tune individual elements with surgical precision. Mastering these tools transforms workmanlike exploratory plots into polished figures ready to drop directly into a manuscript or slide deck.</p>
+
+<p><strong>Using Style Sheets</strong></p>
+
+<p>Matplotlib ships with a collection of built-in style sheets that bundle dozens of coordinated visual settings — background color, grid visibility, font sizes, line widths, and color cycles — into a single named profile. Applying a style sheet globally is done with <code>plt.style.use()</code>, which accepts the name of any built-in style or the file path to a custom <code>.mplstyle</code> file. Once called, it affects every figure created afterward in the same script or notebook session.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+plt.style.use('seaborn-v0_8-whitegrid')
+
+x = np.linspace(0, 2 * np.pi, 200)
+fig, ax = plt.subplots()
+ax.plot(x, np.sin(x), label='sin(x)')
+ax.plot(x, np.cos(x), label='cos(x)')
+ax.legend()
+plt.show()
+</code></pre>
+
+<p>Running that snippet replaces Matplotlib's default gray background and thin lines with a clean white grid, softer colors, and slightly larger fonts — all without touching a single parameter manually. Popular built-in styles include <code>'ggplot'</code> (inspired by R's ggplot2), <code>'bmh'</code> (Bayesian Methods for Hackers), <code>'dark_background'</code> for dark-themed presentations, and the family of <code>'seaborn-*'</code> variants. You can inspect the full list with <code>print(plt.style.available)</code>.</p>
+
+<p>Styles can also be <strong>layered</strong> by passing a list to <code>plt.style.use()</code>. Matplotlib applies the styles in order, with later entries overriding earlier ones wherever settings conflict. This lets you start with a broad aesthetic base and then layer a narrow customization on top:</p>
+
+<pre><code># Start with a clean base, then override font settings with a custom sheet
+plt.style.use(['seaborn-v0_8-paper', 'custom_fonts.mplstyle'])
+</code></pre>
+
+<p>A critical workflow concern is that <code>plt.style.use()</code> modifies the global <code>rcParams</code> state for the rest of the session. If you need to apply a style only to one particular figure — perhaps a dark theme for a presentation slide embedded in a notebook that otherwise uses a light theme — use the <strong>context manager</strong> form instead:</p>
+
+<pre><code>with plt.style.context('dark_background'):
+    fig, ax = plt.subplots()
+    ax.plot(x, np.sin(x), color='cyan')
+    plt.savefig('dark_figure.pdf')
+
+# Back outside the block, global settings are completely restored
+fig2, ax2 = plt.subplots()
+ax2.plot(x, np.cos(x))   # Uses whatever style was active before the block
+plt.show()
+</code></pre>
+
+<p>The context manager guarantees that the style is applied only within its block and that the previous state is fully restored upon exit, even if an exception is raised. This is the recommended approach whenever you need temporary style changes in interactive or notebook environments.</p>
+
+<p><strong>Customizing Colors and Colormaps</strong></p>
+
+<p>Color is one of the most powerful channels for encoding information in a figure, and Matplotlib supports a flexible vocabulary for specifying colors at every level of granularity. A color can be expressed in several equivalent ways:</p>
+
+<ul>
+<li><strong>Named strings</strong> — Matplotlib recognizes all CSS4 color names such as <code>'steelblue'</code>, <code>'tomato'</code>, <code>'darkorange'</code>, and <code>'mediumseagreen'</code>. These are readable and self-documenting in code.</li>
+<li><strong>Hex codes</strong> — Standard six-digit HTML hex strings like <code>'#2c7bb6'</code> give exact control over any of the 16.7 million RGB colors and are the easiest format to copy from a color picker or brand style guide.</li>
+<li><strong>RGB and RGBA tuples</strong> — Floating-point tuples in the range [0, 1] such as <code>(0.17, 0.48, 0.71)</code> or <code>(0.17, 0.48, 0.71, 0.8)</code> (the last value being alpha for transparency) are useful in programmatic contexts where you compute colors mathematically.</li>
+<li><strong>Single-letter shortcuts</strong> — <code>'b'</code> (blue), <code>'r'</code> (red), <code>'g'</code> (green), <code>'k'</code> (black), <code>'w'</code> (white) for quick interactive use.</li>
+</ul>
+
+<pre><code>fig, ax = plt.subplots()
+ax.plot(x, np.sin(x), color='steelblue', linewidth=2)
+ax.plot(x, np.cos(x), color='#e34a33', linewidth=2)
+ax.plot(x, np.sin(x + 1), color=(0.2, 0.6, 0.2), linewidth=2)
+</code></pre>
+
+<p>For <strong>continuous data</strong> — such as a scatter plot where point color encodes a third numerical variable — colormaps provide a mapping from a range of values to a spectrum of colors. The function <code>plt.cm.get_cmap()</code> retrieves a colormap object by name:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+rng = np.random.default_rng(42)
+x_data = rng.uniform(0, 10, 100)
+y_data = rng.uniform(0, 10, 100)
+z_data = rng.uniform(0, 1, 100)   # The third variable encoded as color
+
+cmap = plt.cm.get_cmap('viridis')  # Perceptually uniform, colorblind-friendly
+
+fig, ax = plt.subplots()
+sc = ax.scatter(x_data, y_data, c=z_data, cmap=cmap, s=60, edgecolors='none')
+fig.colorbar(sc, ax=ax, label='Intensity')
+plt.show()
+</code></pre>
+
+<p>Choosing the right colormap matters for both aesthetics and accessibility. <code>'viridis'</code>, <code>'plasma'</code>, and <code>'cividis'</code> are perceptually uniform (equal steps in data correspond to equal steps in perceived color change) and remain distinguishable when printed in grayscale or viewed by people with color vision deficiencies. Diverging colormaps like <code>'RdBu'</code> or <code>'coolwarm'</code> work well when your data has a meaningful midpoint (such as zero in a correlation matrix). Avoid <code>'jet'</code> in publication contexts — its non-uniform luminance profile creates artificial visual boundaries and is poorly reproduced in grayscale.</p>
+
+<p>The <strong>property cycle</strong> controls the automatic sequence of colors (and other properties like linestyle or marker) that Matplotlib cycles through when you plot multiple series without specifying colors explicitly. You can customize it via <code>rcParams</code> or a style sheet:</p>
+
+<pre><code>from cycler import cycler
+
+custom_cycle = cycler(color=['#003f5c', '#7a5195', '#ef5675', '#ffa600']) \
+             + cycler(linewidth=[1.5, 1.5, 1.5, 1.5])
+
+plt.rcParams['axes.prop_cycle'] = custom_cycle
+
+fig, ax = plt.subplots()
+for i in range(4):
+    ax.plot(x, np.sin(x + i * 0.5), label=f'Phase {i}')
+ax.legend()
+plt.show()
+</code></pre>
+
+<p>In this example the four lines automatically receive the four specified colors in order, and the cycle repeats if more than four series are added. This technique is invaluable for enforcing a consistent brand palette across all figures in a report.</p>
+
+<p><strong>Fonts, Tick Marks, and Spines</strong></p>
+
+<p>Typography and axis anatomy are subtle but powerful determinants of a figure's professionalism. Journals often specify exact font families, sizes, and axis tick formats in their figure preparation guidelines, so knowing how to control these elements precisely is essential.</p>
+
+<p>Global font size is set through <code>rcParams</code>:</p>
+
+<pre><code>plt.rcParams['font.size'] = 10          # Base size for most text
+plt.rcParams['axes.titlesize'] = 12     # Axes title
+plt.rcParams['axes.labelsize'] = 10     # x and y axis labels
+plt.rcParams['xtick.labelsize'] = 8     # Tick labels
+plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['legend.fontsize'] = 9
+plt.rcParams['font.family'] = 'serif'   # or 'sans-serif', 'monospace'
+plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif']
+</code></pre>
+
+<p>Setting these once at the top of a script ensures uniform typography throughout. For individual text elements, each text artist also accepts a <code>fontsize</code> keyword argument that overrides the global default.</p>
+
+<p>Tick marks define the quantitative scale on an axis, and controlling their positions and labels is frequently necessary when the automatic choices are unsuitable — for example, to align ticks with meaningful data values, show fractions of π on a trigonometric plot, or reduce clutter on a densely labeled time axis:</p>
+
+<pre><code>fig, ax = plt.subplots(figsize=(6, 3))
+ax.plot(x, np.sin(x))
+
+# Place ticks at multiples of pi/2
+tick_positions = [0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi]
+tick_labels    = ['0', 'π/2', 'π', '3π/2', '2π']
+
+ax.set_xticks(tick_positions)
+ax.set_xticklabels(tick_labels, fontsize=10)
+ax.set_yticks([-1, -0.5, 0, 0.5, 1])
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>The appearance of the tick marks themselves — their direction, length, width, and color — is controlled with <code>ax.tick_params()</code>:</p>
+
+<pre><code>ax.tick_params(
+    axis='both',       # Apply to both x and y axes
+    which='major',     # Major ticks (use 'minor' for minor ticks)
+    direction='in',    # Ticks point inward ('out' or 'inout' are alternatives)
+    length=5,          # Tick length in points
+    width=0.8,         # Tick line width
+    labelsize=9,       # Font size of tick labels
+    top=True,          # Also draw ticks on the top spine
+    right=True         # Also draw ticks on the right spine
+)
+</code></pre>
+
+<p>Pointing ticks <em>inward</em> and drawing them on all four sides of the axes frame is a convention in many physics and engineering journals, giving the figure a tighter, more authoritative appearance.</p>
+
+<p><strong>Spines</strong> are the four boundary lines of the axes box (top, bottom, left, right). Controlling them lets you create minimalist figures with only two visible spines (a common style in statistics and data journalism) or completely frameless axes:</p>
+
+<pre><code>fig, ax = plt.subplots()
+ax.plot(x, np.sin(x))
+
+# Hide the top and right spines
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# Move the left spine to x=0 and bottom spine to y=0
+ax.spines['left'].set_position('zero')
+ax.spines['bottom'].set_position('zero')
+
+# Adjust spine line width
+ax.spines['left'].set_linewidth(0.8)
+ax.spines['bottom'].set_linewidth(0.8)
+plt.show()
+</code></pre>
+
+<p>You can also set the color of spines individually with <code>ax.spines['bottom'].set_color('#333333')</code>, which is useful when the figure background is not white.</p>
+
+<p>Minor ticks, which subdivide the intervals between major ticks, add precision and are expected in certain scientific disciplines. They are enabled with the <code>AutoMinorLocator</code>:</p>
+
+<pre><code>from matplotlib.ticker import AutoMinorLocator, MultipleLocator
+
+ax.xaxis.set_minor_locator(AutoMinorLocator(5))  # 4 minor ticks per major interval
+ax.yaxis.set_minor_locator(MultipleLocator(0.1))
+
+ax.tick_params(which='minor', length=3, width=0.6, direction='in')
+</code></pre>
+
+<p><strong>Saving High-Resolution Figures</strong></p>
+
+<p>A figure that looks sharp on screen may appear blurry, pixelated, or incorrectly proportioned when embedded in a document, depending on how it was saved. Understanding the output pipeline is essential for avoiding these problems.</p>
+
+<p>The <code>dpi</code> (dots per inch) parameter in <code>plt.savefig()</code> controls the pixel density of raster image formats such as PNG, JPEG, and TIFF. The default Matplotlib DPI is 100, which is fine for screen display but insufficient for print. Professional standards vary by context:</p>
+
+<ul>
+<li><strong>72–96 DPI</strong> — Screen display and web use.</li>
+<li><strong>150–200 DPI</strong> — Acceptable for presentations projected on screen.</li>
+<li><strong>300 DPI</strong> — Standard minimum for most academic journals and offset printing.</li>
+<li><strong>600 DPI</strong> — Required by some journals for line art (figures containing only lines and text with no photographic content).</li>
+</ul>
+
+<pre><code>fig.savefig('figure1.png', dpi=300)
+fig.savefig('figure1_hires.tiff', dpi=600)
+</code></pre>
+
+<p>The <code>bbox_inches='tight'</code> argument is almost always necessary when saving figures, because Matplotlib's default bounding box encompasses only the axes area and frequently clips axis labels, legends, or colorbars that extend slightly outside it:</p>
+
+<pre><code>fig.savefig(
+    'figure1.png',
+    dpi=300,
+    bbox_inches='tight',     # Expand bounding box to include all artists
+    pad_inches=0.05          # Add a small margin around the tight bounding box
+)
+</code></pre>
+
+<p>Without <code>bbox_inches='tight'</code>, the left y-axis label or bottom x-axis label is often partially or completely cut off in the saved file even though it appears fine in the interactive window. This is one of the most common and frustrating gotchas when submitting figures for the first time.</p>
+
+<p><strong>Vector formats</strong> — PDF, SVG, and EPS — are fundamentally different from raster formats in that they store the figure as a set of mathematical drawing instructions rather than a grid of pixels. This means they can be scaled to any size — from a postage stamp to a billboard — without any loss of sharpness. They are the preferred format for:</p>
+
+<ul>
+<li>Line art, diagrams, and figures containing only discrete geometric elements and text.</li>
+<li>Figures that will be embedded in LaTeX documents (PDF is the native vector format for <code>pdflatex</code> and <code>lualatex</code>).</li>
+<li>Figures that may be edited after the fact in vector graphics software such as Adobe Illustrator or Inkscape for final layout adjustments.</li>
+<li>Any situation where file size matters, because a complex vector figure is often dramatically smaller than a high-DPI raster equivalent.</li>
+</ul>
+
+<pre><code># PDF — ideal for LaTeX and most print workflows
+fig.savefig('figure1.pdf', bbox_inches='tight')
+
+# SVG — ideal for web embedding and editing in Inkscape
+fig.savefig('figure1.svg', bbox_inches='tight')
+
+# EPS — required by some older journal submission systems
+fig.savefig('figure1.eps', bbox_inches='tight')
+</code></pre>
+
+<p>One nuance with vector output is that the <code>dpi</code> parameter still affects raster elements <em>embedded within</em> a vector figure — for example, a <code>imshow()</code> image panel inside a PDF. Setting <code>dpi=300</code> even when saving to PDF ensures that any such embedded rasters remain sharp.</p>
+
+<p>A complete, production-ready figure saving workflow typically looks like this:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.size': 10,
+    'axes.labelsize': 10,
+    'xtick.labelsize': 8,
+    'ytick.labelsize': 8,
+    'legend.fontsize': 9,
+    'figure.dpi': 150,       # Screen preview resolution
+})
+
+x = np.linspace(0, 2 * np.pi, 300)
+
+fig, ax = plt.subplots(figsize=(3.5, 2.8))   # Width sized for a single column (inches)
+
+ax.plot(x, np.sin(x), color='#2c7bb6', linewidth=1.2, label=r'$\sin(x)$')
+ax.plot(x, np.cos(x), color='#d7191c', linewidth=1.2, label=r'$\cos(x)$')
+
+ax.set_xlabel(r'$x$ (radians)')
+ax.set_ylabel('Amplitude')
+ax.legend(frameon=False, loc='upper right')
+
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.tick_params(direction='in', length=4, width=0.7)
+
+plt.tight_layout()
+
+fig.savefig('figure1.pdf', dpi=300, bbox_inches='tight', pad_inches=0.02)
+fig.savefig('figure1.png', dpi=300, bbox_inches='tight', pad_inches=0.02)
+plt.show()
+</code></pre>
+
+<p>This example encapsulates the full workflow: global parameter setup, figure sizing matched to a journal's single-column width (typically 3.0–3.5 inches), careful color selection, minimal spine styling, inward ticks, and dual-format export for both vector (PDF) and raster (PNG) submission requirements. Developing a personal template like this — saved as a <code>.mplstyle</code> file or a Python module — dramatically accelerates the process of producing consistent, high-quality figures across a project.</p>
+        <div class="notes"><strong>Notes</strong>The complete workflow example at the end ties together all four subtopics and gives learners a ready-to-adapt template. The note about `bbox_inches=&#39;tight&#39;` being one of the most common submission gotchas is practically important and worth emphasizing in discussion. Consider also mentioning `matplotlib.rcdefaults()` as the way to reset all `rcParams` back to factory defaults during a session.</div>
+      </div>
+    </details>
+  </main>
+</body></html>

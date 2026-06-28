@@ -2,7 +2,7 @@
   "ModuleFolderName": "NumPy_for_Engineering",
   "CourseName": "Egn3214",
   "GeneratedDate": "2026-05-14T21:31:45.7388576-04:00",
-  "ModifiedDate": "2026-05-14T21:31:45.7417439-04:00",
+  "ModifiedDate": "2026-06-04T14:52:22.4714863-04:00",
   "Outcomes": [
     {
       "Id": "3e245d62-87a1-46e9-a551-12524e65c453",
@@ -40,9 +40,9 @@
       "Id": "f5da8b7f-b790-432a-994d-ffea1c759034",
       "Title": "Introduction to NumPy and the ndarray",
       "Summary": "Covers what NumPy is, why it is the cornerstone of numerical engineering computation in Python, and how the ndarray differs fundamentally from a Python list.",
-      "SortOrder": 0,
+      "SortOrder": 1,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
-      "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
+      "ModifiedDate": "2026-06-04T12:56:56.6598629-04:00",
       "Elements": [
         {
           "Id": "322a93a4-05cf-4ced-a8e5-edeff00f0b96",
@@ -52,20 +52,20 @@
           "Notes": "NumPy stands for Numerical Python. It was originally developed as Numeric and later merged with Numarray to become NumPy. It underpins virtually every scientific Python library, including SciPy, pandas, and TensorFlow.",
           "SortOrder": 0,
           "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
-          "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
+          "ModifiedDate": "2026-06-04T12:58:03.4021741-04:00",
           "Items": [
             {
-              "Id": "47cf6275-d0c7-4a06-816f-7a6394629565",
+              "Id": "3b74c663-6513-498a-8c21-43156e1018f1",
               "Text": "NumPy is the foundational numerical computing library for the Python scientific ecosystem.",
               "SortOrder": 0
             },
             {
-              "Id": "d587c4dd-4ce2-4feb-a848-8b9218bbec63",
+              "Id": "1aa937ef-4ebc-445a-803d-24dae38e5148",
               "Text": "It is implemented primarily in C, making array operations significantly faster than pure Python loops.",
               "SortOrder": 1
             },
             {
-              "Id": "e43c6707-ce47-48b0-a5c1-1cb0b6cd7a1c",
+              "Id": "752822dd-f775-42fa-a112-bfe229af8408",
               "Text": "Most major engineering and data-science libraries depend on NumPy as a core dependency.",
               "SortOrder": 2
             }
@@ -168,7 +168,7 @@
       "Id": "870f3b39-bf37-461e-8c12-490f851d13b6",
       "Title": "Creating NumPy Arrays",
       "Summary": "Explores the full range of array construction methods, from converting Python sequences to using specialized initialization functions that generate arrays of specific values or ranges.",
-      "SortOrder": 1,
+      "SortOrder": 2,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -333,7 +333,7 @@
       "Id": "079b7894-5321-4e23-8c0b-a12ab1d8dd03",
       "Title": "Element-Wise Operations and Universal Functions",
       "Summary": "Describes how NumPy performs arithmetic and mathematical operations element-by-element using ufuncs, enabling vectorized computation without explicit Python loops.",
-      "SortOrder": 2,
+      "SortOrder": 3,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -471,7 +471,7 @@
       "Id": "7d59dcf7-b259-42f5-b96b-f86176c88c7c",
       "Title": "Broadcasting",
       "Summary": "Explains NumPy\u0027s broadcasting mechanism that allows arithmetic operations between arrays of different but compatible shapes without copying data.",
-      "SortOrder": 3,
+      "SortOrder": 4,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -604,7 +604,7 @@
       "Id": "15fd09c8-1c36-430a-a6c8-ed57ac958204",
       "Title": "Indexing, Slicing, and Fancy Indexing",
       "Summary": "Covers all methods for accessing and selecting subsets of array elements, from basic integer indexing and slices to advanced Boolean and integer-array indexing.",
-      "SortOrder": 4,
+      "SortOrder": 5,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -774,7 +774,7 @@
       "Id": "50c8c603-19de-4102-a166-214881d5fe5f",
       "Title": "Reshaping, Transposing, and Array Manipulation",
       "Summary": "Explains how to change the shape and layout of arrays without altering their data, including reshape, transpose, flatten, and stacking operations fundamental to preparing data for engineering algorithms.",
-      "SortOrder": 5,
+      "SortOrder": 6,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -944,7 +944,7 @@
       "Id": "7296a8d9-bc2f-4c20-a547-47dc0dc70afe",
       "Title": "Linear Algebra with NumPy",
       "Summary": "Covers NumPy\u0027s linear algebra capabilities, including matrix multiplication, decompositions, solving linear systems, and computing norms and determinants as needed for engineering analysis.",
-      "SortOrder": 6,
+      "SortOrder": 7,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
       "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
       "Elements": [
@@ -1114,9 +1114,9 @@
       "Id": "f006c53d-382a-4bb9-adaa-687300b82bd3",
       "Title": "Statistical and Mathematical Functions",
       "Summary": "Introduces NumPy\u0027s built-in statistical descriptors and mathematical functions that enable rapid characterization of engineering data and evaluation of mathematical expressions over arrays.",
-      "SortOrder": 7,
+      "SortOrder": 8,
       "CreatedDate": "2026-05-14T21:31:45.7388576-04:00",
-      "ModifiedDate": "2026-05-14T21:31:45.7388576-04:00",
+      "ModifiedDate": "2026-06-04T12:51:48.5430565-04:00",
       "Elements": [
         {
           "Id": "c7821d28-5edb-4a61-ad9e-306bda3bc006",
@@ -1279,7 +1279,244 @@
           ]
         }
       ]
+    },
+    {
+      "Id": "d40f642d-bad0-481e-be8a-0564e32334fc",
+      "Title": "Numpy Functions",
+      "Summary": "A summary of Numpy functions",
+      "SortOrder": 0,
+      "CreatedDate": "2026-06-04T12:49:42.6921299-04:00",
+      "ModifiedDate": "2026-06-04T14:52:12.4635447-04:00",
+      "Elements": [
+        {
+          "Id": "2316f858-e8e5-441b-9ccd-b2904e614fe8",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Mathematical and Arithmetic Functions",
+          "BodyText": "NumPy provides a rich set of universal functions (ufuncs) for performing element-wise mathematical operations on arrays. These include basic arithmetic as well as advanced mathematical computations commonly used in engineering analysis.",
+          "Notes": "Examples include np.sqrt(), np.exp(), np.log(), np.sin(), np.cos(), and np.tan(). These functions operate efficiently on entire arrays without the need for explicit loops.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:22.4712658-04:00",
+          "Items": [
+            {
+              "Id": "46ae3e6f-f37b-4f59-9591-b4a030aae943",
+              "Text": "Universal functions (ufuncs) apply operations element-wise across entire arrays, making them highly efficient for large datasets.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "daabea08-e143-4f37-a142-692be93fca21",
+              "Text": "Trigonometric functions such as np.sin(), np.cos(), and np.tan() accept angles in radians by default.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "adac634f-6347-4cc3-b2f0-c5eb3ac0ca49",
+              "Text": "Exponential and logarithmic functions like np.exp() and np.log() are essential for signal processing and thermodynamic calculations.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f757d47a-b16c-47f5-95b0-fe225cea4be5",
+              "Text": "Aggregate functions such as np.sum(), np.prod(), np.min(), and np.max() reduce arrays along specified axes.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "bfa7d038-3369-4f21-ba29-e5f7d92cbcaf",
+              "Text": "Rounding functions including np.floor(), np.ceil(), and np.round() help control numerical precision in engineering outputs.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "ddfae557-32fc-45a7-b208-a2bffbbb559e",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Statistical Functions",
+          "BodyText": "NumPy includes a comprehensive suite of statistical functions that allow engineers to analyze datasets, compute descriptive statistics, and understand data distributions. These functions operate directly on arrays and support axis-based computations.",
+          "Notes": "For example, np.mean(data, axis=0) computes the column-wise mean of a 2D dataset, which is useful in sensor data analysis or material property averaging.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "Items": [
+            {
+              "Id": "95de8ec1-7c32-4fa2-b233-313b437a25c5",
+              "Text": "np.mean() and np.median() compute the average and middle value of an array, respectively, providing measures of central tendency.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ed254bd5-012f-4c6d-9090-ece73a42d65a",
+              "Text": "np.std() and np.var() calculate the standard deviation and variance, quantifying the spread of engineering measurement data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d714c0e3-77b5-47df-9c3b-7997c56086d1",
+              "Text": "np.percentile() and np.quantile() identify threshold values within a distribution, useful for quality control and tolerance analysis.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0d0609b5-29ff-4170-8c40-bc99aecd59dd",
+              "Text": "np.corrcoef() computes the Pearson correlation matrix between variables, supporting multivariate engineering analysis.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "b37ce322-70ee-4865-8fac-d7e3f12e540f",
+              "Text": "All statistical functions accept an axis parameter, enabling row-wise or column-wise computation on multi-dimensional arrays.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "0a0bcce6-fa79-4cab-b642-ee56ae57598e",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Linear Algebra Functions",
+          "BodyText": "NumPy\u0027s numpy.linalg module provides essential linear algebra operations used extensively in structural analysis, control systems, and signal processing. These functions handle matrix operations that are fundamental to solving engineering problems.",
+          "Notes": "For instance, np.linalg.solve(A, b) efficiently solves the system of linear equations Ax = b, which appears in finite element analysis and circuit network problems.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "Items": [
+            {
+              "Id": "7a9ebb78-9f3c-45c6-9942-5ba752eea31c",
+              "Text": "np.dot() and np.matmul() perform dot products and matrix multiplication, forming the basis of many engineering computations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "030bf83a-dc41-44c3-85e3-79e38afd6bdd",
+              "Text": "np.linalg.inv() computes the inverse of a square matrix, though np.linalg.solve() is preferred for solving linear systems due to better numerical stability.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "06162294-0261-4bf0-9658-986d892374c2",
+              "Text": "np.linalg.eig() and np.linalg.eigh() compute eigenvalues and eigenvectors, critical for modal analysis and stability assessments.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "268e9788-89e6-4342-bd73-3dc50a877701",
+              "Text": "np.linalg.svd() performs Singular Value Decomposition, used in data compression, signal processing, and least-squares problems.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "3be534c6-e1eb-4bd4-b909-c722e1662316",
+              "Text": "np.linalg.det() calculates the determinant of a matrix, which indicates whether a system of equations has a unique solution.",
+              "SortOrder": 4
+            },
+            {
+              "Id": "704884d8-034b-4976-8894-a60904f84d5c",
+              "Text": "np.linalg.norm() computes vector and matrix norms, providing measures of magnitude used in convergence checks and error analysis.",
+              "SortOrder": 5
+            }
+          ]
+        },
+        {
+          "Id": "3637b38f-646a-40fc-8e8e-dc35041488d1",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Array Manipulation Functions",
+          "BodyText": "NumPy offers a wide range of functions for reshaping, joining, splitting, and transforming arrays, enabling engineers to prepare and restructure data for computational workflows. These functions are essential for adapting data to the required format of algorithms and simulations.",
+          "Notes": "A common engineering use case is reshaping a 1D array of sensor readings into a 2D matrix with np.reshape() so that rows represent time steps and columns represent sensor channels.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "Items": [
+            {
+              "Id": "021388df-bd1d-4f9a-a7be-7094722964b5",
+              "Text": "np.reshape() changes the shape of an array without altering its data, provided the total number of elements remains constant.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "698d7005-d59f-4a5b-b11c-f8c15f565ff7",
+              "Text": "np.concatenate(), np.hstack(), and np.vstack() join multiple arrays along specified axes to combine datasets.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9acbc1cc-2438-4eea-9a15-ad390278fb0e",
+              "Text": "np.split(), np.hsplit(), and np.vsplit() divide arrays into sub-arrays, useful for partitioning datasets into training and testing sets.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4f3d1083-ceca-4a61-8cda-844227bb5ad4",
+              "Text": "np.transpose() and np.swapaxes() reorder array dimensions, often required when interfacing with different libraries or hardware data formats.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "f2ba8c0e-8e07-44d7-97d4-196b67b64157",
+              "Text": "np.flatten() and np.ravel() convert multi-dimensional arrays into 1D arrays, with ravel returning a view when possible for memory efficiency.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "d9d9607e-8eda-459b-9411-69431099339b",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Sorting and Searching Functions",
+          "BodyText": "NumPy provides functions to sort array elements and search for values meeting specific criteria, which are frequently needed in data preprocessing and engineering signal analysis. These functions support multi-dimensional arrays and offer control over sorting algorithms.",
+          "Notes": "For example, np.argsort() returns the indices that would sort an array, allowing engineers to rank experimental measurements or prioritize simulation results without losing index correspondence.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "Items": [
+            {
+              "Id": "7021047e-7aa2-4318-a682-549fd48469e1",
+              "Text": "np.sort() returns a sorted copy of an array, while np.argsort() returns the indices corresponding to the sorted order.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6b3726e5-7786-4d5f-a199-dce880b16d8f",
+              "Text": "np.searchsorted() uses binary search to find the index where a value should be inserted to maintain sorted order, enabling efficient lookup.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2704c5f8-a37f-4860-a071-f05e151ab5a5",
+              "Text": "np.where() returns the indices of elements satisfying a condition, or selects values from two arrays based on a Boolean condition.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "53a0fd5f-2e1f-4cff-8838-b60cc8116bb5",
+              "Text": "np.argmin() and np.argmax() return the indices of the minimum and maximum values along a specified axis.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "9906178b-c6fc-43dd-941a-1f05da22a5c6",
+              "Text": "np.unique() identifies distinct values in an array and can also return counts and inverse indices, useful for categorical engineering data.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "be34f140-dce5-4571-8750-8dc90cbfabf5",
+          "TopicId": "d40f642d-bad0-481e-be8a-0564e32334fc",
+          "Title": "Input/Output and Data Loading Functions",
+          "BodyText": "NumPy supports saving and loading array data through a set of I/O functions that interface with binary and text file formats, facilitating data persistence and interoperability in engineering projects. These functions allow engineers to store simulation results and reload experimental datasets efficiently.",
+          "Notes": "np.save() and np.load() use NumPy\u0027s native .npy binary format for fast and lossless storage of array data, while np.savetxt() and np.loadtxt() handle human-readable CSV or whitespace-delimited files commonly produced by measurement instruments.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "ModifiedDate": "2026-06-04T14:52:12.4105032-04:00",
+          "Items": [
+            {
+              "Id": "b6033113-aa8e-4695-9478-0f9731464c1c",
+              "Text": "np.save() stores a single array to a .npy file, and np.load() retrieves it, preserving dtype and shape exactly.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2c7d4124-a0a9-4a3a-bec3-38a7eda616c7",
+              "Text": "np.savez() saves multiple arrays into a single compressed .npz archive, reducing storage requirements for large datasets.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3c40d835-c7af-4b44-bc4c-71c281bf1067",
+              "Text": "np.savetxt() exports array data to a plain text file with configurable delimiters and formatting, suitable for sharing with non-Python tools.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "836a8dc8-2020-4e17-aff2-64b43e593fda",
+              "Text": "np.loadtxt() and np.genfromtxt() read numerical data from text files, with genfromtxt providing additional handling for missing values.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "bbde7a22-025b-4231-bef3-a8ab3db3a2ba",
+              "Text": "np.fromstring() and np.frombuffer() create arrays from raw string or buffer data, useful when interfacing with binary data streams from hardware.",
+              "SortOrder": 4
+            }
+          ]
+        }
+      ]
     }
   ],
-  "TotalElementCount": 37
+  "TotalElementCount": 43
 }

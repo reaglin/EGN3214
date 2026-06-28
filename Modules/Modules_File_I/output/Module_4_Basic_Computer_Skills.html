@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 &mdash; Basic Computer Skills: File Types</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --ink: #1c1a16;
+    --ink-soft: #4a463d;
+    --rule: #cfc6b3;
+    --accent: #b4451f;      /* terracotta */
+    --accent-deep: #7c2d12;
+    --blue: #1d4e6b;        /* slate teal */
+    --gold: #c08a2d;
+    --green: #4a6b3a;
+    --panel: #faf6ee;
+    --code-bg: #211e18;
+    --code-ink: #ede4d3;
+    --shadow: 0 2px 0 rgba(28,26,22,0.9), 0 14px 30px -18px rgba(28,26,22,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(180,69,31,0.06), transparent 40%),
+      radial-gradient(circle at 90% 12%, rgba(29,78,107,0.06), transparent 38%),
+      var(--paper);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 28px 120px; }
+
+  /* ---- Masthead ---- */
+  header.masthead {
+    padding: 64px 0 36px;
+    border-bottom: 3px double var(--ink);
+    margin-bottom: 8px;
+  }
+  .kicker {
+    font-family: "Spline Sans Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1.title {
+    font-family: "Fraunces", serif;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+  }
+  h1.title em { font-style: italic; color: var(--accent); }
+  .standfirst {
+    font-size: 1.18rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  /* ---- Table of contents ---- */
+  nav.toc {
+    margin: 30px 0 50px;
+    padding: 22px 26px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-left: 5px solid var(--accent);
+    box-shadow: var(--shadow);
+  }
+  nav.toc h2 {
+    font-family: "Spline Sans Mono", monospace;
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    margin: 0 0 12px; color: var(--ink-soft);
+  }
+  nav.toc ol { margin: 0; padding-left: 0; list-style: none; counter-reset: toc; columns: 2; column-gap: 36px; }
+  nav.toc li { counter-increment: toc; margin: 6px 0; break-inside: avoid; }
+  nav.toc a {
+    text-decoration: none; color: var(--ink); font-size: 1rem;
+    border-bottom: 1px solid transparent; transition: border-color .15s, color .15s;
+  }
+  nav.toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: "Spline Sans Mono", monospace; font-size: 0.72rem;
+    color: var(--accent); margin-right: 9px;
+  }
+  nav.toc a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---- Sections ---- */
+  section { padding: 30px 0; border-top: 1px solid var(--rule); }
+  section:first-of-type { border-top: none; }
+  h2.sec {
+    font-family: "Fraunces", serif; font-weight: 600;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    letter-spacing: -0.01em; margin: 0 0 6px; line-height: 1.1;
+  }
+  h2.sec .num {
+    font-family: "Spline Sans Mono", monospace; font-size: 0.85rem;
+    color: var(--accent); vertical-align: super; margin-right: 10px;
+  }
+  h3 {
+    font-family: "Fraunces", serif; font-weight: 600;
+    font-size: 1.28rem; margin: 30px 0 8px; color: var(--accent-deep);
+  }
+  p { margin: 0 0 16px; }
+  strong { font-weight: 600; }
+
+  code {
+    font-family: "Spline Sans Mono", monospace; font-size: 0.86em;
+    background: rgba(28,26,22,0.07); padding: 1px 6px; border-radius: 3px;
+    color: var(--accent-deep);
+  }
+
+  /* file extension chip */
+  .ext {
+    font-family: "Spline Sans Mono", monospace; font-weight: 600;
+    background: var(--ink); color: var(--paper);
+    padding: 1px 8px; border-radius: 3px; font-size: 0.82em;
+    letter-spacing: 0.02em;
+  }
+
+  /* callout boxes */
+  .note {
+    margin: 22px 0; padding: 18px 22px;
+    border: 1px solid var(--rule); background: var(--panel);
+    border-left: 5px solid var(--blue);
+  }
+  .note.warn { border-left-color: var(--accent); }
+  .note.tip  { border-left-color: var(--green); }
+  .note .lab {
+    font-family: "Spline Sans Mono", monospace; font-size: 0.68rem;
+    letter-spacing: 0.22em; text-transform: uppercase; display: block;
+    margin-bottom: 8px; color: var(--ink-soft);
+  }
+  .note.warn .lab { color: var(--accent-deep); }
+  .note.tip .lab  { color: var(--green); }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* code block */
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 20px 22px; border-radius: 6px; overflow-x: auto;
+    font-family: "Spline Sans Mono", monospace; font-size: 0.9rem;
+    line-height: 1.55; box-shadow: var(--shadow); margin: 20px 0;
+  }
+  pre .cm { color: #8a9b7a; }
+  pre .hd { color: var(--gold); }
+
+  /* steps */
+  ol.steps { counter-reset: step; list-style: none; padding: 0; margin: 22px 0; }
+  ol.steps > li {
+    counter-increment: step; position: relative;
+    padding: 4px 0 18px 56px; margin: 0;
+  }
+  ol.steps > li::before {
+    content: counter(step); position: absolute; left: 0; top: 0;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent); color: var(--paper);
+    font-family: "Spline Sans Mono", monospace; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; box-shadow: 0 4px 10px -4px rgba(124,45,18,.6);
+  }
+  ol.steps > li:not(:last-child)::after {
+    content: ""; position: absolute; left: 18px; top: 40px; bottom: 4px;
+    width: 2px; background: var(--rule);
+  }
+  ol.steps strong { color: var(--accent-deep); }
+
+  /* table */
+  .tablewrap { overflow-x: auto; margin: 22px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.97rem; }
+  table caption {
+    text-align: left; font-family: "Spline Sans Mono", monospace;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-soft); padding-bottom: 10px;
+  }
+  th {
+    text-align: left; font-family: "Spline Sans Mono", monospace;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    border-bottom: 2px solid var(--ink); padding: 10px 12px; color: var(--ink);
+  }
+  td { padding: 11px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody tr:hover { background: rgba(180,69,31,0.05); }
+  td .ext { white-space: nowrap; }
+
+  ul.plain { padding-left: 22px; }
+  ul.plain li { margin: 7px 0; }
+
+  footer {
+    margin-top: 60px; padding-top: 26px; border-top: 3px double var(--ink);
+    font-family: "Spline Sans Mono", monospace; font-size: 0.78rem;
+    color: var(--ink-soft); letter-spacing: 0.04em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+
+  @media (max-width: 600px) {
+    nav.toc ol { columns: 1; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Module 4 &middot; Basic Computer Skills</p>
+    <h1 class="title">Understanding <em>File Types</em> in Windows</h1>
+    <p class="standfirst">How your computer knows what a file is, how to change that, what breaks when you do, and how to hand-build a CSV using nothing but Notepad &mdash; or skip Windows entirely and host it on Google Drive for Colab.</p>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>In this module</h2>
+    <ol>
+      <li><a href="#what">What a file type is</a></li>
+      <li><a href="#extensions">How extensions identify files</a></li>
+      <li><a href="#show">Showing file extensions</a></li>
+      <li><a href="#change">Changing a file type</a></li>
+      <li><a href="#sideeffects">Side effects of changing</a></li>
+      <li><a href="#common">Common file types</a></li>
+      <li><a href="#notepad">Make a CSV in Notepad</a></li>
+      <li><a href="#drive">Google Drive + Colab</a></li>
+    </ol>
+  </nav>
+
+  <section id="what">
+    <h2 class="sec"><span class="num">01</span>What a file type actually is</h2>
+    <p>Every file on a computer is just a long sequence of bytes. On its own, that sequence means nothing &mdash; it could be a photo, a spreadsheet, or a program. A <strong>file type</strong> is the agreement about how those bytes should be interpreted. Windows uses that agreement to decide which icon to show, which program to open the file with, and how to treat the contents.</p>
+    <p>There are really two layers to a file type. The <strong>format</strong> is the internal structure of the bytes (for example, the rules that make a JPEG a JPEG). The <strong>extension</strong> is the short label at the end of the filename that <em>advertises</em> which format Windows should expect. Most of the time these two agree &mdash; but as you'll see, they don't have to, and that's where things get interesting.</p>
+  </section>
+
+  <section id="extensions">
+    <h2 class="sec"><span class="num">02</span>How extensions identify files</h2>
+    <p>In Windows, the part of a filename after the last dot is the <strong>extension</strong>. In <code>budget.xlsx</code>, the name is <code>budget</code> and the extension is <span class="ext">.xlsx</span>. Windows keeps a master list called the <em>file association table</em> that maps each extension to a default program.</p>
+    <p>When you double-click <code>report.docx</code>, Windows doesn't inspect the contents. It reads the extension, looks up <span class="ext">.docx</span> in the association table, sees that it points to Word, and launches Word with that file. The extension is essentially a routing label.</p>
+    <div class="note">
+      <span class="lab">Key idea</span>
+      <p>The extension tells Windows what a file <em>claims</em> to be. The actual bytes inside determine what the file <em>really</em> is. A well-behaved file has matching extension and contents. Renaming the extension changes only the label &mdash; never the bytes.</p>
+    </div>
+  </section>
+
+  <section id="show">
+    <h2 class="sec"><span class="num">03</span>Showing file extensions in File Explorer</h2>
+    <p>By default, Windows <em>hides</em> known extensions, so <code>data.csv</code> may appear simply as <code>data</code>. Before you can reliably change or verify a file type, turn extensions back on. This is the single most useful setting in this module.</p>
+    <ol class="steps">
+      <li>Open <strong>File Explorer</strong> (the folder icon on the taskbar, or press <code>Win + E</code>).</li>
+      <li>In <strong>Windows 11</strong>, click the <strong>View</strong> menu at the top &rarr; <strong>Show</strong> &rarr; tick <strong>File name extensions</strong>.</li>
+      <li>In <strong>Windows 10</strong>, click the <strong>View</strong> tab on the ribbon and tick the <strong>File name extensions</strong> checkbox.</li>
+      <li>Extensions now appear on every file. You should see <code>data.csv</code>, not just <code>data</code>.</li>
+    </ol>
+    <div class="note tip">
+      <span class="lab">Why this matters</span>
+      <p>If extensions are hidden, a file saved by Notepad as <code>data.csv</code> may secretly be <code>data.csv.txt</code> &mdash; and you'd never see the extra <span class="ext">.txt</span>. Turning extensions on prevents this very common mistake.</p>
+    </div>
+  </section>
+
+  <section id="change">
+    <h2 class="sec"><span class="num">04</span>Changing a file type in File Explorer</h2>
+    <p>With extensions visible, changing a file type is just renaming the part after the dot. This is how you would, for instance, turn a plain text file into a CSV.</p>
+    <ol class="steps">
+      <li><strong>Select the file</strong> once (single click) so it's highlighted but not opened.</li>
+      <li>Press <code>F2</code>, or right-click and choose <strong>Rename</strong>.</li>
+      <li><strong>Edit the extension</strong> after the dot &mdash; e.g. change <code>data.txt</code> to <code>data.csv</code>. Leave the name before the dot alone unless you also want to rename it.</li>
+      <li>Press <strong>Enter</strong>. Windows warns: <em>&ldquo;If you change a file name extension, the file might become unusable.&rdquo;</em> Click <strong>Yes</strong> only if you're sure the contents truly match the new type.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lab">Important</span>
+      <p>Renaming only works as a true conversion when the file's internal bytes already match the target format. Plain text genuinely <em>is</em> the right format for both <span class="ext">.txt</span> and <span class="ext">.csv</span>, so renaming between them is safe. Renaming a <span class="ext">.png</span> to <span class="ext">.jpg</span> is <em>not</em> safe &mdash; see the next section.</p>
+    </div>
+  </section>
+
+  <section id="sideeffects">
+    <h2 class="sec"><span class="num">05</span>Side effects of changing a file type</h2>
+    <p>Because renaming changes only the label and never the bytes, mismatching the two has consequences. Here is what can go wrong.</p>
+
+    <h3>The file may become unreadable</h3>
+    <p>If you rename <code>photo.png</code> to <code>photo.jpg</code>, the bytes are still in PNG format. An image viewer that trusts the <span class="ext">.jpg</span> label tries to decode JPEG data, fails, and either shows a corrupt image or an error. The file isn't damaged &mdash; the label is simply lying about it.</p>
+
+    <h3>It opens in the wrong program</h3>
+    <p>Changing the extension reroutes the file to a different default program. Rename a spreadsheet's <span class="ext">.xlsx</span> to <span class="ext">.txt</span> and double-clicking now launches Notepad, which displays the raw, unreadable internal structure of the spreadsheet instead of a tidy grid.</p>
+
+    <h3>Real conversion needs real software</h3>
+    <p>To genuinely change a format &mdash; PNG to JPG, DOCX to PDF, XLSX to CSV &mdash; you must <strong>open the file in a program and use Save As / Export</strong>. That re-encodes the bytes into the new format. Renaming never does this.</p>
+
+    <div class="note tip">
+      <span class="lab">The safe exception</span>
+      <p>Plain-text formats are interchangeable by renaming because they share identical byte structure. <span class="ext">.txt</span>, <span class="ext">.csv</span>, <span class="ext">.log</span>, <span class="ext">.md</span>, and many code files are all just text. Renaming among <em>these</em> is harmless &mdash; which is exactly why the Notepad-to-CSV trick below works.</p>
+    </div>
+  </section>
+
+  <section id="common">
+    <h2 class="sec"><span class="num">06</span>Common file types</h2>
+    <p>A quick reference to extensions you'll meet regularly. The "Plain text?" column tells you whether the file is human-readable raw text (and therefore safe to rename to another text type).</p>
+    <div class="tablewrap">
+    <table>
+      <caption>Everyday file types</caption>
+      <thead>
+        <tr><th>Extension</th><th>What it is</th><th>Opens with</th><th>Plain text?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="ext">.txt</span></td><td>Plain text, no formatting</td><td>Notepad, any editor</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.csv</span></td><td>Comma-separated values; a table stored as text</td><td>Notepad, Excel, Colab</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.tsv</span></td><td>Tab-separated values; like CSV but tab-delimited</td><td>Notepad, Excel</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.docx</span></td><td>Microsoft Word document</td><td>Word, Google Docs</td><td>No</td></tr>
+        <tr><td><span class="ext">.xlsx</span></td><td>Microsoft Excel spreadsheet</td><td>Excel, Google Sheets</td><td>No</td></tr>
+        <tr><td><span class="ext">.pdf</span></td><td>Portable Document Format; fixed layout</td><td>Browser, Acrobat</td><td>No</td></tr>
+        <tr><td><span class="ext">.jpg</span> / <span class="ext">.png</span></td><td>Compressed images (photo / lossless)</td><td>Photos, browser</td><td>No</td></tr>
+        <tr><td><span class="ext">.zip</span></td><td>Compressed archive of many files</td><td>File Explorer, 7-Zip</td><td>No</td></tr>
+        <tr><td><span class="ext">.py</span></td><td>Python source code</td><td>Editors, Colab</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.json</span></td><td>Structured data interchange format</td><td>Editors, browsers</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.html</span></td><td>Web page markup</td><td>Browser, editors</td><td>Yes</td></tr>
+        <tr><td><span class="ext">.exe</span></td><td>Windows program / installer</td><td>Runs directly</td><td>No</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section id="notepad">
+    <h2 class="sec"><span class="num">07</span>Assignment: Create &amp; save a CSV with Notepad</h2>
+    <p>A CSV is simply plain text where each line is a row and commas separate the columns. Because it's plain text, you can build one by hand in Notepad &mdash; no Excel required. Follow these steps exactly.</p>
+    <ol class="steps">
+      <li><strong>Open Notepad.</strong> Click Start, type <code>Notepad</code>, press Enter.</li>
+      <li><strong>Type your data</strong> with commas between values and one record per line. For example:
+        <pre><span class="hd">name,age,city</span>
+Ada,36,London
+Grace,41,New York
+Linus,28,Helsinki</pre>
+      </li>
+      <li><strong>Open Save As.</strong> Go to <strong>File &rarr; Save As</strong> (or press <code>Ctrl + Shift + S</code>).</li>
+      <li><strong>Set "Save as type"</strong> to <strong>All Files (*.*)</strong>. This stops Notepad from forcing a <span class="ext">.txt</span> ending onto your filename.</li>
+      <li><strong>Name it with the .csv extension</strong> &mdash; type <code>students.csv</code> exactly, including the extension, in the File name box.</li>
+      <li><strong>Set Encoding to UTF-8</strong> in the dropdown at the bottom of the dialog, then click <strong>Save</strong>.</li>
+      <li><strong>Verify.</strong> In File Explorer (with extensions shown), confirm the file reads <code>students.csv</code> and <em>not</em> <code>students.csv.txt</code>.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lab">The #1 mistake</span>
+      <p>If you leave "Save as type" on <strong>Text Documents (*.txt)</strong>, Notepad appends <span class="ext">.txt</span> and you get <code>students.csv.txt</code>. With extensions hidden you won't notice. Always choose <strong>All Files</strong> first &mdash; this is why Section 03 had you turn extensions on.</p>
+    </div>
+    <div class="note tip">
+      <span class="lab">Rules for valid CSV</span>
+      <p>Use a plain comma (not a semicolon) as the separator. Don't add spaces after commas unless they're part of the value. Every row should have the same number of columns. If a value itself contains a comma, wrap that value in double quotes, e.g. <code>"Smith, John"</code>.</p>
+    </div>
+  </section>
+
+  <section id="drive">
+    <h2 class="sec"><span class="num">08</span>Alternative: Host the CSV on Google Drive for Colab</h2>
+    <p>If you'd rather not work locally in Windows, you can keep the same CSV in Google Drive and open it directly from Google Colab. Drive can host any file type &mdash; CSVs, images, notebooks, datasets &mdash; and Colab can read them once Drive is connected.</p>
+
+    <h3>Step 1 &mdash; Get the CSV into Drive</h3>
+    <p>You can create the file the same way as above and then upload it, or build it in the browser:</p>
+    <ul class="plain">
+      <li><strong>Upload an existing file:</strong> open <a href="https://drive.google.com" target="_blank" rel="noopener">drive.google.com</a>, click <strong>New &rarr; File upload</strong>, and select your <code>students.csv</code>.</li>
+      <li><strong>Or make one in Sheets:</strong> create a Google Sheet, enter your data, then <strong>File &rarr; Download &rarr; Comma-separated values (.csv)</strong>. (Note that the Sheet <em>itself</em> is not a CSV &mdash; you must export it.)</li>
+    </ul>
+
+    <h3>Step 2 &mdash; Mount Drive in Colab</h3>
+    <p>In a Colab notebook, run this cell. It will prompt you to authorize access to your Drive.</p>
+    <pre><span class="cm"># Connect your Google Drive to this Colab session</span>
+from google.colab import drive
+drive.mount('/content/drive')</pre>
+
+    <h3>Step 3 &mdash; Read the CSV</h3>
+    <p>Once mounted, your Drive lives under <code>/content/drive/MyDrive/</code>. Point pandas at the file using its path:</p>
+    <pre><span class="cm"># Adjust the path to wherever you saved the file in Drive</span>
+import pandas as pd
+df = pd.read_csv('/content/drive/MyDrive/students.csv')
+df.head()</pre>
+
+    <div class="note">
+      <span class="lab">Finding the path</span>
+      <p>If the file sits in a folder, include it: <code>/content/drive/MyDrive/Module4/students.csv</code>. In Colab's left sidebar, open the <strong>Files</strong> panel, browse into <code>drive/MyDrive</code>, right-click the file, and choose <strong>Copy path</strong> to get it exactly right.</p>
+    </div>
+    <div class="note tip">
+      <span class="lab">Either path is fine</span>
+      <p>The Notepad method and the Drive method produce the <em>same kind of file</em> &mdash; a plain-text CSV. Use Notepad if you're working on a Windows machine and want to understand file types hands-on; use Drive if you'd prefer to stay in the browser and load straight into Colab.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Module 4 &mdash; Basic Computer Skills</span>
+    <span>File Types &middot; Notepad CSV &middot; Drive + Colab</span>
+  </footer>
+
+</div>
+</body>
+</html>

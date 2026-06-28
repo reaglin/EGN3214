@@ -1,9 +1,9 @@
 {
   "Id": "93f982c1-9087-45e8-a218-adc0c3fe0bdf",
-  "Name": "Control Flow and Python Data Structures",
+  "Name": "2 - Control Flow and Python Data Structures",
   "Description": "Covers conditional statements, for and while loops, break and continue, and the range() function, then introduces Python\u0027s core data structures \u2014 lists, tuples, dictionaries, and sets \u2014 with guidance on selecting the right structure for engineering problems.",
   "CreatedBy": "Ron",
   "CreatedDate": "2026-05-13T09:57:17.5931324-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.601428-04:00",
+  "LastModifiedDate": "2026-05-22T12:16:53.7698547-04:00",
   "Actions": []
 }

@@ -1,43 +1,43 @@
 {
   "Id": "0e83e896-761d-4499-929b-2abda0e7fa3b",
-  "Name": "Egn3214",
-  "Description": "",
+  "Name": "EGN3214",
+  "Description": "Programming for Engineers",
   "CreatedBy": "",
   "CreatedDate": "2026-05-13T09:57:17.5523423-04:00",
-  "LastModifiedDate": "2026-05-16T11:21:52.1243437-04:00",
+  "LastModifiedDate": "2026-06-27T14:29:10.7960767-04:00",
   "Modules": [
     {
-      "ModuleName": "Python Environment Setup and Language Fundamentals",
+      "ModuleName": "1 - Python Environment Setup and Language Fundamentals",
       "FolderName": "Python_Environment_Setup",
       "Order": 1
     },
     {
-      "ModuleName": "Control Flow and Python Data Structures",
+      "ModuleName": "2 - Control Flow and Python Data Structures",
       "FolderName": "Control_Flow_and",
       "Order": 2
     },
     {
-      "ModuleName": "Functions, Comprehensions, and Functional Patterns",
+      "ModuleName": "3 - Functions, Comprehensions, and Functional Patterns",
       "FolderName": "Functions_Comprehensions_and",
       "Order": 3
     },
     {
-      "ModuleName": "Modules, File I/O, and Error Handling",
+      "ModuleName": "4 - Modules, File I/O, and Error Handling",
       "FolderName": "Modules_File_I",
       "Order": 4
     },
     {
-      "ModuleName": "NumPy for Engineering Numerical Computation",
+      "ModuleName": "5 - NumPy for Engineering Numerical Computation",
       "FolderName": "NumPy_for_Engineering",
       "Order": 5
     },
     {
-      "ModuleName": "Data Visualization with Matplotlib and Intro to Pandas",
+      "ModuleName": "6 - Data Visualization with Matplotlib and Intro to Pandas",
       "FolderName": "Data_Visualization_with",
       "Order": 6
     },
     {
-      "ModuleName": "Object-Oriented Programming and AI-Assisted Coding Workflow",
+      "ModuleName": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow",
       "FolderName": "Object_Oriented_Programming",
       "Order": 7
     },

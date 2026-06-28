@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control_Flow_and</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Control_Flow_and</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Lists</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Lists are one of Python's most fundamental and flexible data structures. They allow you to store, access, and manipulate ordered collections of items, making them indispensable for nearly every kind of programming task.</p>
+<ul>
+  <li><strong>Creating and Accessing Lists</strong></li>
+  <li><strong>Lists are defined with square brackets:</strong> <code>my_list = [1, 2, 3]</code>. This syntax groups multiple values into a single named collection that can be referenced throughout your code.</li>
+  <li><strong>Elements are accessed by index starting at 0:</strong> <code>my_list[0]</code> returns the first element. Indexing gives you direct, efficient access to any position in the list.</li>
+  <li><strong>Negative indices access elements from the end of the list.</strong> For example, <code>my_list[-1]</code> returns the last element, which is useful when the list length is unknown.</li>
+  <li><strong>Lists can contain elements of different data types, including other lists.</strong> This flexibility allows you to build complex, nested structures when your problem requires it.</li>
+  <li><strong>Modifying Lists</strong></li>
+  <li><strong>Direct index assignment</strong> (<code>my_list[0] = 10</code>) replaces an existing element in place. Because lists are mutable, this change affects the original list immediately.</li>
+  <li><strong><code>append()</code> adds a single element to the end of the list.</strong> It is the most common way to grow a list one item at a time inside a loop or conditional block.</li>
+  <li><strong><code>remove()</code> deletes the first occurrence of a specified value.</strong> If the value does not exist in the list, Python raises a <code>ValueError</code>.</li>
+  <li><strong><code>pop()</code> removes and returns the element at a given index, defaulting to the last element.</strong> The returned value can be stored in a variable for further use.</li>
+  <li><strong>List Slicing</strong></li>
+  <li><strong>The syntax <code>list[start:stop]</code> returns elements from index <em>start</em> up to but not including <em>stop</em>.</strong> This gives you a concise way to extract a contiguous portion of a list.</li>
+  <li><strong>An optional step value controls how many indices to skip between selected elements.</strong> For example, <code>my_list[::2]</code> returns every other element starting from the beginning.</li>
+  <li><strong>Slicing creates a shallow copy of the selected portion, leaving the original list unchanged.</strong> Modifying the slice does not affect the source list's contents at those positions.</li>
+  <li><strong>List Comprehensions</strong></li>
+  <li><strong>List comprehensions replace many <code>for</code>-loop-based list-building patterns with a single line of code.</strong> The general form is <code>[expression for item in iterable]</code>, which produces a new list of transformed values.</li>
+  <li><strong>An optional <code>if</code> clause filters which items from the iterable are included.</strong> For example, <code>[x for x in values if x &gt; 0]</code> keeps only positive numbers.</li>
+  <li><strong>List comprehensions improve readability and are considered idiomatic Python.</strong> They signal clearly that the goal is to produce a new list from an existing sequence.</li>
+  <li><strong>Common List Operations and Methods</strong></li>
+  <li><strong><code>len()</code> returns the number of elements in a list.</strong> This is frequently used to control loops or validate that a list has the expected size before processing.</li>
+  <li><strong><code>sort()</code> rearranges list elements in place; <code>sorted()</code> returns a new sorted list without modifying the original.</strong> Choose between them depending on whether preserving the original order matters.</li>
+  <li><strong><code>count()</code> returns how many times a specific value appears in the list.</strong> It is useful for quick frequency checks without building a separate tally structure.</li>
+  <li><strong><code>index()</code> returns the position of the first occurrence of a specified value.</strong> If the value is not present, it raises a <code>ValueError</code>, so consider checking membership with <code>in</code> first.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Lists are ordered, mutable sequences that can hold items of any type, making them one of the most versatile and widely used data structures in Python.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Tuples</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Tuples are Python's ordered, immutable sequence type. While they look similar to lists, their inability to be changed after creation makes them the right choice whenever data should remain fixed and consistent throughout a program.</p>
+<ul>
+  <li><strong>Creating and Accessing Tuples</strong></li>
+  <li><strong>Tuples are created with parentheses:</strong> <code>my_tuple = (1, 2, 3)</code>, or without: <code>my_tuple = 1, 2, 3</code>. The parentheses are optional because it is the comma that actually creates the tuple.</li>
+  <li><strong>Elements are accessed by zero-based index, identical to list indexing.</strong> You can also use negative indices and slicing with tuples just as you would with lists.</li>
+  <li><strong>A single-element tuple must include a trailing comma to distinguish it from a parenthesized expression.</strong> Writing <code>my_tuple = (5,)</code> creates a tuple, while <code>my_tuple = (5)</code> is simply the integer <code>5</code>.</li>
+  <li><strong>Immutability of Tuples</strong></li>
+  <li><strong>Attempting to assign a new value to a tuple element raises a <code>TypeError</code>.</strong> Once a tuple is created, its contents are locked, and no element can be replaced, added, or removed.</li>
+  <li><strong>Immutability guarantees the data remains consistent throughout program execution.</strong> This makes tuples safer to pass between functions when you need assurance that the original data will not be altered.</li>
+  <li><strong>Because tuples are immutable, they are hashable and can be used as dictionary keys.</strong> Lists cannot serve as dictionary keys because they are mutable and therefore not hashable.</li>
+  <li><strong>Tuple Packing and Unpacking</strong></li>
+  <li><strong>Packing:</strong> <code>coordinates = (10, 20)</code> stores two values in one tuple. Packing lets you group related values together under a single variable name.</li>
+  <li><strong>Unpacking:</strong> <code>x, y = coordinates</code> assigns each element to a separate variable. This is a concise and readable alternative to accessing elements by index.</li>
+  <li><strong>The number of variables on the left must match the number of elements in the tuple unless a starred expression is used.</strong> A starred variable like <code>first, *rest = my_tuple</code> captures all remaining elements into a list.</li>
+  <li><strong>Functions that return multiple values implicitly return a tuple.</strong> Writing <code>return x, y</code> in a function is equivalent to <code>return (x, y)</code>, and the caller can unpack the result directly.</li>
+  <li><strong>When to Use Tuples vs. Lists</strong></li>
+  <li><strong>Use a tuple when the number and meaning of elements are fixed,</strong> such as a coordinate pair <code>(x, y)</code> or an RGB color value <code>(255, 128, 0)</code>. The fixed structure communicates that these values belong together in a specific order.</li>
+  <li><strong>Use a list when items will be added, removed, or reordered during execution.</strong> Lists support all mutation operations that tuples intentionally forbid.</li>
+  <li><strong>Tuples communicate intent to other developers that the data is not meant to change.</strong> Choosing a tuple over a list is a form of self-documenting code that signals the fixed nature of the stored values.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Tuples are ordered, immutable sequences that are ideal for storing fixed collections of data that should not be changed after creation.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">3</span><h2>Dictionaries</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Dictionaries store data as key-value pairs, making it possible to look up information by a meaningful name rather than a numeric position. They are one of Python's most powerful built-in structures and appear frequently in engineering and scientific code.</p>
+<ul>
+  <li><strong>Creating and Accessing Dictionaries</strong></li>
+  <li><strong>Dictionaries are defined as:</strong> <code>my_dict = {'key': value, ...}</code>. Each entry pairs a unique key with an associated value that can be any Python object.</li>
+  <li><strong>Values are accessed with <code>my_dict['key']</code>; using a missing key raises a <code>KeyError</code>.</strong> This direct bracket access is fast but requires that you know the key exists.</li>
+  <li><strong>The <code>get()</code> method returns a default value instead of raising an error when a key is not found.</strong> For example, <code>my_dict.get('missing_key', 0)</code> returns <code>0</code> rather than crashing the program.</li>
+  <li><strong>Dictionary keys must be unique; assigning to an existing key overwrites its value.</strong> If you need to track multiple values per key, store a list or another collection as the value.</li>
+  <li><strong>Modifying Dictionaries</strong></li>
+  <li><strong>Assigning to a new key</strong> (<code>my_dict['new_key'] = value</code>) adds the entry to the dictionary. If the key already exists, the assignment replaces the current value instead.</li>
+  <li><strong>Assigning to an existing key replaces its current value.</strong> Dictionaries do not raise an error or create a duplicate; the old value is silently overwritten.</li>
+  <li><strong><code>del</code> removes a key-value pair; <code>pop()</code> removes and returns the value for a specified key.</strong> Use <code>pop()</code> when you need to capture the removed value for further processing.</li>
+  <li><strong><code>update()</code> merges key-value pairs from another dictionary, overwriting duplicate keys.</strong> This is a convenient way to combine configuration data or apply a batch of changes at once.</li>
+  <li><strong>Iterating Over Dictionaries</strong></li>
+  <li><strong><code>keys()</code> returns a view of all keys in the dictionary.</strong> Iterating over <code>keys()</code> is equivalent to iterating over the dictionary directly, since the default iteration yields keys.</li>
+  <li><strong><code>values()</code> returns a view of all values in the dictionary.</strong> Use this when you need to process or aggregate every stored value without caring about the associated keys.</li>
+  <li><strong><code>items()</code> returns a view of all (key, value) pairs, suitable for unpacking in a <code>for</code> loop.</strong> The pattern <code>for k, v in my_dict.items():</code> gives you simultaneous access to each key and its value.</li>
+  <li><strong>Engineering Applications of Dictionaries</strong></li>
+  <li><strong>Dictionaries allow data to be accessed by a meaningful label rather than a numeric index.</strong> For example, storing sensor readings as <code>{'temperature': 98.6, 'pressure': 14.7}</code> makes the code self-explanatory.</li>
+  <li><strong>They are ideal for storing configuration settings, lookup tables, and named datasets.</strong> A material properties dictionary, for instance, can map material names to their density, Young's modulus, or yield strength.</li>
+  <li><strong>Using descriptive string keys makes engineering code easier to read and maintain.</strong> Another engineer reading the code can immediately understand what each value represents without consulting separate documentation.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Dictionaries store data as key-value pairs, enabling fast lookups by key rather than by position, and are ideal for representing structured, labeled data.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">4</span><h2>Sets and Choosing the Right Data Structure</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Sets provide a way to store collections of unique elements and perform efficient membership tests or set algebra. Understanding sets alongside lists, tuples, and dictionaries equips you to choose the right structure for any engineering problem.</p>
+<ul>
+  <li><strong>Creating and Using Sets</strong></li>
+  <li><strong>Sets are created with curly braces:</strong> <code>my_set = {1, 2, 3}</code>, or with <code>set()</code>. You can also convert another iterable, such as a list, into a set by passing it to <code>set()</code>.</li>
+  <li><strong>Duplicate values are automatically removed; each element appears only once.</strong> This behavior makes sets a convenient tool for deduplicating a collection of values.</li>
+  <li><strong>An empty set must be created with <code>set()</code>, not <code>{}</code>, which creates an empty dictionary.</strong> This is a common source of bugs for programmers new to Python.</li>
+  <li><strong>Set Operations</strong></li>
+  <li><strong>Union (<code>|</code> or <code>union()</code>) returns all elements present in either set.</strong> For example, <code>{1, 2} | {2, 3}</code> produces <code>{1, 2, 3}</code>, combining both collections without duplicates.</li>
+  <li><strong>Intersection (<code>&amp;</code> or <code>intersection()</code>) returns only elements present in both sets.</strong> This is useful for finding shared items between two data sources, such as sensors active in two different tests.</li>
+  <li><strong>Difference (<code>-</code> or <code>difference()</code>) returns elements in the first set not found in the second.</strong> For example, <code>{1, 2, 3} - {2, 3}</code> gives <code>{1}</code>, isolating what is unique to the first set.</li>
+  <li><strong>Symmetric difference (<code>^</code> or <code>symmetric_difference()</code>) returns elements in one set but not both.</strong> It is equivalent to the union minus the intersection and highlights items that do not overlap.</li>
+  <li><strong>Membership Testing with Sets</strong></li>
+  <li><strong>The <code>in</code> operator tests whether an element exists in a set in constant average time.</strong> This <em>O(1)</em> average performance is due to the underlying hash table implementation.</li>
+  <li><strong>Membership testing in a set is much faster than in a list for large collections.</strong> Testing membership in a list requires scanning each element one by one, which grows slower as the list grows larger.</li>
+  <li><strong>Sets are the preferred structure when the primary operation is checking for the presence of unique items.</strong> If you find yourself building a list and then repeatedly using <code>in</code> to search it, a set is almost certainly the better choice.</li>
+  <li><strong>Comparing Core Data Structures</strong></li>
+  <li><strong>Lists are best for ordered, changeable sequences accessed by position.</strong> Use a list when the order of items matters and elements will be added, removed, or updated over time.</li>
+  <li><strong>Tuples are best for fixed records where immutability and hashability are required.</strong> Their fixed nature makes them safe to use as dictionary keys or as return values from functions.</li>
+  <li><strong>Dictionaries are best for labeled data requiring fast lookup by a meaningful key.</strong> Whenever you need to associate a name or identifier with a value, a dictionary is the natural fit.</li>
+  <li><strong>Sets are best for storing unique items and performing membership tests or set algebra.</strong> If duplicates are irrelevant and order does not matter, a set provides both clarity and performance.</li>
+  <li><strong>Selecting the Right Structure for Engineering Problems</strong></li>
+  <li><strong>Ask whether the data needs to be ordered and accessed by position — if yes, consider a list or tuple.</strong> Choose a list if the sequence will change; choose a tuple if it is fixed and should not be modified.</li>
+  <li><strong>Ask whether the data needs to be accessed by a descriptive label — if yes, use a dictionary.</strong> Named access improves readability and eliminates the need to remember which index corresponds to which value.</li>
+  <li><strong>Ask whether uniqueness of elements is required or membership testing will be frequent — if yes, use a set.</strong> Sets eliminate duplicates automatically and provide the fastest possible membership checks.</li>
+  <li><strong>Ask whether the data should be protected from modification — if yes, prefer a tuple over a list.</strong> Choosing a tuple signals to collaborators and future maintainers that the values are intentionally constant.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Sets store unique, unordered elements and support efficient membership testing and set operations. This topic also provides guidance on selecting the appropriate data structure for engineering problems.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>

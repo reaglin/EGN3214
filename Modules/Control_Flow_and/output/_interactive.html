@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control_Flow_and</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Control_Flow_and</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Conditional Statements</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Conditional statements allow a program to make decisions by executing different code blocks based on whether a condition evaluates to true or false. Python provides <strong>if</strong>, <strong>elif</strong>, and <strong>else</strong> constructs to express branching logic clearly and concisely.</p>
+<ul>
+<li><strong>The if Statement:</strong> An <code>if</code> statement evaluates a Boolean expression and executes its indented block only when the result is <em>True</em>. Python uses indentation (typically four spaces) rather than braces to define the scope of a conditional block, so consistent formatting is essential. Any expression that returns <em>True</em> or <em>False</em> can serve as the condition, including comparisons and logical operators.</li>
+<li><strong>The elif Clause:</strong> <code>elif</code> is evaluated only if all preceding <code>if</code> and <code>elif</code> conditions were <em>False</em>, making it an efficient way to test a series of mutually exclusive cases. Any number of <code>elif</code> clauses can follow a single <code>if</code> statement, and using them instead of multiple independent <code>if</code> statements avoids unnecessary condition evaluations once a match is found.</li>
+<li><strong>The else Clause:</strong> <code>else</code> does not take a condition; it runs automatically when all prior conditions are <em>False</em>, acting as a catch-all fallback. Only one <code>else</code> clause is permitted per <code>if</code>-<code>elif</code>-<code>else</code> chain, and it must appear last. Including an <code>else</code> clause is good practice for handling edge cases and unexpected inputs.</li>
+<li><strong>Comparison and Logical Operators:</strong> Comparison operators such as <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, and <code>&gt;=</code> return <em>True</em> or <em>False</em> by comparing two values. The <code>and</code> operator returns <em>True</em> only if both operands are <em>True</em>, while the <code>or</code> operator returns <em>True</em> if at least one operand is <em>True</em>. The <code>not</code> operator negates a Boolean expression, turning <em>True</em> to <em>False</em> and vice versa.</li>
+<li><strong>Nested Conditionals:</strong> A nested conditional is an <code>if</code> statement contained within the block of another <code>if</code>, <code>elif</code>, or <code>else</code> clause, and each nested level requires an additional level of indentation. Excessive nesting can make code harder to read and maintain; flattening logic with logical operators is often preferred. For example, two nested conditions can frequently be combined into a single condition using <code>and</code>.</li>
+</ul>
+<pre><code># Example: if-elif-else chain
+score = 78
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "F"
+
+print(grade)  # Output: C
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Conditional statements allow a program to make decisions by executing different code blocks based on whether a condition evaluates to true or false. This topic covers if, elif, and else constructs in Python. Slides: 1, 2, 3, 4, 5.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>for Loops and the range() Function</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>The <code>for</code> loop iterates over a sequence of items, making it ideal for processing collections of data. The <code>range()</code> function generates numeric sequences commonly used to control loop iterations, and tools like <code>enumerate()</code> add further flexibility when both index and value are needed.</p>
+<ul>
+<li><strong>The for Loop:</strong> The loop variable takes on the value of each successive item in the iterable on each iteration, and the loop body executes once for every item in the sequence. Any iterable object — including lists, tuples, strings, and dictionaries — can be used with a <code>for</code> loop, making it a versatile and widely used control structure in Python.</li>
+<li><strong>The range() Function — Basic Form:</strong> <code>range(n)</code> generates integers from <em>0</em> up to but not including <em>n</em>, making it the simplest way to repeat an action a fixed number of times. <code>range(start, stop)</code> generates integers from <em>start</em> up to but not including <em>stop</em>, giving control over where the sequence begins.</li>
+<li><strong>The range() Function — Step Form:</strong> <code>range(start, stop, step)</code> generates integers from <em>start</em> to <em>stop</em>, incrementing by <em>step</em> each time, which allows for skipping values or counting backwards with a negative step. <code>range()</code> produces values <em>lazily</em>, meaning values are computed on demand rather than stored all at once, making it memory-efficient for large sequences.</li>
+<li><strong>Iterating with an Index Using enumerate():</strong> <code>enumerate(iterable)</code> returns pairs of <em>(index, value)</em> for each item in the sequence, so both the position and the value are available inside the loop. Using <code>enumerate()</code> avoids the need for a separate counter variable, and its optional <code>start</code> parameter allows the index to begin at a value other than zero.</li>
+<li><strong>Looping Over Numeric Ranges in Engineering:</strong> <code>range()</code> is ideal for stepping through evenly spaced numeric intervals common in engineering computations, such as time steps in a simulation. Combining <code>range()</code> with <code>len()</code> allows iteration over the indices of any list or array, and careful selection of <em>start</em>, <em>stop</em>, and <em>step</em> values prevents off-by-one errors in numerical work.</li>
+</ul>
+<pre><code># Example: range() with step and enumerate()
+values = [10.5, 20.3, 15.8, 9.1]
+
+for i, v in enumerate(values, start=1):
+    print(f"Sample {i}: {v}")
+
+# Counting down with a negative step
+for n in range(5, 0, -1):
+    print(n)
+</code></pre>
+        <div class="notes"><strong>Notes</strong>The for loop iterates over a sequence of items, making it ideal for processing collections of data. The range() function generates numeric sequences commonly used to control loop iterations. Slides: 1, 2, 3, 4.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">3</span><h2>while Loops</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>A <code>while</code> loop repeats a block of code for as long as a specified condition remains <em>True</em>, making it suitable for situations where the number of iterations is not known in advance. Understanding how to structure the condition and guarantee termination is essential to using <code>while</code> loops safely.</p>
+<ul>
+<li><strong>The while Loop Structure:</strong> The condition is evaluated before each iteration; if it is <em>False</em> initially, the loop body never executes at all. The loop body <em>must</em> include a statement that changes the condition's outcome to eventually terminate the loop, otherwise the program will run forever. <code>while</code> loops are well suited for event-driven loops, convergence checks, and user-input validation where an exact iteration count cannot be predetermined.</li>
+<li><strong>Infinite Loops and Loop Guards:</strong> An infinite loop results when the loop condition is never updated to become <em>False</em>, causing the program to hang. Common causes include forgetting to increment a counter or inadvertently using an always-<em>True</em> condition such as <code>while True:</code> without a <code>break</code>. A <em>loop guard</em> is a variable or condition deliberately placed in the loop body to ensure the loop will eventually terminate.</li>
+<li><strong>Comparing for and while Loops:</strong> Use a <code>for</code> loop when the number of iterations or the sequence to iterate over is known before the loop starts, as it expresses intent more clearly in those cases. Use a <code>while</code> loop when the loop must continue until a runtime condition changes, such as reading sensor data until a threshold is exceeded. Both loop types can solve many of the same problems, but choosing the appropriate one improves code clarity and reduces the risk of logic errors.</li>
+</ul>
+<pre><code># Example: while loop for convergence check
+estimate = 1.0
+target = 2.0
+tolerance = 0.001
+
+while abs(target - estimate) > tolerance:
+    estimate += 0.1
+    print(f"Current estimate: {estimate:.3f}")
+
+print("Converged!")
+</code></pre>
+        <div class="notes"><strong>Notes</strong>A while loop repeats a block of code for as long as a specified condition remains True, making it suitable for situations where the number of iterations is not known in advance. Slides: 1, 2, 3.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">4</span><h2>Loop Control: break and continue</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>The <code>break</code> and <code>continue</code> statements provide fine-grained control over loop execution, allowing early termination or skipping specific iterations without exiting the loop entirely. Used thoughtfully, they produce efficient and readable loop structures.</p>
+<ul>
+<li><strong>The break Statement:</strong> <code>break</code> exits the loop immediately, regardless of whether the loop condition is still <em>True</em>, and execution continues with the first statement after the loop's closing block. In nested loops, <code>break</code> only terminates the <em>innermost</em> loop in which it appears, leaving outer loops unaffected. <code>break</code> is often paired with an <code>if</code> statement to conditionally exit a loop once a target value or state is reached.</li>
+<li><strong>The continue Statement:</strong> <code>continue</code> does not exit the loop; it only skips the remainder of the <em>current iteration</em> and moves on to the next one. After <code>continue</code>, a <code>for</code> loop advances to the next item and a <code>while</code> loop re-evaluates its condition before proceeding. <code>continue</code> improves readability by avoiding deeply nested <code>if</code> statements inside loop bodies — instead of wrapping valid-case logic in an <code>if</code>, you skip invalid cases up front.</li>
+<li><strong>The else Clause on Loops:</strong> A loop's <code>else</code> block runs after the loop finishes all iterations <em>without</em> hitting a <code>break</code> statement. If <code>break</code> is executed, the <code>else</code> block is skipped entirely, which makes this construct particularly useful for implementing search logic with a clear <em>"not found"</em> outcome. This pattern eliminates the need for a separate flag variable to track whether a loop completed normally.</li>
+<li><strong>Practical Use Cases for break and continue:</strong> Use <code>break</code> to stop iterating once a target condition or result is found, saving unnecessary computation on the remaining items. Use <code>continue</code> to skip invalid, missing, or out-of-range values during data processing without interrupting the overall loop. Combining <code>break</code> and <code>continue</code> with conditional logic creates efficient, readable loop structures that clearly express the programmer's intent.</li>
+</ul>
+<pre><code># Example: break, continue, and loop else
+data = [4, -1, 7, 0, 3, -2, 5]
+
+for value in data:
+    if value < 0:
+        continue          # skip negative values
+    if value == 0:
+        break             # stop if a zero is encountered
+    print(f"Processing: {value}")
+else:
+    print("All values processed without hitting zero.")
+</code></pre>
+        <div class="notes"><strong>Notes</strong>The break and continue statements provide fine-grained control over loop execution, allowing early termination or skipping specific iterations without exiting the loop entirely. Slides: 1, 2, 3, 4.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>

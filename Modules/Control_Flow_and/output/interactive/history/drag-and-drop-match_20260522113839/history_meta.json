@@ -1,0 +1,6 @@
+﻿{
+  "summaries": {
+    "2": "Left-side items now appear once with a use count (e.g., \u0022List [3 uses]\u0022) that decrements with each correct match instead of disappearing.",
+    "3": "Added a success popup that displays a code example demonstrating the data structure solving the problem when the user answers correctly."
+  }
+}

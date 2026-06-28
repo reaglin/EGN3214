@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules_File_I</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>Modules_File_I</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Introduction to Python Modules</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Python modules allow you to organize code into separate, reusable files. Understanding how to create, import, and locate modules is fundamental to writing well-structured Python programs.</p>
+<ul>
+<li><strong>What Is a Module?</strong></li>
+<li>A module file uses the <code>.py</code> extension and can be stored anywhere on the Python path. This makes it straightforward to share and distribute reusable code across multiple projects.</li>
+<li>Modules promote code reuse, readability, and separation of concerns. Rather than repeating logic in every script, you define it once and import it wherever needed.</li>
+<li>Any valid Python file can act as a module without additional configuration. There is no special syntax required to turn a script into an importable module.</li>
+<li><strong>Importing Modules with <em>import</em></strong></li>
+<li>Use <code>import module_name</code> to load the entire module into your current namespace. All of the module's contents become accessible through the module object.</li>
+<li>Access module contents with the syntax <code>module_name.attribute</code>. This dot notation makes it clear exactly where each name originates.</li>
+<li>A module is executed only once per interpreter session, even if imported multiple times. Python caches the module object in <code>sys.modules</code> after the first import.</li>
+<li><strong>Selective Imports with <em>from…import</em></strong></li>
+<li>Use <code>from module import name</code> to bring a single attribute directly into the current scope. This lets you reference the name without the module prefix.</li>
+<li>Multiple names can be imported in one statement separated by commas, for example <code>from math import pi, sqrt</code>. This keeps import lines concise when only a few items are needed.</li>
+<li>Selective imports can improve readability but may obscure where a name originates. If two modules define the same name, the last import wins, which can introduce subtle bugs.</li>
+<li><strong>Module Aliases</strong></li>
+<li>Use <code>import module_name as alias</code> to assign a shorthand reference to the module. For example, <code>import numpy as np</code> is a widely adopted convention.</li>
+<li>Aliases are particularly useful for modules with long or frequently typed names. They reduce repetitive typing while keeping code readable.</li>
+<li>The alias only exists in the current script's namespace. Other scripts that import the same module independently can choose a different alias or none at all.</li>
+<li><strong>The Module Search Path</strong></li>
+<li>Python searches the current directory first, then installed package directories listed in <code>sys.path</code>. This order determines which file is loaded when multiple files share the same name.</li>
+<li>The <code>PYTHONPATH</code> environment variable can add directories to <code>sys.path</code>. Setting this variable allows Python to locate custom modules stored outside the standard installation directories.</li>
+<li>If the module is not found in any path location, an <code>ImportError</code> is raised. Checking <code>sys.path</code> at runtime is a useful first step when diagnosing import failures.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Explains what modules are, why they are used, and how Python locates and loads them at runtime.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Writing and Using Custom Modules</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Writing your own modules lets you package engineering functions and constants for reuse across multiple scripts and projects. This topic covers the conventions and techniques that make custom modules reliable and easy to maintain.</p>
+<ul>
+<li><strong>Creating a Custom Module File</strong></li>
+<li>Choose a descriptive, lowercase filename with underscores for readability, such as <code>beam_analysis.py</code>. Following this convention aligns with Python's own standard library naming style.</li>
+<li>Include a module-level docstring to describe the module's purpose. This docstring appears when someone calls <code>help()</code> on the module and serves as the first point of documentation.</li>
+<li>Define all reusable functions and constants at the top level of the file. Top-level definitions are immediately available to any script that imports the module.</li>
+<li><strong>The <em>__name__ == '__main__'</em> Guard</strong></li>
+<li>When a file is run directly, Python sets <code>__name__</code> to <code>'__main__'</code>. This allows the file to behave as both an importable module and a standalone script.</li>
+<li>When a file is imported, <code>__name__</code> is set to the module's filename without <code>.py</code>. Code inside the guard is therefore skipped during import, preventing unintended side effects.</li>
+<li>Place demonstration, testing, or script-entry logic inside the <code>if __name__ == '__main__'</code> block. This is the standard location for example usage or quick sanity checks of the module's functions.</li>
+<li><strong>Organizing Functions and Constants</strong></li>
+<li>Place constants near the top of the module, before function definitions. Grouping constants together makes them easy to find and update without searching through function bodies.</li>
+<li>Write each function with a clear docstring describing inputs, outputs, and units where applicable. Engineering functions often involve physical quantities, so stating units in the docstring prevents costly mistakes.</li>
+<li>Avoid defining mutable global state in a module to prevent unexpected side effects. Mutable globals can change value between calls in ways that are difficult to trace across a large codebase.</li>
+<li><strong>Importing Your Custom Module</strong></li>
+<li>Ensure the module file is on the Python search path before importing. The simplest approach is to place the module in the same directory as the script that imports it.</li>
+<li>Use <code>import module_name</code> or <code>from module_name import function</code> as needed. Choose the form that best communicates the relationship between the calling code and the module.</li>
+<li>Changes to the module file require a restart of the interpreter or use of <code>importlib.reload</code> to take effect. During interactive development, <code>importlib.reload(module_name)</code> refreshes the cached module object without restarting the session.</li>
+<li><strong>Documenting a Custom Module</strong></li>
+<li>Write a module-level docstring as the very first statement in the file. It should summarize what the module provides and, if relevant, how to get started using it.</li>
+<li>Provide docstrings for every public function describing parameters, return values, and any raised exceptions. Consistent documentation makes it possible for teammates to use the module confidently without reading the implementation.</li>
+<li>Type hints in function signatures further clarify expected argument and return types, for example <code>def area(radius: float) -> float:</code>. Type hints also enable static analysis tools to catch type mismatches before runtime.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Covers how to design, write, and import your own Python modules to share reusable engineering functions across projects.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">3</span><h2>Using Standard Library Modules</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Python ships with a large standard library of modules that are ready to use without any additional installation. The modules introduced here cover mathematics, file system interaction, system utilities, date and time handling, and random number generation — all common needs in engineering scripting.</p>
+<ul>
+<li><strong>The <em>math</em> Module</strong></li>
+<li>Access constants such as <code>math.pi</code> and <code>math.e</code> for precise numeric values. These constants are accurate to the full precision of a Python float, which is far more reliable than typing an approximation by hand.</li>
+<li>Use functions like <code>math.sqrt</code>, <code>math.log</code>, <code>math.sin</code>, and <code>math.cos</code> for common calculations. These functions operate on real numbers and are implemented in C, making them both accurate and fast.</li>
+<li><code>math.degrees</code> and <code>math.radians</code> convert between angle units. Because most <code>math</code> trigonometric functions expect radians, these converters are essential when working with degree-based inputs.</li>
+<li><strong>The <em>os</em> and <em>os.path</em> Modules</strong></li>
+<li>Use <code>os.getcwd()</code> to retrieve and <code>os.chdir()</code> to change the current working directory. Knowing the working directory is critical when your script opens files using relative paths.</li>
+<li><code>os.path.join</code> constructs file paths in a platform-safe manner, automatically using the correct separator for Windows or Unix systems. Hard-coding slashes in path strings is a common source of cross-platform bugs.</li>
+<li><code>os.listdir</code> returns the contents of a directory as a list of filenames. Combined with a loop, it makes it straightforward to process every data file in a folder automatically.</li>
+<li><strong>The <em>sys</em> Module</strong></li>
+<li><code>sys.argv</code> provides a list of command-line arguments passed to a script, where <code>sys.argv[0]</code> is the script name itself. Parsing <code>sys.argv</code> allows a single script to accept different inputs each time it is run.</li>
+<li><code>sys.exit()</code> terminates the interpreter with an optional status code. A non-zero status code conventionally signals an error condition to the calling shell or build system.</li>
+<li><code>sys.path</code> is the list of directories Python searches when importing modules. You can append directories to <code>sys.path</code> at runtime to make modules in non-standard locations importable.</li>
+<li><strong>The <em>datetime</em> Module</strong></li>
+<li>Use <code>datetime.datetime.now()</code> to capture the current timestamp at the moment the call is made. Timestamping output files or log entries with this value makes results reproducible and traceable.</li>
+<li>Arithmetic on <code>datetime</code> objects produces <code>timedelta</code> objects representing durations. Subtracting two timestamps, for instance, immediately gives the elapsed time as a <code>timedelta</code> that you can convert to seconds or days.</li>
+<li><code>strftime</code> formats a <code>datetime</code> object as a human-readable string using format codes such as <code>%Y-%m-%d %H:%M:%S</code>. Consistent date formatting in filenames and reports prevents ambiguity when files are shared internationally.</li>
+<li><strong>The <em>random</em> Module</strong></li>
+<li><code>random.random()</code> returns a float uniformly distributed between <code>0.0</code> and <code>1.0</code>. This single function is the foundation for many simulation and Monte Carlo techniques.</li>
+<li><code>random.randint(a, b)</code> returns a random integer <em>N</em> such that <em>a</em> ≤ <em>N</em> ≤ <em>b</em>, with both endpoints included. It is useful for simulating discrete events such as dice rolls or random index selection.</li>
+<li><code>random.choice</code> selects a random element from a non-empty sequence. This is convenient when you need to sample from a predefined list of scenarios or test cases.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Introduces key modules included with Python that are immediately useful for engineering scripting tasks without additional installation.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NumPy_for_Engineering</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+  <header>
+    <h1>NumPy_for_Engineering</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Introduction to NumPy and the ndarray</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>NumPy is the cornerstone of numerical computing in Python, providing the <strong>ndarray</strong> — a fast, memory-efficient, homogeneous array object that powers virtually every major engineering and data-science library. Understanding how the ndarray works and how it differs from native Python data structures is the essential first step toward high-performance engineering computation.</p>
+<ul>
+  <li><strong>What Is NumPy?</strong> NumPy is the foundational numerical computing library for the Python scientific ecosystem. It sits beneath libraries such as SciPy, Pandas, and scikit-learn, making it impossible to do serious engineering work in Python without encountering it.</li>
+  <li><strong>Implemented primarily in C for speed.</strong> Because its core routines are written in C, array operations run significantly faster than equivalent pure Python loops. This speed advantage becomes dramatic as array sizes grow into the millions of elements common in engineering datasets.</li>
+  <li><strong>Universal dependency across the ecosystem.</strong> Most major engineering and data-science libraries depend on NumPy as a core dependency. When you install SciPy, Matplotlib, or TensorFlow, NumPy comes along because they all rely on its array infrastructure.</li>
+  <li><strong>The ndarray has a fixed size at creation.</strong> Unlike a Python list, an ndarray cannot be resized in place; any operation that changes its size silently creates a brand-new array. This constraint enables the memory layout guarantees that make vectorized operations possible.</li>
+  <li><strong>Every ndarray exposes key attributes.</strong> The attributes <em>shape</em>, <em>dtype</em>, <em>ndim</em>, and <em>size</em> describe the array's structure and content type. Inspecting these attributes before performing operations is good practice and helps prevent subtle shape-mismatch bugs.</li>
+  <li><strong>Homogeneous data enables SIMD acceleration.</strong> Because every element shares the same fixed-size data type, the CPU can apply Single Instruction, Multiple Data (SIMD) and other vectorized instruction sets to process many elements simultaneously. This hardware-level parallelism is impossible when data types are mixed.</li>
+  <li><strong>Python lists support mixed types; NumPy arrays do not.</strong> A Python list can hold integers, strings, and objects side by side, but a NumPy array enforces a single <em>dtype</em> for every element. This restriction is the trade-off that makes mathematical operations orders of magnitude faster.</li>
+  <li><strong>Arithmetic on NumPy arrays is automatically vectorized.</strong> Writing <code>a + b</code> on two arrays applies the addition element-wise across the entire array without any explicit Python loop. The loop executes inside compiled C code, eliminating Python interpreter overhead.</li>
+  <li><strong>NumPy arrays consume less memory than Python lists.</strong> A Python list stores a sequence of object references, each carrying type information and reference-count overhead. A NumPy array stores raw typed bytes contiguously, so a million <code>float64</code> values occupy exactly 8 MB rather than the many tens of megabytes a list would require.</li>
+  <li><strong>Broadcasting and ufuncs are exclusive to NumPy arrays.</strong> Features such as broadcasting (operating on arrays of different but compatible shapes) and universal functions (ufuncs) are not available on plain Python lists. These tools are central to writing concise, loop-free engineering code.</li>
+  <li><strong><em>shape</em> describes the size along every dimension.</strong> For a 2-D array with 3 rows and 4 columns, <code>shape</code> returns <code>(3, 4)</code>. This tuple is used constantly when reshaping arrays, checking compatibility, and iterating over axes.</li>
+  <li><strong><em>dtype</em> records the element data type.</strong> Common engineering dtypes include <code>float64</code> for double-precision real numbers and <code>int32</code> for 32-bit integers. Choosing the right dtype balances numerical precision against memory consumption.</li>
+  <li><strong><em>ndim</em> gives the number of axes.</strong> A 1-D array has <code>ndim == 1</code>, a matrix has <code>ndim == 2</code>, and a stack of matrices has <code>ndim == 3</code>. Many NumPy functions accept an <code>axis</code> argument whose valid range depends on <em>ndim</em>.</li>
+  <li><strong><em>size</em> is the total element count.</strong> For a shape of <code>(3, 4)</code>, <code>size</code> is 12 — the product of all dimension lengths. This is useful for quickly verifying that two arrays hold the same number of elements before performing reshape or dot-product operations.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Covers what NumPy is, why it is the cornerstone of numerical engineering computation in Python, and how the ndarray differs fundamentally from a Python list.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Creating NumPy Arrays</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Before any numerical work can begin, arrays must be constructed. NumPy provides a rich set of creation functions that cover every common engineering scenario — converting existing Python data, generating evenly spaced grids, allocating pre-filled buffers, building matrices with special structure, and drawing random samples. Knowing which function fits each situation leads to cleaner, faster code.</p>
+<ul>
+  <li><strong>np.array() converts any sequence-like object.</strong> It accepts lists, tuples, and nested combinations, automatically inferring shape and dtype from the input. Passing a nested list of uniform inner lengths produces a 2-D or higher-dimensional array in a single call.</li>
+  <li><strong>The dtype argument gives explicit control over precision.</strong> Without it, NumPy infers the dtype from the input values, which may yield <code>int64</code> when <code>float32</code> is needed for memory efficiency. Specifying <code>dtype=np.float32</code> prevents unexpected type promotion downstream.</li>
+  <li><strong>Nested lists become multi-dimensional arrays automatically.</strong> A list of lists where every inner list has the same length is interpreted as a 2-D array, making it straightforward to initialize small matrices directly from hand-typed data in engineering scripts.</li>
+  <li><strong>np.arange() generates values at fixed step intervals.</strong> Its signature <code>np.arange(start, stop, step)</code> mirrors Python's built-in <code>range()</code> but returns an ndarray and accepts floating-point arguments. The stop value is <em>excluded</em> from the result, consistent with Python convention.</li>
+  <li><strong>np.linspace() generates a fixed count of evenly spaced points.</strong> Unlike <code>arange</code>, you specify how many points you want rather than the step size, and by default both endpoints are included. This is ideal for creating frequency axes, time vectors, or parameter sweeps in engineering simulations.</li>
+  <li><strong>linspace is safer than arange for floating-point steps.</strong> Floating-point arithmetic accumulates rounding errors over many additions, so <code>arange</code> with a float step can produce an unexpected extra or missing element. <code>linspace</code> computes each point independently, avoiding this pitfall entirely.</li>
+  <li><strong>Both functions return 1-D arrays that can be reshaped.</strong> After creation, chaining <code>.reshape(rows, cols)</code> turns a flat range into a 2-D grid, which is a common pattern when pre-computing lookup tables or structured meshes in engineering workflows.</li>
+  <li><strong>np.zeros() allocates an array filled with 0.0.</strong> Providing a shape tuple such as <code>(4, 4)</code> creates a 4×4 array of zeros, which is the standard starting point for accumulating sums, building matrices row by row, or initializing finite-element stiffness matrices before assembly.</li>
+  <li><strong>np.ones() fills every element with 1.0.</strong> It is frequently used to create unit vectors, weight arrays, or masks before scaling. Like <code>zeros</code>, an optional <code>dtype</code> argument controls element type.</li>
+  <li><strong>np.full() fills the array with any scalar constant.</strong> <code>np.full((3, 3), np.pi)</code> creates a 3×3 array where every element is π, which is more readable and faster than multiplying a <code>ones</code> array by the desired constant.</li>
+  <li><strong>np.empty() allocates without initialization for a speed advantage.</strong> The array's contents are whatever bytes happen to be in memory at that location, so it is only safe to use when every element will be overwritten before being read. In tight loops where initialization is immediately followed by assignment, this avoids a redundant zeroing pass.</li>
+  <li><strong>np.eye() creates an n×n identity matrix.</strong> The identity matrix is fundamental in linear algebra — multiplying any matrix by it leaves the matrix unchanged — and <code>np.eye(n)</code> is the standard way to construct one for solving systems of equations or initializing Kalman filter covariance matrices.</li>
+  <li><strong>np.diag() builds or extracts diagonal structure.</strong> When passed a 1-D array <em>v</em>, it constructs a square matrix with <em>v</em> on the main diagonal and zeros elsewhere. When passed a 2-D array, it extracts the diagonal elements as a 1-D array, making it a versatile tool for working with eigenvalues and diagonal preconditioners.</li>
+  <li><strong>The k parameter shifts the diagonal off-centre.</strong> In <code>np.eye(n, k=1)</code>, the diagonal of ones moves one position above the main diagonal, enabling quick construction of banded matrices common in finite-difference and finite-element methods.</li>
+  <li><strong>np.random.rand() draws from a uniform distribution.</strong> Values fall in the interval <code>[0, 1)</code>, making it useful for Monte Carlo simulations, random initializations, and generating synthetic sensor noise with a known uniform character.</li>
+  <li><strong>np.random.randn() draws from the standard normal distribution.</strong> With mean 0 and standard deviation 1, this is the go-to function for simulating Gaussian measurement noise or initializing neural network weights in engineering machine-learning applications.</li>
+  <li><strong>np.random.randint() generates random integers in a range.</strong> The <code>size</code> argument controls the shape of the output array, so <code>np.random.randint(0, 10, size=(3, 3))</code> produces a 3×3 matrix of random integers between 0 and 9 inclusive.</li>
+  <li><strong>Setting a random seed ensures reproducible results.</strong> Calling <code>np.random.seed(42)</code> before any random generation locks the sequence of pseudo-random numbers, which is essential for debugging stochastic algorithms and sharing reproducible engineering experiments with colleagues.</li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Explores the full range of array construction methods, from converting Python sequences to using specialized initialization functions that generate arrays of specific values or ranges.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+</body></html>

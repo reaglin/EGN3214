@@ -1,56 +1,99 @@
 ﻿{
-  "ModuleName": "Control Flow and Python Data Structures",
+  "ModuleName": "2 - Control Flow and Python Data Structures",
   "CourseName": "Egn3214",
   "ModuleFolderName": "Control_Flow_and",
-  "GeneratedUtc": "2026-05-19T01:27:27.5319656Z",
+  "GeneratedUtc": "2026-05-22T18:25:19.6855849Z",
   "Artifacts": [
     {
       "Name": "Module Topics",
       "Type": "Module Topics",
       "FileType": ".json",
-      "Description": "A structured list of the key concepts and subjects covered in this module that learners and instructors can reference to understand the scope of the content.",
-      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\hierarchy.json",
+      "Description": "An outline of all topics covered in the module, including conditional statements (if/elif/else), for and while loops, loop control with break and continue, and Python data structures such as lists, serving as a navigation guide for learners and a planning reference for instructors.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\hierarchy.json",
       "ViewerKind": 2,
       "WebHref": "content/module_topics.html",
       "LocalHref": "module_topics.html",
       "RawHref": "../hierarchy.json",
-      "SourceModifiedTicks": 639145417110625903
+      "SourceModifiedTicks": 639143722683275045
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive reading module covering Python control flow with if, elif, and else conditional statements, explaining Boolean evaluation and branching logic; learners read through explanations and examples to understand how programs make decisions.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\_interactive.html",
+      "ViewerKind": 1,
+      "WebHref": "content/_interactive.html",
+      "LocalHref": "_interactive.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150600851149713
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive reading module covering Python control flow with if, elif, and else conditional statements, explaining Boolean evaluation and branching logic; learners read through explanations and examples to understand how programs make decisions.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\Control_Flow_and_interactive_topics_t1-4.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Control_Flow_and_interactive_topics_t1-4.html",
+      "LocalHref": "Control_Flow_and_interactive_topics_t1-4.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150600851149713
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive reading module introducing Python lists as a core data structure, covering how to create, access, and manipulate ordered collections using square-bracket syntax; learners read through explanations and examples to build foundational knowledge of list operations.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\Control_Flow_and_interactive_topics_t5-8.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Control_Flow_and_interactive_topics_t5-8.html",
+      "LocalHref": "Control_Flow_and_interactive_topics_t5-8.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150597348430458
     },
     {
       "Name": "Quiz Question Bank (10 questions)",
       "Type": "Quiz",
       "FileType": ".json",
-      "Description": "A bank of ten quiz questions on control flow and Python data structures that instructors can draw from to assess learner comprehension and that learners use to test their knowledge.",
-      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\quiz_questions.json",
+      "Description": "A 10-question quiz bank assessing learners\u0027 understanding of conditional statements, the elif clause, the range() function, loop selection, and break behavior in nested loops, used to test comprehension of core control flow concepts.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\quiz_questions.json",
       "ViewerKind": 3,
       "WebHref": "quiz/index.html",
       "LocalHref": "module_quiz.html",
       "RawHref": "../quiz_questions.json",
-      "SourceModifiedTicks": 639145554679965935
+      "SourceModifiedTicks": 639149929606014938
     },
     {
-      "Name": "Problem-Solving Exercise: Structural Load Data Analyzer",
-      "Type": "Assignment",
-      "FileType": ".html",
-      "Description": "A hands-on coding assignment in which learners write a Python program to analyze structural load data, applying control flow logic and data structures to solve a realistic engineering problem.",
-      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\assignments\\A001_Problem_Solving__Problem_Solving_Exercise_Struc.html",
-      "ViewerKind": 1,
-      "WebHref": "assignments/index.html",
-      "LocalHref": "../assignments/A001_Problem_Solving__Problem_Solving_Exercise_Struc.html",
-      "RawHref": "",
-      "SourceModifiedTicks": 639145417110615833
-    },
-    {
-      "Name": "Drag-and-Drop Match",
+      "Name": "Drag-Drop Code Use Match",
       "Type": "Interactive Activity",
       "FileType": ".html",
-      "Description": "An interactive drag-and-drop activity where learners match control flow concepts or Python data structures to their definitions or examples, reinforcing understanding through active recall.",
-      "FilePath": "C:\\Users\\Ron\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\interactive\\drag-and-drop-match.html",
+      "Description": "An interactive drag-and-drop activity covering nested conditionals in which learners match 8 code snippets or keywords to their correct descriptions, with correct answers locking in place and incorrect ones bouncing back, used to reinforce understanding of nested conditional syntax and logic.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\interactive\\drag-and-drop-match.html",
       "ViewerKind": 1,
       "WebHref": "interactive/drag-and-drop-match.html",
       "LocalHref": "interactive/drag-and-drop-match.html",
       "RawHref": "",
-      "SourceModifiedTicks": 639145556837776449
+      "SourceModifiedTicks": 639150651727466710
+    },
+    {
+      "Name": "Drag-Drop Data Structure Match",
+      "Type": "Interactive Activity",
+      "FileType": ".html",
+      "Description": "An interactive drag-and-drop activity in which learners match Python data structure names (e.g., list, tuple, dictionary) to 8 engineering scenarios that best illustrate their use, used to practice selecting the appropriate data structure for real-world engineering contexts.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Control_Flow_and\\output\\interactive\\drag-and-drop-match_20260522113839.html",
+      "ViewerKind": 1,
+      "WebHref": "interactive/drag-and-drop-match_20260522113839.html",
+      "LocalHref": "interactive/drag-and-drop-match_20260522113839.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150641925124402
     }
   ]
 }

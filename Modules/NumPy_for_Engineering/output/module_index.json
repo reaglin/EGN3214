@@ -1,0 +1,100 @@
+﻿{
+  "ModuleName": "5 - NumPy for Engineering Numerical Computation",
+  "CourseName": "EGN3214",
+  "ModuleFolderName": "NumPy_for_Engineering",
+  "GeneratedUtc": "2026-06-28T15:36:58.4758925Z",
+  "HtmlIndexSignature": "",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "Outlines the topics covered in the NumPy module, including array creation, element-wise operations, universal functions, and broadcasting, serving as a syllabus-style reference for learners and instructors navigating the module content.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "",
+      "LocalHref": "../hierarchy.json",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161959424787993
+    },
+    {
+      "Name": "NumPy_for_Engineering",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive HTML lesson on NumPy for engineering that guides learners through ndarray basics, array creation, vectorized operations, broadcasting, indexing, linear algebra, and practical engineering applications with explanations and embedded code examples.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\_interactive.html",
+      "ViewerKind": 1,
+      "WebHref": "content/_interactive.html",
+      "LocalHref": "_interactive.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161125843017307
+    },
+    {
+      "Name": "Assignment 5 Open Channel derived",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "A derived version of Assignment 5 that directs students to use NumPy library functions and the Newton-Raphson iterative method specifically to numerically solve for the depth of flow in an open channel, submitted as a Colab notebook.",
+      "CustomName": "Open Channel Flow Assignment - New",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\Assignment_5_Open_Channel_derived.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Assignment_5_Open_Channel_derived.html",
+      "LocalHref": "Assignment_5_Open_Channel_derived.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161881313715824
+    },
+    {
+      "Name": "Assignment 5 Open Channel",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "The original Assignment 5 that instructs students to apply Manning\u0027s Equation and an iterative numerical technique to calculate the depth of flow in an open channel, submitted as a Colab notebook.",
+      "CustomName": "Open Channel Flow Assignment - Old",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\Assignment_5_Open_Channel.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Assignment_5_Open_Channel.html",
+      "LocalHref": "Assignment_5_Open_Channel.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161877755145531
+    },
+    {
+      "Name": "Assignment 5 \u2013 Find Depth of Flow in an Open Channel",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An instructor-authored summary page for Assignment 5 describing the task of solving Manning\u0027s Equation for flow depth in a trapezoidal open channel with a 50 cfs target flowrate using Python functions with NumPy or math libraries and iterative methods.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\ext_77319c9d.html",
+      "ViewerKind": 1,
+      "WebHref": "content/ext_77319c9d.html",
+      "LocalHref": "ext_77319c9d.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161878960238273
+    },
+    {
+      "Name": "NumPy_for_Engineering",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive HTML lesson on NumPy for engineering that guides learners through ndarray basics, array creation, vectorized operations, broadcasting, indexing, linear algebra, and practical engineering applications with explanations and embedded code examples.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\NumPy_for_Engineering_interactive_topics_t1-2.html",
+      "ViewerKind": 1,
+      "WebHref": "content/NumPy_for_Engineering_interactive_topics_t1-2.html",
+      "LocalHref": "NumPy_for_Engineering_interactive_topics_t1-2.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161125843017307
+    },
+    {
+      "Name": "External Materials Index",
+      "Type": "External Materials",
+      "FileType": ".html",
+      "Description": "An index page listing the external materials for the NumPy module, currently containing one item \u2014 Assignment 5 on finding depth of flow in an open channel \u2014 giving learners and instructors a quick reference to supplementary resources.",
+      "CustomName": null,
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\EGN3214\\Modules\\NumPy_for_Engineering\\output\\external_materials_index.html",
+      "ViewerKind": 5,
+      "WebHref": "",
+      "LocalHref": "external_materials_index.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639161878960467510
+    }
+  ]
+}

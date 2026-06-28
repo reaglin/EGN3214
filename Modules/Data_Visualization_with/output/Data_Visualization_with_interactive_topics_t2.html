@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Plots and Scatter Plots</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+  <header>
+    <h1>Line Plots and Scatter Plots</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Line Plots and Scatter Plots</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Line plots and scatter plots are the two workhorses of data visualization in science and engineering. A <strong>line plot</strong> connects data points with line segments to emphasize trends, continuity, or the evolution of a quantity over an ordered axis such as time or position. A <strong>scatter plot</strong>, by contrast, renders each observation as an independent marker with no connecting line, making it ideal for revealing correlations, clusters, or outliers in relational data. Matplotlib's <code>pyplot</code> interface — typically imported as <code>import matplotlib.pyplot as plt</code> — provides a concise, state-based API that makes both chart types fast to produce and deeply customizable. The following sections walk through creation and customization of each type in detail.</p>
+
+<p><strong>Creating a Basic Line Plot</strong></p>
+
+<p>The entry point for line plots is <code>plt.plot()</code>. At its simplest, you pass a single sequence and Matplotlib treats the index (0, 1, 2, …) as the x-axis. More commonly you supply two sequences — x values then y values. The function is deliberately flexible about the container type: NumPy arrays, plain Python lists, and pandas <code>Series</code> objects are all accepted without any explicit conversion.</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2 * np.pi, 200)   # NumPy array
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.show()
+</code></pre>
+
+<p>The same call works with a Python list:</p>
+
+<pre><code>x_list = [0, 1, 2, 3, 4]
+y_list = [0, 1, 4, 9, 16]
+plt.plot(x_list, y_list)
+plt.show()
+</code></pre>
+
+<p>And with a pandas <code>Series</code>, where the Series index automatically becomes the x-axis:</p>
+
+<pre><code>import pandas as pd
+
+temperature = pd.Series([22.1, 23.4, 25.0, 24.3, 21.8],
+                        index=[8, 9, 10, 11, 12])   # hours of the day
+plt.plot(temperature)
+plt.show()
+</code></pre>
+
+<p><strong>Multiple lines on the same axes</strong> are added by calling <code>plt.plot()</code> more than once before <code>plt.show()</code>. Each call appends a new line to the current axes object. Matplotlib automatically assigns a different color from its default color cycle so the lines are visually distinct even if you do nothing extra.</p>
+
+<pre><code>x = np.linspace(0, 2 * np.pi, 200)
+
+plt.plot(x, np.sin(x))
+plt.plot(x, np.cos(x))
+plt.plot(x, np.sin(2 * x))
+plt.show()
+</code></pre>
+
+<p><strong>Format strings</strong> let you specify line style, color, and marker shape compactly in a single positional argument placed immediately after the y-data. The format string is parsed as <em>color + line style + marker</em> in any order. Common color codes include <code>'r'</code> (red), <code>'g'</code> (green), <code>'b'</code> (blue), <code>'k'</code> (black), and <code>'c'</code> (cyan). Line styles include <code>'-'</code> (solid), <code>'--'</code> (dashed), <code>'-.'</code> (dash-dot), and <code>':'</code> (dotted). Marker codes include <code>'o'</code> (circle), <code>'s'</code> (square), <code>'^'</code> (triangle), <code>'+'</code> (plus), and <code>'x'</code> (cross).</p>
+
+<pre><code>x = np.linspace(0, 10, 30)
+
+plt.plot(x, np.sin(x), 'r--o')    # red dashed line with circle markers
+plt.plot(x, np.cos(x), 'b-.s')    # blue dash-dot line with square markers
+plt.plot(x, x / 10,   'k:^')      # black dotted line with triangle markers
+plt.show()
+</code></pre>
+
+<p>For finer control you can always use keyword arguments instead of or in addition to the format string. <code>linewidth</code> (or <code>lw</code>), <code>markersize</code> (or <code>ms</code>), <code>markerfacecolor</code>, and <code>alpha</code> (transparency, 0–1) are frequently useful.</p>
+
+<pre><code>plt.plot(x, np.sin(x), color='steelblue', linestyle='--',
+         marker='o', linewidth=2, markersize=6, alpha=0.8)
+plt.show()
+</code></pre>
+
+<p><strong>Customizing Line Plots</strong></p>
+
+<p>A plot without labeled axes and a title is incomplete for any audience beyond a quick personal check. Matplotlib provides straightforward functions for all standard annotations.</p>
+
+<p><code>plt.xlabel()</code> and <code>plt.ylabel()</code> attach text labels to the horizontal and vertical axes respectively. Both accept an optional <code>fontsize</code> keyword. Including the physical unit in the label — for example <em>"Time (s)"</em> or <em>"Voltage (mV)"</em> — is a professional standard that prevents misinterpretation.</p>
+
+<pre><code>x = np.linspace(0, 4 * np.pi, 300)
+
+plt.plot(x, np.sin(x))
+plt.xlabel('Angle (radians)', fontsize=13)
+plt.ylabel('Amplitude', fontsize=13)
+plt.show()
+</code></pre>
+
+<p><code>plt.title()</code> places a title above the axes. For publications you might leave the title blank and use a figure caption instead, but for exploratory work a descriptive title speeds up interpretation.</p>
+
+<pre><code>plt.plot(x, np.sin(x))
+plt.title('Sine Wave — One Full Cycle', fontsize=15)
+plt.show()
+</code></pre>
+
+<p><code>plt.legend()</code> renders a legend box that maps line styles to labels. It only produces useful output when each <code>plt.plot()</code> call includes a <code>label</code> keyword argument; <code>plt.legend()</code> then collects all labeled artists automatically. The <code>loc</code> keyword controls placement: <code>'upper right'</code>, <code>'lower left'</code>, <code>'center'</code>, and so on. Passing <code>loc='best'</code> lets Matplotlib find the position that overlaps the least data.</p>
+
+<pre><code>x = np.linspace(0, 2 * np.pi, 200)
+
+plt.plot(x, np.sin(x),     label='sin(x)',    color='royalblue')
+plt.plot(x, np.cos(x),     label='cos(x)',    color='tomato')
+plt.plot(x, np.sin(2 * x), label='sin(2x)',   color='seagreen', linestyle='--')
+
+plt.xlabel('x (radians)')
+plt.ylabel('f(x)')
+plt.title('Trigonometric Functions')
+plt.legend(loc='upper right', fontsize=11)
+plt.show()
+</code></pre>
+
+<p>A common mistake is calling <code>plt.legend()</code> without having passed <code>label=</code> to any plot call — the result is either an empty legend or a legend with generic, unhelpful entries. Always pair <code>label=</code> in <code>plt.plot()</code> with <code>plt.legend()</code>.</p>
+
+<p>Additional quality-of-life customizations worth knowing: <code>plt.grid(True)</code> overlays a background grid that makes reading values easier; <code>plt.tight_layout()</code> automatically adjusts spacing to prevent axis labels from being clipped; and <code>plt.savefig('filename.png', dpi=150)</code> exports the figure to disk instead of displaying it interactively.</p>
+
+<p><strong>Creating a Scatter Plot</strong></p>
+
+<p><code>plt.scatter(x, y)</code> is the dedicated scatter plot function. Unlike <code>plt.plot(x, y, 'o')</code> which also places markers at data points, <code>plt.scatter()</code> is designed to encode additional variables through marker size and color, making it much more expressive for multivariate data.</p>
+
+<pre><code>rng = np.random.default_rng(42)
+x = rng.uniform(0, 10, 80)
+y = 2.5 * x + rng.normal(0, 3, 80)
+
+plt.scatter(x, y)
+plt.xlabel('Feature X')
+plt.ylabel('Response Y')
+plt.title('Basic Scatter Plot')
+plt.show()
+</code></pre>
+
+<p>The <strong><code>s</code> parameter</strong> sets the marker size in points² (not points — the unit is area). A scalar value applies the same size to every point. Passing an array whose length matches the data allows each point to have its own size, which encodes a third variable visually through marker area. For example, if a dataset records city locations and population, the population can drive the size of each city's dot.</p>
+
+<pre><code>population = rng.uniform(10, 500, 80)    # a third variable (e.g., city population)
+
+plt.scatter(x, y, s=population)          # larger population → larger dot
+plt.xlabel('Longitude (relative)')
+plt.ylabel('Latitude (relative)')
+plt.title('Marker Size Encodes Population')
+plt.show()
+</code></pre>
+
+<p>Because <code>s</code> is in units of area, the visual radius scales as the square root of the value. If you want the <em>radius</em> to be proportional to your variable, pass the square of that variable to <code>s</code>. Conversely, to represent a magnitude that spans orders of magnitude, you may want to pass the log of the variable.</p>
+
+<p>The <strong><code>c</code> parameter</strong> maps a continuous or categorical variable to marker color. When you pass an array of numbers to <code>c</code>, Matplotlib maps those numbers through a colormap (specified with the <code>cmap</code> keyword) to produce a gradient of colors. This is one of the most powerful techniques for revealing a third dimension in a 2-D scatter plot.</p>
+
+<pre><code>depth = rng.uniform(0, 100, 80)          # a third variable (e.g., ocean depth)
+
+scatter = plt.scatter(x, y, c=depth, cmap='plasma', s=60, alpha=0.8)
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Color Encodes Depth')
+plt.show()
+</code></pre>
+
+<p>When a continuous variable is mapped to color, it is essential to add a color scale so the viewer can read off actual values. <code>plt.colorbar()</code> creates a vertical (or horizontal) color bar adjacent to the axes. You should pass the return value of <code>plt.scatter()</code> as its argument so Matplotlib knows which mappable to reference, and you can add a label with the <code>label</code> keyword or by calling <code>.set_label()</code> on the returned colorbar object.</p>
+
+<pre><code>fig, ax = plt.subplots()
+
+sc = ax.scatter(x, y, c=depth, cmap='viridis', s=population * 0.5, alpha=0.75)
+
+cbar = fig.colorbar(sc, ax=ax)
+cbar.set_label('Depth (m)', fontsize=12)
+
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_title('Scatter: Size = Population, Color = Depth')
+plt.show()
+</code></pre>
+
+<p>Notice the switch here to the object-oriented API (<code>fig, ax = plt.subplots()</code>). This is preferable for any plot more complex than a quick exploratory sketch because it gives you explicit handles to the figure and axes, preventing ambiguity when multiple subplots are involved. <code>ax.scatter()</code>, <code>ax.set_xlabel()</code>, <code>ax.set_ylabel()</code>, and <code>ax.set_title()</code> are the object-oriented equivalents of the <code>plt.*</code> convenience functions.</p>
+
+<p>Popular colormaps for continuous data include <code>'viridis'</code> and <code>'plasma'</code> (perceptually uniform, colorblind-friendly), <code>'coolwarm'</code> (diverging, useful when data has a meaningful midpoint), and <code>'gray'</code> (for monochrome output). Avoid <code>'jet'</code> in scientific work — it is perceptually non-uniform and can create false visual boundaries.</p>
+
+<p><strong>Axis Limits and Scaling</strong></p>
+
+<p>By default Matplotlib automatically determines axis limits based on the range of the data, adding a small margin. In many situations you need explicit control — to zoom in on a region of interest, to match limits across multiple panels, or to exclude outliers that distort the view.</p>
+
+<p><code>plt.xlim(min, max)</code> and <code>plt.ylim(min, max)</code> set the visible range of the x- and y-axes respectively. You can pass just one bound by using <code>None</code> for the other (e.g., <code>plt.xlim(0, None)</code> forces the left limit to zero while letting Matplotlib choose the right limit automatically).</p>
+
+<pre><code>x = np.linspace(-10, 10, 400)
+y = np.sin(x) / x    # sinc-like function; undefined at x=0 but NumPy handles it
+
+plt.plot(x, y)
+plt.xlim(-8, 8)       # zoom in, exclude the noisy tails near ±10
+plt.ylim(-0.3, 1.1)   # show the full main lobe plus a little negative excursion
+plt.xlabel('x')
+plt.ylabel('sin(x)/x')
+plt.title('Windowed Sinc Function')
+plt.show()
+</code></pre>
+
+<p><code>plt.xscale('log')</code> and <code>plt.yscale('log')</code> switch an axis to a base-10 logarithmic scale. Logarithmic axes are indispensable whenever data spans several orders of magnitude — frequency response plots (Bode plots), power spectral densities, population sizes, financial returns, and many physical phenomena all benefit from log scaling. On a log axis, equal distances represent equal <em>ratios</em>, not equal differences, so exponential relationships appear as straight lines.</p>
+
+<pre><code>frequency = np.logspace(1, 5, 200)    # 10 Hz to 100 kHz, evenly spaced in log
+gain = 1 / np.sqrt(1 + (frequency / 1000) ** 2)   # simple RC low-pass filter
+
+plt.plot(frequency, gain)
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel('Frequency (Hz)')
+plt.ylabel('Gain')
+plt.title('Bode Magnitude Plot — RC Low-Pass Filter')
+plt.grid(True, which='both', linestyle='--', alpha=0.5)  # grid on major & minor ticks
+plt.show()
+</code></pre>
+
+<p>The keyword <code>which='both'</code> in <code>plt.grid()</code> draws grid lines at both major and minor tick marks, which is standard practice for log-scale plots and greatly aids reading values.</p>
+
+<p><code>plt.axis('equal')</code> forces the same physical scale on both axes, meaning one unit in x occupies the same number of pixels as one unit in y. This is critical for spatial or geometric data where distortion would be misleading. For instance, a circle plotted with unequal axis scaling appears as an ellipse — <code>plt.axis('equal')</code> corrects this.</p>
+
+<pre><code>theta = np.linspace(0, 2 * np.pi, 300)
+x_circle = np.cos(theta)
+y_circle = np.sin(theta)
+
+plt.plot(x_circle, y_circle, 'b-')
+plt.axis('equal')            # without this, the circle would look like an ellipse
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Unit Circle — Equal Aspect Ratio')
+plt.show()
+</code></pre>
+
+<p>Related options for <code>plt.axis()</code> include <code>'tight'</code> (removes extra margin around data), <code>'square'</code> (makes the axes box square without necessarily equalizing scales), and <code>'off'</code> (hides all axis decorations — useful for image display). You can also call <code>ax.set_aspect('equal')</code> in the object-oriented API for the same effect as <code>plt.axis('equal')</code>.</p>
+
+<p>Together, line plots and scatter plots — augmented with careful axis labels, legends, limits, and scaling — form the foundation of nearly all quantitative visualization. Mastering their options in Matplotlib gives you a toolkit capable of communicating everything from a simple trend to a rich four-variable relationship rendered through position, size, color, and transparency simultaneously.</p>
+        <div class="notes"><strong>Notes</strong>Consider demonstrating plt.subplots() for multi-panel figures in a follow-up topic so learners see how the object-oriented API scales beyond single plots. The Bode plot example pairs naturally with a signal-processing or controls engineering context.</div>
+      </div>
+    </details>
+  </main>
+</body></html>

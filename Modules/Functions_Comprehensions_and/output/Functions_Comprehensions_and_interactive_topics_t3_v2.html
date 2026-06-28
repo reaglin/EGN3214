@@ -42,7 +42,7 @@ main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
 .doc-section:last-child { border-bottom: none; }
 .doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
 pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
-pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; margin: .75rem 0 1rem; }
   </style>
 </head><body>
   <header>
@@ -61,7 +61,17 @@ pre { background: var(--code-bg); border: 1px solid var(--code-border); border-r
     <li><strong><code>*args</code> allows a function to accept any number of positional arguments, including zero.</strong> If no extra positional arguments are supplied by the caller, <code>args</code> will simply be an empty tuple rather than causing an error.</li>
     <li><strong>Inside the function, <code>args</code> can be iterated, indexed, or passed to other functions.</strong> Because it is a regular tuple, you can loop over it with <code>for</code>, access elements by index, check its length, or unpack it into another call.</li>
   </ul>
+</ul>
 
+<pre><code># *args example
+def total(*args):
+    return sum(args)
+
+print(total(1, 2, 3))   # 6
+print(total())          # 0
+</code></pre>
+
+<ul>
   <li><strong>Collecting Keyword Arguments with **kwargs</strong></li>
   <ul>
     <li><strong>The <code>**</code> prefix collects remaining keyword arguments into a regular dictionary.</strong> Any named arguments passed by the caller that do not match an explicitly declared parameter are bundled into a <code>dict</code> keyed by argument name.</li>
@@ -69,7 +79,17 @@ pre { background: var(--code-bg); border: 1px solid var(--code-border); border-r
     <li><strong><code>**kwargs</code> allows callers to pass any named arguments not explicitly declared.</strong> This is especially useful when designing functions that need to remain open to future options without breaking existing call sites.</li>
     <li><strong>The resulting dictionary can be iterated with <code>.items()</code> to process each key-value pair.</strong> Standard dictionary operations — including <code>.get()</code>, membership testing, and comprehension — are all available on <code>kwargs</code> inside the function body.</li>
   </ul>
+</ul>
 
+<pre><code># **kwargs example
+def greet(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+greet(name="Alice", language="Python")
+</code></pre>
+
+<ul>
   <li><strong>Combining *args and **kwargs</strong></li>
   <ul>
     <li><strong>Regular parameters, <code>*args</code>, and <code>**kwargs</code> can all appear in a single function signature.</strong> This gives a function the ability to handle a fixed interface for required data while remaining open to arbitrary additional inputs.</li>
@@ -77,7 +97,16 @@ pre { background: var(--code-bg); border: 1px solid var(--code-border); border-r
     <li><strong>This pattern is heavily used in decorator and middleware design.</strong> A wrapper function that accepts <code>*args, **kwargs</code> and forwards them to the wrapped callable can handle <em>any</em> underlying function signature transparently.</li>
     <li><strong>Callers can still supply regular positional and keyword arguments alongside variadic ones.</strong> Python assigns values to named parameters first, then routes any leftovers into <code>args</code> or <code>kwargs</code> as appropriate.</li>
   </ul>
+</ul>
 
+<pre><code># Combined signature
+def mixed(required, *args, flag=False, **kwargs):
+    print(required, args, flag, kwargs)
+
+mixed("hello", 1, 2, flag=True, extra="yes")
+</code></pre>
+
+<ul>
   <li><strong>Unpacking Arguments at the Call Site</strong></li>
   <ul>
     <li><strong>Using <code>*iterable</code> in a call unpacks the iterable into individual positional arguments.</strong> For example, <code>func(*my_list)</code> is equivalent to passing each element of <code>my_list</code> as a separate positional argument, saving you from writing them out explicitly.</li>
@@ -87,31 +116,12 @@ pre { background: var(--code-bg); border: 1px solid var(--code-border); border-r
   </ul>
 </ul>
 
-<pre><code># *args example
-def total(*args):
-    return sum(args)
-
-print(total(1, 2, 3))   # 6
-print(total())          # 0
-
-# **kwargs example
-def greet(**kwargs):
-    for key, value in kwargs.items():
-        print(f"{key}: {value}")
-
-greet(name="Alice", language="Python")
-
-# Combined signature
-def mixed(required, *args, flag=False, **kwargs):
-    print(required, args, flag, kwargs)
-
-mixed("hello", 1, 2, flag=True, extra="yes")
-
-# Unpacking at the call site
+<pre><code># Unpacking at the call site
 values = [10, 20, 30]
 options = {"sep": ", ", "end": "!\n"}
 print(*values, **options)
 </code></pre>
+
         <div class="notes"><strong>Notes</strong>Covers the special *args and **kwargs syntax that allows functions to accept an arbitrary number of positional or keyword arguments. Explains how these mechanisms support flexible and reusable API design. Slides: 1, 2, 3, 4.</div>
       </div></div>
   </main>

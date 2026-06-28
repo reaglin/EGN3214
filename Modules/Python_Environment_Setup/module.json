@@ -1,9 +1,9 @@
 {
   "Id": "7f87a206-8b47-4cf9-adf1-68fc7cea72ec",
-  "Name": "Python Environment Setup and Language Fundamentals",
+  "Name": "1 - Python Environment Setup and Language Fundamentals",
   "Description": "Introduces the Python programming environment including IDEs, Jupyter notebooks, and package management, then covers core language fundamentals: data types, variables, operators, type conversion, and the distinction between interactive and script execution.",
   "CreatedBy": "Ron",
   "CreatedDate": "2026-05-13T09:57:17.5824061-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.5908195-04:00",
+  "LastModifiedDate": "2026-05-22T12:17:02.8840014-04:00",
   "Actions": []
 }

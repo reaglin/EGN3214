@@ -1,0 +1,68 @@
+﻿{
+  "ModuleName": "Python Environment Setup and Language Fundamentals",
+  "CourseName": "Egn3214",
+  "ModuleFolderName": "Python_Environment_Setup",
+  "GeneratedUtc": "2026-05-22T15:04:13.7091051Z",
+  "Artifacts": [
+    {
+      "Name": "Module Topics",
+      "Type": "Module Topics",
+      "FileType": ".json",
+      "Description": "A structured outline of the module\u0027s topics, covering Python environments (IDEs, Jupyter Notebooks), package management (pip, virtual environments), execution modes (interactive vs. script), and variables \u2014 used by instructors to plan lessons and by learners to preview what will be covered.",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Python_Environment_Setup\\hierarchy.json",
+      "ViewerKind": 2,
+      "WebHref": "",
+      "LocalHref": "../hierarchy.json",
+      "RawHref": "",
+      "SourceModifiedTicks": 639143657189080805
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "This interactive HTML page introduces learners to Python environments and tools, explaining what a Python environment is (interpreter plus supporting tools), why choosing the right one matters, and guiding them through the options available before writing their first code; instructors would assign it as a foundational reading or orientation resource at the start of the course.",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Python_Environment_Setup\\output\\_interactive_v2.html",
+      "ViewerKind": 1,
+      "WebHref": "content/_interactive_v2.html",
+      "LocalHref": "_interactive_v2.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150581594928200
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "This interactive HTML page introduces learners to Python environments and tools, explaining what a Python environment is and guiding them through selecting and setting up an appropriate interpreter and editor so they can begin writing, running, and debugging Python code.",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Python_Environment_Setup\\output\\_interactive_v3.html",
+      "ViewerKind": 1,
+      "WebHref": "content/_interactive_v3.html",
+      "LocalHref": "_interactive_v3.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639150585222397611
+    },
+    {
+      "Name": "Interactive HTML",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive HTML lesson that explains Python fundamentals \u2014 starting with variables and assignment, including what variables are, naming conventions, and how values are stored and updated \u2014 used by learners to read explanations and engage with examples directly in a browser.",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Python_Environment_Setup\\output\\_interactive.html",
+      "ViewerKind": 1,
+      "WebHref": "content/_interactive.html",
+      "LocalHref": "_interactive.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639144028200815214
+    },
+    {
+      "Name": "Interactive HTML \u2014 Topics",
+      "Type": "Text Content",
+      "FileType": ".html",
+      "Description": "An interactive HTML page mirroring the main lesson content on Python variables and assignment, serving as a topic-level entry point that lets learners navigate directly to specific subtopics within the module.",
+      "FilePath": "C:\\Users\\ronal\\OneDrive - Daytona State College\\Documents\\PreseMaker\\Courses\\Egn3214\\Modules\\Python_Environment_Setup\\output\\Python_Environment_Setup_interactive_topics.html",
+      "ViewerKind": 1,
+      "WebHref": "content/Python_Environment_Setup_interactive_topics.html",
+      "LocalHref": "Python_Environment_Setup_interactive_topics.html",
+      "RawHref": "",
+      "SourceModifiedTicks": 639144028200815214
+    }
+  ]
+}

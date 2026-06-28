@@ -1,0 +1,23 @@
+﻿{
+  "ModuleFolderName": "Modules_File_I",
+  "CourseName": "Egn3214",
+  "LastModified": "2026-05-22T18:19:21.7580665-04:00",
+  "NextAssignmentNumber": 2,
+  "Assignments": [
+    {
+      "Id": "A001",
+      "Title": "Van der Waals Gas Analysis: Evaluating Equation-of-State Models with Real Experimental Data",
+      "Type": "ProblemSolvingExercise",
+      "Level": "Medium",
+      "SubmissionFormat": "Pdf",
+      "TopicTitles": "Introduction to Python Modules, Writing and Using Custom Modules, Using Standard Library Modules, File I/O with the with Statement, Reading and Writing CSV Files, Working with JSON, Error Handling with try-except",
+      "ExtraInstructions": "The student should be supplied with data for determination of the Van Der Waals constant (different P, V, T, constant n). The collected data would be in CSV format. They should plot the data using the theoretical value of the constant to see how well it fits visually. They should then come to a conclusion about the accuracy of the equation in the simplified form of PV=nRT and the full form with the Pressure and Volume Corrections. Measurement error must also be addressed. The students will use Colab and some code can be supplied. The assignment should have them using library modules and file i/o",
+      "OutputFormat": "Html",
+      "FileName": "A001_Problem_Solving__Van_der_Waals_Gas.html",
+      "GeneratedDate": "2026-05-22T18:12:53.7864829-04:00",
+      "TypeDisplayName": "Problem-Solving Exercise",
+      "LevelDisplayName": "Medium  (2\u20134 hours)",
+      "FormatDisplayName": "PDF"
+    }
+  ]
+}

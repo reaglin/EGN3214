@@ -1,9 +1,9 @@
 {
   "Id": "c238ea93-b959-48c7-b5d9-7c9452d4be11",
-  "Name": "Object-Oriented Programming and AI-Assisted Coding Workflow",
+  "Name": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow",
   "Description": "Introduces classes, instances, attributes, methods, and inheritance for modeling engineering objects such as beams and sensors, and establishes the AI-assisted programming workflow using GitHub Copilot and ChatGPT for code generation, debugging, and responsible verification.",
   "CreatedBy": "Ron",
   "CreatedDate": "2026-05-13T09:57:17.6459626-04:00",
-  "LastModifiedDate": "2026-05-13T09:57:17.6470165-04:00",
+  "LastModifiedDate": "2026-05-29T11:20:08.7097005-04:00",
   "Actions": []
 }
