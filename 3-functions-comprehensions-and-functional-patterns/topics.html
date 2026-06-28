@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 - Functions, Comprehensions, and Functional Patterns — Module Topics</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.2rem;margin-top:28px;color:#1a3c6e}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 3 - Functions, Comprehensions, and Functional Patterns</a></div>
+<h1>3 - Functions, Comprehensions, and Functional Patterns — Module Topics</h1>
+<h2>Defining Functions</h2>
+<div class="summary">Introduces the syntax and mechanics of creating reusable functions in Python. Covers the def keyword, naming conventions, and the role of the return statement.</div>
+<ul>
+<li><strong>The def Statement</strong> <span class="el-body">— Functions in Python are defined using the def keyword followed by a name and a parenthesized parameter list. The indented block beneath the signature forms the function body.</span></li>
+<li><strong>The return Statement</strong> <span class="el-body">— The return statement sends a value back to the caller and immediately exits the function. A function without an explicit return statement implicitly returns None.</span></li>
+<li><strong>Docstrings and Function Documentation</strong> <span class="el-body">— A docstring is a string literal placed as the first statement inside a function body and serves as built-in documentation. It is accessible at runtime via the function&#39;s __doc__ attribute or the help() function.</span></li>
+<li><strong>Calling a Function</strong> <span class="el-body">— A function is invoked by writing its name followed by parentheses containing any required arguments. The interpreter jumps to the function body, executes it, and resumes at the call site with the returned value.</span></li>
+</ul>
+<h2>Parameters and Arguments</h2>
+<div class="summary">Explores the different ways values can be passed into functions, including positional, keyword, and default parameters. Establishes clear terminology between parameters and arguments.</div>
+<ul>
+<li><strong>Positional Parameters</strong> <span class="el-body">— Positional parameters are matched to arguments in the order they appear in the function signature. The first argument maps to the first parameter, the second to the second, and so on.</span></li>
+<li><strong>Keyword Arguments</strong> <span class="el-body">— Keyword arguments are passed by explicitly naming the parameter they correspond to, allowing arguments to be supplied in any order. This improves readability, especially in functions with many parameters.</span></li>
+<li><strong>Default Parameter Values</strong> <span class="el-body">— A parameter can be assigned a default value in the function signature, making the argument optional at the call site. If the caller does not supply that argument, the default is used.</span></li>
+<li><strong>Parameters vs. Arguments Terminology</strong> <span class="el-body">— Parameters are the variable names listed in the function definition, while arguments are the actual values passed when the function is called. Keeping this distinction clear helps in reading error messages and documentation.</span></li>
+</ul>
+<h2>Variable-Length Arguments: *args and **kwargs</h2>
+<div class="summary">Covers the special *args and **kwargs syntax that allows functions to accept an arbitrary number of positional or keyword arguments. Explains how these mechanisms support flexible and reusable API design.</div>
+<ul>
+<li><strong>Collecting Positional Arguments with *args</strong> <span class="el-body">— Prefixing a parameter name with an asterisk (*) causes Python to collect all extra positional arguments into a tuple assigned to that parameter. By convention the name args is used, though any valid identifier works.</span></li>
+<li><strong>Collecting Keyword Arguments with **kwargs</strong> <span class="el-body">— Prefixing a parameter name with two asterisks (**) causes Python to collect all extra keyword arguments into a dictionary. The keys are the argument names and the values are the supplied values.</span></li>
+<li><strong>Combining *args and **kwargs</strong> <span class="el-body">— A function can declare both *args and **kwargs together to accept any combination of positional and keyword arguments. This pattern is common in decorators and generic wrapper functions.</span></li>
+<li><strong>Unpacking Arguments at the Call Site</strong> <span class="el-body">— The * and ** operators can also be used at the call site to unpack a list or tuple into positional arguments and a dictionary into keyword arguments respectively. This is the inverse of the collection behavior in definitions.</span></li>
+</ul>
+<h2>Scope and Variable Visibility</h2>
+<div class="summary">Explains how Python resolves variable names using the LEGB rule and how the global and nonlocal keywords allow functions to modify variables in enclosing scopes.</div>
+<ul>
+<li><strong>The LEGB Scope Rule</strong> <span class="el-body">— Python resolves names by searching four scopes in order: Local, Enclosing, Global, and Built-in. The first scope in which the name is found wins.</span></li>
+<li><strong>Local Variables</strong> <span class="el-body">— Any name assigned inside a function is treated as local to that function by default, even if a global variable with the same name exists. Local variables do not affect the outer scope.</span></li>
+<li><strong>The global Keyword</strong> <span class="el-body">— The global keyword declares that a name inside a function refers to a module-level variable rather than creating a new local one. This allows the function to read and modify the global variable.</span></li>
+<li><strong>The nonlocal Keyword</strong> <span class="el-body">— The nonlocal keyword is used inside a nested function to refer to a variable in the nearest enclosing function scope that is not global. It enables inner functions to modify variables from their enclosing scope.</span></li>
+</ul>
+<h2>Recursion</h2>
+<div class="summary">Introduces recursion as a technique where a function calls itself to solve a problem by reducing it to smaller instances. Covers base cases, recursive cases, and practical considerations like stack depth.</div>
+<ul>
+<li><strong>What Is Recursion?</strong> <span class="el-body">— Recursion is a programming technique in which a function calls itself as part of its own definition. It is a natural fit for problems that can be broken into smaller versions of the same problem.</span></li>
+<li><strong>Base Cases</strong> <span class="el-body">— A base case is a condition under which the recursive function returns a result directly without making another recursive call. Every recursive function must have at least one base case to eventually terminate.</span></li>
+<li><strong>Recursive Cases</strong> <span class="el-body">— The recursive case defines how the function calls itself with a modified argument that moves closer to the base case. The result of the recursive call is typically combined with additional computation to produce the answer.</span></li>
+<li><strong>Recursion Depth and Limitations</strong> <span class="el-body">— Python enforces a maximum recursion depth, defaultable around 1000 calls, to prevent call stack overflow. Very deep recursion will raise a RecursionError even when the logic is correct.</span></li>
+</ul>
+<h2>Comprehensions</h2>
+<div class="summary">Teaches the concise comprehension syntax for building lists, dictionaries, and sets from iterables. Covers optional filtering conditions and nested comprehensions.</div>
+<ul>
+<li><strong>List Comprehensions</strong> <span class="el-body">— A list comprehension provides a compact syntax for creating a new list by applying an expression to each item in an iterable. It replaces many common for-loop patterns with a single readable line.</span></li>
+<li><strong>Dictionary Comprehensions</strong> <span class="el-body">— Dictionary comprehensions build a new dictionary by specifying a key-value expression iterated over a source iterable. They are the dict equivalent of list comprehensions.</span></li>
+<li><strong>Set Comprehensions</strong> <span class="el-body">— Set comprehensions use curly braces without a colon to produce a set of unique values derived from an iterable. Duplicate expressions are automatically discarded because sets do not allow repeated elements.</span></li>
+<li><strong>Filtering in Comprehensions</strong> <span class="el-body">— All three comprehension types support an optional if clause that acts as a filter, including only items for which the condition evaluates to True. Filtering replaces a nested if statement inside a for loop.</span></li>
+<li><strong>Nested Comprehensions</strong> <span class="el-body">— Comprehensions can contain multiple for clauses to iterate over nested iterables, effectively flattening or combining data from multiple sequences. The leftmost for clause is the outermost loop.</span></li>
+</ul>
+<h2>Lambda Functions and Functional Patterns</h2>
+<div class="summary">Introduces anonymous lambda functions and the map and filter built-ins as tools for applying functional programming patterns in Python. Explains when to use these tools versus comprehensions or named functions.</div>
+<ul>
+<li><strong>Lambda Functions</strong> <span class="el-body">— A lambda function is an anonymous function defined with the lambda keyword in a single expression. It is used when a small throwaway function is needed without the overhead of a full def statement.</span></li>
+<li><strong>The map() Function</strong> <span class="el-body">— The built-in map() applies a function to every item in an iterable and returns a map object, a lazy iterator, that yields the transformed values. It is the functional equivalent of a transformation comprehension.</span></li>
+<li><strong>The filter() Function</strong> <span class="el-body">— The built-in filter() applies a predicate function to each element of an iterable and returns only the elements for which the predicate returns True. It is the functional equivalent of a comprehension with an if clause.</span></li>
+<li><strong>Combining map and filter</strong> <span class="el-body">— map() and filter() can be composed by nesting calls, applying filtering first and then transformation, or vice versa. This chains functional operations without creating intermediate lists.</span></li>
+<li><strong>Choosing Between Comprehensions and Functional Tools</strong> <span class="el-body">— Python offers both comprehensions and map/filter as ways to transform and filter data. Choosing between them depends on readability, the existence of a named function, and team conventions.</span></li>
+</ul>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Assignment 5 – Find Depth of Flow in an Open Channel</title>
+  <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background: #f5f5f5;
+    color: #222;
+    padding: 2rem;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-width: 860px;
+    margin: 0 auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  }
+  h1, h2 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+  h1 a, h2 a { color: #1a56a0; text-decoration: none; }
+  h1 a:hover, h2 a:hover { text-decoration: underline; }
+  .link-row { margin: 0.5rem 0; }
+  .link-row a { color: #1a56a0; word-break: break-all; }
+  .yt-thumb-wrap { margin: 1rem 0; }
+  .yt-thumb-wrap a { display: block; text-decoration: none; }
+  .yt-thumb-wrap img { width: 100%; border-radius: 6px 6px 0 0; display: block; }
+  .yt-play-btn {
+    background: #cc0000;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0 0 6px 6px;
+  }
+  .yt-thumb-wrap a:hover .yt-play-btn { background: #aa0000; }
+  .meta { margin-top: 1rem; }
+  .meta p { margin-bottom: 0.5rem; }
+  .label { font-weight: 600; }
+  .pedagogy {
+    margin-top: 1.25rem;
+    background: #f0f6ff;
+    border-left: 4px solid #1a56a0;
+    padding: 0.75rem 1rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .pedagogy h2 { font-size: 1rem; margin-bottom: 0.4rem; color: #1a56a0; }
+  .date { margin-top: 1.25rem; font-size: 0.85rem; color: #888; }
+  </style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<div class="card">
+  <h1><a href="Assignment_5_Open_Channel.html" target="_blank" rel="noopener">Assignment 5 – Find Depth of Flow in an Open Channel</a></h1>
+  <div class="meta">
+    <p><span class="label">Author / Site:</span> Course Instructor</p>
+    <p><span class="label">Summary:</span> This assignment tasks students with using iterative numerical techniques to solve Manning&#39;s Equation for the depth of flow in a trapezoidal open channel given a target flowrate of 50 cfs. Students implement a Python function using NumPy/math libraries to compute flow area, wetted perimeter, and hydraulic radius, then iteratively converge on a depth solution with 0.01-foot accuracy. The deliverable is a Jupyter/Colab engineering report including code, a Q vs. depth plot, and documented methodology.</p>
+    <p><span class="label">Relevance to Module:</span> This assignment directly applies NumPy mathematical functions (e.g., sqrt, pow), iterative numerical computation, and function-based engineering problem solving — all core skills introduced in Module 5. It reinforces the use of NumPy as a foundation for engineering calculations by embedding these operations within a real hydraulic engineering context requiring convergence logic and result visualization.</p>
+  </div>
+  <div class="pedagogy">
+    <h2>Instructor Note</h2>
+    <p>This assignment allows the student to learn how to solve problems in the format y=f(x) for x, when x cannot be explicitly solved in algebraic terms.</p>
+  </div>
+  <p class="date">Added June 4, 2026</p>
+</div>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

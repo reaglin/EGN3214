@@ -1,0 +1,62 @@
+﻿[
+  {
+    "title": "6 - Data Visualization with Matplotlib and Intro to Pandas \u2014 Topics \u0026 Learning Outcomes",
+    "href": "topics-outcomes.html",
+    "type": "Page"
+  },
+  {
+    "title": "6 - Data Visualization with Matplotlib and Intro to Pandas \u2014 Module Topics",
+    "href": "topics.html",
+    "type": "Page"
+  },
+  {
+    "title": "Introduction to Matplotlib and the pyplot Interface",
+    "href": "content/Data_Visualization_with_interactive_topics_t1.html",
+    "type": "Content"
+  },
+  {
+    "title": "Line Plots and Scatter Plots",
+    "href": "content/Data_Visualization_with_interactive_topics_t2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Bar Charts and Histograms",
+    "href": "content/Data_Visualization_with_interactive_topics_t3.html",
+    "type": "Content"
+  },
+  {
+    "title": "Subplots and Figure Layout",
+    "href": "content/Data_Visualization_with_interactive_topics_t4.html",
+    "type": "Content"
+  },
+  {
+    "title": "Publication-Quality Figure Styling",
+    "href": "content/Data_Visualization_with_interactive_topics_t5.html",
+    "type": "Content"
+  },
+  {
+    "title": "Introduction to Pandas: Series and DataFrames",
+    "href": "content/Data_Visualization_with_interactive_topics_t6.html",
+    "type": "Content"
+  },
+  {
+    "title": "Reading, Filtering, and Sorting Data with Pandas",
+    "href": "content/Data_Visualization_with_interactive_topics_t7.html",
+    "type": "Content"
+  },
+  {
+    "title": "Descriptive Statistics with Pandas",
+    "href": "content/Data_Visualization_with_interactive_topics_t8.html",
+    "type": "Content"
+  },
+  {
+    "title": "6 - Data Visualization with Matplotlib and Intro to Pandas \u2014 Module Topics",
+    "href": "content/module_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Descriptive Statistics with Pandas",
+    "href": "content/_interactive.html",
+    "type": "Content"
+  }
+]

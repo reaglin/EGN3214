@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2 - Control Flow and Python Data Structures — Topics &amp; Learning Outcomes</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.25rem;margin-top:30px;color:#1a3c6e;border-bottom:1px solid #ececec;padding-bottom:4px}
+h3{font-size:1.05rem;margin-top:22px;color:#1a3c6e}
+.toc{border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:14px 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+.toc a{color:#1a3c6e;font-weight:600;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.prefix{color:#555;font-style:italic;margin:6px 0 14px}
+.mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
+.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .statement{font-weight:600;margin:4px 0 8px}
+.meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
+.meta .map{background:#eaf6ec;color:#137333}
+.co{margin:7px 0}
+.co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 2 - Control Flow and Python Data Structures</a></div>
+<h1>2 - Control Flow and Python Data Structures — Topics &amp; Learning Outcomes</h1>
+<div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
+
+<h2 id="topics">Module Topics</h2>
+<h3>Conditional Statements</h3>
+<div class="summary">Conditional statements allow a program to make decisions by executing different code blocks based on whether a condition evaluates to true or false. This topic covers if, elif, and else constructs in Python.</div>
+<ul>
+<li><strong>The if Statement</strong> <span class="el-body">— The if statement is the most fundamental conditional construct in Python, executing a block of code only when a specified condition is True.</span></li>
+<li><strong>The elif Clause</strong> <span class="el-body">— The elif (else-if) clause allows a program to check multiple conditions in sequence after an initial if condition fails.</span></li>
+<li><strong>The else Clause</strong> <span class="el-body">— The else clause defines a default block of code that executes when none of the preceding if or elif conditions are True.</span></li>
+<li><strong>Comparison and Logical Operators</strong> <span class="el-body">— Conditions in Python are built using comparison operators (==, !=, &lt;, &gt;, &lt;=, &gt;=) and logical operators (and, or, not) to form complex Boolean expressions.</span></li>
+<li><strong>Nested Conditionals</strong> <span class="el-body">— Conditional statements can be placed inside other conditional blocks to test additional conditions when an outer condition is True.</span></li>
+</ul>
+<h3>for Loops and the range() Function</h3>
+<div class="summary">The for loop iterates over a sequence of items, making it ideal for processing collections of data. The range() function generates numeric sequences commonly used to control loop iterations.</div>
+<ul>
+<li><strong>The for Loop</strong> <span class="el-body">— A for loop in Python iterates over each item in a sequence — such as a list, string, or range — executing the loop body once per item.</span></li>
+<li><strong>The range() Function</strong> <span class="el-body">— The range() function generates an immutable sequence of integers and is commonly used with for loops to repeat an action a specific number of times.</span></li>
+<li><strong>Iterating with an Index Using enumerate()</strong> <span class="el-body">— The enumerate() function allows a for loop to access both the index and the value of each item in an iterable simultaneously.</span></li>
+<li><strong>Looping Over Numeric Ranges in Engineering</strong> <span class="el-body">— Engineering applications frequently require iterating over a defined numeric range, such as time steps in a simulation or indices in a data array.</span></li>
+</ul>
+<h3>while Loops</h3>
+<div class="summary">A while loop repeats a block of code for as long as a specified condition remains True, making it suitable for situations where the number of iterations is not known in advance.</div>
+<ul>
+<li><strong>The while Loop Structure</strong> <span class="el-body">— A while loop continuously executes its body until its controlling condition evaluates to False, checking the condition before each iteration.</span></li>
+<li><strong>Infinite Loops and Loop Guards</strong> <span class="el-body">— An infinite loop occurs when a while loop&#39;s condition never becomes False, causing the program to run indefinitely without halting.</span></li>
+<li><strong>Comparing for and while Loops</strong> <span class="el-body">— Choosing between a for loop and a while loop depends on whether the number of iterations is known in advance or determined dynamically during execution.</span></li>
+</ul>
+<h3>Loop Control: break and continue</h3>
+<div class="summary">The break and continue statements provide fine-grained control over loop execution, allowing early termination or skipping specific iterations without exiting the loop entirely.</div>
+<ul>
+<li><strong>The break Statement</strong> <span class="el-body">— The break statement immediately terminates the innermost loop it appears in, transferring control to the first statement after the loop.</span></li>
+<li><strong>The continue Statement</strong> <span class="el-body">— The continue statement skips the remainder of the current loop iteration and jumps directly to the next iteration&#39;s condition check.</span></li>
+<li><strong>The else Clause on Loops</strong> <span class="el-body">— Python allows an optional else clause on both for and while loops, which executes only if the loop completed normally without encountering a break statement.</span></li>
+<li><strong>Practical Use Cases for break and continue</strong> <span class="el-body">— In engineering and data processing, break and continue are frequently used to handle exceptions in data, implement early-exit optimizations, and process conditional sequences.</span></li>
+</ul>
+<h3>Lists</h3>
+<div class="summary">Lists are ordered, mutable sequences that can hold items of any type, making them one of the most versatile and widely used data structures in Python.</div>
+<ul>
+<li><strong>Creating and Accessing Lists</strong> <span class="el-body">— A list is created using square brackets and can store any mix of data types. Individual elements are accessed using zero-based integer indices.</span></li>
+<li><strong>Modifying Lists</strong> <span class="el-body">— Because lists are mutable, their elements can be changed, added, or removed after the list is created using built-in methods and direct assignment.</span></li>
+<li><strong>List Slicing</strong> <span class="el-body">— Slicing extracts a sub-list from a list using the syntax list[start:stop:step], returning a new list containing the selected elements.</span></li>
+<li><strong>List Comprehensions</strong> <span class="el-body">— A list comprehension provides a concise, readable way to create a new list by applying an expression to each item in an iterable, optionally filtered by a condition.</span></li>
+<li><strong>Common List Operations and Methods</strong> <span class="el-body">— Python provides a rich set of built-in functions and list methods for sorting, searching, counting, and transforming list data.</span></li>
+</ul>
+<h3>Tuples</h3>
+<div class="summary">Tuples are ordered, immutable sequences that are ideal for storing fixed collections of data that should not be changed after creation.</div>
+<ul>
+<li><strong>Creating and Accessing Tuples</strong> <span class="el-body">— Tuples are defined using parentheses (or simply commas) and support the same indexing and slicing operations as lists, but their contents cannot be modified.</span></li>
+<li><strong>Immutability of Tuples</strong> <span class="el-body">— Once a tuple is created, its elements cannot be added, removed, or changed, making tuples a safer choice when data integrity is important.</span></li>
+<li><strong>Tuple Packing and Unpacking</strong> <span class="el-body">— Tuple packing assigns multiple values into a single tuple, while tuple unpacking assigns the elements of a tuple to individual variables in one statement.</span></li>
+<li><strong>When to Use Tuples vs. Lists</strong> <span class="el-body">— Tuples are preferred when the data represents a fixed record or should be protected from modification, while lists are better suited for collections that need to grow or change.</span></li>
+</ul>
+<h3>Dictionaries</h3>
+<div class="summary">Dictionaries store data as key-value pairs, enabling fast lookups by key rather than by position, and are ideal for representing structured, labeled data.</div>
+<ul>
+<li><strong>Creating and Accessing Dictionaries</strong> <span class="el-body">— Dictionaries are created using curly braces with colon-separated key-value pairs. Values are retrieved by supplying the corresponding key in square brackets.</span></li>
+<li><strong>Modifying Dictionaries</strong> <span class="el-body">— Dictionaries are mutable; entries can be added, updated, or deleted at any time using direct assignment and built-in methods.</span></li>
+<li><strong>Iterating Over Dictionaries</strong> <span class="el-body">— Python provides dedicated methods for iterating over a dictionary&#39;s keys, values, or key-value pairs using keys(), values(), and items().</span></li>
+<li><strong>Engineering Applications of Dictionaries</strong> <span class="el-body">— Dictionaries are well suited for mapping labeled engineering data, such as material properties, configuration parameters, or named measurement channels.</span></li>
+</ul>
+<h3>Sets and Choosing the Right Data Structure</h3>
+<div class="summary">Sets store unique, unordered elements and support efficient membership testing and set operations. This topic also provides guidance on selecting the appropriate data structure for engineering problems.</div>
+<ul>
+<li><strong>Creating and Using Sets</strong> <span class="el-body">— A set is an unordered collection of unique elements defined with curly braces or the set() constructor. It automatically discards duplicate values.</span></li>
+<li><strong>Set Operations</strong> <span class="el-body">— Sets support mathematical operations including union, intersection, difference, and symmetric difference, enabling powerful comparisons between groups of data.</span></li>
+<li><strong>Membership Testing with Sets</strong> <span class="el-body">— Sets provide O(1) average-time membership testing using the in operator, making them significantly faster than lists for checking whether a value exists in a large collection.</span></li>
+<li><strong>Comparing Core Data Structures</strong> <span class="el-body">— Lists, tuples, dictionaries, and sets each have distinct properties — ordered vs. unordered, mutable vs. immutable, indexed vs. keyed — that make them appropriate for different tasks.</span></li>
+<li><strong>Selecting the Right Structure for Engineering Problems</strong> <span class="el-body">— Choosing the appropriate data structure improves program correctness, performance, and readability, particularly in data-intensive engineering applications.</span></li>
+</ul>
+<h2 id="outcomes">Student Learning Outcomes</h2>
+<p class="prefix">By the end of this module, students will be able to:</p>
+<div class="mo">
+<div class="code">MO1</div>
+<div class="statement">Construct conditional statements using if, elif, and else clauses — combined with comparison and logical operators — to control program execution flow</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO2</div>
+<div class="statement">Implement for loops, while loops, and loop control statements (break and continue) to iterate over sequences and numeric ranges in engineering contexts</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO3</div>
+<div class="statement">Manipulate Python lists using indexing, slicing, list comprehensions, and built-in methods to process ordered collections of data</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO1</span></div>
+</div>
+<div class="mo">
+<div class="code">MO4</div>
+<div class="statement">Differentiate between lists, tuples, dictionaries, and sets based on their properties of mutability, ordering, and access method</div>
+<div class="meta"><span>Level: Analyze</span><span>Type: Cognitive</span><span class="map">Course mapping: CO1</span></div>
+</div>
+<div class="mo">
+<div class="code">MO5</div>
+<div class="statement">Select the appropriate Python data structure for a given engineering problem by evaluating the correctness, performance, and readability trade-offs among lists, tuples, dictionaries, and sets</div>
+<div class="meta"><span>Level: Evaluate</span><span>Type: Cognitive</span><span class="map">Course mapping: CO1</span></div>
+</div>
+<h3>Course Outcomes (reference)</h3>
+<div class="co"><span class="code">CO1</span>Use variables, arrays and object structures appropriate to solve engineering problems.</div>
+<div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
+<div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 - Data Visualization with Matplotlib and Intro to Pandas — Topics &amp; Learning Outcomes</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.25rem;margin-top:30px;color:#1a3c6e;border-bottom:1px solid #ececec;padding-bottom:4px}
+h3{font-size:1.05rem;margin-top:22px;color:#1a3c6e}
+.toc{border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:14px 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+.toc a{color:#1a3c6e;font-weight:600;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.prefix{color:#555;font-style:italic;margin:6px 0 14px}
+.mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
+.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .statement{font-weight:600;margin:4px 0 8px}
+.meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
+.meta .map{background:#eaf6ec;color:#137333}
+.co{margin:7px 0}
+.co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+<h1>6 - Data Visualization with Matplotlib and Intro to Pandas — Topics &amp; Learning Outcomes</h1>
+<div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
+
+<h2 id="topics">Module Topics</h2>
+<h3>Introduction to Matplotlib and the pyplot Interface</h3>
+<div class="summary">Introduces the matplotlib library and its pyplot module, explaining how the interface manages the figure and axes objects that underlie every plot.</div>
+<ul>
+<li><strong>What is Matplotlib?</strong> <span class="el-body">— Matplotlib is a comprehensive Python library for creating static, animated, and interactive visualizations. It is the foundational plotting library in the scientific Python ecosystem.</span></li>
+<li><strong>The pyplot Module</strong> <span class="el-body">— The pyplot module provides a state-based interface to matplotlib, allowing users to create and modify figures with simple function calls. It is typically imported as plt.</span></li>
+<li><strong>Figures and Axes Objects</strong> <span class="el-body">— In matplotlib, a Figure is the top-level container for all plot elements, while an Axes is the region within the figure where data is plotted. Understanding this hierarchy is essential for building complex visualizations.</span></li>
+<li><strong>Displaying and Saving Figures</strong> <span class="el-body">— Once a plot is constructed, it can be rendered to the screen with plt.show() or saved to a file with plt.savefig(). Proper use of these functions ensures figures appear and are preserved correctly.</span></li>
+</ul>
+<h3>Line Plots and Scatter Plots</h3>
+<div class="summary">Covers the creation and customization of line plots and scatter plots, the two most common chart types for visualizing continuous and relational engineering data.</div>
+<ul>
+<li><strong>Creating a Basic Line Plot</strong> <span class="el-body">— A line plot is created using plt.plot(x, y), which connects data points with line segments. It is ideal for showing trends over a continuous variable such as time or distance.</span></li>
+<li><strong>Customizing Line Plots</strong> <span class="el-body">— Line plots can be customized with keyword arguments to control color, line width, style, and markers. Meaningful labels and titles improve interpretability.</span></li>
+<li><strong>Creating a Scatter Plot</strong> <span class="el-body">— A scatter plot is created with plt.scatter(x, y) and displays individual data points without connecting lines. It is useful for exploring correlations and distributions between two variables.</span></li>
+<li><strong>Axis Limits and Scaling</strong> <span class="el-body">— Controlling the visible range of axes ensures that important data features are not clipped or obscured. Matplotlib provides functions to set both linear and logarithmic scales.</span></li>
+</ul>
+<h3>Bar Charts and Histograms</h3>
+<div class="summary">Explains how to create bar charts for categorical comparisons and histograms for examining the distribution of numerical data in engineering contexts.</div>
+<ul>
+<li><strong>Creating a Bar Chart</strong> <span class="el-body">— Bar charts are created with plt.bar(categories, values) and are used to compare discrete groups or categories. They are commonly used to display experimental results across different conditions.</span></li>
+<li><strong>Annotating Bar Charts</strong> <span class="el-body">— Adding value labels or annotations to bar charts makes them easier to interpret, especially in technical reports. matplotlib provides text placement functions for this purpose.</span></li>
+<li><strong>Creating a Histogram</strong> <span class="el-body">— Histograms are created with plt.hist(data, bins=n) and display the frequency distribution of a single continuous variable. They are essential for understanding data spread and identifying outliers in engineering measurements.</span></li>
+<li><strong>Comparing Distributions with Histograms</strong> <span class="el-body">— Multiple datasets can be compared by overlaying histograms on the same axes. Proper use of transparency and color enables effective visual comparison of distributions.</span></li>
+</ul>
+<h3>Subplots and Figure Layout</h3>
+<div class="summary">Demonstrates how to create multi-panel figures using subplots, enabling side-by-side comparison of different plots within a single publication-ready figure.</div>
+<ul>
+<li><strong>Creating Subplots with plt.subplots()</strong> <span class="el-body">— The plt.subplots(nrows, ncols) function creates a Figure and a grid of Axes objects in one call. It is the recommended approach for building multi-panel layouts.</span></li>
+<li><strong>Plotting on Individual Axes</strong> <span class="el-body">— When using subplots, plotting commands are called on individual Axes objects rather than on plt directly. This object-oriented approach provides precise control over each panel.</span></li>
+<li><strong>Adjusting Layout and Spacing</strong> <span class="el-body">— Subplot panels can overlap or clip labels if spacing is not adjusted. matplotlib provides tools to automatically or manually correct figure layout.</span></li>
+<li><strong>Using GridSpec for Complex Layouts</strong> <span class="el-body">— For non-uniform subplot grids, matplotlib.gridspec.GridSpec allows plots of different sizes to share a figure. This is useful for dashboard-style engineering figures.</span></li>
+</ul>
+<h3>Publication-Quality Figure Styling</h3>
+<div class="summary">Covers techniques for elevating plot aesthetics to meet publication and report standards, including style sheets, custom colors, annotations, and saving high-resolution outputs.</div>
+<ul>
+<li><strong>Using Style Sheets</strong> <span class="el-body">— Matplotlib includes built-in style sheets that instantly apply consistent aesthetics to all figures in a script. Selecting an appropriate style reduces manual customization effort.</span></li>
+<li><strong>Customizing Colors and Colormaps</strong> <span class="el-body">— Color choices affect both the aesthetic quality and accessibility of a figure. Matplotlib supports named colors, hex codes, RGB tuples, and scientific colormaps.</span></li>
+<li><strong>Fonts, Tick Marks, and Spines</strong> <span class="el-body">— Fine-tuning typography and axis decorations distinguishes a presentation-ready figure from a draft plot. Matplotlib allows control over font size, tick frequency, and axis border (spine) visibility.</span></li>
+<li><strong>Saving High-Resolution Figures</strong> <span class="el-body">— Exporting figures at sufficient resolution is critical for print publications and technical reports. The plt.savefig() function supports multiple formats and resolution settings.</span></li>
+</ul>
+<h3>Introduction to Pandas: Series and DataFrames</h3>
+<div class="summary">Introduces the pandas library and its two primary data structures — Series and DataFrame — which form the foundation for data manipulation and analysis in Python.</div>
+<ul>
+<li><strong>What is Pandas?</strong> <span class="el-body">— Pandas is a Python library built on NumPy that provides high-performance, easy-to-use data structures for working with labeled and relational data. It is the standard tool for tabular data analysis in Python.</span></li>
+<li><strong>The Pandas Series</strong> <span class="el-body">— A Series is a one-dimensional labeled array capable of holding data of any type. It behaves like a NumPy array but with an associated index that labels each element.</span></li>
+<li><strong>The Pandas DataFrame</strong> <span class="el-body">— A DataFrame is a two-dimensional labeled data structure with columns of potentially different types, analogous to a spreadsheet or SQL table. It is the primary pandas object for engineering datasets.</span></li>
+<li><strong>Inspecting a DataFrame</strong> <span class="el-body">— Pandas provides several methods for quickly exploring the structure and content of a newly loaded dataset. These are essential first steps in any data analysis workflow.</span></li>
+</ul>
+<h3>Reading, Filtering, and Sorting Data with Pandas</h3>
+<div class="summary">Demonstrates how to load datasets from files and then select, filter, and sort rows and columns to extract meaningful subsets for engineering analysis.</div>
+<ul>
+<li><strong>Reading Data from Files</strong> <span class="el-body">— Pandas provides read functions that import data from common file formats directly into a DataFrame. Reading CSV files is the most common operation in engineering data workflows.</span></li>
+<li><strong>Selecting Columns and Rows</strong> <span class="el-body">— Pandas provides multiple methods for selecting subsets of a DataFrame by column name or row index. Mastery of these selection methods is fundamental to data manipulation.</span></li>
+<li><strong>Filtering Rows with Boolean Conditions</strong> <span class="el-body">— Boolean indexing allows rows to be selected based on conditions applied to one or more columns. This is the standard method for subsetting engineering data by threshold or category.</span></li>
+<li><strong>Sorting DataFrames</strong> <span class="el-body">— Sorting a DataFrame rearranges rows based on the values in one or more columns. Sorted data is easier to inspect and is required as a preprocessing step for some analyses.</span></li>
+<li><strong>Adding and Modifying Columns</strong> <span class="el-body">— New columns can be added to a DataFrame through direct assignment, enabling derived variables to be computed from existing data. This is essential for feature engineering and unit conversions.</span></li>
+</ul>
+<h3>Descriptive Statistics with Pandas</h3>
+<div class="summary">Covers pandas methods for computing summary statistics, aggregating grouped data, and identifying missing values in engineering datasets.</div>
+<ul>
+<li><strong>Summary Statistics with describe()</strong> <span class="el-body">— The df.describe() method computes count, mean, standard deviation, min, max, and quartiles for all numeric columns simultaneously. It provides a rapid overview of dataset characteristics.</span></li>
+<li><strong>Aggregation with groupby()</strong> <span class="el-body">— The groupby() method splits a DataFrame into groups based on column values and applies aggregate functions to each group. It is the pandas equivalent of SQL GROUP BY.</span></li>
+<li><strong>Handling Missing Values</strong> <span class="el-body">— Missing values represented as NaN are common in real engineering datasets from sensor dropouts or incomplete records. Pandas provides methods to detect, remove, or fill missing data.</span></li>
+<li><strong>Correlation and Relationships</strong> <span class="el-body">— Pandas can compute pairwise correlations between numeric columns, providing a quick measure of linear relationships within an engineering dataset.</span></li>
+<li><strong>Plotting Directly from Pandas</strong> <span class="el-body">— Pandas DataFrames and Series have built-in plot methods that call matplotlib internally, enabling quick exploratory visualizations with minimal code.</span></li>
+</ul>
+<h2 id="outcomes">Student Learning Outcomes</h2>
+<p class="prefix">By the end of this module, students will be able to:</p>
+<div class="mo">
+<div class="code">MO1</div>
+<div class="statement">Construct line plots, scatter plots, bar charts, and histograms using Matplotlib&#39;s pyplot interface with appropriate axis labels, titles, and customization parameters</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO2</div>
+<div class="statement">Compose multi-panel publication-quality figures using plt.subplots() and GridSpec with correctly adjusted layout, styling, and high-resolution export settings</div>
+<div class="meta"><span>Level: Create</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO3</div>
+<div class="statement">Load a CSV dataset into a Pandas DataFrame and apply column selection, Boolean row filtering, and sorting operations to extract targeted subsets of engineering data</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO1</span></div>
+</div>
+<div class="mo">
+<div class="code">MO4</div>
+<div class="statement">Compute descriptive statistics and grouped aggregations on a Pandas DataFrame using describe() and groupby() to summarize engineering dataset characteristics</div>
+<div class="meta"><span>Level: Analyze</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO5</div>
+<div class="statement">Evaluate the distribution and relationships within an engineering dataset by interpreting histograms, correlation values, and grouped summary statistics generated with Matplotlib and Pandas</div>
+<div class="meta"><span>Level: Evaluate</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<h3>Course Outcomes (reference)</h3>
+<div class="co"><span class="code">CO1</span>Use variables, arrays and object structures appropriate to solve engineering problems.</div>
+<div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
+<div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

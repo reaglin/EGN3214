@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numerical Methods with SciPy and Curve Fitting — Topics &amp; Learning Outcomes</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.25rem;margin-top:30px;color:#1a3c6e;border-bottom:1px solid #ececec;padding-bottom:4px}
+h3{font-size:1.05rem;margin-top:22px;color:#1a3c6e}
+.toc{border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:14px 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+.toc a{color:#1a3c6e;font-weight:600;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.prefix{color:#555;font-style:italic;margin:6px 0 14px}
+.mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
+.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .statement{font-weight:600;margin:4px 0 8px}
+.meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
+.meta .map{background:#eaf6ec;color:#137333}
+.co{margin:7px 0}
+.co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ Numerical Methods with SciPy and Curve Fitting</a></div>
+<h1>Numerical Methods with SciPy and Curve Fitting — Topics &amp; Learning Outcomes</h1>
+<div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
+
+<h2 id="topics">Module Topics</h2>
+<h3>Introduction to SciPy for Numerical Computing</h3>
+<div class="summary">Introduces the SciPy library, its ecosystem, and how it extends NumPy to support numerical methods used in engineering and science.</div>
+<ul>
+<li><strong>What is SciPy?</strong> <span class="el-body">— SciPy is an open-source Python library built on top of NumPy that provides a wide collection of algorithms for scientific and technical computing.</span></li>
+<li><strong>SciPy vs NumPy: Complementary Roles</strong> <span class="el-body">— While NumPy handles array creation and basic mathematical operations, SciPy provides higher-level algorithms such as optimization, integration, and signal processing.</span></li>
+<li><strong>Installing and Importing SciPy Submodules</strong> <span class="el-body">— SciPy submodules must be imported explicitly; importing the top-level scipy package does not automatically load all submodules.</span></li>
+<li><strong>Overview of Numerical Problem Categories</strong> <span class="el-body">— This module focuses on three core numerical problem types: root finding, numerical integration (including ODEs), and curve fitting.</span></li>
+</ul>
+<h3>Root Finding with scipy.optimize</h3>
+<div class="summary">Covers scalar and multivariate root-finding methods available in scipy.optimize, including bracket-based and derivative-based approaches.</div>
+<ul>
+<li><strong>Concept of Root Finding</strong> <span class="el-body">— Root finding is the process of locating values of x such that f(x) = 0, a fundamental task in engineering analysis such as finding equilibrium points or solving implicit equations.</span></li>
+<li><strong>Bracket-Based Methods: brentq and bisect</strong> <span class="el-body">— Bracket-based methods require an interval [a, b] where the function changes sign, guaranteeing convergence to a root within that interval.</span></li>
+<li><strong>Derivative-Based Methods: fsolve and newton</strong> <span class="el-body">— Derivative-based methods such as Newton-Raphson use the function&#39;s slope to converge rapidly to a root but may fail if started far from the solution.</span></li>
+<li><strong>General Scalar Minimization and root_scalar</strong> <span class="el-body">— scipy.optimize.root_scalar provides a unified interface for choosing among multiple root-finding algorithms using a common function signature.</span></li>
+<li><strong>Practical Considerations for Root Finding</strong> <span class="el-body">— Choosing an appropriate root-finding method depends on function continuity, availability of derivatives, and whether a bracketing interval can be identified.</span></li>
+</ul>
+<h3>Numerical Integration with scipy.integrate</h3>
+<div class="summary">Covers numerical quadrature for definite integrals and the integration of systems of ordinary differential equations using scipy.integrate.</div>
+<ul>
+<li><strong>Numerical Quadrature: quad and dblquad</strong> <span class="el-body">— scipy.integrate.quad computes definite integrals of scalar functions over a finite or infinite interval using adaptive Gaussian quadrature.</span></li>
+<li><strong>Integrating Tabular Data: simpson and trapezoid</strong> <span class="el-body">— When data is given as discrete arrays rather than a function, methods such as simpson and trapezoid approximate the integral from the sample points.</span></li>
+<li><strong>Introduction to Ordinary Differential Equations (ODEs)</strong> <span class="el-body">— An ODE describes how a quantity changes with respect to an independent variable, and solve_ivp integrates such equations forward from a set of initial conditions.</span></li>
+<li><strong>Solving ODEs with solve_ivp</strong> <span class="el-body">— scipy.integrate.solve_ivp is the modern interface for integrating systems of ODEs, supporting multiple integration methods and dense output.</span></li>
+<li><strong>Defining the Derivative Function for solve_ivp</strong> <span class="el-body">— The user-defined function passed to solve_ivp must accept time t and state vector y and return the vector of derivatives dy/dt.</span></li>
+<li><strong>Interpreting and Visualizing ODE Solutions</strong> <span class="el-body">— Once solve_ivp returns a result, the solution arrays can be plotted with Matplotlib to visualize the system&#39;s transient and steady-state behavior.</span></li>
+</ul>
+<h3>Linear Curve Fitting with numpy.polyfit</h3>
+<div class="summary">Explains polynomial regression using numpy.polyfit, including model selection, coefficient interpretation, and generating fitted curves for visualization.</div>
+<ul>
+<li><strong>What is Curve Fitting?</strong> <span class="el-body">— Curve fitting finds the parameters of a mathematical model that minimize the difference between the model&#39;s predictions and observed data points.</span></li>
+<li><strong>Using numpy.polyfit for Polynomial Regression</strong> <span class="el-body">— numpy.polyfit fits a polynomial of specified degree to x-y data using the least-squares method and returns the polynomial coefficients.</span></li>
+<li><strong>Selecting Polynomial Degree</strong> <span class="el-body">— Choosing the right polynomial degree requires balancing fit accuracy with model simplicity, guided by domain knowledge and residual analysis.</span></li>
+<li><strong>Linearization of Nonlinear Data</strong> <span class="el-body">— Some nonlinear relationships such as exponential or power-law models can be transformed into linear form, allowing numpy.polyfit to be applied after a variable substitution.</span></li>
+<li><strong>Generating and Plotting Fitted Curves</strong> <span class="el-body">— After obtaining polynomial coefficients, a smooth fitted curve is generated by evaluating the polynomial on a dense array of x values and overlaying it on the scatter plot of the data.</span></li>
+</ul>
+<h3>Nonlinear Curve Fitting with scipy.optimize.curve_fit</h3>
+<div class="summary">Covers fitting arbitrary nonlinear models to data using scipy.optimize.curve_fit, including defining model functions, interpreting fit parameters, and assessing uncertainty.</div>
+<ul>
+<li><strong>When to Use Nonlinear Fitting</strong> <span class="el-body">— Nonlinear curve fitting is required when the relationship between variables cannot be described by a polynomial or linearized form, and the model has parameters that appear nonlinearly.</span></li>
+<li><strong>Defining a Model Function for curve_fit</strong> <span class="el-body">— The user supplies a Python function that takes the independent variable as its first argument followed by the model parameters, returning the predicted dependent variable values.</span></li>
+<li><strong>Calling curve_fit and Interpreting Output</strong> <span class="el-body">— scipy.optimize.curve_fit returns the optimal parameter array popt and the covariance matrix pcov, which together describe the best-fit model and parameter uncertainty.</span></li>
+<li><strong>Setting Initial Guesses and Bounds</strong> <span class="el-body">— Providing good initial parameter estimates via the p0 argument and restricting parameter ranges with bounds improves convergence and prevents physically unreasonable solutions.</span></li>
+<li><strong>Handling Convergence Failures</strong> <span class="el-body">— If curve_fit cannot converge, it raises a RuntimeError; diagnosing and resolving convergence failures is an important practical skill.</span></li>
+</ul>
+<h3>Residuals Analysis</h3>
+<div class="summary">Explains how to compute, visualize, and interpret residuals to evaluate curve-fit quality and identify model inadequacy on engineering datasets.</div>
+<ul>
+<li><strong>What are Residuals?</strong> <span class="el-body">— Residuals are the differences between observed data values and the corresponding values predicted by the fitted model, quantifying the pointwise error of the fit.</span></li>
+<li><strong>Computing Residuals in Python</strong> <span class="el-body">— Residuals are computed by evaluating the fitted model at the original x data points and subtracting the predicted values from the observed y values.</span></li>
+<li><strong>Residual Plots and What They Reveal</strong> <span class="el-body">— Plotting residuals against the independent variable (or fitted values) is the primary diagnostic tool for evaluating whether the chosen model is appropriate.</span></li>
+<li><strong>Quantitative Fit Metrics</strong> <span class="el-body">— Alongside visual residual plots, quantitative metrics such as the coefficient of determination R&#178; and root mean square error (RMSE) provide summary measures of fit quality.</span></li>
+<li><strong>Applying Residuals Analysis to Engineering Datasets</strong> <span class="el-body">— On real engineering datasets, residuals analysis guides iterative model improvement by revealing systematic errors tied to physical phenomena not yet captured by the model.</span></li>
+<li><strong>Overfitting and Model Complexity</strong> <span class="el-body">— Increasing model complexity will always reduce residuals on training data, but may degrade predictive performance on new data—a phenomenon known as overfitting.</span></li>
+</ul>
+<h3>Applying Numerical Methods to Engineering Datasets</h3>
+<div class="summary">Brings together root finding, integration, ODE solving, and curve fitting in end-to-end workflows applied to realistic engineering problems.</div>
+<ul>
+<li><strong>Structuring an End-to-End Numerical Workflow</strong> <span class="el-body">— A complete numerical workflow involves loading and inspecting data, selecting and applying an appropriate method, validating results, and communicating outputs clearly.</span></li>
+<li><strong>Loading and Preprocessing Engineering Data</strong> <span class="el-body">— Real engineering datasets typically require preprocessing steps such as unit conversion, removal of missing values, and normalization before applying numerical methods.</span></li>
+<li><strong>Combining Root Finding and Integration</strong> <span class="el-body">— Some engineering problems require both root finding and integration, for example locating where a cumulative quantity reaches a threshold by combining quad with a root solver.</span></li>
+<li><strong>Fitting ODE Model Parameters to Experimental Data</strong> <span class="el-body">— A powerful workflow combines solve_ivp with curve_fit to estimate parameters of a dynamic model from time-series measurements.</span></li>
+<li><strong>Communicating Numerical Results in Engineering Reports</strong> <span class="el-body">— Effective communication of numerical results requires presenting fitted parameters with uncertainties, fit quality metrics, and clearly labeled plots that support engineering decisions.</span></li>
+</ul>
+<h2 id="outcomes">Student Learning Outcomes</h2>
+<p class="prefix">By the end of this module, students will be able to:</p>
+<div class="mo">
+<div class="code">MO1</div>
+<div class="statement">Select an appropriate root-finding method from scipy.optimize (such as brentq, bisect, or fsolve) based on the continuity of the function, availability of derivatives, and the existence of a bracketing interval</div>
+<div class="meta"><span>Level: Evaluate</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO2</div>
+<div class="statement">Apply scipy.integrate functions (quad, simpson, trapezoid, or solve_ivp) to compute definite integrals and solve initial value ODE problems from engineering datasets</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO3</div>
+<div class="statement">Fit both polynomial and nonlinear models to engineering data using numpy.polyfit and scipy.optimize.curve_fit, including defining model functions, supplying initial parameter guesses, and extracting fitted coefficients</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Behavioral</span><span class="map">Course mapping: CO2</span></div>
+</div>
+<div class="mo">
+<div class="code">MO4</div>
+<div class="statement">Construct residual plots and calculate quantitative fit metrics (R&#178; and RMSE) to diagnose model adequacy and identify overfitting in curve-fitting results</div>
+<div class="meta"><span>Level: Analyze</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO5</div>
+<div class="statement">Design an end-to-end numerical workflow that integrates data preprocessing, method selection, parameter estimation, and clearly labeled result visualization to address a realistic engineering problem</div>
+<div class="meta"><span>Level: Create</span><span>Type: Behavioral</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<h3>Course Outcomes (reference)</h3>
+<div class="co"><span class="code">CO1</span>Use variables, arrays and object structures appropriate to solve engineering problems.</div>
+<div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
+<div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

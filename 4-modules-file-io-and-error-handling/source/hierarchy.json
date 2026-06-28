@@ -1,0 +1,1083 @@
+{
+  "ModuleFolderName": "Modules_File_I",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T13:11:10.4033941-04:00",
+  "ModifiedDate": "2026-05-14T13:11:10.4075126-04:00",
+  "Outcomes": [
+    {
+      "Id": "cc8a3075-0d4e-43eb-8429-50d02269e6c0",
+      "Text": "Explain the purpose and structure of Python modules and how they are imported into scripts.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "4b02d121-161e-45af-9542-f04ba3e81b7b",
+      "Text": "Create custom Python modules and reuse them across multiple engineering scripts.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "03c23cc8-06e8-4d82-9d9b-0e3c2e199a36",
+      "Text": "Apply the with-statement context manager to safely read and write text and CSV files.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "16dd0e98-cc94-46a1-bb6d-2116180521c5",
+      "Text": "Demonstrate how to encode and decode data using Python\u0027s JSON module.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "e273df31-891f-4808-a932-68fedfe4be58",
+      "Text": "Identify common runtime errors in engineering scripts and handle them using try-except patterns.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "8e90d21b-574d-47e7-894d-bde74ef5402c",
+      "Text": "Analyze standard library modules to select appropriate tools for common programming tasks.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+      "Title": "Introduction to Python Modules",
+      "Summary": "Explains what modules are, why they are used, and how Python locates and loads them at runtime.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "d628055f-e050-46b5-9b0e-76af6f69b253",
+          "TopicId": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+          "Title": "What Is a Module?",
+          "BodyText": "A module is a single Python file containing definitions, functions, classes, and variables that can be reused in other scripts.",
+          "Notes": "Think of a module as a toolbox: you build the tools once and import them wherever needed, avoiding code duplication across engineering projects.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "0a3f5aff-99d8-4df7-8535-b1838405ad62",
+              "Text": "A module file uses the .py extension and can be stored anywhere on the Python path.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "662703c7-42b3-49e5-9458-b76cef197685",
+              "Text": "Modules promote code reuse, readability, and separation of concerns.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5e0e6458-85d1-44b7-8bc3-126def1d7742",
+              "Text": "Any valid Python file can act as a module without additional configuration.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "fc243ad1-e7b9-472a-a8e2-f9a55adfe101",
+          "TopicId": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+          "Title": "Importing Modules with import",
+          "BodyText": "The import statement loads a module into the current namespace, making its contents accessible via dot notation.",
+          "Notes": "Using the module name as a prefix (e.g., math.sqrt) avoids name collisions when multiple modules define identically named functions.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "d6ade8df-c5af-4ca3-a606-922935b086aa",
+              "Text": "Use \u0027import module_name\u0027 to load the entire module.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "87c5d57f-353c-4f7f-af89-93d349b57fba",
+              "Text": "Access module contents with the syntax \u0027module_name.attribute\u0027.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8b494b8d-184a-4efa-95f4-125afd69d610",
+              "Text": "A module is executed only once per interpreter session, even if imported multiple times.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "911d6486-b08a-4053-8302-afd41ce3abab",
+          "TopicId": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+          "Title": "Selective Imports with from\u2026import",
+          "BodyText": "The from\u2026import syntax lets you import specific names from a module directly into the current namespace.",
+          "Notes": "While convenient, wildcard imports (from module import *) can shadow existing names unexpectedly and are generally discouraged in production code.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "114f9ec7-8ef4-42cc-a5f3-cc4405a33887",
+              "Text": "Use \u0027from module import name\u0027 to bring a single attribute into scope.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c9bbeb7d-fc9d-4eb1-b882-fec3e8f5861e",
+              "Text": "Multiple names can be imported in one statement separated by commas.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0200849b-ab23-4415-8c3f-e3dfa040e458",
+              "Text": "Selective imports can improve readability but may obscure where a name originates.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "ffd3fa7c-fb71-4621-902c-e3ab2f742356",
+          "TopicId": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+          "Title": "Module Aliases",
+          "BodyText": "The \u0027as\u0027 keyword creates a shorter or more descriptive alias for an imported module or name.",
+          "Notes": "Community-standard aliases such as \u0027import numpy as np\u0027 and \u0027import pandas as pd\u0027 improve code portability and readability across engineering teams.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "a4fc61df-3fee-4b0f-ad0a-5dbd2200d7fb",
+              "Text": "Use \u0027import module_name as alias\u0027 to assign a shorthand reference.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "79419921-d514-48ac-8f26-82b323c0ab8f",
+              "Text": "Aliases are particularly useful for modules with long or frequently typed names.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "623589c8-6a75-4d92-baa6-ae50ccfe0e4b",
+              "Text": "The alias only exists in the current script\u0027s namespace.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "840ff9f3-37ce-4bb2-8840-3fd334377dfd",
+          "TopicId": "e0be62b0-f47a-4d05-bcd9-4e92451fe5c0",
+          "Title": "The Module Search Path",
+          "BodyText": "When Python encounters an import statement it searches a sequence of directories defined in sys.path to locate the module file.",
+          "Notes": "sys.path can be inspected and modified at runtime, allowing scripts to import modules from project-specific directories not on the default path.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "2dc4bd03-bdc1-4260-9ffe-b635c73906eb",
+              "Text": "Python searches the current directory first, then installed package directories.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f1776b4f-8ef9-452c-95dd-3f46402f1f00",
+              "Text": "The PYTHONPATH environment variable can add directories to sys.path.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4d83aa01-4d7d-4d15-8991-d7c2a96a5b6f",
+              "Text": "If the module is not found in any path location, an ImportError is raised.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+      "Title": "Writing and Using Custom Modules",
+      "Summary": "Covers how to design, write, and import your own Python modules to share reusable engineering functions across projects.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "bdd9e3f6-2cfe-42a0-a73d-ad4d89b748a7",
+          "TopicId": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+          "Title": "Creating a Custom Module File",
+          "BodyText": "A custom module is created by writing functions, classes, or constants in a .py file and saving it in a location accessible to your scripts.",
+          "Notes": "Organizing related engineering utilities into a single module (e.g., unit_conversions.py) keeps projects tidy and makes testing individual functions straightforward.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "1e17670b-1342-4a8b-85f8-45c128f2b203",
+              "Text": "Choose a descriptive, lowercase filename with underscores for readability.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d4d69930-db25-49cc-bd03-27278dc24e91",
+              "Text": "Include a module-level docstring to describe the module\u0027s purpose.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0d7cd1e5-a22a-47a1-b760-de31283fce28",
+              "Text": "Define all reusable functions and constants at the top level of the file.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "12722e2d-ed7c-4a38-8276-da3000abb9d3",
+          "TopicId": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+          "Title": "The __name__ == \u0027__main__\u0027 Guard",
+          "BodyText": "This guard allows a module file to contain both reusable code and a standalone test or demo block that only executes when the file is run directly.",
+          "Notes": "Without this guard, any test code at the top level of your module would execute automatically whenever another script imports it, causing unintended side effects.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "824c4067-d1c8-4bfc-878c-6957751311f6",
+              "Text": "When a file is run directly, Python sets __name__ to \u0027__main__\u0027.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "90e5f778-cadb-4996-96f9-d2a9682da744",
+              "Text": "When a file is imported, __name__ is set to the module\u0027s filename without .py.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "308291bb-3208-43d2-b554-d9c93e183c6f",
+              "Text": "Place demonstration, testing, or script-entry logic inside the if __name__ == \u0027__main__\u0027 block.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "3bf70682-4fa9-40b9-8d06-6ba7d7c26e93",
+          "TopicId": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+          "Title": "Organizing Functions and Constants",
+          "BodyText": "Group related functions and constants logically within a module to make the interface clear to other developers and scripts.",
+          "Notes": "Using ALL_CAPS for module-level constants is a Python convention that signals the value should not be reassigned by importing code.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "e80362c8-4436-4e0a-952f-d8cf4654929d",
+              "Text": "Place constants near the top of the module, before function definitions.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "eacda3a5-c551-43f3-b3a7-157e40283f54",
+              "Text": "Write each function with a clear docstring describing inputs, outputs, and units where applicable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7cb21a01-e656-4541-81b9-0d527b9a1c6b",
+              "Text": "Avoid defining mutable global state in a module to prevent unexpected side effects.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "da28de95-7417-4ca4-8346-615760934b0b",
+          "TopicId": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+          "Title": "Importing Your Custom Module",
+          "BodyText": "Once saved in the correct directory, a custom module is imported using the same syntax as any standard library module.",
+          "Notes": "If your custom module is in the same directory as the script that imports it, no path manipulation is needed. For larger projects, consider packaging modules into a subdirectory with an __init__.py file.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "87bfa1ae-8381-4fd6-828f-9c01a9acd11e",
+              "Text": "Ensure the module file is on the Python search path before importing.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "21dff3fc-aaaf-4f30-9e01-97f20878b5f7",
+              "Text": "Use \u0027import module_name\u0027 or \u0027from module_name import function\u0027 as needed.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "eabdc3c1-a119-42dc-a8c5-84b9c74f7a89",
+              "Text": "Changes to the module file require a restart of the interpreter or use of importlib.reload to take effect.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "9f4954a1-e46a-4430-bddb-b5cdf1eff35f",
+          "TopicId": "cc1bc630-f3dd-4a2d-b16d-2bb062bbb4f2",
+          "Title": "Documenting a Custom Module",
+          "BodyText": "Good documentation within a module enables other engineers to understand and correctly use its functions without reading the implementation.",
+          "Notes": "The built-in help() function displays a module\u0027s docstring and the docstrings of all its public functions, making in-line documentation immediately accessible.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "fe30c930-6a3a-45d2-8705-327057c72236",
+              "Text": "Write a module-level docstring as the very first statement in the file.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1b8d0f91-3831-4710-ab20-9435d93bbc31",
+              "Text": "Provide docstrings for every public function describing parameters, return values, and any raised exceptions.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b32b7ae5-7533-4a45-89f8-3092f2cfb41a",
+              "Text": "Type hints in function signatures further clarify expected argument and return types.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+      "Title": "Using Standard Library Modules",
+      "Summary": "Introduces key modules included with Python that are immediately useful for engineering scripting tasks without additional installation.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "b0c6b6f7-a62c-45cb-986a-5e6b120cf31b",
+          "TopicId": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+          "Title": "The math Module",
+          "BodyText": "The math module provides mathematical functions and constants commonly needed in engineering calculations.",
+          "Notes": "math functions operate on scalar values. For array-based operations, NumPy\u0027s equivalents are preferred in engineering workflows.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "b0e0dbbd-f80e-4cab-84d1-358d165677dc",
+              "Text": "Access constants such as math.pi and math.e for precise numeric values.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1a14749a-21b5-4b71-8a51-4323c428399f",
+              "Text": "Use functions like math.sqrt, math.log, math.sin, and math.cos for common calculations.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "da842a93-eead-4d12-b1f6-b4827bd611fa",
+              "Text": "math.degrees and math.radians convert between angle units.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "af00d900-f0fe-4d69-b49c-51b23d5dff6d",
+          "TopicId": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+          "Title": "The os and os.path Modules",
+          "BodyText": "The os module provides operating-system-independent functions for interacting with the file system and environment.",
+          "Notes": "Using os.path.join to construct file paths instead of string concatenation ensures scripts run correctly on both Windows and Unix-based systems.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "b987def6-cb59-4a19-954d-552e88a0eb31",
+              "Text": "Use os.getcwd() to retrieve and os.chdir() to change the current working directory.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "dae5e7a0-17ca-4a26-a80c-93445daa9622",
+              "Text": "os.path.join constructs file paths in a platform-safe manner.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "833bab3f-dbb7-4a42-a010-3916b9fde217",
+              "Text": "os.listdir returns the contents of a directory as a list of filenames.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "a9ffad40-5b3a-4f3f-8388-6634dd971c27",
+          "TopicId": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+          "Title": "The sys Module",
+          "BodyText": "The sys module exposes interpreter-level variables and functions, including command-line arguments and the module search path.",
+          "Notes": "sys.argv is a list where sys.argv[0] is always the script name; additional elements are arguments passed by the user at the command line.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "d91161f4-c8c7-45fb-88ad-cc7ec5455700",
+              "Text": "sys.argv provides a list of command-line arguments passed to a script.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8868d0d0-f3fa-46e7-8933-af6b9f769a3b",
+              "Text": "sys.exit() terminates the interpreter with an optional status code.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "62c57a69-25eb-4511-b760-dc98e930929e",
+              "Text": "sys.path is the list of directories Python searches when importing modules.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "efae4c5c-486c-4622-877a-377571f4bc49",
+          "TopicId": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+          "Title": "The datetime Module",
+          "BodyText": "The datetime module supplies classes for manipulating dates and times, which is useful for timestamping engineering data logs.",
+          "Notes": "datetime.now() returns the local current date and time; datetime.utcnow() returns UTC time. For timezone-aware applications, consider the zoneinfo module introduced in Python 3.9.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "63cfa21e-2157-48f1-a5f1-0a47f6d6dcae",
+              "Text": "Use datetime.datetime.now() to capture the current timestamp.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c877ac4a-da6b-4911-ad01-05c6d6106931",
+              "Text": "Arithmetic on datetime objects produces timedelta objects representing durations.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a448f8a2-c87f-4f40-8d3d-a5c06a60d8e2",
+              "Text": "strftime formats a datetime object as a human-readable string using format codes.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "18f2be48-93dc-4f7a-9ece-4e3dd1235d62",
+          "TopicId": "ea7f12fe-27ae-4c49-8235-f4714b749365",
+          "Title": "The random Module",
+          "BodyText": "The random module generates pseudo-random numbers and provides tools for random sampling, useful in simulations and testing.",
+          "Notes": "For reproducible results in testing or simulations, call random.seed() with a fixed integer before generating values.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "94f20ff9-e646-48db-b238-40b6da8b3db9",
+              "Text": "random.random() returns a float uniformly distributed between 0.0 and 1.0.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d71541d3-dfc9-4228-9a8e-de1863c00b93",
+              "Text": "random.randint(a, b) returns a random integer N such that a \u2264 N \u2264 b.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "254f31a9-95d2-44c2-abfc-e5481946091d",
+              "Text": "random.choice selects a random element from a non-empty sequence.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+      "Title": "File I/O with the with Statement",
+      "Summary": "Explains how to open, read, and write text files safely using Python\u0027s with-statement context manager to guarantee proper resource cleanup.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "6659778e-5ac2-4f10-92c8-26e109588dc3",
+          "TopicId": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+          "Title": "Opening Files and File Modes",
+          "BodyText": "Python\u0027s built-in open() function returns a file object that provides methods for reading and writing; the mode argument determines how the file is accessed.",
+          "Notes": "Common modes: \u0027r\u0027 (read, default), \u0027w\u0027 (write, truncates), \u0027a\u0027 (append), \u0027x\u0027 (exclusive creation). Add \u0027b\u0027 for binary mode, e.g., \u0027rb\u0027.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "04fb868e-06c9-416f-8d85-79c6ca84d6de",
+              "Text": "The first argument to open() is the file path as a string or Path object.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6f2afeb6-5cfa-4bf5-9fa7-a097d4bef46c",
+              "Text": "The mode argument controls whether the file is opened for reading, writing, or appending.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "68706fd6-92ec-4aed-b5a8-ff208bcd70dc",
+              "Text": "An optional encoding argument (e.g., encoding=\u0027utf-8\u0027) prevents character-encoding errors on different platforms.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "cec36f6e-0157-433e-a263-5fe69a4f70ad",
+          "TopicId": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+          "Title": "The with Statement Context Manager",
+          "BodyText": "The with statement ensures a file is automatically closed when the indented block exits, even if an exception occurs.",
+          "Notes": "Without the with statement, a file must be closed explicitly with file.close(). Forgetting this can lead to data loss or resource leaks, especially in long-running engineering scripts.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "21bf44c9-f587-454c-8f7e-10c66aa9c857",
+              "Text": "Use \u0027with open(path, mode) as f:\u0027 to open a file within a managed context.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "bedc0d9b-8a11-4dad-ad9f-ad41026a388a",
+              "Text": "The file object is bound to the alias after \u0027as\u0027 and is available inside the block.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d2bc7d39-fd99-4c45-a0ba-d6a9fd80c3f0",
+              "Text": "The file is closed automatically when the with block exits, regardless of errors.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "1b09233c-fe1f-4111-8313-96e8deb97fe4",
+          "TopicId": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+          "Title": "Reading Text Files",
+          "BodyText": "File objects provide multiple methods for reading text content depending on whether you need the entire file, one line, or all lines as a list.",
+          "Notes": "For large files, iterating over the file object line by line (for line in f) is more memory-efficient than reading the entire file into memory at once with read().",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "f49ee9c1-cba5-4880-8d79-2c3b9720dad4",
+              "Text": "f.read() returns the entire file content as a single string.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c9473c31-b76a-472e-a1d5-2057ba1b096d",
+              "Text": "f.readline() reads and returns one line at a time, including the newline character.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7c4a4029-da1a-4f8e-b381-d998dc369c4a",
+              "Text": "f.readlines() returns a list of all lines in the file.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "9f998294-beae-4075-aec9-07f702491b60",
+          "TopicId": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+          "Title": "Writing Text Files",
+          "BodyText": "Opening a file in write or append mode allows you to output strings to the file using the write or writelines methods.",
+          "Notes": "f.write() does not add a newline automatically; you must include \u0027\\n\u0027 explicitly at the end of each line. Using mode \u0027w\u0027 overwrites an existing file completely.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "bcde0490-b550-4f52-b989-6e989533df77",
+              "Text": "f.write(string) writes the given string to the file and returns the number of characters written.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c1501ace-4108-4bf3-a4a3-9c57930941db",
+              "Text": "f.writelines(list) writes each item in a list to the file without adding separators.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "65d4ebe9-b8d0-4210-b2a8-08dee229bfa0",
+              "Text": "Open in append mode (\u0027a\u0027) to add content to an existing file without erasing it.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "a11f2fa8-cd1c-4424-8d4e-9e4053a77f23",
+          "TopicId": "b7c8e737-b160-4372-91d8-244244a3b0dc",
+          "Title": "Working with File Paths Using pathlib",
+          "BodyText": "The pathlib module provides an object-oriented interface for constructing and manipulating file paths that works consistently across operating systems.",
+          "Notes": "Path objects can be passed directly to open() instead of strings, and they offer convenient attributes like .stem, .suffix, .parent, and methods like .exists() and .mkdir().",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "4d141dd2-e8df-4768-b476-a55ca2bac52a",
+              "Text": "Use Path from pathlib to create platform-independent path objects.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "24ac04ce-fba2-4144-9615-6edac09a4c12",
+              "Text": "The / operator joins path components intuitively, e.g., Path(\u0027data\u0027) / \u0027results.txt\u0027.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cf680d16-2bbf-425c-9cb0-d6ae52a854ce",
+              "Text": "Path.exists() returns True if the path points to an existing file or directory.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+      "Title": "Reading and Writing CSV Files",
+      "Summary": "Covers using Python\u0027s built-in csv module to read tabular data from CSV files and write structured results, a common task in engineering data workflows.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "c9c7303f-ecf8-484e-a1a4-80183c1460ba",
+          "TopicId": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+          "Title": "What Is a CSV File?",
+          "BodyText": "A CSV (Comma-Separated Values) file stores tabular data as plain text, with each row on a new line and columns separated by a delimiter, typically a comma.",
+          "Notes": "CSV is widely used to exchange data between measurement instruments, spreadsheet software, and Python analysis scripts in engineering environments.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "9e42a802-8dde-45de-8eac-24a79115f59d",
+              "Text": "The first row of a CSV file often contains column headers.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8c04cb92-a2ed-451a-9609-421856812646",
+              "Text": "Fields containing the delimiter or newlines are enclosed in quotation marks.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ae2cc97b-a0be-4881-b8d8-8b59bf897249",
+              "Text": "The delimiter can be customized; tabs, semicolons, and pipes are common alternatives.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "d69c6f0c-2dd0-46b0-a088-d90a5aedfab1",
+          "TopicId": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+          "Title": "Reading CSV Files with csv.reader",
+          "BodyText": "csv.reader wraps a file object and returns an iterator that yields each row as a list of strings.",
+          "Notes": "All values read by csv.reader are strings; numeric data must be explicitly converted using int() or float() before mathematical operations.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "a7af1fec-50e1-4903-8f44-0b443c315269",
+              "Text": "Pass the open file object to csv.reader to create a reader object.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "bd5bbed1-8b49-4138-b034-e182e5d930ed",
+              "Text": "Iterate over the reader to process each row as a list.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "1ab55ef4-edf7-4d26-bd24-0ee516917b6f",
+              "Text": "Use next(reader) to skip a header row before processing data rows.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "7c5900ae-8108-4aac-9ae6-b55473d18219",
+          "TopicId": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+          "Title": "Reading CSV Files with csv.DictReader",
+          "BodyText": "csv.DictReader reads each row as an ordered dictionary, using the header row as keys, which makes column access by name more readable.",
+          "Notes": "DictReader is particularly useful when CSVs have many columns and you only need a subset, since you can access values by column name rather than numeric index.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "bb442154-07a3-4bb3-83d8-db42d7f86c57",
+              "Text": "DictReader automatically uses the first row as field names unless fieldnames is specified.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "99817a95-7371-496f-81aa-b545a5869253",
+              "Text": "Access row values by column name: row[\u0027Temperature\u0027].",
+              "SortOrder": 1
+            },
+            {
+              "Id": "32e212df-e662-407f-8934-55db1460369c",
+              "Text": "Each row is returned as a dictionary-like object with consistent key ordering.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "5f5a49a7-a701-481b-b66f-65e5f8d58f27",
+          "TopicId": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+          "Title": "Writing CSV Files with csv.writer",
+          "BodyText": "csv.writer provides methods to write rows to a CSV file, handling quoting and delimiter escaping automatically.",
+          "Notes": "On Windows, open files for csv.writer with newline=\u0027\u0027 to prevent blank lines from being inserted between rows due to universal newline translation.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "42bd8ca4-d292-467b-ad75-278ecaaf1982",
+              "Text": "Create a writer object by passing the open file object to csv.writer.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "5675c55e-5823-4b35-baa8-5f083ff8385c",
+              "Text": "Use writer.writerow(list) to write a single row.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ced32cc8-e101-4586-a693-95c39c8cc6c4",
+              "Text": "Use writer.writerows(list_of_lists) to write multiple rows at once.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "bda907f1-d144-4702-8a3e-b501a547245e",
+          "TopicId": "c24afa4f-9a1b-4326-a1ce-e6c48b853444",
+          "Title": "Writing CSV Files with csv.DictWriter",
+          "BodyText": "csv.DictWriter writes dictionaries as CSV rows, with field names specified at construction time.",
+          "Notes": "Calling writer.writeheader() writes the fieldnames as the first row, ensuring the output file is self-describing and easy to re-import.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "f22a2055-7eb8-4fc1-86e4-1f505ddfb62c",
+              "Text": "Pass fieldnames as a list when creating the DictWriter object.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ab074e05-450e-4ee7-aaf6-f2a83296a010",
+              "Text": "Call writeheader() before writing data rows to include column labels.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9d72cfc7-3cef-4de0-a86d-c21eda529508",
+              "Text": "Use writerow(dict) or writerows(list_of_dicts) to write data.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "48620186-b589-4cc7-be4e-4b143a17c05d",
+      "Title": "Working with JSON",
+      "Summary": "Introduces JSON as a human-readable data interchange format and demonstrates how Python\u0027s json module serializes and deserializes data for configuration files and APIs.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "1232abc9-2cd3-4964-838e-38e0ac57c1d7",
+          "TopicId": "48620186-b589-4cc7-be4e-4b143a17c05d",
+          "Title": "What Is JSON?",
+          "BodyText": "JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data using key-value pairs, arrays, and nested objects.",
+          "Notes": "JSON is the dominant format for web APIs and is increasingly used in engineering applications for configuration files and structured sensor data logs.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "c2c1d378-d2f8-4c4a-aa5e-c2247c78d7d7",
+              "Text": "JSON supports six data types: strings, numbers, booleans, null, arrays, and objects.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6de782b2-91f9-40dd-af30-23e661da2bce",
+              "Text": "JSON objects correspond closely to Python dictionaries; arrays correspond to lists.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "42199e2a-07ce-4209-a169-bbb858b10e27",
+              "Text": "JSON files are plain text and can be opened and inspected in any text editor.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "84c7ba8f-460d-4a1c-a7d5-e6408ce47d31",
+          "TopicId": "48620186-b589-4cc7-be4e-4b143a17c05d",
+          "Title": "Parsing JSON with json.loads and json.load",
+          "BodyText": "Python\u0027s json module converts a JSON string or file into native Python data structures using the loads and load functions.",
+          "Notes": "json.loads (note the \u0027s\u0027) operates on a string already in memory, while json.load reads directly from a file object \u2014 a common source of confusion for new users.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "4a07e434-dcd3-45bc-bab0-18388985dbdb",
+              "Text": "json.loads(string) parses a JSON-formatted string and returns a Python object.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a07be715-05f1-48e4-b671-5b9751aafd7e",
+              "Text": "json.load(file_object) reads and parses JSON directly from an open file.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "dc5846d8-124d-4d81-bc26-04c2d3653e11",
+              "Text": "JSON objects become Python dicts, arrays become lists, and JSON null becomes None.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "bf08a370-f157-421e-a129-2ed8705e61b5",
+          "TopicId": "48620186-b589-4cc7-be4e-4b143a17c05d",
+          "Title": "Serializing Data with json.dumps and json.dump",
+          "BodyText": "The json module converts Python objects into JSON-formatted strings or writes them to a file using dumps and dump.",
+          "Notes": "The indent parameter in json.dumps(data, indent=4) produces human-readable, pretty-printed JSON, which is useful when writing configuration or log files.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "f58a6417-6575-47b0-963b-c5df01df7bd5",
+              "Text": "json.dumps(object) returns a JSON-formatted string from a Python object.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b6c8435f-71a9-458c-917f-8179de816355",
+              "Text": "json.dump(object, file_object) writes JSON directly to an open file.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2b0a3efe-04ca-485e-9959-e542819c4b99",
+              "Text": "Python dicts, lists, strings, numbers, booleans, and None are natively serializable.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "7a50026a-5b3a-44c8-9847-6327221a3a13",
+          "TopicId": "48620186-b589-4cc7-be4e-4b143a17c05d",
+          "Title": "JSON for Configuration Files",
+          "BodyText": "Storing simulation parameters or tool settings in a JSON file allows engineers to modify inputs without editing source code.",
+          "Notes": "A common pattern is to load a JSON config at the start of a script, validate required keys are present, and then pass values into functions as a dictionary.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "fa476e0a-7214-4586-a9b9-8f20815ee217",
+              "Text": "Define default parameters in a .json file and load them at script startup.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2330cc45-25e6-4967-9754-f5ed48d1a1f4",
+              "Text": "Updating the config file changes script behavior without touching Python code.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8c72d2b6-bb41-4a64-8acf-f49a939fa0a5",
+              "Text": "Nested JSON objects allow hierarchical grouping of related parameters.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "5722599c-fe7b-4b3d-9d9e-43f4fc67eee9",
+          "TopicId": "48620186-b589-4cc7-be4e-4b143a17c05d",
+          "Title": "Limitations of Python\u0027s json Module",
+          "BodyText": "Not all Python objects can be directly serialized to JSON; certain types require custom handling or conversion before they can be encoded.",
+          "Notes": "NumPy arrays and datetime objects are common non-serializable types in engineering scripts. Convert arrays to lists with .tolist() and datetimes to strings with .isoformat() before calling json.dump.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "4874e16b-dff2-4a4d-b07a-192e0bb1c3ba",
+              "Text": "Sets, tuples (stored as arrays), and custom class instances are not natively JSON-serializable.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "658315d0-2dec-4363-88da-73184977673d",
+              "Text": "A custom JSONEncoder subclass can extend serialization to additional types.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e75c3e15-6b76-42c9-8d8f-71fd31b26158",
+              "Text": "Always validate JSON output when working with mixed Python and NumPy numeric types.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+      "Title": "Error Handling with try-except",
+      "Summary": "Explains Python\u0027s exception handling model and demonstrates how to use try-except blocks to build resilient engineering scripts that recover gracefully from runtime errors.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+      "Elements": [
+        {
+          "Id": "e73f0f7d-1899-4251-b08b-5948095cdc3b",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "What Is an Exception?",
+          "BodyText": "An exception is a runtime error that interrupts normal program flow; if not handled, it terminates the script and displays a traceback.",
+          "Notes": "Common built-in exceptions in engineering scripts include FileNotFoundError, ValueError, ZeroDivisionError, TypeError, and KeyError. Understanding which exception to expect helps write targeted handlers.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "da48d65c-db8d-4322-821f-7a128fa2462a",
+              "Text": "Python raises an exception object when an error condition occurs.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "699c754d-8769-4981-b520-19184e39663d",
+              "Text": "An unhandled exception prints a traceback and stops execution immediately.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "1388ee43-fc46-4fc4-aed2-230518d44fb7",
+              "Text": "Exceptions are organized in a class hierarchy; catching a parent class also catches its subclasses.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "26d1e786-64c7-4f10-a497-42446d56fd45",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "Basic try-except Structure",
+          "BodyText": "A try block contains code that might raise an exception; the except block defines how to respond if a specific exception type is raised.",
+          "Notes": "Catching the broad Exception base class is sometimes necessary but can hide unexpected bugs. Prefer catching the most specific exception type relevant to the operation.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "b7b467c5-37e0-4d71-a279-713734f7fb37",
+              "Text": "Code inside the try block executes normally until an exception is raised.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f4d2a762-b824-43e0-bc49-c4ba13875250",
+              "Text": "If an exception matches the specified type, the except block executes instead of crashing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5d9675da-29dd-461e-a955-11dce4d74219",
+              "Text": "Multiple except clauses can handle different exception types separately.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "88c64f93-1620-42c1-9fb1-872716536e40",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "The else and finally Clauses",
+          "BodyText": "The optional else clause runs only if no exception was raised; the finally clause runs unconditionally and is used for cleanup actions.",
+          "Notes": "finally is particularly valuable in scripts that open external resources such as network connections or file handles that must be released regardless of success or failure.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "fc2e9330-c2dc-4a0a-bcd7-18c3e4c124d8",
+              "Text": "The else block executes when the try block completes without raising an exception.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fe58e4cd-791d-409d-a4c3-0e1fa46bb677",
+              "Text": "The finally block always executes, making it ideal for releasing resources.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f06a5b12-0426-45fe-a504-6519b20b77b0",
+              "Text": "Both else and finally are optional and can be used together or independently.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "0522a66d-f495-4059-956a-7e7e26b47c3a",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "Accessing Exception Information",
+          "BodyText": "Using \u0027as\u0027 in an except clause binds the exception object to a variable, providing access to its message and attributes for logging or debugging.",
+          "Notes": "Printing or logging the exception object with str(e) or repr(e) gives the error message without a full traceback, which is appropriate for user-facing output in engineering tools.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "ea7bc4f7-e063-4fd4-a3bd-bf3d43f253f5",
+              "Text": "Use \u0027except ExceptionType as e\u0027 to capture the exception instance.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3cde226d-c7a1-4ac2-9efc-d5df2a5c5933",
+              "Text": "str(e) returns the human-readable error message associated with the exception.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "67048f2f-7262-4c64-a28d-ccf4d69985f9",
+              "Text": "The exception object may carry additional attributes relevant to the specific error type.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "6291e026-0ecd-4b32-a6a2-76b3467a4b3c",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "Raising Exceptions",
+          "BodyText": "The raise statement lets you deliberately trigger an exception when your code detects an invalid condition, signaling errors clearly to calling code.",
+          "Notes": "Raising a ValueError with a descriptive message when a function receives an out-of-range engineering parameter is far more informative than allowing the script to silently produce incorrect results.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "c81d5b4f-ff20-4339-a774-c80a8c360de8",
+              "Text": "Use \u0027raise ExceptionType(message)\u0027 to raise a specific exception with a description.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b233867e-960f-472b-bf45-23cd8a545e31",
+              "Text": "Re-raise a caught exception with a bare \u0027raise\u0027 statement to propagate it after logging.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "89e5f93d-f769-4a42-8072-855009ff78b0",
+              "Text": "Custom exception classes can be created by subclassing Exception for domain-specific errors.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "5ecb6c7f-f6e2-4c91-9f67-d315fdb9ceda",
+          "TopicId": "73c4b63b-bfab-4670-8534-eff2d813c82c",
+          "Title": "Practical Error Handling in Engineering Scripts",
+          "BodyText": "Combining try-except with file I/O, user input, and numeric operations produces robust scripts that handle real-world data quality issues gracefully.",
+          "Notes": "A common pattern is to wrap file reading and data parsing in a try-except block that logs the problematic row and continues processing, rather than aborting the entire run on a single bad data point.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "ModifiedDate": "2026-05-14T13:11:10.4033941-04:00",
+          "Items": [
+            {
+              "Id": "8c801d9c-d266-4509-8c7b-0ab780c0453f",
+              "Text": "Validate inputs at the boundary of your script using try-except before processing begins.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4fb4ad17-2d8c-4c1e-8a03-adf28c7027e1",
+              "Text": "Log caught exceptions with enough context to identify the source of the problem.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "511e5338-96b3-461e-817f-0777f4f86858",
+              "Text": "Design error handling so the script can continue processing remaining data after a recoverable error.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 36
+}

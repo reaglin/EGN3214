@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modules_File_I</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+ul{margin:.4rem 0 1rem 1.2rem}
+li{margin:.25rem 0}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>Modules_File_I</h1>
+<h2>Learning Objectives</h2>
+<ul>
+<li>Explain the purpose of file I/O and describe the standard file modes (r, w, a, rb, wb, etc.) used when opening files in Python</li>
+<li>Demonstrate how to open and close files safely using the with statement as a context manager</li>
+<li>Read data from text files using methods such as read(), readline(), and readlines()</li>
+<li>Write and append data to text files using write() and writelines()</li>
+<li>Construct and manipulate file system paths programmatically using the pathlib module (Path objects, path concatenation, existence checks, and directory listing)</li>
+<li>Apply best practices for file handling including exception awareness and cross-platform path compatibility</li>
+</ul>
+<h2>Prerequisites</h2>
+<ul>
+<li>Completion of prior EGN3214 modules covering Python fundamentals (variables, data types, operators)</li>
+<li>Working knowledge of Python control flow: if/elif/else, for and while loops</li>
+<li>Familiarity with Python functions: defining, calling, and passing arguments</li>
+<li>Understanding of Python lists, strings, and basic string methods</li>
+<li>Basic experience using an IDE or text editor (VS Code, PyCharm, or Jupyter Notebook) and running Python scripts from the command line or terminal</li>
+</ul>
+<h2>Materials &amp; Resources</h2>
+<ul>
+<li>Course textbook reference: relevant chapters on File I/O and the pathlib module (instructor to specify edition)</li>
+<li>Python 3 official documentation: https://docs.python.org/3/library/functions.html#open</li>
+<li>Python 3 pathlib documentation: https://docs.python.org/3/library/pathlib.html</li>
+<li>Lecture slide deck: Modules_File_I (provided on course LMS)</li>
+<li>Starter code repository: sample text files and skeleton Python scripts (provided on course LMS)</li>
+<li>Replit, Jupyter Notebook, or local Python 3.x environment for live coding exercises</li>
+<li>Whiteboard or shared screen for instructor demonstrations</li>
+<li>Optional supplemental reading: &quot;Automate the Boring Stuff with Python&quot; – Chapter on Reading and Writing Files (freely available online)</li>
+</ul>
+<h2>Instructional Activities</h2>
+<ul>
+<li>Activity 1 — Hook / Real-World Motivation (10 min): Instructor presents brief examples of real engineering applications that rely on file I/O (reading sensor data logs, writing simulation output, parsing CSV configuration files). Class discussion: &quot;Where have you encountered data stored in files in your own projects?&quot;</li>
+<li>Activity 2 — Direct Instruction: Opening Files and File Modes (15 min): Instructor explains the built-in open() function, introduces all standard file modes (r, w, a, x, b, t, +), and discusses what happens when a file does not exist. Live demo: open a file in each common mode and observe behavior.</li>
+<li>Activity 3 — Direct Instruction: The with Statement Context Manager (15 min): Instructor explains resource management, the concept of a context manager, and how the with statement guarantees file closure even when exceptions occur. Compare with/without the with statement side-by-side. Highlight __enter__ and __exit__ at a conceptual level.</li>
+<li>Activity 4 — Guided Practice: Reading Text Files (20 min): Instructor live-codes reading a provided sample engineering data file using read(), readline(), and readlines(). Students follow along in their own environment. Discuss trade-offs of each method (memory usage, iteration patterns). Brief pair-and-share: students modify the code to count lines and words.</li>
+<li>Activity 5 — Guided Practice: Writing Text Files (20 min): Instructor demonstrates writing new content to a file with mode &#39;w&#39; and appending with mode &#39;a&#39;. Cover write() vs writelines(). Students complete a short exercise: generate a simple formatted report (student name, ID, computed value) and save it to a .txt file.</li>
+<li>Activity 6 — Direct Instruction + Demo: Working with pathlib (20 min): Introduce the pathlib.Path class; demonstrate creating Path objects, joining paths with /, checking existence (.exists(), .is_file(), .is_dir()), listing directory contents (.iterdir()), and getting file metadata (.stem, .suffix, .name, .parent). Emphasize cross-platform advantages over os.path string manipulation.</li>
+<li>Activity 7 — Independent Lab Exercise (25 min): Students complete a structured lab: (1) Use pathlib to locate all .txt files in a given directory. (2) Read each file, extract numeric values on each line, and compute the average. (3) Write a summary report file containing the filename and computed average for each input file. Instructor circulates and provides targeted feedback.</li>
+<li>Activity 8 — Debrief and Q&amp;A (10 min): Instructor reviews common errors observed during the lab (FileNotFoundError, incorrect modes, path separators). Reinforce best practices. Open Q&amp;A to address remaining conceptual questions.</li>
+</ul>
+<h2>Assessment / Check for Understanding</h2>
+<ul>
+<li>Entrance Ticket (pre-activity, ungraded): A 2-question poll on the LMS asking students to identify what a file mode does and where they have seen file I/O used — used to gauge prior exposure and adjust pacing</li>
+<li>Think-Pair-Share (during Activity 4): Students predict the output of a code snippet that reads a file with readline() in a loop; pairs compare answers before class discussion</li>
+<li>Exit Ticket (end of class, ungraded): Three short written questions — (1) What is the primary advantage of using the with statement over manually calling file.close()? (2) Write the one-line Python statement to open data.txt for appending. (3) Write a pathlib expression to check whether a file named results.txt exists in the current directory</li>
+<li>Lab Report (graded, individual submission via LMS): Students submit their completed lab script from Activity 7 along with a generated summary report file. Rubric evaluates correctness of pathlib usage (25%), accurate file reading and data extraction (25%), correct writing of the summary report (25%), and code readability/comments (25%)</li>
+<li>Module Quiz (graded, auto-graded on LMS — 10 multiple-choice and 2 short-answer questions): Covers all five topic areas — file modes, with statement behavior, reading methods, writing methods, and pathlib operations. Short-answer items ask students to write small code snippets; administered within one week following the lesson</li>
+</ul>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

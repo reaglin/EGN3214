@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subplots and Figure Layout</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+  <header>
+    <h1>Subplots and Figure Layout</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Subplots and Figure Layout</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>One of the most powerful features in Matplotlib is the ability to arrange multiple plots within a single figure, creating what are called <strong>subplots</strong> or multi-panel figures. Rather than producing a series of isolated charts, subplots let you place related visualizations side by side or in a grid, making it far easier for readers to compare trends, distributions, or relationships across different datasets or variables. This is especially important in scientific publishing, data analysis reports, and dashboards, where a cohesive, well-organized figure communicates far more than a collection of separate images.</p>
+
+<p>Understanding subplots requires grasping two core Matplotlib objects: the <strong>Figure</strong> (<code>fig</code>) and the <strong>Axes</strong> (<code>ax</code> or <code>axs</code>). The Figure is the entire canvas — the outermost container that holds everything. Each Axes is an individual plotting panel within that canvas. When you work with subplots, you are managing one Figure that contains multiple Axes objects, each of which behaves like its own independent plot.</p>
+
+<p><strong>Creating Subplots with <code>plt.subplots()</code></strong></p>
+
+<p>The most common and convenient way to create a multi-panel figure is with <code>plt.subplots()</code>. You call it with the number of rows and columns you want in your grid, and it returns two objects: the Figure and an array of Axes.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axs = plt.subplots(2, 3, figsize=(12, 6))
+</code></pre>
+
+<p>In this example, <code>fig</code> is the Figure object representing the entire canvas, and <code>axs</code> is a NumPy array of shape <code>(2, 3)</code> containing six individual Axes objects arranged in two rows and three columns. You access each panel using standard array indexing: <code>axs[0, 0]</code> is the top-left panel, <code>axs[0, 2]</code> is the top-right, <code>axs[1, 1]</code> is the center of the bottom row, and so on.</p>
+
+<p>If you request only a single row or a single column — for example <code>plt.subplots(1, 3)</code> — the returned <code>axs</code> is a one-dimensional array, so you index it with a single integer: <code>axs[0]</code>, <code>axs[1]</code>, <code>axs[2]</code>. If you request a single subplot with <code>plt.subplots(1, 1)</code>, <code>axs</code> is just a single Axes object, not an array at all.</p>
+
+<p>The <code>figsize=(width, height)</code> keyword argument controls the overall size of the figure in inches. Matplotlib uses a default screen resolution of 100 dots per inch (dpi), so <code>figsize=(12, 6)</code> produces a figure 1200 by 600 pixels at that resolution. Choosing an appropriate figure size is important: too small and labels overlap or become unreadable; too large and the figure becomes unwieldy. A good rule of thumb is to allocate roughly 4 inches of width per column and 3 to 4 inches of height per row, then adjust based on content.</p>
+
+<p>The <code>sharex=True</code> and <code>sharey=True</code> arguments are exceptionally useful when your subplots cover the same range of data. When <code>sharex=True</code> is set, all panels in the same column share the same x-axis limits and tick marks. When <code>sharey=True</code> is set, all panels in the same row share y-axis limits. This makes visual comparison immediate and eliminates the need for readers to mentally re-calibrate their expectations when scanning between panels.</p>
+
+<pre><code>fig, axs = plt.subplots(1, 2, figsize=(10, 4), sharex=True, sharey=True)
+
+x = np.linspace(0, 10, 200)
+axs[0].plot(x, np.sin(x), color='steelblue')
+axs[1].plot(x, np.cos(x), color='tomato')
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>In this code, both panels share the same x range (0 to 10) and the same y range, so it is immediately clear that sine and cosine oscillate at the same frequency and amplitude. Without <code>sharey=True</code>, Matplotlib might auto-scale each panel independently, potentially creating misleading visual differences.</p>
+
+<p><strong>Plotting on Individual Axes</strong></p>
+
+<p>Once you have your array of Axes objects, you plot on each one using methods that belong directly to the Axes object rather than to <code>pyplot</code>. The Axes API mirrors the <code>pyplot</code> API almost exactly, but the key conceptual difference is that you are calling methods <em>on a specific panel</em> rather than on whatever the current active plot happens to be.</p>
+
+<ul>
+  <li><strong><code>ax.plot(x, y)</code></strong> draws line plots, accepting the same keyword arguments as <code>plt.plot()</code>: <code>color</code>, <code>linewidth</code>, <code>linestyle</code>, <code>label</code>, and so on.</li>
+  <li><strong><code>ax.scatter(x, y)</code></strong> draws scatter plots, with options for marker size (<code>s</code>), color (<code>c</code>), and transparency (<code>alpha</code>).</li>
+  <li><strong><code>ax.bar(categories, values)</code></strong> draws vertical bar charts. <code>ax.barh()</code> draws horizontal bar charts.</li>
+  <li><strong><code>ax.hist(data, bins=20)</code></strong> draws histograms, identical in behavior to <code>plt.hist()</code>.</li>
+</ul>
+
+<p>Here is a complete example that places four different plot types in a two-by-two grid:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+rng = np.random.default_rng(42)
+x = np.linspace(0, 2 * np.pi, 300)
+data = rng.normal(loc=0, scale=1, size=500)
+categories = ['A', 'B', 'C', 'D']
+values = [23, 45, 12, 67]
+
+fig, axs = plt.subplots(2, 2, figsize=(10, 8))
+
+# Top-left: line plot
+axs[0, 0].plot(x, np.sin(x), color='steelblue', linewidth=2, label='sin(x)')
+axs[0, 0].set_title('Line Plot')
+axs[0, 0].set_xlabel('x')
+axs[0, 0].set_ylabel('sin(x)')
+axs[0, 0].legend()
+
+# Top-right: scatter plot
+axs[0, 1].scatter(rng.uniform(0, 10, 100), rng.uniform(0, 10, 100),
+                  alpha=0.6, color='tomato', s=40, label='Random Points')
+axs[0, 1].set_title('Scatter Plot')
+axs[0, 1].set_xlabel('x')
+axs[0, 1].set_ylabel('y')
+axs[0, 1].legend()
+
+# Bottom-left: bar chart
+axs[1, 0].bar(categories, values, color='mediumseagreen', edgecolor='black')
+axs[1, 0].set_title('Bar Chart')
+axs[1, 0].set_xlabel('Category')
+axs[1, 0].set_ylabel('Value')
+
+# Bottom-right: histogram
+axs[1, 1].hist(data, bins=25, color='mediumpurple', edgecolor='white', alpha=0.8)
+axs[1, 1].set_title('Histogram')
+axs[1, 1].set_xlabel('Value')
+axs[1, 1].set_ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>Notice that each panel is addressed explicitly by its row-column index. The label and title methods — <code>ax.set_title()</code>, <code>ax.set_xlabel()</code>, and <code>ax.set_ylabel()</code> — are called on each specific Axes, so they apply only to that panel. This is in contrast to using <code>plt.title()</code>, which would only affect the currently active panel and could produce unexpected results in a multi-panel figure.</p>
+
+<p><code>ax.legend()</code> similarly scopes the legend to its specific panel. If you set <code>label='...'</code> on a line or scatter call inside <code>axs[0, 0]</code> and then call <code>axs[0, 0].legend()</code>, the legend appears only in that top-left panel. This is exactly what you want in a multi-panel figure where each panel has its own independent content and annotation.</p>
+
+<p><strong>Adjusting Layout and Spacing</strong></p>
+
+<p>A common frustration when creating subplot grids is that titles, axis labels, and tick marks from adjacent panels collide with each other, producing an ugly and unreadable figure. Matplotlib provides several tools for dealing with this.</p>
+
+<p><strong><code>plt.tight_layout()</code></strong> is the simplest and most commonly used solution. When called after all plotting commands, it automatically analyzes the sizes of all labels, ticks, and titles and adjusts the spacing between subplots to prevent overlap. In the vast majority of cases, adding <code>plt.tight_layout()</code> just before <code>plt.show()</code> is sufficient to produce a clean figure. It accepts an optional <code>pad</code> argument that controls how much extra padding to add around the figure edges, and a <code>rect</code> argument that restricts the layout to a specific region of the figure (useful when you have a <code>fig.suptitle()</code> that would otherwise be cut off).</p>
+
+<pre><code>plt.tight_layout(pad=1.5)
+</code></pre>
+
+<p>When you need more precise control, <strong><code>plt.subplots_adjust()</code></strong> lets you set the spacing manually. The key parameters are:</p>
+
+<ul>
+  <li><strong><code>hspace</code></strong>: the height of the vertical gap between rows, as a fraction of the average Axes height. A value of <code>0.4</code> gives a moderate gap; <code>0.0</code> eliminates it entirely.</li>
+  <li><strong><code>wspace</code></strong>: the width of the horizontal gap between columns, as a fraction of the average Axes width.</li>
+  <li><strong><code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code></strong>: the positions of the outer edges of the subplot area, as fractions of the figure width and height. For example, <code>top=0.9</code> reserves the top 10% of the figure for a super-title.</li>
+</ul>
+
+<pre><code>plt.subplots_adjust(hspace=0.4, wspace=0.3, top=0.88)
+</code></pre>
+
+<p><code>tight_layout()</code> and <code>subplots_adjust()</code> can conflict with each other if called together, because <code>tight_layout()</code> will overwrite any manual adjustments. Use one or the other: prefer <code>tight_layout()</code> for convenience and fall back to <code>subplots_adjust()</code> when you need fine-grained control.</p>
+
+<p><strong><code>fig.suptitle()</code></strong> adds a single centered title that spans the entire figure, sitting above all subplot panels. This is useful for giving the overall figure a descriptive heading while individual panels retain their own per-panel titles.</p>
+
+<pre><code>fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+
+axs[0].plot(x, np.sin(x))
+axs[0].set_title('Sine Wave')
+
+axs[1].plot(x, np.cos(x))
+axs[1].set_title('Cosine Wave')
+
+fig.suptitle('Trigonometric Functions', fontsize=16, fontweight='bold')
+plt.tight_layout(rect=[0, 0, 1, 0.95])  # leave space for suptitle
+plt.show()
+</code></pre>
+
+<p>The <code>rect=[0, 0, 1, 0.95]</code> argument to <code>tight_layout()</code> tells it to confine the subplot area to the bottom 95% of the figure, leaving the top 5% clear for the super-title. Without this, the super-title often overlaps with the top row of subplot titles.</p>
+
+<p><strong>Using GridSpec for Complex Layouts</strong></p>
+
+<p>The uniform grid produced by <code>plt.subplots()</code> is excellent for symmetric layouts, but many real-world figures require panels of different sizes — for example, one wide panel spanning the full width at the top with two narrower panels below it, or a large central panel flanked by smaller annotation panels. For these cases, <strong>GridSpec</strong> provides complete control over the layout.</p>
+
+<p><code>GridSpec</code> is imported from <code>matplotlib.gridspec</code> and instantiated with a row count and a column count. You can think of it as defining an invisible grid of cells, where each cell is a potential home for a subplot. The power comes from the fact that a single subplot can occupy multiple cells by slicing the GridSpec object using standard Python slice notation.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import numpy as np
+
+fig = plt.figure(figsize=(12, 8))
+gs = gridspec.GridSpec(2, 3)  # 2 rows, 3 columns
+</code></pre>
+
+<p>With the GridSpec defined, you create individual Axes objects by passing slices of <code>gs</code> to <code>fig.add_subplot()</code>.</p>
+
+<ul>
+  <li><strong><code>gs[0, :]</code></strong> — row 0, all columns: a single panel that spans the full width of the top row.</li>
+  <li><strong><code>gs[1, 0]</code></strong> — row 1, column 0: a single cell in the bottom-left.</li>
+  <li><strong><code>gs[1, 1:3]</code></strong> — row 1, columns 1 and 2: a panel spanning the right two-thirds of the bottom row.</li>
+</ul>
+
+<pre><code>import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import numpy as np
+
+x = np.linspace(0, 10, 300)
+rng = np.random.default_rng(0)
+
+fig = plt.figure(figsize=(12, 8))
+gs = gridspec.GridSpec(2, 3, figure=fig, hspace=0.4, wspace=0.35)
+
+# Full-width top panel
+ax_top = fig.add_subplot(gs[0, :])
+ax_top.plot(x, np.sin(x) * np.exp(-0.1 * x), color='steelblue', linewidth=2)
+ax_top.set_title('Damped Sine Wave (Full Width)')
+ax_top.set_xlabel('Time')
+ax_top.set_ylabel('Amplitude')
+
+# Bottom-left panel (single cell)
+ax_bl = fig.add_subplot(gs[1, 0])
+ax_bl.hist(rng.normal(0, 1, 500), bins=20, color='tomato', edgecolor='white')
+ax_bl.set_title('Distribution')
+ax_bl.set_xlabel('Value')
+ax_bl.set_ylabel('Count')
+
+# Bottom-center panel (single cell)
+ax_bc = fig.add_subplot(gs[1, 1])
+ax_bc.scatter(rng.uniform(0, 5, 80), rng.uniform(0, 5, 80),
+              color='mediumseagreen', alpha=0.7)
+ax_bc.set_title('Scatter')
+ax_bc.set_xlabel('x')
+ax_bc.set_ylabel('y')
+
+# Bottom-right panel (single cell)
+ax_br = fig.add_subplot(gs[1, 2])
+ax_br.bar(['X', 'Y', 'Z'], [34, 67, 45], color='mediumpurple', edgecolor='black')
+ax_br.set_title('Bar Chart')
+ax_br.set_xlabel('Group')
+ax_br.set_ylabel('Value')
+
+fig.suptitle('Complex GridSpec Layout', fontsize=16, fontweight='bold', y=1.01)
+plt.show()
+</code></pre>
+
+<p>This produces a figure where the top half is occupied entirely by one wide plot, and the bottom half is split into three narrower panels. The key is the slicing syntax: <code>gs[0, :]</code> uses Python's slice notation to say "row 0, all columns," exactly as you would slice a NumPy array. <code>gs[1, 1:3]</code> would span columns 1 and 2 of row 1, creating a panel twice the width of the single-cell panel beside it.</p>
+
+<p>GridSpec also accepts <code>hspace</code> and <code>wspace</code> directly in its constructor, which is often cleaner than calling <code>plt.subplots_adjust()</code> separately. You can also specify <code>width_ratios</code> and <code>height_ratios</code> to make certain rows or columns proportionally larger than others:</p>
+
+<pre><code>gs = gridspec.GridSpec(2, 2,
+                       width_ratios=[2, 1],
+                       height_ratios=[1, 2],
+                       hspace=0.3,
+                       wspace=0.3)
+</code></pre>
+
+<p>This creates a grid where the left column is twice as wide as the right column, and the bottom row is twice as tall as the top row. Such layouts are invaluable when you want a large primary plot accompanied by smaller detail or annotation panels.</p>
+
+<p>It is worth noting that <code>plt.subplots()</code> itself uses GridSpec internally, and for simple uniform grids it is far less verbose. Reserve GridSpec for situations where you genuinely need panels of different sizes or irregular arrangements. When your layout is uniform, <code>plt.subplots(nrows, ncols)</code> with <code>tight_layout()</code> will serve you well in almost every case.</p>
+
+<p>Together, these tools — <code>plt.subplots()</code> for uniform grids, the Axes API for per-panel plotting and labeling, <code>tight_layout()</code> and <code>subplots_adjust()</code> for spacing, <code>fig.suptitle()</code> for figure-level annotation, and <code>GridSpec</code> for complex custom layouts — give you complete control over multi-panel figures in Matplotlib, enabling you to produce professional, publication-ready visualizations that communicate complex data clearly and efficiently.</p>
+        <div class="notes"><strong>Notes</strong>Students often forget that `plt.tight_layout()` must be called *after* all plotting commands, since it needs to know the final sizes of all labels and titles before it can compute the correct spacing. Also worth emphasizing that indexing `axs` with two indices (e.g., `axs[0, 1]`) is necessary for 2D subplot grids, while a 1-row or 1-column grid returns a 1D array requiring single-index access. The `fig.suptitle()` + `tight_layout(rect=...)` combination is a frequent source of confusion and is worth demonstrating live.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

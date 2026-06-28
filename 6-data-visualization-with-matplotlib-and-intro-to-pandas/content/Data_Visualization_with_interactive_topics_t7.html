@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading, Filtering, and Sorting Data with Pandas</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+  <header>
+    <h1>Reading, Filtering, and Sorting Data with Pandas</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Reading, Filtering, and Sorting Data with Pandas</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Pandas is one of the most powerful and widely used libraries in the Python data science ecosystem, and for good reason: it provides a rich, expressive toolkit for loading, inspecting, transforming, and slicing structured data. At the heart of Pandas is the <strong>DataFrame</strong>, a two-dimensional labeled data structure that behaves like a spreadsheet or a SQL table — rows and columns each carry labels, and you can manipulate them with concise, readable code. Whether you are processing sensor readings from an engineering test, analyzing material properties from a lab spreadsheet, or exploring survey results, the workflow almost always begins with reading a file, selecting the data you care about, filtering out irrelevant rows, and sorting what remains into a meaningful order. This topic walks through each stage of that workflow in depth.</p>
+
+<p>Before anything else, you need to import the library. The universal convention is:</p>
+
+<pre><code>import pandas as pd</code></pre>
+
+<p>The alias <code>pd</code> is not enforced by Python, but it is so universally adopted that any code you encounter online or in textbooks will use it, so it is wise to follow the same convention.</p>
+
+<p><strong>Reading Data from Files</strong></p>
+
+<p>The most common way to get data into a Pandas DataFrame is to read it from a <strong>CSV (comma-separated values)</strong> file. A CSV file stores tabular data as plain text, with commas separating values in each row and newline characters separating rows. Pandas makes loading such a file trivially simple:</p>
+
+<pre><code>df = pd.read_csv('filepath.csv')</code></pre>
+
+<p>This single line reads the entire file, uses the first row as the column headers, assigns an automatically generated integer index (0, 1, 2, …) to the rows, and returns a fully formed DataFrame. The variable name <code>df</code> is a common shorthand for "DataFrame" and is used throughout most Pandas code.</p>
+
+<p>Consider a file called <code>bridge_loads.csv</code> that looks like this in plain text:</p>
+
+<pre><code>span_id,material,load_kN,deflection_mm
+1,steel,450.0,2.3
+2,concrete,320.0,4.1
+3,steel,510.0,2.7
+4,aluminum,290.0,5.5</code></pre>
+
+<p>After calling <code>pd.read_csv('bridge_loads.csv')</code>, Pandas creates a DataFrame with four columns (<code>span_id</code>, <code>material</code>, <code>load_kN</code>, <code>deflection_mm</code>) and four rows indexed 0 through 3. You can immediately inspect it with <code>df.head()</code> or <code>print(df)</code>.</p>
+
+<p>Sometimes one of the columns already serves as a meaningful unique identifier for each row — for instance, <code>span_id</code> above. Rather than keeping a redundant default integer index alongside it, you can tell Pandas to promote that column to the index at import time using the <strong><code>index_col</code></strong> parameter:</p>
+
+<pre><code>df = pd.read_csv('bridge_loads.csv', index_col='span_id')</code></pre>
+
+<p>Now the DataFrame's row labels are 1, 2, 3, 4 (drawn from <code>span_id</code>) rather than 0, 1, 2, 3. This is particularly useful when your data has a natural key — a sample ID, a timestamp, a part number — because it lets you look up rows by that meaningful label instead of by an arbitrary integer position. You can also pass an integer to <code>index_col</code> (e.g., <code>index_col=0</code>) to designate the first column by position instead of by name.</p>
+
+<p>Real-world data is rarely clean. Sensors malfunction, surveyors leave fields blank, and legacy databases encode missing values with strings like <code>"N/A"</code>, <code>"--"</code>, <code>"none"</code>, or even domain-specific placeholders like <code>"999"</code> or <code>"missing"</code>. Pandas automatically recognises common null indicators (<code>NaN</code>, <code>NULL</code>, empty strings, <code>NA</code>), but it will not know about unusual ones unless you tell it. The <strong><code>na_values</code></strong> parameter accepts a string or list of strings that should be treated as <code>NaN</code> during import:</p>
+
+<pre><code>df = pd.read_csv('sensors.csv', na_values=['--', '999', 'missing'])</code></pre>
+
+<p>With this call, any cell containing <code>--</code>, <code>999</code>, or the word <code>missing</code> will be stored as <code>NaN</code> in the resulting DataFrame, enabling you to use Pandas' built-in missing-value handling methods (<code>df.isna()</code>, <code>df.dropna()</code>, <code>df.fillna()</code>) seamlessly.</p>
+
+<p>Beyond CSV, <code>pd.read_excel()</code>, <code>pd.read_json()</code>, <code>pd.read_sql()</code>, and several other readers follow the same general pattern and share many of the same parameters, so the skills you learn with <code>read_csv</code> transfer broadly.</p>
+
+<p><strong>Selecting Columns and Rows</strong></p>
+
+<p>Once you have a DataFrame loaded, the next essential skill is isolating exactly the data you need. Pandas offers several selection mechanisms, and understanding which one to use in a given situation prevents subtle bugs.</p>
+
+<p>The most direct way to retrieve a single column is bracket notation with the column name as a string:</p>
+
+<pre><code>loads = df['load_kN']</code></pre>
+
+<p>This returns a <strong>Series</strong> — a one-dimensional labeled array. A Series shares the same row index as the parent DataFrame and supports most of the same operations (arithmetic, aggregation, plotting). If you want two or more columns and want to keep them together as a DataFrame rather than extracting separate Series objects, pass a <em>list</em> of column names inside the brackets:</p>
+
+<pre><code>subset = df[['material', 'load_kN']]</code></pre>
+
+<p>Notice the double brackets: the outer brackets are the DataFrame selection operator, and the inner brackets define a Python list. The result is a new DataFrame with only those two columns. This distinction — single string gives a Series, list of strings gives a DataFrame — is one of the most commonly confused aspects of Pandas for beginners.</p>
+
+<p>For more precise row-and-column selection, Pandas provides two dedicated indexers: <strong><code>loc</code></strong> and <strong><code>iloc</code></strong>.</p>
+
+<p><code>df.loc[row_label, col_label]</code> selects by <em>label</em>. Both the row and column arguments use the actual index labels and column names you see in the DataFrame. For example, if the row index is the <code>span_id</code> column from earlier:</p>
+
+<pre><code># Single cell
+df.loc[2, 'load_kN']          # returns 320.0
+
+# Entire row as a Series
+df.loc[3]
+
+# Specific row and multiple columns
+df.loc[2, ['material', 'deflection_mm']]
+
+# Slice of rows (inclusive on both ends with loc)
+df.loc[1:3]</code></pre>
+
+<p>An important subtlety: when you slice with <code>loc</code>, <em>both endpoints are included</em>. <code>df.loc[1:3]</code> returns rows with labels 1, 2, and 3. This differs from normal Python slicing, where the stop is exclusive.</p>
+
+<p><code>df.iloc[row_int, col_int]</code> selects by <em>integer position</em>, completely ignoring the index labels. This is useful when you want the third row regardless of what its label is, or when you are iterating programmatically:</p>
+
+<pre><code># First row, first column (position 0, 0)
+df.iloc[0, 0]
+
+# First five rows (positions 0–4), all columns
+df.iloc[0:5]
+
+# Last row
+df.iloc[-1]</code></pre>
+
+<p>With <code>iloc</code>, slicing follows standard Python rules: the stop index is exclusive. <code>df.iloc[0:5]</code> gives positions 0, 1, 2, 3, and 4 — five rows, not six.</p>
+
+<p>A useful mental model: use <code>loc</code> when you know the <em>names</em> of what you want, and use <code>iloc</code> when you know the <em>positions</em>.</p>
+
+<p><strong>Filtering Rows with Boolean Conditions</strong></p>
+
+<p>Selecting predefined rows or columns is useful, but the real analytical power comes from <strong>boolean filtering</strong> — dynamically selecting rows based on whether they satisfy a condition. This is sometimes called boolean indexing or boolean masking.</p>
+
+<p>The mechanism works in two steps. First, you create a boolean Series — a Series of <code>True</code> and <code>False</code> values — by applying a comparison to a column:</p>
+
+<pre><code>mask = df['load_kN'] > 400</code></pre>
+
+<p>This produces a Series aligned to the same index as <code>df</code>, where each entry is <code>True</code> if that row's <code>load_kN</code> exceeds 400 and <code>False</code> otherwise. Then you pass that mask back into the DataFrame as an index:</p>
+
+<pre><code>heavy_loads = df[df['load_kN'] > 400]</code></pre>
+
+<p>Pandas returns only the rows where the mask is <code>True</code>. In the bridge example, this would return spans 1 and 3 (with loads of 450 and 510), leaving out spans 2 and 4. The original DataFrame <code>df</code> is untouched; <code>heavy_loads</code> is a new filtered view.</p>
+
+<p>You can combine multiple conditions using the bitwise operators <code>&</code> (AND) and <code>|</code> (OR). <em>Each individual condition must be wrapped in parentheses</em> because of Python's operator precedence rules — failing to do so is a common source of errors:</p>
+
+<pre><code># Rows where load exceeds 400 AND material is steel
+steel_heavy = df[(df['load_kN'] > 400) & (df['material'] == 'steel')]
+
+# Rows where material is steel OR deflection is more than 4mm
+flexible_or_steel = df[(df['material'] == 'steel') | (df['deflection_mm'] > 4.0)]</code></pre>
+
+<p>You can also negate a condition with the tilde operator <code>~</code>:</p>
+
+<pre><code># All rows where material is NOT steel
+not_steel = df[~(df['material'] == 'steel')]</code></pre>
+
+<p>For situations where writing out the column references feels verbose, Pandas offers <strong><code>df.query()</code></strong>, which accepts a string expression that is parsed and evaluated against the DataFrame's columns. Column names are referenced directly inside the string, making it read almost like natural language:</p>
+
+<pre><code>heavy_steel = df.query('load_kN > 400 and material == "steel"')
+</code></pre>
+
+<p><code>query</code> supports <code>and</code>, <code>or</code>, <code>not</code>, as well as <code>&</code>, <code>|</code>, and <code>~</code>. You can even reference external Python variables inside a query string using the <code>@</code> prefix:</p>
+
+<pre><code>threshold = 400
+heavy = df.query('load_kN > @threshold')
+</code></pre>
+
+<p>Both approaches — boolean indexing and <code>query</code> — produce identical results. Boolean indexing is more idiomatic in general code, while <code>query</code> is often preferred when writing exploratory or readable analysis scripts, especially when column names are long and the condition is complex.</p>
+
+<p><strong>Sorting DataFrames</strong></p>
+
+<p>Sorting helps you identify extremes, prepare data for rank-based analysis, and present results in a logical order. The primary method is <strong><code>df.sort_values()</code></strong>.</p>
+
+<p>To sort by a single column in ascending order (smallest to largest for numbers, A to Z for strings):</p>
+
+<pre><code>df_sorted = df.sort_values('load_kN')</code></pre>
+
+<p>This returns a new DataFrame with the rows reordered — the original <code>df</code> is not changed unless you pass <code>inplace=True</code>. To reverse the order:</p>
+
+<pre><code>df_sorted_desc = df.sort_values('load_kN', ascending=False)</code></pre>
+
+<p>Now the row with the highest load appears first. This is immediately useful for finding the most heavily loaded spans or the most deflected members.</p>
+
+<p>When you need to sort by more than one criterion — for example, first by material alphabetically, and then within each material group by load in descending order — pass lists to both <code>by</code> and <code>ascending</code>:</p>
+
+<pre><code>df_multi = df.sort_values(
+    by=['material', 'load_kN'],
+    ascending=[True, False]
+)</code></pre>
+
+<p>Here, <code>material</code> is sorted ascending (A–Z) and, wherever two rows share the same material, <code>load_kN</code> is sorted descending within that group. The <code>ascending</code> parameter can take a single boolean (applied to all sort keys) or a list of booleans aligned to the list of column names.</p>
+
+<p>One practical consideration: after sorting, the original row index labels are preserved but appear in a new order, which can look odd (e.g., the index might read 3, 1, 4, 2 instead of 1, 2, 3, 4). If you want a clean sequential integer index after sorting, call <code>reset_index(drop=True)</code>:</p>
+
+<pre><code>df_clean = df.sort_values('load_kN', ascending=False).reset_index(drop=True)</code></pre>
+
+<p>The <code>drop=True</code> argument discards the old index rather than promoting it to a column.</p>
+
+<p><strong>Adding and Modifying Columns</strong></p>
+
+<p>Raw data rarely arrives in exactly the form you need for analysis. You will frequently need to create new columns derived from existing ones, transform values, or rename columns for clarity. Pandas makes all of this straightforward.</p>
+
+<p>The simplest way to add a new column is direct assignment. You refer to a column name that does not yet exist on the left side of an assignment, and Pandas creates it:</p>
+
+<pre><code>df['stress_MPa'] = df['load_kN'] / df['area_cm2']</code></pre>
+
+<p>This performs the arithmetic element-wise across all rows simultaneously — no loop required. The result is a new column <code>stress_MPa</code> appended to the DataFrame. You can use any arithmetic combination of existing columns, constants, or NumPy functions:</p>
+
+<pre><code>import numpy as np
+df['log_load'] = np.log(df['load_kN'])
+df['load_plus_margin'] = df['load_kN'] * 1.15   # 15% safety margin
+</code></pre>
+
+<p>For transformations that are more complex than simple arithmetic — for instance, applying a custom formula or a lookup — <strong><code>df['col'].apply(func)</code></strong> applies a Python function to each element of a column one at a time:</p>
+
+<pre><code>def classify_load(kn):
+    if kn > 500:
+        return 'high'
+    elif kn > 350:
+        return 'medium'
+    else:
+        return 'low'
+
+df['load_category'] = df['load_kN'].apply(classify_load)
+</code></pre>
+
+<p>After this call, every row has a new <code>load_category</code> column populated by running <code>classify_load</code> on its <code>load_kN</code> value. You can pass a named function as above, or use a <code>lambda</code> for brief inline transformations:</p>
+
+<pre><code>df['deflection_inches'] = df['deflection_mm'].apply(lambda x: x / 25.4)
+</code></pre>
+
+<p><code>apply</code> is flexible but can be slower than vectorised operations (like direct arithmetic) on large datasets, because it iterates in Python rather than delegating to optimised C code. When performance matters with large DataFrames, prefer vectorised expressions; reserve <code>apply</code> for logic that truly cannot be expressed that way.</p>
+
+<p>Finally, <strong><code>df.rename()</code></strong> lets you change column (or index) names without altering any of the underlying data. You pass a dictionary to the <code>columns</code> parameter mapping old names to new names:</p>
+
+<pre><code>df = df.rename(columns={
+    'load_kN': 'applied_load_kN',
+    'deflection_mm': 'max_deflection_mm'
+})
+</code></pre>
+
+<p>Only the columns you name in the dictionary are changed; all others remain untouched. This is safer than reassigning <code>df.columns</code> entirely (which requires you to list every column name in the correct order). By default, <code>rename</code> returns a new DataFrame; to modify in place, add <code>inplace=True</code>.</p>
+
+<p>Putting it all together, a typical early-stage engineering data workflow might look like this:</p>
+
+<pre><code>import pandas as pd
+
+# 1. Load the data
+df = pd.read_csv('bridge_loads.csv', index_col='span_id', na_values=['--', 'N/A'])
+
+# 2. Add a derived column
+df['load_per_mm_deflection'] = df['load_kN'] / df['deflection_mm']
+
+# 3. Filter to steel spans only with load above threshold
+steel_df = df[(df['material'] == 'steel') & (df['load_kN'] > 400)]
+
+# 4. Sort by stiffness (highest load per mm deflection first)
+steel_df = steel_df.sort_values('load_per_mm_deflection', ascending=False)
+
+# 5. Select only the columns needed for the report
+report = steel_df[['material', 'load_kN', 'load_per_mm_deflection']]
+
+print(report)
+</code></pre>
+
+<p>This concise pipeline — read, derive, filter, sort, select — captures the essential rhythm of data preparation with Pandas and scales naturally to datasets with millions of rows.</p>
+        <div class="notes"><strong>Notes</strong>Consider pairing this content with a downloadable sample CSV so learners can run the examples directly. Emphasise that boolean indexing parentheses are mandatory — it is the most common syntax mistake at this stage.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

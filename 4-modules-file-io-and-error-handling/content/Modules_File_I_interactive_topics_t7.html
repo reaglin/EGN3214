@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules_File_I</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+  <header>
+    <h1>Modules_File_I</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Error Handling with try-except</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>When a Python program encounters an error at runtime, it raises an <strong>exception</strong> — a signal that something unexpected has occurred. Understanding how to catch, inspect, and raise exceptions is essential for writing robust engineering scripts that handle real-world data gracefully.</p>
+
+<ul>
+  <li><strong>What Is an Exception?</strong></li>
+  <li><strong>Python raises an exception object when an error condition occurs.</strong> Rather than silently producing a wrong answer, Python creates an object describing what went wrong and where, giving you the opportunity to respond to it programmatically.</li>
+  <li><strong>An unhandled exception prints a traceback and stops execution immediately.</strong> The traceback shows the call stack at the moment of failure, which is useful for debugging but undesirable in production scripts that must keep running.</li>
+  <li><strong>Exceptions are organized in a class hierarchy; catching a parent class also catches its subclasses.</strong> For example, catching <code>OSError</code> will also catch <code>FileNotFoundError</code> and <code>PermissionError</code>, since both are subclasses of <code>OSError</code>.</li>
+
+  <li><strong>Basic try-except Structure</strong></li>
+  <li><strong>Code inside the <code>try</code> block executes normally until an exception is raised.</strong> As soon as an exception occurs, Python stops executing the remaining lines in the <code>try</code> block and looks for a matching <code>except</code> clause.</li>
+  <li><strong>If an exception matches the specified type, the <code>except</code> block executes instead of crashing.</strong> This lets your program respond to the error — for example, by printing a message, using a default value, or skipping a bad record.</li>
+  <li><strong>Multiple <code>except</code> clauses can handle different exception types separately.</strong> Listing specific exception types before more general ones ensures each error kind receives the most appropriate response.
+    <pre><code>try:
+    value = int(user_input)
+except ValueError:
+    print("Input is not a valid integer.")
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+</code></pre>
+  </li>
+
+  <li><strong>The <code>else</code> and <code>finally</code> Clauses</strong></li>
+  <li><strong>The <code>else</code> block executes when the <code>try</code> block completes without raising an exception.</strong> Placing success-path code in <code>else</code> rather than at the end of the <code>try</code> block makes it clear that this code only runs when no error occurred.</li>
+  <li><strong>The <code>finally</code> block always executes, making it ideal for releasing resources.</strong> Whether an exception was raised or not, <code>finally</code> runs — ensuring file handles are closed, connections are released, and cleanup always happens.
+    <pre><code>try:
+    f = open("data.csv")
+    data = f.read()
+except FileNotFoundError:
+    print("File not found.")
+else:
+    print("File read successfully.")
+finally:
+    print("Cleanup complete.")
+</code></pre>
+  </li>
+  <li><strong>Both <code>else</code> and <code>finally</code> are optional and can be used together or independently.</strong> Use whichever combination matches the logic your script requires — they are not mutually dependent.</li>
+
+  <li><strong>Accessing Exception Information</strong></li>
+  <li><strong>Use <code>except ExceptionType as e</code> to capture the exception instance.</strong> The variable <code>e</code> holds the actual exception object, giving you programmatic access to details about what went wrong.</li>
+  <li><strong><code>str(e)</code> returns the human-readable error message associated with the exception.</strong> Printing or logging <code>str(e)</code> alongside context information makes diagnosing problems far easier than a bare "an error occurred" message.
+    <pre><code>try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Caught an error: {e}")
+</code></pre>
+  </li>
+  <li><strong>The exception object may carry additional attributes relevant to the specific error type.</strong> For instance, <code>OSError</code> exposes <code>errno</code> and <code>strerror</code> attributes that provide machine-readable and human-readable descriptions of the operating-system-level error.</li>
+
+  <li><strong>Raising Exceptions</strong></li>
+  <li><strong>Use <code>raise ExceptionType(message)</code> to raise a specific exception with a description.</strong> Raising exceptions deliberately lets you enforce preconditions and communicate clearly to callers when your function receives invalid input.
+    <pre><code>def compute_flow(area, velocity):
+    if area <= 0:
+        raise ValueError(f"Area must be positive, got {area}")
+    return area * velocity
+</code></pre>
+  </li>
+  <li><strong>Re-raise a caught exception with a bare <code>raise</code> statement to propagate it after logging.</strong> This pattern lets an intermediate layer record diagnostic information without swallowing the exception, preserving the original traceback for higher-level handlers.</li>
+  <li><strong>Custom exception classes can be created by subclassing <code>Exception</code> for domain-specific errors.</strong> A class like <code>SensorReadError</code> or <code>InvalidMaterialError</code> makes error handling code more readable and allows callers to catch only errors relevant to their domain.</li>
+
+  <li><strong>Practical Error Handling in Engineering Scripts</strong></li>
+  <li><strong>Validate inputs at the boundary of your script using try-except before processing begins.</strong> Catching bad data — such as non-numeric values in a CSV column — early prevents cascading failures deep inside calculation functions where errors are harder to interpret.</li>
+  <li><strong>Log caught exceptions with enough context to identify the source of the problem.</strong> Include the filename, row number, variable name, or sensor ID alongside the error message so that post-run debugging does not require re-running the entire job.</li>
+  <li><strong>Design error handling so the script can continue processing remaining data after a recoverable error.</strong> Wrapping the processing of each data record in its own try-except block allows the script to skip bad records and report them at the end, rather than halting on the first failure.
+    <pre><code>errors = []
+results = []
+for i, record in enumerate(dataset):
+    try:
+        results.append(process(record))
+    except ValueError as e:
+        errors.append(f"Row {i}: {e}")
+
+print(f"Processed {len(results)} records with {len(errors)} errors.")
+</code></pre>
+  </li>
+</ul>
+        <div class="notes"><strong>Notes</strong>Explains Python&#39;s exception handling model and demonstrates how to use try-except blocks to build resilient engineering scripts that recover gracefully from runtime errors. Emphasise to students that good error handling is not about suppressing errors — it is about responding to them intentionally. Encourage the habit of catching specific exception types rather than bare &lt;code&gt;except:&lt;/code&gt; clauses, which can accidentally hide bugs.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

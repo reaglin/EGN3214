@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Matplotlib and the pyplot Interface</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+  <header>
+    <h1>Introduction to Matplotlib and the pyplot Interface</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Introduction to Matplotlib and the pyplot Interface</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Matplotlib is the foundational plotting library of the Python scientific ecosystem. Created by John D. Hunter in 2003, it was originally designed to replicate the plotting capabilities of MATLAB in a free, open-source environment. Over the two decades since its release, it has grown into an extraordinarily feature-rich library that powers visualizations in academic research, data science, engineering, and finance. Understanding Matplotlib deeply means understanding not just how to draw a line on a chart, but how the library thinks about the structure of a visualization — from the outermost window all the way down to individual tick marks on an axis.</p>
+
+<p>At its heart, Matplotlib works by constructing a hierarchy of objects. Every plot you make is composed of a <strong>Figure</strong>, which is the top-level container (think of it as the canvas or the page), one or more <strong>Axes</strong> objects inside the Figure (each Axes is an individual plot panel with its own coordinate system), and then the actual visual elements — lines, markers, text, patches — that live inside each Axes. This object hierarchy is fundamental to everything Matplotlib does, and all the convenience functions you call eventually manipulate objects in this hierarchy.</p>
+
+<p><strong>What is Matplotlib?</strong></p>
+
+<p>Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. It is distributed as an open-source package and is installable via pip or conda. At the most basic level it lets you draw a line chart or a scatter plot with just a couple of lines of code, but its true power lies in the granular control it gives you over every visual element on the screen.</p>
+
+<p>One of Matplotlib's most important practical qualities is its <strong>seamless integration with NumPy arrays and pandas DataFrames</strong>. Because nearly all numerical Python work involves NumPy arrays — whether directly or via libraries like pandas that are built on top of NumPy — the fact that Matplotlib accepts these structures natively is enormously convenient. You do not need to convert data to lists or any special format. Consider this example:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2 * np.pi, 300)   # NumPy array of 300 evenly spaced values
+y = np.sin(x)                          # NumPy array of sine values
+
+plt.plot(x, y)
+plt.show()
+</code></pre>
+
+<p>Here <code>x</code> and <code>y</code> are plain NumPy arrays and <code>plt.plot()</code> accepts them directly. The same works with a pandas Series or a column of a DataFrame, making it trivial to plot data you have already loaded and cleaned in pandas.</p>
+
+<p>Matplotlib also supports a <strong>wide range of output formats</strong>, which makes it suitable for many different workflows. When you call <code>plt.savefig()</code>, the file format is inferred from the extension you provide. Common raster formats include <code>PNG</code> (ideal for web and screen display) and <code>JPEG</code> (smaller file size, lossy compression). Vector formats include <code>PDF</code> (excellent for print and LaTeX documents) and <code>SVG</code> (scalable vector graphics, easily embedded in web pages or edited in tools like Inkscape). Because vector formats store mathematical descriptions of shapes rather than pixel grids, figures saved as PDF or SVG remain crisp at any zoom level — critically important for publication-quality figures.</p>
+
+<p>Perhaps most importantly for advanced users, Matplotlib is <strong>highly customizable</strong>. Every visual element — the font family and size on axis labels, the width and color and dash pattern of a plotted line, the position and number of tick marks, the background color of the plot area, the spacing between subplots — can be controlled programmatically. This fine-grained control distinguishes Matplotlib from higher-level libraries like Seaborn or Plotly, which make it easy to produce attractive defaults quickly but can be harder to customize precisely. Matplotlib, by contrast, gives you the full toolkit to produce exactly the figure you envision.</p>
+
+<p><strong>The pyplot Module</strong></p>
+
+<p>While Matplotlib's full object-oriented API is powerful, the most common way beginners (and many experienced practitioners) interact with the library is through <strong>pyplot</strong>, a module within Matplotlib that provides a MATLAB-style procedural interface. It is conventionally imported as follows:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+</code></pre>
+
+<p>The alias <code>plt</code> is nearly universal in the Python community and you will see it in virtually every tutorial, textbook, and Stack Overflow answer. Using it saves typing and makes code immediately recognizable to other Python programmers.</p>
+
+<p>The key concept that makes pyplot work is that it maintains an internal notion of the <strong>current figure</strong> and the <strong>current axes</strong>. When you call a pyplot function, it automatically operates on whichever figure and axes are currently active, so you do not need to explicitly pass references to these objects on every call. This significantly reduces boilerplate code in simple, single-figure scripts. For example:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [10, 20, 25, 30])   # plots on the current axes
+plt.xlabel('Time (s)')                       # labels the x-axis of the current axes
+plt.title('Sample Plot')                     # sets the title of the current axes
+plt.show()                                   # displays the current figure
+</code></pre>
+
+<p>In this script, pyplot created a figure and axes automatically on the first call to <code>plt.plot()</code>, and all subsequent calls operated on that same axes without you ever needing to reference it directly. This is convenient for quick, exploratory work.</p>
+
+<p>The three most commonly used pyplot functions are worth understanding individually. <code>plt.plot()</code> is the general-purpose line-and-marker plotting function. It accepts x and y data (as lists, NumPy arrays, or pandas Series), along with keyword arguments for styling (color, linewidth, linestyle, marker shape, etc.). <code>plt.show()</code> renders the current figure and displays it — in an interactive environment like a Jupyter Notebook this may happen automatically, but in a script it is necessary to call <code>plt.show()</code> explicitly to see the output. <code>plt.savefig()</code> writes the current figure to disk, and must be called <em>before</em> <code>plt.show()</code> in a script because calling <code>plt.show()</code> first clears the figure.</p>
+
+<p>For more complex visualization needs — multiple subplots with different data, figures embedded in GUI applications, or careful reuse of axes objects across functions — pyplot can be combined with the <strong>object-oriented (OO) Matplotlib API</strong>. In this approach, you explicitly create and store references to Figure and Axes objects and call methods on those objects rather than going through the pyplot state machine. The two styles are not mutually exclusive; a common hybrid pattern is to use pyplot to create the figure and axes objects and then work with those objects directly:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+fig, ax = plt.subplots()          # create Figure and Axes, get references to both
+
+x = np.linspace(0, 10, 100)
+ax.plot(x, np.sin(x), label='sin(x)')
+ax.plot(x, np.cos(x), label='cos(x)')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('Trig Functions')
+ax.legend()
+
+plt.show()
+</code></pre>
+
+<p>Here <code>fig</code> is a Figure object and <code>ax</code> is an Axes object. Methods like <code>ax.plot()</code>, <code>ax.set_xlabel()</code>, and <code>ax.legend()</code> are called directly on the Axes, which is the recommended approach whenever your code grows beyond a single simple plot.</p>
+
+<p><strong>Figures and Axes Objects</strong></p>
+
+<p>Understanding the difference between a <strong>Figure</strong> and an <strong>Axes</strong> is arguably the most important conceptual step in learning Matplotlib, because confusion between these two objects is the source of many common errors.</p>
+
+<p>A <strong>Figure</strong> is the entire window or page. It is the outermost container. You create one explicitly with <code>plt.figure()</code>, which instantiates a new Figure object and immediately makes it the current figure in pyplot's state machine:</p>
+
+<pre><code>fig = plt.figure(figsize=(10, 6))   # 10 inches wide, 6 inches tall
+</code></pre>
+
+<p>The <code>figsize</code> argument controls the physical dimensions of the figure in inches, which matters when saving to a file because the output dimensions (combined with the <code>dpi</code> setting) determine the pixel resolution. A figure with no axes added to it is just a blank canvas — nothing will be visible.</p>
+
+<p>An <strong>Axes</strong> object is an individual plot region within a Figure. It contains its own x-axis, y-axis, title, tick marks, tick labels, data space, and all the plotted artists (lines, markers, text, images, etc.). A single Figure can contain many Axes objects arranged in any layout, which is how multi-panel figures and subplot grids are constructed. Each Axes is completely independent — it has its own axis limits, scale, labels, and coordinate system.</p>
+
+<p>You can add an Axes to a Figure using <code>fig.add_subplot()</code> or the more convenient <code>plt.subplots()</code> function. When you use <code>plt.subplots(nrows, ncols)</code>, you get back both the Figure and a NumPy array of Axes objects:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 8))
+
+# axes is a 2x2 NumPy array of Axes objects
+axes[0, 0].plot([1, 2, 3], [4, 5, 6])
+axes[0, 0].set_title('Top Left')
+
+axes[0, 1].scatter([1, 2, 3], [9, 3, 7])
+axes[0, 1].set_title('Top Right')
+
+axes[1, 0].bar(['A', 'B', 'C'], [5, 8, 3])
+axes[1, 0].set_title('Bottom Left')
+
+axes[1, 1].hist(np.random.randn(1000), bins=30)
+axes[1, 1].set_title('Bottom Right')
+
+plt.tight_layout()   # automatically adjusts spacing to prevent overlapping labels
+plt.show()
+</code></pre>
+
+<p>By accessing each Axes object through its index in the <code>axes</code> array, you have precise, unambiguous control over each plot panel. This is why working with Axes objects directly — rather than relying solely on pyplot's current-axes concept — becomes essential as your visualizations grow in complexity. Each Axes independently manages its own x-axis and y-axis objects (accessible as <code>ax.xaxis</code> and <code>ax.yaxis</code>), which themselves contain tick locators, tick formatters, and axis labels. This nesting is what gives Matplotlib its remarkable depth of customization.</p>
+
+<p><strong>Displaying and Saving Figures</strong></p>
+
+<p>Once you have built a figure, you need to either display it or save it to disk (or both). Understanding how these operations work correctly avoids several common frustrations.</p>
+
+<p><strong>Saving a figure</strong> is done with <code>plt.savefig()</code>, or equivalently with the <code>fig.savefig()</code> method on a Figure object (the latter is preferred when you have an explicit reference to the figure). A critical and commonly overlooked parameter is <code>dpi</code>, which stands for <em>dots per inch</em>:</p>
+
+<pre><code>plt.savefig('output_figure.png', dpi=300)
+</code></pre>
+
+<p>The <code>dpi</code> setting controls the resolution of the output raster image. The default is typically 100 dpi, which produces figures adequate for screen display but often too low-resolution for print publications, which typically require at least 300 dpi. A figure that is 8 inches wide saved at 100 dpi will be 800 pixels wide; the same figure at 300 dpi will be 2400 pixels wide — much sharper when printed. For vector formats (PDF, SVG), the <code>dpi</code> setting is less relevant because the output is resolution-independent, though it still affects any raster elements embedded within the vector file (such as images plotted with <code>imshow()</code>). Additional useful arguments to <code>savefig()</code> include <code>bbox_inches='tight'</code>, which trims extra whitespace around the figure, and <code>transparent=True</code>, which makes the figure background transparent (useful for PNG overlays).</p>
+
+<pre><code>fig.savefig('publication_figure.pdf', bbox_inches='tight')   # clean PDF for a paper
+fig.savefig('web_thumbnail.png', dpi=150, transparent=True)  # transparent PNG for web
+</code></pre>
+
+<p><strong>Displaying a figure</strong> is done with <code>plt.show()</code>. In a standard Python script, this call is necessary to actually render and display the figure in a window; without it, the script will complete and exit without ever showing you anything. In Jupyter Notebooks, figures are often displayed automatically at the end of a cell due to Matplotlib's inline backend, but explicitly calling <code>plt.show()</code> is still good practice because it clarifies intent and ensures consistent behavior. An important ordering rule: always call <code>plt.savefig()</code> <em>before</em> <code>plt.show()</code>. The reason is that <code>plt.show()</code> in non-interactive backends finalizes and clears the current figure after displaying it, so calling it first leaves nothing to save.</p>
+
+<pre><code>plt.plot([1, 2, 3], [4, 5, 6])
+plt.savefig('my_plot.png', dpi=200)   # save first
+plt.show()                             # then display
+</code></pre>
+
+<p>Finally, <strong>releasing figure memory</strong> is done with <code>plt.close()</code>. This is a point that beginners frequently overlook, especially when writing scripts or loops that generate many figures. Matplotlib keeps figure objects in memory until they are explicitly closed or the Python process ends. If you are generating dozens or hundreds of figures in a loop — for example, creating one plot per data file in a batch processing workflow — and not closing them, memory usage will grow continuously and may eventually cause your program to crash or slow to a crawl:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+for i in range(50):
+    fig, ax = plt.subplots()
+    ax.plot(np.random.randn(100))
+    ax.set_title(f'Random Walk {i}')
+    fig.savefig(f'random_walk_{i}.png', dpi=150)
+    plt.close(fig)    # release this figure's memory before the next iteration
+</code></pre>
+
+<p>Passing the specific figure object to <code>plt.close(fig)</code> is the most precise approach, ensuring only that figure is closed. You can also call <code>plt.close('all')</code> to release all currently open figures at once, which is a useful cleanup step at the beginning or end of a script.</p>
+
+<p>Taken together, these four areas — the library itself, the pyplot interface, the Figure/Axes object model, and the display/save workflow — form the conceptual foundation on which all Matplotlib work is built. Every more advanced topic, from custom colormaps to animated plots to embedding figures in GUI applications, builds directly on this foundation. Taking the time to understand these concepts thoroughly, rather than treating Matplotlib as a collection of magic incantations, pays enormous dividends as your visualization needs grow in complexity.</p>
+        <div class="notes"><strong>Notes</strong>The hybrid pyplot/OO style shown in the subplots example is widely considered best practice for anything beyond a single simple plot. Students should be encouraged early to store references to fig and ax rather than relying exclusively on pyplot&#39;s state machine, as this habit avoids many common bugs in multi-axes or multi-figure code.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

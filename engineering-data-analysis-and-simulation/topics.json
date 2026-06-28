@@ -1,0 +1,1544 @@
+{
+  "ModuleFolderName": "Engineering_Data_Analysis",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T21:40:58.8747559-04:00",
+  "ModifiedDate": "2026-05-14T21:40:58.8749127-04:00",
+  "Outcomes": [
+    {
+      "Id": "72d15f9a-386f-4a65-bc16-c107d27b8e00",
+      "Text": "Explain the full engineering data workflow from loading and cleaning CSV data to producing meaningful visualizations.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "850e28e9-4c2e-4ef0-a39c-5ef3220b865a",
+      "Text": "Apply pandas and NumPy to import, inspect, and clean real-world time-series datasets.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "53221edd-981e-4dfb-8278-0fa3e84ec6c5",
+      "Text": "Create publication-quality plots and charts using matplotlib to communicate engineering data insights.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "59093cb6-7d8d-4da1-85ee-3921ee041239",
+      "Text": "Implement time-stepping simulation models for mechanical, electrical, and thermal engineering systems.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "ad63add8-d375-4f9b-8834-d6069a35f4a9",
+      "Text": "Analyze the accuracy of numerical simulations by comparing time-stepped results against known analytical solutions.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "9b7f8e7c-084c-4818-b1ca-eb0fe4f83a7d",
+      "Text": "Evaluate the trade-offs between simulation fidelity, step size, and computational cost in engineering models.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+      "Title": "Introduction to Engineering Data Workflows",
+      "Summary": "Establishes the end-to-end pipeline from raw data acquisition to actionable insight. Introduces the key Python libraries used throughout the module.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "9cd9dff6-e4a8-4dd7-a624-d733abcb1513",
+          "TopicId": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+          "Title": "The Engineering Data Pipeline",
+          "BodyText": "A structured data pipeline guides engineers from raw measurements to validated conclusions. Understanding each stage prevents errors from propagating downstream.",
+          "Notes": "Emphasize that skipping or rushing cleaning steps is the most common source of incorrect analysis in engineering practice.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "1330d337-a384-4a9e-996e-b0286f8bf4e2",
+              "Text": "The pipeline stages are: acquire, load, clean, explore, visualize, and interpret.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2920001d-32bd-4584-87af-c0fd3cf10e8f",
+              "Text": "Each stage has defined inputs and outputs that must be validated before proceeding.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "dbe64d7d-bf1e-4102-8e2a-10838af6bab6",
+              "Text": "Automation of repetitive pipeline steps reduces human error and improves reproducibility.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d2c10798-e978-4f51-ab0d-731e998bcbd4",
+              "Text": "Documentation at each stage is essential for audit trails and peer review.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "e2878db8-6bb0-44ca-a9c9-8e76d973c641",
+          "TopicId": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+          "Title": "Overview of pandas",
+          "BodyText": "pandas is the primary Python library for structured data manipulation, providing DataFrame and Series objects suited to tabular and time-series engineering data.",
+          "Notes": "pandas is built on top of NumPy, so operations are vectorized and efficient for large datasets common in sensor logging and instrumentation.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "eee51534-74f6-4d29-b129-de83f8198b0e",
+              "Text": "The DataFrame object represents a two-dimensional labeled table analogous to a spreadsheet.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "373e73ac-ae62-4668-9540-a201ef6e635e",
+              "Text": "Series objects represent single columns or one-dimensional labeled arrays.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b1f85959-e9c1-4aa0-a4d3-ad4016ffbf43",
+              "Text": "pandas integrates directly with NumPy, enabling fast numerical operations on tabular data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "eea16ff3-d051-4bd3-9bca-607febc4f195",
+              "Text": "Built-in I/O functions support reading and writing CSV, Excel, and other common engineering file formats.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "35cfcef1-c7cf-4b83-9336-2d823cbdd22f",
+          "TopicId": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+          "Title": "Overview of NumPy",
+          "BodyText": "NumPy provides the foundational n-dimensional array structure and mathematical functions required for numerical engineering computation in Python.",
+          "Notes": "NumPy operations execute in compiled C code, making them orders of magnitude faster than equivalent pure Python loops for large arrays.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "96f5b422-2947-4859-84e4-765943774d10",
+              "Text": "The ndarray is NumPy\u0027s core data structure for storing homogeneous numerical data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1bfca3c7-38f7-47a7-81d8-180d6a423e55",
+              "Text": "Broadcasting rules allow element-wise operations between arrays of compatible shapes without explicit loops.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9d1c54ca-1d76-43a6-bc90-f5700d287364",
+              "Text": "NumPy includes linear algebra, Fourier transform, and statistical functions used throughout engineering analysis.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "50875d1c-167e-466f-a272-4be9c487d9bf",
+              "Text": "Random number generation in NumPy supports Monte Carlo and stochastic simulation workflows.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "aa7dff43-1368-45f3-bceb-10b7ccd6f7df",
+          "TopicId": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+          "Title": "Overview of matplotlib",
+          "BodyText": "matplotlib is Python\u0027s foundational plotting library, enabling creation of static, animated, and interactive visualizations suitable for engineering reports.",
+          "Notes": "The pyplot interface provides a MATLAB-like workflow, while the object-oriented API gives finer control needed for multi-panel engineering figures.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "8d249f97-bbd1-47c5-a435-107727ed10ad",
+              "Text": "The Figure and Axes objects form the core of matplotlib\u0027s object-oriented interface.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3fd6a64d-b258-43bf-b4ed-65c473e20e53",
+              "Text": "Line plots, scatter plots, histograms, and bar charts cover the majority of engineering visualization needs.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "aacad85b-60d6-42e5-8f19-33f4591f4cef",
+              "Text": "Labels, titles, legends, and grid lines should always be included to make plots self-documenting.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "a63f7414-673e-4a01-8f88-e1e652b3c02d",
+              "Text": "Figures can be exported to PNG, PDF, SVG, and other formats for inclusion in engineering reports.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d90acfe0-5350-45a8-bc45-eb04cc8948f3",
+          "TopicId": "09cce1cd-5162-43da-b0a5-edb2a7eeff98",
+          "Title": "Setting Up the Python Environment",
+          "BodyText": "A reproducible environment ensures that all library versions are consistent across team members and computing platforms.",
+          "Notes": "Using virtual environments or conda environments prevents version conflicts between projects and is considered best practice in engineering software development.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "aeff4cb1-4d69-4e02-952b-8c942b2df348",
+              "Text": "Use virtual environments or conda environments to isolate project dependencies.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b51f0b65-4bac-46d6-90a3-e9d238afcbd7",
+              "Text": "A requirements.txt or environment.yml file should pin library versions for reproducibility.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "24bfe3c6-b609-451f-a3b8-767884ef2e97",
+              "Text": "Jupyter Notebooks provide an interactive environment that combines code, outputs, and narrative documentation.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "efe5e33f-6871-47cb-be00-95766b4562c0",
+              "Text": "Version control with Git should be applied to notebooks and scripts from the start of a project.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "a7462699-d77a-4459-bd54-c1978747b75a",
+      "Title": "Loading and Inspecting Engineering Data",
+      "Summary": "Covers the practical techniques for importing CSV and time-series data files into Python and performing initial inspection to understand data structure and quality.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "a5e71593-ded7-49f2-918c-0d19cdc66e41",
+          "TopicId": "a7462699-d77a-4459-bd54-c1978747b75a",
+          "Title": "Reading CSV Files with pandas",
+          "BodyText": "The pd.read_csv() function is the primary method for loading comma-separated engineering datasets into a DataFrame for analysis.",
+          "Notes": "Engineering CSV files often have non-standard delimiters, comment lines, or multi-row headers. The sep, skiprows, and header parameters handle these cases.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "7817ce5b-2b35-4329-8e85-55cb36c4ebc0",
+              "Text": "pd.read_csv() accepts file paths, URLs, or file-like objects as its first argument.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "566fcd5f-183e-45d5-bda4-b62e49032bcd",
+              "Text": "The dtype parameter allows explicit specification of column data types to avoid silent type inference errors.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "43f46227-a2a2-416b-90c1-0440556ce865",
+              "Text": "The parse_dates parameter converts date and time columns automatically during loading.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "bf2ae94e-03ec-4930-96d0-d0620a7e1131",
+              "Text": "Large files can be read in chunks using the chunksize parameter to manage memory usage.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2c352de5-45e3-4ce4-83ff-da86e54a5cbb",
+          "TopicId": "a7462699-d77a-4459-bd54-c1978747b75a",
+          "Title": "Initial Data Inspection",
+          "BodyText": "Before any analysis, engineers must inspect the structure and content of a loaded DataFrame to understand its shape, types, and completeness.",
+          "Notes": "Experienced data analysts spend significant time on inspection before writing any analysis code \u2014 this step prevents wasted effort on flawed assumptions.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "62a02ed3-600a-431f-a028-ee9c2242d2b5",
+              "Text": "df.shape returns the number of rows and columns as a tuple.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e66567b2-3ae8-4cec-9b8f-5051195483fc",
+              "Text": "df.dtypes reveals the inferred data type of each column, flagging potential type mismatches.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9f60b565-5581-463c-82d9-14ee43aec415",
+              "Text": "df.head() and df.tail() display the first and last rows to verify correct loading.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9d6686b9-6e5d-46b8-8b76-dfb395494704",
+              "Text": "df.info() provides a concise summary of column names, non-null counts, and data types.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "b66d60b2-f1a0-472a-82e0-21f21f7701c6",
+              "Text": "df.describe() generates summary statistics including mean, standard deviation, and quartiles.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "9de9c111-5728-4ddf-8f36-ef11be59577c",
+          "TopicId": "a7462699-d77a-4459-bd54-c1978747b75a",
+          "Title": "Working with Time-Series Indices",
+          "BodyText": "Engineering time-series data is most powerful when the DataFrame index is a DatetimeIndex, enabling time-based slicing and resampling.",
+          "Notes": "Setting a proper DatetimeIndex is critical before applying any resampling or rolling-window operations used in signal smoothing and trend detection.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "381a97ae-afd5-438f-ac95-599a4363b5e9",
+              "Text": "pd.to_datetime() converts string or numeric columns to pandas Timestamp objects.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "452f886f-d7b4-4b12-ad63-72c8f661d107",
+              "Text": "Setting a datetime column as the index using df.set_index() enables time-based selection.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3a4e4890-fda3-4eb1-a85b-aa4c2fbd5beb",
+              "Text": "Time slicing with string labels such as df[\u00272024-01\u0027] selects all rows within that period.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2a574eee-1502-4615-a4ef-9a77127fffde",
+              "Text": "The DatetimeIndex supports attributes like .hour, .day, and .month for feature extraction.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "55a7141d-0b7e-4c40-b78f-3e2037af9721",
+          "TopicId": "a7462699-d77a-4459-bd54-c1978747b75a",
+          "Title": "Selecting and Filtering Data",
+          "BodyText": "Subsetting a DataFrame to relevant rows and columns is a fundamental skill for focusing analysis on the engineering variables of interest.",
+          "Notes": "Boolean indexing is the preferred pattern for conditional filtering; avoid chained indexing as it can produce unexpected results with the SettingWithCopyWarning.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "37c32e16-9b67-4064-a1c2-1d88baafe306",
+              "Text": "Column selection using df[\u0027column\u0027] returns a Series; df[[\u0027col1\u0027, \u0027col2\u0027]] returns a DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7a78b66c-d62f-4f69-82ef-bea99effaa06",
+              "Text": "loc[] selects rows and columns by label; iloc[] selects by integer position.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "51cbc80c-8a6d-443f-a06e-6a70e86bfeba",
+              "Text": "Boolean masks created from comparison operations filter rows meeting specified conditions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "08f14799-4146-4019-9a20-2eff4ea0c460",
+              "Text": "The query() method provides a string-based syntax for readable conditional filtering.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "0b163e94-c4ec-4071-aa10-b2a7a45a9e91",
+          "TopicId": "a7462699-d77a-4459-bd54-c1978747b75a",
+          "Title": "Importing Data from Multiple Sources",
+          "BodyText": "Engineering projects often combine data from multiple CSV files, sensors, or logging systems that must be merged into a single coherent dataset.",
+          "Notes": "Always verify that timestamps or key columns align correctly before merging, as clock skew between sensors is a common source of synchronization error.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "af3a0953-1a12-48cf-ad1a-d7395c793e19",
+              "Text": "pd.concat() stacks multiple DataFrames vertically or horizontally along a specified axis.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "efd849a8-f6f3-4860-bd9c-05c3328d83fd",
+              "Text": "pd.merge() performs SQL-style joins on one or more key columns.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "de6a0d25-211b-4b2a-ac4a-27dad2bfcf1f",
+              "Text": "The join() method merges DataFrames on their indices, suitable for time-aligned sensor data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1e1df403-4825-45ce-8117-ff03bc67db6c",
+              "Text": "Duplicate rows introduced during merging should be detected with duplicated() and resolved.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+      "Title": "Data Cleaning and Preprocessing",
+      "Summary": "Addresses the identification and correction of common data quality issues including missing values, outliers, incorrect types, and inconsistent formatting found in raw engineering datasets.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "07e1efd8-3553-487e-9d8c-6eba2abd93aa",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Detecting and Handling Missing Values",
+          "BodyText": "Missing values are ubiquitous in engineering data due to sensor faults, communication dropouts, or logging gaps, and must be addressed before analysis.",
+          "Notes": "The choice between dropping and filling missing values depends on the proportion of missing data and the physical meaning of the measurement \u2014 interpolation is often appropriate for time-series sensor data.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "8f1886a9-f9e5-4a21-8702-bbea451e0e5f",
+              "Text": "df.isnull().sum() counts missing values per column to quantify the extent of the problem.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "dbf11255-faa8-45e6-8300-33eef302e3e8",
+              "Text": "dropna() removes rows or columns containing missing values based on configurable thresholds.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fbb81a69-c181-478b-a508-5dadc75ef33b",
+              "Text": "fillna() replaces missing values with a constant, forward fill, backward fill, or computed statistic.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c69373c0-9a81-4506-aab9-90ab6fae9422",
+              "Text": "interpolate() estimates missing values using linear or polynomial interpolation, ideal for smooth time-series signals.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "8499a873-4729-4b3f-ba99-7f428acdbb86",
+              "Text": "Missing data patterns should be visualized before choosing a strategy, as systematic gaps indicate sensor faults.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "1fc08246-5439-459e-a468-f511f4b9bb71",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Identifying and Treating Outliers",
+          "BodyText": "Outliers in engineering datasets can represent genuine extreme events or instrument errors and must be carefully evaluated before removal or correction.",
+          "Notes": "In safety-critical engineering analysis, outliers should never be removed without engineering justification \u2014 they may represent the most important events in the dataset.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "979f4549-c722-4654-a40d-d20c35149ae9",
+              "Text": "Box plots and scatter plots provide visual identification of potential outliers.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ffdc5e6f-b7ad-4d94-9094-975589d5c976",
+              "Text": "The interquartile range (IQR) method flags values more than 1.5\u00D7 IQR beyond the quartiles.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2023e0e9-2a96-4b3a-9513-0bf4f7259a99",
+              "Text": "Z-score thresholding identifies values more than a specified number of standard deviations from the mean.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "68865ba4-8457-49f8-be5c-ceb28a922ff0",
+              "Text": "Domain knowledge must guide whether an outlier is a true event or an instrument artifact.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "71d624a2-c7a0-4ef0-8b48-b2b6ad64a454",
+              "Text": "Outliers can be removed, capped, or flagged with a separate boolean column depending on context.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "877202c9-da26-4b48-ae38-a5ca7956db93",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Correcting Data Types",
+          "BodyText": "Incorrectly inferred data types prevent numerical operations and must be corrected as an early step in the cleaning process.",
+          "Notes": "Numeric columns stored as strings are a frequent problem when CSV files contain units or symbols embedded in data cells \u2014 these must be stripped before conversion.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "45c4bc58-f2ee-45a2-9a61-d20065c47ad4",
+              "Text": "astype() converts a Series or DataFrame column to a specified data type.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1748e67f-c3fe-4068-a3e5-e5ef74ad2338",
+              "Text": "pd.to_numeric() with errors=\u0027coerce\u0027 converts non-numeric values to NaN rather than raising an error.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "65294763-5fa6-41d8-85b4-bd5142deb34b",
+              "Text": "String columns representing categories can be converted to the Categorical dtype for memory efficiency.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b18ec257-8e44-48d5-ba6e-9e9ada54bd71",
+              "Text": "Datetime parsing should be done at load time or immediately after loading to enable time-series operations.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "a05a3fa0-42cb-493f-9bc3-d3fbec090113",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Handling Duplicate Records",
+          "BodyText": "Duplicate rows corrupt statistical summaries and simulation inputs and must be identified and removed as part of standard data cleaning.",
+          "Notes": "Exact duplicates are straightforward to remove, but near-duplicates caused by repeated sensor transmissions at slightly different timestamps require domain-specific deduplication logic.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "409a6154-8f72-44b6-b0a5-ca7917f4b8a2",
+              "Text": "duplicated() returns a boolean mask identifying duplicate rows based on all or specified columns.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "729856b8-c27e-44aa-8728-5369677c6605",
+              "Text": "drop_duplicates() removes duplicate rows, retaining the first or last occurrence by configuration.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2491dc52-7d98-4c79-8697-ff8f8d93c231",
+              "Text": "Time-based deduplication may require resampling to a regular grid rather than simple row removal.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "2045c8ef-1062-479f-95fa-e59800249807",
+              "Text": "After deduplication, the row count and index should be reset and verified.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "3418ea05-fba2-43e5-99a8-80bf6a5beb54",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Normalizing and Scaling Data",
+          "BodyText": "Engineering signals recorded in different units or on vastly different scales must be normalized before comparison, visualization, or use as simulation inputs.",
+          "Notes": "Min-max normalization maps values to [0, 1]; z-score standardization produces zero mean and unit variance. The choice depends on downstream use \u2014 machine learning models typically require standardization while visualization often uses normalization.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "ceca630d-04c6-4545-a57a-0bb265d44557",
+              "Text": "Min-max normalization scales data to a fixed range, typically [0, 1], preserving relative relationships.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c457878c-a831-4b94-942d-b13236f2c2d4",
+              "Text": "Z-score standardization transforms data to have zero mean and unit standard deviation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "508f7706-27b1-4f76-9827-7d244563ab80",
+              "Text": "Unit conversion should be applied before normalization to ensure physical consistency.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b1f65cd6-4853-4d3a-af4e-97468e9b4383",
+              "Text": "Scaling parameters derived from training data must be saved and applied consistently to new data.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7b934cff-6ecb-4619-ab92-ae55ae091bc8",
+          "TopicId": "6203dd4b-d50f-469a-80f3-a6d22d47adec",
+          "Title": "Resampling and Aggregating Time-Series Data",
+          "BodyText": "Engineering time-series data is often recorded at irregular intervals or at higher frequencies than required for analysis, necessitating resampling to a uniform grid.",
+          "Notes": "Downsampling high-frequency vibration or electrical data to a lower rate must be preceded by a low-pass filter to prevent aliasing \u2014 a common error in engineering signal processing.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "5713d634-952f-4e37-b9ae-6379e25c9fa5",
+              "Text": "resample() groups time-series data into fixed time buckets for aggregation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "88634e2b-f59b-4f61-a0d8-f36b4ee5eae2",
+              "Text": "Common aggregation functions include mean, max, min, and sum applied to each resampled bucket.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9df5c290-80c3-4fb8-a8c1-159747df5b01",
+              "Text": "Upsampling to a higher frequency requires an interpolation method to fill the new time points.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c4ee85b8-314e-4ba8-bf17-0405915712be",
+              "Text": "Rolling windows using rolling() compute moving averages and other statistics for trend smoothing.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "a61d611b-79ad-457b-b025-500e5b160e9d",
+      "Title": "Visualizing Engineering Data with matplotlib",
+      "Summary": "Teaches the construction of clear, informative plots for communicating engineering data patterns, trends, distributions, and relationships using matplotlib and pandas plotting utilities.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "ebd8de36-99e1-4d3e-95cd-adfed51dd472",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Line Plots for Time-Series Data",
+          "BodyText": "Line plots are the standard visualization for time-series engineering data, clearly showing how a measured variable evolves over time.",
+          "Notes": "Always label axes with physical quantities and units. Use grid lines to facilitate value reading and set a descriptive title that includes the system name and measurement period.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "85772429-afed-408b-817e-a72d5c46cb30",
+              "Text": "plt.plot() or ax.plot() draws a line connecting sequential data points.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8e6c1f5b-94b5-41c3-8f96-6ad8f938b2f5",
+              "Text": "Multiple signals can be overlaid on the same axes using repeated plot calls with distinct colors.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f0e455b1-cd9d-46ea-9cba-1b5801a21ace",
+              "Text": "Axis limits should be set explicitly to focus on the region of interest.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5f93f212-d1fb-4e4f-855f-232f67d9d0d2",
+              "Text": "Legends are required when multiple signals are plotted on the same axes.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "570c0929-9ea4-4e10-a90e-64ede02320bc",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Scatter Plots for Correlation Analysis",
+          "BodyText": "Scatter plots reveal relationships and correlations between two engineering variables, such as load versus deflection or temperature versus resistance.",
+          "Notes": "Color-coding scatter plot points by a third variable using the c parameter adds a dimension of information and can reveal clustering patterns not visible otherwise.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "4d7f3a7e-754d-4da1-8ac9-3777570287db",
+              "Text": "plt.scatter() plots individual data points without connecting lines.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "bbd16f11-1e14-4a44-b057-fe67aff9e469",
+              "Text": "Trend lines can be added using NumPy polynomial fitting and plot to indicate general relationships.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c1f98e23-cbb4-4a61-98a1-f912f9edccd6",
+              "Text": "Correlation coefficients computed with NumPy or pandas quantify the strength of observed relationships.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0cbef291-bcde-4879-b189-2e116c88f3ba",
+              "Text": "Logarithmic axes should be used when data spans multiple orders of magnitude.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "1bb705d1-551c-4d43-9091-e24575eadc86",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Histograms and Distribution Plots",
+          "BodyText": "Histograms and density plots characterize the statistical distribution of engineering measurements, supporting quality control and reliability analysis.",
+          "Notes": "The number of bins significantly affects histogram appearance; the Freedman-Diaconis rule or Sturges\u0027 rule provides data-driven bin count selection.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "93c7644a-ddbc-4aa4-8d84-c3c9df626d89",
+              "Text": "plt.hist() divides data into bins and counts occurrences in each bin.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "32048b3a-f742-4678-be5f-044d8e91454e",
+              "Text": "The density=True parameter normalizes the histogram to a probability density function.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e08e76ec-1fa5-46d3-ac53-aa5eecce02d7",
+              "Text": "Kernel density estimation (KDE) provides a smooth continuous approximation of the distribution.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8cf808ce-fd4f-453b-b7e1-a8f838177044",
+              "Text": "Overlaying a normal distribution curve reveals deviations from Gaussian behavior in measurement noise.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "cc4b1de7-b193-4327-a3a8-36105ffdc9ff",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Subplots and Multi-Panel Figures",
+          "BodyText": "Engineering reports often require multiple related plots arranged in a grid to allow side-by-side comparison of different signals or analysis results.",
+          "Notes": "plt.tight_layout() or the constrained_layout parameter prevents overlapping axis labels in multi-panel figures, which is a common formatting issue.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "eecb1a7f-5e6b-4352-8152-730ef937ffc8",
+              "Text": "plt.subplots(rows, cols) creates a grid of Axes objects sharing a single Figure.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8d29ce49-8d5c-40be-98b0-21295845bee2",
+              "Text": "sharex and sharey parameters link axis scales across subplots for consistent comparison.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e1eb4c95-3b3d-49f8-acad-7b55420e66b1",
+              "Text": "Individual Axes are accessed by index from the returned array of Axes objects.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5c32ce28-2170-4a77-aab4-b9540c829468",
+              "Text": "Figure size should be scaled with the number of panels to maintain readability.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "b953a8cd-0574-4914-9635-0bef2d081f24",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Formatting and Annotating Plots",
+          "BodyText": "Proper formatting, labeling, and annotation transform a basic plot into a professional engineering figure ready for reports or publications.",
+          "Notes": "Annotations pointing to key events such as failure onset, peak load, or phase transitions dramatically improve the interpretive value of engineering plots.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "1c49b6bb-5734-47f5-b12a-fb8c26d02b15",
+              "Text": "ax.set_xlabel(), ax.set_ylabel(), and ax.set_title() add descriptive text to axes.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "03d1bead-b684-4552-b1a2-5c875ebed3e1",
+              "Text": "ax.annotate() places text and arrows pointing to specific data features.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "20bd119f-6647-4ea3-9781-9a0fc8bbf4fe",
+              "Text": "plt.savefig() exports the figure to image or vector formats with configurable resolution.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "987720ee-925e-4032-a20d-e3f99564e5f8",
+              "Text": "Engineering style guides often specify font sizes, line widths, and color palettes that should be applied consistently.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "a89f3546-aab6-4db2-bf3b-08ce2f0fe1d2",
+          "TopicId": "a61d611b-79ad-457b-b025-500e5b160e9d",
+          "Title": "Visualizing Simulation Results Alongside Measured Data",
+          "BodyText": "Overlaying simulated and measured data on the same plot is the primary method for validating simulation models against physical experiments.",
+          "Notes": "Distinguishing measured from simulated data using different line styles (solid vs. dashed) in addition to color ensures clarity even in grayscale print.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "80d36d5a-b4ab-42c1-9fa9-835eb814f686",
+              "Text": "Simulated results should be plotted with a dashed or dotted line to distinguish them from solid measured data lines.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f20081cd-0d48-4262-b302-22ac731510c8",
+              "Text": "Residual plots showing the difference between simulation and measurement quantify model error.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e61fa2e0-e3d6-4799-826a-84873df4ae41",
+              "Text": "Shared x-axis time alignment must be verified before overlaying simulated and measured signals.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5e78dc1e-9b73-447a-9926-ff6561562c5b",
+              "Text": "A legend clearly identifying each series is mandatory in validation plots.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+      "Title": "Time-Stepping Simulation Fundamentals",
+      "Summary": "Introduces the principles of numerical time-stepping methods used to simulate dynamic engineering systems governed by ordinary differential equations, with emphasis on implementation in Python.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "817198ee-54f0-4896-9ea2-96e49e8e3d7b",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Ordinary Differential Equations in Engineering",
+          "BodyText": "Many engineering systems are governed by ordinary differential equations (ODEs) that describe how state variables such as position, current, or temperature change over time.",
+          "Notes": "The order of an ODE determines the number of initial conditions required. Most physical systems result in first- or second-order ODEs that can be solved analytically only for simple cases.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "19410349-9030-46df-83ea-9607977ea7d0",
+              "Text": "A first-order ODE relates the rate of change of a state variable to its current value and time.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "5ae99de5-58d1-4c82-b1a0-872708d15621",
+              "Text": "Second-order ODEs arise in mechanical vibration and RLC circuit problems.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d8c9d73b-5d69-401b-b92e-d4309b6d1842",
+              "Text": "Initial conditions specify the state of the system at the start of simulation.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "748b70d6-4c3e-4382-928e-fb9ff42fc0c5",
+              "Text": "Analytical solutions exist only for linear ODEs with constant coefficients and simple forcing functions.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "656b6fbd-58ec-4ab0-b8d2-5d2ff969244a",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Euler\u0027s Method",
+          "BodyText": "Euler\u0027s method is the simplest explicit time-stepping scheme, approximating the next state by stepping forward in time along the current derivative.",
+          "Notes": "Euler\u0027s method is first-order accurate \u2014 error is proportional to the step size h. It is useful for learning and prototyping but may be too inaccurate or unstable for stiff engineering systems.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "b3b4abd9-65d4-4352-93fa-ab150affdf3a",
+              "Text": "The update rule is: x(t \u002B h) = x(t) \u002B h \u00D7 f(x(t), t), where f is the derivative function.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "db8b91a3-cc4a-4514-b2ab-31b85d6cad95",
+              "Text": "Smaller time steps h improve accuracy but increase computation time.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "36a3e46e-428e-482b-a9a3-9296929b3021",
+              "Text": "Euler\u0027s method can become unstable if the step size exceeds a system-dependent stability limit.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "797d1b3e-3ac6-4d10-b702-097ef5b1db3d",
+              "Text": "Implementation requires a loop over discrete time steps, storing state at each step.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "247f0d83-adb7-4290-9443-029b29cc8fcc",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Runge-Kutta Methods",
+          "BodyText": "Runge-Kutta methods, particularly the classical fourth-order RK4 scheme, provide substantially higher accuracy than Euler\u0027s method for the same step size.",
+          "Notes": "RK4 evaluates the derivative function four times per step, making it four times more expensive per step than Euler but typically far more accurate, requiring larger steps to achieve the same accuracy.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "cbb20e8a-9799-4afb-a0cf-f4a27d568e1c",
+              "Text": "RK4 computes four intermediate slope estimates and combines them with weighted averaging.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c341e65c-3d70-4b70-b999-73a07675ea60",
+              "Text": "Fourth-order accuracy means the local error scales with h\u2074, dramatically improving accuracy over Euler.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "571939c8-e310-49ae-863e-b93fc6f6c9dd",
+              "Text": "RK4 is suitable for most non-stiff engineering ODEs and is a standard first choice for simulation.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0886aa34-d12f-48e4-818e-6bbbee395684",
+              "Text": "scipy.integrate.solve_ivp provides adaptive Runge-Kutta solvers that automatically adjust step size.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "4bff3e29-1f8f-43a6-94f0-949c3f64d3d7",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Implementing a Time-Stepping Loop",
+          "BodyText": "A time-stepping simulation requires a structured loop that advances the system state from initial conditions to the final simulation time using the chosen numerical method.",
+          "Notes": "Pre-allocating output arrays with NumPy before the loop is critical for performance \u2014 appending to a Python list inside a loop causes repeated memory allocation that becomes prohibitively slow for large simulations.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "b12c4b2f-0b0c-4160-9a30-566ecea89d1c",
+              "Text": "Define the time array using np.linspace() or np.arange() to establish a uniform grid.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "27b2af11-536a-4a29-84aa-6473262114e6",
+              "Text": "Initialize the state vector with physical initial conditions before entering the loop.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fc1b23f0-1067-4e53-b649-49e4d1acbf7c",
+              "Text": "At each step, compute the derivative, apply the update rule, and store the new state.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "57860e11-be14-4e17-82ed-a4c8e7a5f1da",
+              "Text": "Store all state values in a pre-allocated NumPy array for efficient downstream analysis and plotting.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8e7c2c82-8c93-47ab-9197-cc2eaf5e83e3",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Step Size Selection and Accuracy",
+          "BodyText": "Choosing an appropriate time step is a critical engineering decision balancing simulation accuracy against computational cost.",
+          "Notes": "A convergence study \u2014 running the simulation with progressively smaller step sizes and observing when results stabilize \u2014 is the standard method for validating step size selection.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "871f4e2d-2797-4caf-a9c6-fffe98248066",
+              "Text": "The time step must be small relative to the fastest characteristic time constant of the system.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "375ecf9e-6a21-4931-8f08-80aeb82e7c87",
+              "Text": "Stability limits for explicit methods depend on the stiffness of the ODE system.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8ea745ef-6204-45a8-accc-e9b7a4cfca72",
+              "Text": "Convergence testing involves halving the step size and verifying that results change by less than an acceptable tolerance.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "12ab85bf-8da7-4d15-bdcd-36c12d087615",
+              "Text": "Adaptive step size methods automatically balance accuracy and efficiency by adjusting h during simulation.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "49489d9a-ef9b-41bb-a90f-7b3af77fa5ba",
+          "TopicId": "14ff2341-27d4-48a4-a8a5-e3d5a27aa36c",
+          "Title": "Using scipy for ODE Integration",
+          "BodyText": "SciPy\u0027s integrate module provides robust, adaptive ODE solvers that serve as reference implementations for validating custom time-stepping code.",
+          "Notes": "solve_ivp supports multiple solver methods including RK45, DOP853, and Radau for stiff systems. Using scipy as a benchmark against a custom Euler implementation demonstrates the accuracy difference clearly.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "6ef10dae-9fa3-474b-9c0f-b77b5a1e5923",
+              "Text": "scipy.integrate.solve_ivp accepts the derivative function, time span, and initial conditions.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f421cdd4-b03c-44c5-ab18-8fccced2bfb0",
+              "Text": "The method parameter selects the integration algorithm, with \u0027RK45\u0027 as the default.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f2695728-73ba-46bf-b9e2-05dec17b7cb0",
+              "Text": "The dense_output parameter enables continuous solution interpolation between time steps.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "11cae988-43e8-46d3-a034-e6b32bc4a047",
+              "Text": "Results from solve_ivp should be compared against custom implementations to validate correctness.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+      "Title": "Simulating Mechanical Systems",
+      "Summary": "Applies time-stepping methods to model fundamental mechanical systems including spring-mass-damper oscillators, analyzing dynamic behavior and comparing numerical results to analytical solutions.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "808c370e-103f-42c2-8eda-d2b9a9a11a32",
+          "TopicId": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+          "Title": "The Spring-Mass-Damper System",
+          "BodyText": "The spring-mass-damper is the canonical mechanical dynamic system, described by a second-order linear ODE that governs displacement over time under applied forces.",
+          "Notes": "This system is the mechanical analog of an RLC circuit, and the mathematical structure is identical \u2014 insights from one domain transfer directly to the other.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "643cdc0e-0e3f-4480-ab2b-4831f04aa49f",
+              "Text": "The equation of motion is: m\u00B7\u1E8D \u002B c\u00B7\u1E8B \u002B k\u00B7x = F(t), where m is mass, c is damping, and k is stiffness.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1684ec08-af64-45e5-b1f4-14fbccae9b9c",
+              "Text": "The natural frequency \u03C9\u2099 = \u221A(k/m) characterizes the rate of free oscillation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9ac7bbf5-9a8c-4e32-91e4-5cc23157a9ee",
+              "Text": "The damping ratio \u03B6 = c / (2\u221A(mk)) determines whether the system is underdamped, critically damped, or overdamped.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "7f4e0ae4-dfa4-4cb8-a228-f2afac987fa1",
+              "Text": "Second-order ODEs are converted to two coupled first-order ODEs for numerical integration.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "a1984578-459a-42bc-86a3-34241f6bd09c",
+          "TopicId": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+          "Title": "Underdamped, Critically Damped, and Overdamped Responses",
+          "BodyText": "The damping ratio determines three qualitatively different responses to initial displacement or applied force that have distinct engineering implications.",
+          "Notes": "Most vibration engineering problems target slight underdamping to achieve fast settling with acceptable overshoot. Critical damping minimizes settling time without oscillation and is the goal in many control system designs.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "27cc9c45-4023-4787-9a30-6a2a7d3b5adf",
+              "Text": "Underdamped systems (\u03B6 \u003C 1) exhibit decaying oscillation at the damped natural frequency \u03C9d = \u03C9\u2099\u221A(1 - \u03B6\u00B2).",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c1143ece-68e1-42c5-83bf-c347d456e81a",
+              "Text": "Critically damped systems (\u03B6 = 1) return to equilibrium as fast as possible without oscillating.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "265fc891-a427-49b9-8c76-6a21c272e768",
+              "Text": "Overdamped systems (\u03B6 \u003E 1) return to equilibrium without oscillation but more slowly than critical damping.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9fcccce8-01dd-4f60-8b82-4a094cea6cda",
+              "Text": "The response type must be considered when designing mechanical suspensions, vibration isolators, and machine mounts.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8ec3f6d3-333b-442e-b516-a134f1b53fc4",
+          "TopicId": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+          "Title": "Analytical Solution for Free Vibration",
+          "BodyText": "The analytical closed-form solution for the underdamped free vibration case provides the exact benchmark against which numerical simulations are compared.",
+          "Notes": "The analytical solution assumes linear, time-invariant system properties. When nonlinearity or time-varying parameters are introduced, numerical simulation becomes the only viable approach.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "3e292b81-c054-4f34-9f95-edd34bfa201c",
+              "Text": "The underdamped analytical solution is x(t) = A\u00B7e^(-\u03B6\u03C9\u2099t)\u00B7cos(\u03C9d\u00B7t \u002B \u03C6), where A and \u03C6 depend on initial conditions.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ec8a2aa5-92ec-491c-b3ec-e493adc1d969",
+              "Text": "NumPy exponential and trigonometric functions compute the analytical solution element-wise over a time array.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4e7dedee-0edb-4ebd-bd5f-1f4e74a9623f",
+              "Text": "Plotting analytical and numerical solutions together on the same axes immediately reveals discrepancies.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "7a728f8e-2dca-4f59-956c-03ede8e2fcc3",
+              "Text": "The maximum error between analytical and numerical solutions quantifies the accuracy of the time-stepping scheme.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "5fc4aaab-a5eb-470a-97ca-e7d214a31c28",
+          "TopicId": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+          "Title": "Forced Vibration and Resonance",
+          "BodyText": "When an external periodic force is applied, the system response depends strongly on the ratio of forcing frequency to natural frequency, reaching maximum amplitude at resonance.",
+          "Notes": "Resonance is a critical design concern in rotating machinery, bridges, and aircraft structures. The Tacoma Narrows Bridge collapse is a historical example of resonance-driven failure.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "26803617-40b4-4ada-aa3e-e80e29506e01",
+              "Text": "Forced vibration adds a harmonic term F\u2080\u00B7sin(\u03A9\u00B7t) to the right-hand side of the equation of motion.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b9186cac-e8b1-45dc-9d0c-208f4913f11b",
+              "Text": "Resonance occurs when the forcing frequency \u03A9 approaches the natural frequency \u03C9\u2099.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "918334b5-7438-4002-a8f2-046bdf40ca2f",
+              "Text": "At resonance, amplitude grows until limited by damping or nonlinear effects.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f41672df-028e-478a-a7fd-18d66d45d37c",
+              "Text": "Frequency response curves plotting amplitude versus forcing frequency reveal resonance peaks.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "1237813a-6fb7-4bc8-80ee-8883e48c9c64",
+          "TopicId": "efda33c6-96f5-4712-8fbb-021f68e46a6d",
+          "Title": "Numerical Implementation of the Mechanical Model",
+          "BodyText": "Converting the second-order mechanical ODE into a state-space form and implementing a time-stepping loop in Python produces the simulated displacement and velocity time histories.",
+          "Notes": "Use descriptive variable names matching physical quantities (mass, damping, stiffness) rather than generic mathematical symbols to improve code readability and reduce implementation errors.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "d727ad1c-a731-47ce-8a43-bd3ed2900d66",
+              "Text": "Define the state vector as [x, \u1E8B] and express the ODE as two coupled first-order equations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "85867247-3b39-4535-93e6-48bea8392bb2",
+              "Text": "Implement the derivative function that returns [\u1E8B, \u1E8D] given the current state and time.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "23c7ba4f-8180-4901-953e-48d6d73507a3",
+              "Text": "Run the time-stepping loop and store displacement and velocity at each time step.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ff2cb6ab-975d-409a-b947-ae338420b5ae",
+              "Text": "Plot displacement against time and overlay the analytical solution to validate the simulation.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+      "Title": "Simulating Electrical Systems",
+      "Summary": "Applies time-stepping simulation to model RC and RLC electrical circuits, computing voltage and current transient responses and validating results against analytical solutions.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "b303b291-a398-47da-b90b-0dda49cfe247",
+          "TopicId": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+          "Title": "The RC Circuit",
+          "BodyText": "The RC circuit is the simplest first-order electrical system, described by a first-order ODE governing the voltage across the capacitor during charging or discharging.",
+          "Notes": "The RC circuit is the electrical analog of a first-order thermal system \u2014 the mathematical structure is identical, with voltage analogous to temperature and current analogous to heat flux.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "b798d78f-d32d-4521-a73e-f275c0493507",
+              "Text": "The governing ODE is: R\u00B7C\u00B7dVc/dt \u002B Vc = Vs, where Vc is capacitor voltage and Vs is source voltage.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d760cdc4-db54-42eb-b1a6-24f3d5a0410b",
+              "Text": "The time constant \u03C4 = R\u00B7C determines how quickly the capacitor charges or discharges.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6b6e9998-e3f4-4fab-8c51-9ec7dd0fde24",
+              "Text": "The analytical solution for charging from zero is Vc(t) = Vs\u00B7(1 - e^(-t/\u03C4)).",
+              "SortOrder": 2
+            },
+            {
+              "Id": "37bd448b-df37-44b5-a86e-26e89b40639e",
+              "Text": "After five time constants, the capacitor is considered fully charged to within 1% of the source voltage.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "74fef78f-5aa0-4cb5-b174-2d16aeef6c5b",
+          "TopicId": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+          "Title": "The RLC Circuit",
+          "BodyText": "The RLC circuit is a second-order system exhibiting resonance, damping, and oscillatory behavior mathematically equivalent to the spring-mass-damper mechanical system.",
+          "Notes": "The analogy between mechanical and electrical systems allows insights and solutions to be transferred between domains \u2014 a powerful tool in multi-domain engineering analysis.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "c5942c52-a6cd-43ed-b0cd-1c4ab6b624d1",
+              "Text": "The KVL equation yields: L\u00B7d\u00B2I/dt\u00B2 \u002B R\u00B7dI/dt \u002B I/C = dVs/dt for series RLC circuits.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ba481943-038e-4d16-b272-3519e68245e8",
+              "Text": "The resonant frequency is \u03C9\u2080 = 1/\u221A(LC) and the damping factor is \u03B1 = R/(2L).",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a60a14a1-466b-4c3b-aef6-bd786bb424b3",
+              "Text": "Underdamped RLC circuits produce oscillating current and voltage transients.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "874ecc1f-cb1e-4ce5-8040-3398e22fbcc9",
+              "Text": "The quality factor Q = \u03C9\u2080L/R quantifies the sharpness of resonance in the frequency domain.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "691dce5a-d69d-4ed0-88f8-08c2b9533af3",
+          "TopicId": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+          "Title": "Implementing the Electrical Simulation",
+          "BodyText": "Numerical simulation of RC and RLC circuits follows the same state-space time-stepping approach used for mechanical systems, with electrical quantities replacing mechanical ones.",
+          "Notes": "Mapping the mechanical implementation to the electrical case reinforces the universality of the state-space simulation framework and reduces implementation effort.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "a52a28d6-4401-4f8e-be10-401ae9e09953",
+              "Text": "For RC circuits, the state is [Vc] and the derivative function returns dVc/dt.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b64584c6-fd92-4fd5-b0da-896b74184b5e",
+              "Text": "For RLC circuits, the state is [I, dI/dt] and two coupled first-order equations are required.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4b871f93-d22a-44f7-94bd-371b1cb37ddf",
+              "Text": "Physical component values (R, L, C) should be defined as named constants at the top of the script.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "bf684e75-fc0a-4446-9a47-54900e4803e3",
+              "Text": "Simulate both step and sinusoidal source inputs to characterize transient and steady-state behavior.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "75406c38-ea5c-4eef-bf19-40c98bbfd815",
+          "TopicId": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+          "Title": "Frequency Domain Analysis",
+          "BodyText": "While time-stepping produces time-domain results, frequency-domain analysis using Fourier transforms provides complementary insight into circuit filtering characteristics.",
+          "Notes": "NumPy\u0027s np.fft.fft() computes the discrete Fourier transform of a simulated or measured time series, enabling frequency content analysis without additional libraries.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "044b773f-d7cc-4338-a94d-2fa81d7a562a",
+              "Text": "np.fft.fft() computes the discrete Fourier transform of a time-domain signal.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7063c5bc-3982-41ce-9a24-a33d0ede3ce1",
+              "Text": "np.fft.fftfreq() returns the frequency axis corresponding to the FFT output.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c4fbf306-0300-4942-8909-d0819225c2cd",
+              "Text": "The magnitude spectrum reveals which frequency components are amplified or attenuated by the circuit.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8696cc78-87ac-4192-8917-94035eb73732",
+              "Text": "Bode plots of magnitude and phase versus frequency are standard representations of circuit frequency response.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8a695935-bd8d-46f1-a06b-0ef2fababf7f",
+          "TopicId": "5d74ee06-d387-4f6f-8d0f-4fed67d03c65",
+          "Title": "Validation Against Analytical Solutions",
+          "BodyText": "Analytical solutions for RC and RLC circuits under standard inputs provide exact benchmarks for assessing the accuracy of time-stepping implementations.",
+          "Notes": "When the numerical and analytical solutions diverge noticeably, the first diagnostic step is to reduce the time step by half and recheck \u2014 if the error halves for Euler or reduces by a factor of 16 for RK4, the method is converging correctly.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "61b24227-042d-4c56-be31-9f7e6efc80b2",
+              "Text": "Compute the analytical solution using NumPy array operations over the same time array used for simulation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "139bc927-4c6d-4c1a-b8e5-6e7dbc7f7cdb",
+              "Text": "Plot analytical and numerical results on the same axes with distinct line styles.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c0a814d7-95bb-4979-8137-fa13ab4fe644",
+              "Text": "Compute and plot the absolute error as a function of time to identify where discrepancies are largest.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0572174e-327f-4118-9ce1-fbfacb0fd2e9",
+              "Text": "Report the maximum and root-mean-square error as quantitative validation metrics.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+      "Title": "Simulating Thermal Systems",
+      "Summary": "Applies first- and second-order ODE-based simulation to model heat transfer in lumped-parameter thermal systems, including Newton\u0027s law of cooling and multi-node conduction networks.",
+      "SortOrder": 7,
+      "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+      "Elements": [
+        {
+          "Id": "85bc0afc-0b6f-481f-ad2e-99b1f0b4d8e5",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Lumped Parameter Thermal Models",
+          "BodyText": "Lumped parameter thermal models treat a body as having a single uniform temperature, valid when internal conduction resistance is small compared to surface convection resistance.",
+          "Notes": "The Biot number Bi = hL/k quantifies the validity of the lumped assumption. Bi \u003C 0.1 is the standard criterion for applying the lumped parameter model.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "eac6aa0a-5fe6-4ae1-beba-c7152d41fc19",
+              "Text": "The lumped model assumes spatial uniformity \u2014 temperature varies only with time, not position.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f368ad63-ab07-449e-9a3d-82b3124e5257",
+              "Text": "The Biot number must be less than 0.1 to justify the lumped parameter assumption.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "deb2fef2-c807-42a6-81ca-6163a91a5a8f",
+              "Text": "Thermal capacitance C = m\u00B7cp stores energy analogously to electrical capacitance.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1827d84c-ce94-438c-9073-a57dda7e080f",
+              "Text": "Thermal resistance R = 1/(h\u00B7A) opposes heat flow analogously to electrical resistance.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "bbc87691-7594-4a0f-817a-df1ecb2565a8",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Newton\u0027s Law of Cooling",
+          "BodyText": "Newton\u0027s law of cooling governs the temperature of a lumped-parameter body cooling or heating in a surrounding fluid, producing a first-order exponential response.",
+          "Notes": "This is the thermal analog of the RC circuit charging equation \u2014 identical mathematical form allows the same simulation code structure to be reused with different physical constants.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "e3d2b12d-4e1e-4d8e-8b03-17191b84cb70",
+              "Text": "The governing ODE is: m\u00B7cp\u00B7dT/dt = -h\u00B7A\u00B7(T - T\u221E), where T\u221E is the ambient temperature.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "cd7b6420-822c-4b45-b89f-3deef4a15e14",
+              "Text": "The time constant is \u03C4 = m\u00B7cp / (h\u00B7A), analogous to \u03C4 = RC in electrical systems.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c6a272c6-0d0c-487a-bc34-c705df71651f",
+              "Text": "The analytical solution is T(t) = T\u221E \u002B (T\u2080 - T\u221E)\u00B7e^(-t/\u03C4).",
+              "SortOrder": 2
+            },
+            {
+              "Id": "77fd3886-7fba-4ba1-a19f-106f11aa4df4",
+              "Text": "The time constant determines how quickly the body equilibrates with its surroundings.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "a231cb37-0008-4461-bf1b-b6f90298cf0c",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Simulating Cooling and Heating Transients",
+          "BodyText": "Implementing the Newton\u0027s law ODE in a time-stepping loop produces the simulated temperature-time history for cooling or heating scenarios.",
+          "Notes": "Real engineering heating and cooling problems often involve time-varying ambient conditions or heat generation \u2014 these are handled by making T\u221E or the heat source term a function of time in the derivative function.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "02958a75-315d-43cc-a9b5-945a38a84012",
+              "Text": "Define physical parameters (mass, specific heat, heat transfer coefficient, area) as named constants.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "904ddfe9-e694-4073-be4a-96e1ee4c4162",
+              "Text": "Implement the derivative function dT/dt = -h\u00B7A\u00B7(T - T\u221E) / (m\u00B7cp).",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f0fdbc49-2b0e-4fa2-ae36-6b20b809de06",
+              "Text": "Run the Euler or RK4 loop and store temperature at each time step.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "3322d4e5-5fce-4ef5-a48a-c9a14ce0dae5",
+              "Text": "Overlay the analytical exponential decay on the numerical results to validate accuracy.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d6bbe2aa-f640-4080-93a1-c3b52f3f710a",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Multi-Node Thermal Networks",
+          "BodyText": "When a system has multiple thermal masses connected by conductive or convective resistances, it forms a multi-node network described by coupled first-order ODEs.",
+          "Notes": "Multi-node thermal networks are the foundation of finite-difference heat conduction simulation and arise in electronics cooling, building energy analysis, and spacecraft thermal control.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "d549504a-2987-4ac6-b372-e3fade85a522",
+              "Text": "Each node has a thermal capacitance and is connected to adjacent nodes via thermal resistances.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2a684b02-129d-4eae-afad-d70f2aef76f3",
+              "Text": "The state vector contains the temperature of each node.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "49e33bd7-2f4f-4de3-b971-0b717c9424ea",
+              "Text": "The system of ODEs is expressed in matrix form as C\u00B7dT/dt = A\u00B7T \u002B b, where A encodes conductances.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "41bf249b-dfb2-4112-a7ce-e1b294c3a99f",
+              "Text": "NumPy matrix operations handle the vector derivative function efficiently for multi-node systems.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "aed86bb7-19af-4e63-99be-6d170c718056",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Comparison with Analytical and Experimental Data",
+          "BodyText": "Validating thermal simulations against analytical solutions and where available measured temperature data confirms model accuracy and identifies parameter calibration needs.",
+          "Notes": "Thermal system identification \u2014 estimating h\u00B7A and m\u00B7cp from measured temperature-time data by fitting the exponential model \u2014 is a practical application that combines data analysis with simulation in a single workflow.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "db50fe8e-5243-486b-9e93-be65c34e646c",
+              "Text": "Analytical solutions for single-node systems are computed and plotted alongside numerical results.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "23659add-ec6c-49ad-8118-2582452f7b14",
+              "Text": "Root-mean-square error between simulation and measurement quantifies goodness of fit.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0f68c3ad-7608-4adb-a9c8-84884bcd1475",
+              "Text": "Parameter sensitivity analysis reveals which physical parameters most strongly influence the temperature response.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ccc4ae73-08de-498f-9996-10d94049d331",
+              "Text": "Curve fitting using scipy.optimize.curve_fit can extract thermal properties from measured cooling data.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "c6ba8895-067b-45ee-8e7f-2684532f3beb",
+          "TopicId": "9c47d37d-a72a-49f5-8e2b-2d605737be5b",
+          "Title": "Connecting Data Analysis to Thermal Simulation",
+          "BodyText": "Measured temperature data loaded and cleaned using pandas can serve directly as inputs or validation benchmarks for thermal simulation models, closing the loop between data analysis and simulation.",
+          "Notes": "This integration of data workflow and simulation workflow is the central theme of the module \u2014 engineers rarely have purely analytical or purely experimental problems, and the ability to move fluidly between both is a key professional skill.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "ModifiedDate": "2026-05-14T21:40:58.8747559-04:00",
+          "Items": [
+            {
+              "Id": "f38c869d-7593-4b1d-a559-8adc4e660f7c",
+              "Text": "Load measured temperature-time CSV data using pd.read_csv() and clean it using techniques from earlier topics.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9decc75e-8ec8-4922-abfe-9bd02bc0da5d",
+              "Text": "Use the measured ambient temperature as a time-varying boundary condition in the simulation ODE.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d567e96c-c961-4ca9-932c-6437457675e6",
+              "Text": "Plot simulated and measured temperature histories on the same axes to assess model fidelity.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b10121f6-3f1c-4392-96c1-dd749ec7561b",
+              "Text": "Iterate on physical parameters to minimize the discrepancy between simulation and measurement.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 44
+}

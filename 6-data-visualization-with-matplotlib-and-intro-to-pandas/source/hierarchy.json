@@ -1,0 +1,1039 @@
+{
+  "ModuleFolderName": "Data_Visualization_with",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T21:33:28.9453026-04:00",
+  "ModifiedDate": "2026-05-14T21:33:28.9455062-04:00",
+  "Outcomes": [
+    {
+      "Id": "82807f11-c110-4dfe-a3e5-64df8d207e75",
+      "Text": "Explain the structure of matplotlib\u0027s pyplot interface and how it manages figures and axes.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "a77e9cd1-5e06-4cdb-ad2d-814d4d7e00ac",
+      "Text": "Apply pyplot functions to create line plots, scatter plots, bar charts, and histograms from engineering data.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "6204d5af-cea1-46d2-97c3-4cde7332669d",
+      "Text": "Demonstrate the use of subplots to organize multiple visualizations within a single figure.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "853d4e6d-eccb-4f6b-be28-3ea9eff472c3",
+      "Text": "Create publication-quality figures by customizing labels, titles, legends, colors, and styles.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "3e004648-9b7e-4784-b0f8-a7cde30f09e5",
+      "Text": "Identify the differences between pandas Series and DataFrame structures and when to use each.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "fbf50f42-b0f4-4c50-8acc-15f38aea7b47",
+      "Text": "Analyze engineering datasets using pandas operations including reading, filtering, sorting, and descriptive statistics.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "2176f379-38ef-4867-b76e-cb9200a67e98",
+      "Title": "Introduction to Matplotlib and the pyplot Interface",
+      "Summary": "Introduces the matplotlib library and its pyplot module, explaining how the interface manages the figure and axes objects that underlie every plot.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "1eb7113b-e648-41af-8763-1a11eac7a6c5",
+          "TopicId": "2176f379-38ef-4867-b76e-cb9200a67e98",
+          "Title": "What is Matplotlib?",
+          "BodyText": "Matplotlib is a comprehensive Python library for creating static, animated, and interactive visualizations. It is the foundational plotting library in the scientific Python ecosystem.",
+          "Notes": "Matplotlib was originally modeled after MATLAB\u0027s plotting syntax, making it approachable for engineers transitioning from that environment.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "5ee95c18-ccee-4478-a3ab-3429a6d851cb",
+              "Text": "Matplotlib integrates seamlessly with NumPy arrays and pandas DataFrames.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0f8b5a33-32ca-4e15-912a-30b96a1e5303",
+              "Text": "It supports a wide range of output formats including PNG, PDF, and SVG.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "19bd8c2f-1545-4dd4-a003-f9e0ea961ced",
+              "Text": "The library is highly customizable, allowing fine-grained control over every visual element.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "a89b1b8c-a3bb-4cc5-94bd-117ecaea6b5a",
+          "TopicId": "2176f379-38ef-4867-b76e-cb9200a67e98",
+          "Title": "The pyplot Module",
+          "BodyText": "The pyplot module provides a state-based interface to matplotlib, allowing users to create and modify figures with simple function calls. It is typically imported as plt.",
+          "Notes": "The conventional import statement is: import matplotlib.pyplot as plt. This alias is used universally in documentation and community code.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "90343905-a286-4a13-a8ad-9b112daefa68",
+              "Text": "pyplot tracks the \u0027current figure\u0027 and \u0027current axes\u0027 automatically, reducing boilerplate code.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "eac3e11d-8988-406d-936e-b86fd930e80f",
+              "Text": "Functions such as plt.plot(), plt.show(), and plt.savefig() operate on the current active figure.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "12611411-da37-403f-8f24-8abeb2771e7b",
+              "Text": "For more complex layouts, pyplot can be combined with the object-oriented matplotlib API.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "ea7227a3-5723-4a19-85c8-d084e0324aa4",
+          "TopicId": "2176f379-38ef-4867-b76e-cb9200a67e98",
+          "Title": "Figures and Axes Objects",
+          "BodyText": "In matplotlib, a Figure is the top-level container for all plot elements, while an Axes is the region within the figure where data is plotted. Understanding this hierarchy is essential for building complex visualizations.",
+          "Notes": "A single Figure can contain multiple Axes objects, which is the basis for creating subplot layouts.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "55e4002d-4323-42a4-8fc4-dd04fd009128",
+              "Text": "plt.figure() creates a new Figure object and makes it the current figure.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fc7b3efd-24b4-4137-8f76-837d2660cfdc",
+              "Text": "Each Axes object has its own x-axis, y-axis, title, and data space.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8ee3344a-6912-471e-b9e4-5e813bb05435",
+              "Text": "Accessing Axes objects directly enables more precise control over individual plot panels.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "104a2634-450c-4b93-876d-c6215a21e9f1",
+          "TopicId": "2176f379-38ef-4867-b76e-cb9200a67e98",
+          "Title": "Displaying and Saving Figures",
+          "BodyText": "Once a plot is constructed, it can be rendered to the screen with plt.show() or saved to a file with plt.savefig(). Proper use of these functions ensures figures appear and are preserved correctly.",
+          "Notes": "In Jupyter notebooks, plt.show() is often unnecessary because figures render inline automatically with the %matplotlib inline magic command.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "a6121c24-9fac-4a38-909b-856dac7a5f18",
+              "Text": "plt.savefig(\u0027filename.png\u0027, dpi=300) saves a high-resolution raster image.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fc785322-5b07-4c17-820c-277f81736efb",
+              "Text": "plt.show() should typically be called once per figure after all plotting commands.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "86d0fe9c-b797-4dc4-b4f7-e68561f377dd",
+              "Text": "plt.close() releases memory associated with a figure after it is no longer needed.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ac9597e0-0610-48b2-841f-8b492725a4b2",
+      "Title": "Line Plots and Scatter Plots",
+      "Summary": "Covers the creation and customization of line plots and scatter plots, the two most common chart types for visualizing continuous and relational engineering data.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "21f952b2-90c4-437c-8f9f-acb26757f725",
+          "TopicId": "ac9597e0-0610-48b2-841f-8b492725a4b2",
+          "Title": "Creating a Basic Line Plot",
+          "BodyText": "A line plot is created using plt.plot(x, y), which connects data points with line segments. It is ideal for showing trends over a continuous variable such as time or distance.",
+          "Notes": "If only one array is passed to plt.plot(), it is treated as the y-values and the index is used as x.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "24f56d89-fcc4-46ff-b9ff-ccfe58c8503b",
+              "Text": "plt.plot() accepts NumPy arrays, Python lists, or pandas Series as input.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e70852e8-4b74-487a-be0c-c7b09c2f03f4",
+              "Text": "Multiple lines can be added to the same axes by calling plt.plot() repeatedly.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ca0fd56c-1d78-4479-bac0-ee8426e2c50e",
+              "Text": "Line style, color, and marker can be specified in a single format string (e.g., \u0027r--o\u0027).",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "1fcb20d3-6157-4571-b279-b62ac08b5a40",
+          "TopicId": "ac9597e0-0610-48b2-841f-8b492725a4b2",
+          "Title": "Customizing Line Plots",
+          "BodyText": "Line plots can be customized with keyword arguments to control color, line width, style, and markers. Meaningful labels and titles improve interpretability.",
+          "Notes": "Common keyword arguments include color, linewidth (or lw), linestyle (or ls), and marker. For example: plt.plot(x, y, color=\u0027blue\u0027, linewidth=2, linestyle=\u0027--\u0027, marker=\u0027o\u0027).",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "38be4423-fc70-44fa-872e-f6080b77cb85",
+              "Text": "Use plt.xlabel() and plt.ylabel() to add descriptive axis labels.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9751283a-2349-4ee5-909b-3686163c8b47",
+              "Text": "plt.title() adds a title to the current axes.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cc7485ac-8c36-46f8-95f3-76b7abfe1534",
+              "Text": "plt.legend() renders a legend when plots include a label keyword argument.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "7f5cf471-37ca-4448-a538-47bf2fc08f74",
+          "TopicId": "ac9597e0-0610-48b2-841f-8b492725a4b2",
+          "Title": "Creating a Scatter Plot",
+          "BodyText": "A scatter plot is created with plt.scatter(x, y) and displays individual data points without connecting lines. It is useful for exploring correlations and distributions between two variables.",
+          "Notes": "plt.scatter() offers more per-point customization than plt.plot() with markers, allowing each point to have a different color or size encoded by a third variable.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "5378ef45-1009-48cc-ad46-e5b7d93ad086",
+              "Text": "The s parameter controls marker size and can accept an array to vary size per point.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a1240334-d767-40d2-b299-450f8db74a78",
+              "Text": "The c parameter maps a third variable to point color when combined with a colormap.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "75b32d52-9b28-454e-83ad-2996b0d16b5c",
+              "Text": "plt.colorbar() adds a color scale legend when a continuous variable is mapped to color.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "c03567d0-61e4-4aac-b00b-8ceee94e5a4d",
+          "TopicId": "ac9597e0-0610-48b2-841f-8b492725a4b2",
+          "Title": "Axis Limits and Scaling",
+          "BodyText": "Controlling the visible range of axes ensures that important data features are not clipped or obscured. Matplotlib provides functions to set both linear and logarithmic scales.",
+          "Notes": "Logarithmic scales are particularly useful in engineering for visualizing data that spans several orders of magnitude, such as frequency response plots.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "85fca455-628c-4ddf-8fad-c3626901f1a2",
+              "Text": "plt.xlim(min, max) and plt.ylim(min, max) set explicit axis boundaries.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3df2af5b-68a1-4bea-afd0-883a57171a54",
+              "Text": "plt.xscale(\u0027log\u0027) and plt.yscale(\u0027log\u0027) switch axes to logarithmic scale.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "112a91e8-f674-4006-ac90-b5a8e11a0527",
+              "Text": "plt.axis(\u0027equal\u0027) enforces equal aspect ratio, important for geometric or spatial data.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "07dd8455-5beb-4fff-a152-24a85cb54184",
+      "Title": "Bar Charts and Histograms",
+      "Summary": "Explains how to create bar charts for categorical comparisons and histograms for examining the distribution of numerical data in engineering contexts.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "4be0ae18-0edd-4b59-a25a-bd58b8a41646",
+          "TopicId": "07dd8455-5beb-4fff-a152-24a85cb54184",
+          "Title": "Creating a Bar Chart",
+          "BodyText": "Bar charts are created with plt.bar(categories, values) and are used to compare discrete groups or categories. They are commonly used to display experimental results across different conditions.",
+          "Notes": "Horizontal bar charts can be created with plt.barh(), which may be preferable when category labels are long.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "135d3f5f-3578-4f2c-8e82-2231f095baac",
+              "Text": "The width parameter adjusts bar width, and color accepts a list for per-bar coloring.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f138bb08-51e0-4bba-bcdd-f2e99eff3bb4",
+              "Text": "Error bars can be added using the yerr parameter to represent uncertainty.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "785496a8-2ec7-4c94-8264-c0c06dadcd3c",
+              "Text": "Grouped bar charts are created by offsetting multiple bar calls with adjusted x positions.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "54380aa8-32e6-473f-9224-037c5e43c331",
+          "TopicId": "07dd8455-5beb-4fff-a152-24a85cb54184",
+          "Title": "Annotating Bar Charts",
+          "BodyText": "Adding value labels or annotations to bar charts makes them easier to interpret, especially in technical reports. matplotlib provides text placement functions for this purpose.",
+          "Notes": "plt.text(x, y, str(value)) places a string at specified data coordinates. Aligning text to bar tops requires computing the correct y offset from bar heights.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "2107a63c-c398-4a88-8ed9-f2684128edfa",
+              "Text": "plt.annotate() supports advanced annotation with arrows and connection styles.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "56b7cd3d-aebf-4cdc-916d-22a443b479d9",
+              "Text": "Iterating over bar container objects allows programmatic placement of value labels.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "bf577080-7d9a-4301-ac62-c43360cbadd8",
+              "Text": "Font size and alignment can be controlled with fontsize and ha keyword arguments.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "1d6ed5a3-a6f1-4949-8aaf-a509147a7ad7",
+          "TopicId": "07dd8455-5beb-4fff-a152-24a85cb54184",
+          "Title": "Creating a Histogram",
+          "BodyText": "Histograms are created with plt.hist(data, bins=n) and display the frequency distribution of a single continuous variable. They are essential for understanding data spread and identifying outliers in engineering measurements.",
+          "Notes": "The bins parameter can accept an integer for automatic bin sizing or a list of explicit bin edges. Choosing an appropriate bin count is important to avoid under- or over-smoothing the distribution.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "e79fcbe0-b94d-4b37-b72c-9e1a77b22b1b",
+              "Text": "density=True normalizes the histogram so that the total area equals one, producing a probability density.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ebb4337d-77a8-4f52-aa74-52c08fd29e33",
+              "Text": "The edgecolor parameter draws borders around bars, improving visual clarity.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7e05f126-2013-489d-af0c-b54b6d6084cc",
+              "Text": "Overlapping histograms benefit from the alpha parameter to control transparency.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "a04273e1-28d9-4cca-93f2-500c57ac8a77",
+          "TopicId": "07dd8455-5beb-4fff-a152-24a85cb54184",
+          "Title": "Comparing Distributions with Histograms",
+          "BodyText": "Multiple datasets can be compared by overlaying histograms on the same axes. Proper use of transparency and color enables effective visual comparison of distributions.",
+          "Notes": "When comparing two distributions, setting alpha=0.5 for both histograms allows overlap regions to be visible. Adding a legend with distinct labels is essential for disambiguation.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "d51cc8bd-279f-44a2-99e2-6d95fdf3d8f7",
+              "Text": "Calling plt.hist() twice on the same axes overlays both distributions automatically.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "3a02e123-0773-47a3-bde5-c4bd508f7c0c",
+              "Text": "plt.legend() should be used to clearly identify each distribution.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "872f916f-ee7f-4461-ad85-360570ea4277",
+              "Text": "Cumulative histograms (cumulative=True) are useful for showing percentile thresholds.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "398530b1-ca51-4b0e-a559-690fe0f1876c",
+      "Title": "Subplots and Figure Layout",
+      "Summary": "Demonstrates how to create multi-panel figures using subplots, enabling side-by-side comparison of different plots within a single publication-ready figure.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "44471523-fba9-4fee-ac99-5f75e8a0189a",
+          "TopicId": "398530b1-ca51-4b0e-a559-690fe0f1876c",
+          "Title": "Creating Subplots with plt.subplots()",
+          "BodyText": "The plt.subplots(nrows, ncols) function creates a Figure and a grid of Axes objects in one call. It is the recommended approach for building multi-panel layouts.",
+          "Notes": "plt.subplots(2, 2) returns a 2x2 array of Axes. Each subplot is accessed by indexing, e.g., axs[0, 1] for the top-right panel.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "e099b4cd-8c71-41bb-9ab5-1a95c89795a2",
+              "Text": "The returned fig and axs objects give direct access to the figure and each axes panel.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "5660d0e4-2a53-43be-98c0-9d44ad50725c",
+              "Text": "sharex=True and sharey=True link axis ranges across subplots for easier comparison.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0b3aa4c8-d757-4711-ae95-b567e9852676",
+              "Text": "figsize=(width, height) passed to plt.subplots() controls the overall figure dimensions in inches.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "beb43553-fe36-4cd5-9ff8-cfe8a72e7b22",
+          "TopicId": "398530b1-ca51-4b0e-a559-690fe0f1876c",
+          "Title": "Plotting on Individual Axes",
+          "BodyText": "When using subplots, plotting commands are called on individual Axes objects rather than on plt directly. This object-oriented approach provides precise control over each panel.",
+          "Notes": "Most pyplot functions have equivalent Axes methods: plt.plot() corresponds to ax.plot(), plt.set_xlabel() corresponds to ax.set_xlabel(), and so on.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "d7a24f47-bfcb-44e5-8810-6de24a607d7d",
+              "Text": "ax.plot(), ax.scatter(), ax.bar(), and ax.hist() work identically to their pyplot counterparts.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c91a5220-1890-4c95-9843-38ceb4fa1339",
+              "Text": "ax.set_title(), ax.set_xlabel(), and ax.set_ylabel() set per-panel labels and titles.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "44a8c24a-c2c2-4474-bc91-4d90aaa17f29",
+              "Text": "ax.legend() adds a legend scoped to that individual subplot panel.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "9ae8aa06-4038-4791-9a2a-3eb4a2ccd447",
+          "TopicId": "398530b1-ca51-4b0e-a559-690fe0f1876c",
+          "Title": "Adjusting Layout and Spacing",
+          "BodyText": "Subplot panels can overlap or clip labels if spacing is not adjusted. matplotlib provides tools to automatically or manually correct figure layout.",
+          "Notes": "plt.tight_layout() is the quickest fix for overlapping labels and should be called just before plt.show() or plt.savefig().",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "34449708-d0d2-4e0e-ac72-3d5a4cfd4d9a",
+              "Text": "plt.tight_layout() automatically adjusts subplot parameters to prevent overlap.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "eac44f5c-a40c-4654-806a-5b89ff1ad00f",
+              "Text": "plt.subplots_adjust(hspace, wspace) provides manual control over vertical and horizontal spacing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "1b1516e8-27b1-41c1-9e6f-2a011b2667e9",
+              "Text": "fig.suptitle() adds a centered title above all subplots in the figure.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "7852b47d-0cc3-445d-b8b4-caa380d8b64a",
+          "TopicId": "398530b1-ca51-4b0e-a559-690fe0f1876c",
+          "Title": "Using GridSpec for Complex Layouts",
+          "BodyText": "For non-uniform subplot grids, matplotlib.gridspec.GridSpec allows plots of different sizes to share a figure. This is useful for dashboard-style engineering figures.",
+          "Notes": "GridSpec can create layouts where one plot spans multiple rows or columns, for example a wide summary plot above a row of detail panels.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "d67e7240-2f02-4d8d-b0e3-0637e5a1777c",
+              "Text": "GridSpec is imported from matplotlib.gridspec and passed a row and column count.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "da32ab18-78f0-4872-beb8-4509b5dcae29",
+              "Text": "Subplot areas are defined by slicing the GridSpec object, e.g., gs[0, :] for a full-width top panel.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "18ff1e6c-bc46-4d07-8408-df6c36258439",
+              "Text": "fig.add_subplot(gs[row, col]) creates an Axes object in the specified grid cell.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "37ae646c-7b8d-4de4-9ac1-f83a14076dec",
+      "Title": "Publication-Quality Figure Styling",
+      "Summary": "Covers techniques for elevating plot aesthetics to meet publication and report standards, including style sheets, custom colors, annotations, and saving high-resolution outputs.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "a18e65b9-a505-4297-8cb0-2fcb8d28bdfe",
+          "TopicId": "37ae646c-7b8d-4de4-9ac1-f83a14076dec",
+          "Title": "Using Style Sheets",
+          "BodyText": "Matplotlib includes built-in style sheets that instantly apply consistent aesthetics to all figures in a script. Selecting an appropriate style reduces manual customization effort.",
+          "Notes": "plt.style.use(\u0027seaborn-v0_8-whitegrid\u0027) applies a clean grid style popular in scientific publications. A list of available styles is returned by plt.style.available.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "f81ed73a-eac6-4c3e-b55e-ec2a6906aba0",
+              "Text": "plt.style.use(\u0027style_name\u0027) applies a style globally for the duration of the script.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "99781ecb-d5d7-4f1a-9bd3-8ccb651b457e",
+              "Text": "Styles can be combined by passing a list: plt.style.use([\u0027style1\u0027, \u0027style2\u0027]).",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5e4cfdb2-f999-45bb-a6a3-7f1eb6aff506",
+              "Text": "Context managers (with plt.style.context(\u0027style\u0027):) apply a style temporarily without changing global settings.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "ea4581c0-252e-4f9c-bc92-16d233dcb4d1",
+          "TopicId": "37ae646c-7b8d-4de4-9ac1-f83a14076dec",
+          "Title": "Customizing Colors and Colormaps",
+          "BodyText": "Color choices affect both the aesthetic quality and accessibility of a figure. Matplotlib supports named colors, hex codes, RGB tuples, and scientific colormaps.",
+          "Notes": "For accessibility, avoid red-green color combinations. The \u0027viridis\u0027 and \u0027cividis\u0027 colormaps are perceptually uniform and colorblind-friendly alternatives.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "5616711c-b128-4cf8-bb33-486da740095a",
+              "Text": "Colors can be specified as named strings (\u0027steelblue\u0027), hex codes (\u0027#2c7bb6\u0027), or RGB tuples.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0a2b0b68-82a6-4e8a-be44-c991887bc1e0",
+              "Text": "plt.cm.get_cmap() retrieves a colormap object for mapping continuous data to color.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fe58119b-8dcd-4eb3-bc45-931489ac6898",
+              "Text": "The prop_cycle style parameter defines an automatic color sequence for multiple lines.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "8c142349-84cd-4482-93ab-e88be48bf923",
+          "TopicId": "37ae646c-7b8d-4de4-9ac1-f83a14076dec",
+          "Title": "Fonts, Tick Marks, and Spines",
+          "BodyText": "Fine-tuning typography and axis decorations distinguishes a presentation-ready figure from a draft plot. Matplotlib allows control over font size, tick frequency, and axis border (spine) visibility.",
+          "Notes": "Removing the top and right spines (ax.spines[\u0027top\u0027].set_visible(False)) creates a cleaner, more modern look commonly seen in scientific journals.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "c2917565-a80f-47a9-9c7d-b71586eb8bb2",
+              "Text": "plt.rcParams[\u0027font.size\u0027] sets a global default font size for all text elements.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c1e66726-df58-4454-960e-dc99e303245a",
+              "Text": "ax.set_xticks() and ax.set_xticklabels() define custom tick positions and labels.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a10ee19a-255a-412a-b463-3e99a1f0f594",
+              "Text": "ax.tick_params() controls tick direction, length, width, and label font size.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "70d964c4-9456-4fa9-aaea-8753d4f0f17e",
+          "TopicId": "37ae646c-7b8d-4de4-9ac1-f83a14076dec",
+          "Title": "Saving High-Resolution Figures",
+          "BodyText": "Exporting figures at sufficient resolution is critical for print publications and technical reports. The plt.savefig() function supports multiple formats and resolution settings.",
+          "Notes": "Journals typically require figures at 300 DPI for raster formats. Vector formats (PDF, SVG) are resolution-independent and preferred when file size permits.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "1bb55cbf-1420-4183-8df0-7f743fbd5ed9",
+              "Text": "The dpi parameter in plt.savefig() controls dots per inch for raster output.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2ff77cf0-a439-4182-b7a5-14be6e4c60ea",
+              "Text": "bbox_inches=\u0027tight\u0027 prevents axis labels from being clipped at the figure boundary.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7aed8f79-41e4-45e7-8f1c-384f7db91645",
+              "Text": "Vector formats like PDF and SVG preserve sharpness at any zoom level and are ideal for technical documents.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "bc3b40e0-10b8-4383-9fb6-b2a9f21fd25c",
+      "Title": "Introduction to Pandas: Series and DataFrames",
+      "Summary": "Introduces the pandas library and its two primary data structures \u2014 Series and DataFrame \u2014 which form the foundation for data manipulation and analysis in Python.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "8e7d8353-ca26-49dd-aa72-1d5bc9c063d5",
+          "TopicId": "bc3b40e0-10b8-4383-9fb6-b2a9f21fd25c",
+          "Title": "What is Pandas?",
+          "BodyText": "Pandas is a Python library built on NumPy that provides high-performance, easy-to-use data structures for working with labeled and relational data. It is the standard tool for tabular data analysis in Python.",
+          "Notes": "The name \u0027pandas\u0027 is derived from \u0027panel data,\u0027 an econometrics term for multidimensional structured data. It is conventionally imported as: import pandas as pd.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "68d53f0c-eb18-46d5-918b-09b3fcd26fe6",
+              "Text": "Pandas handles missing data gracefully, representing it as NaN and providing methods to fill or drop it.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4260efe7-7c4c-4899-a1d3-3505f2199abd",
+              "Text": "It integrates directly with matplotlib, enabling one-line plotting of DataFrames and Series.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5ab59a0c-a509-4d41-b969-91eacef48f3d",
+              "Text": "Pandas supports reading and writing many file formats including CSV, Excel, JSON, and SQL.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "737b1ffd-a17b-49fa-9649-066d4f550857",
+          "TopicId": "bc3b40e0-10b8-4383-9fb6-b2a9f21fd25c",
+          "Title": "The Pandas Series",
+          "BodyText": "A Series is a one-dimensional labeled array capable of holding data of any type. It behaves like a NumPy array but with an associated index that labels each element.",
+          "Notes": "Series can be thought of as a single column of a spreadsheet with a row index. The index defaults to integers but can be set to strings, dates, or other values.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "c9063b7c-f79a-476a-a712-418641557dff",
+              "Text": "A Series is created with pd.Series(data, index=labels) where data can be a list, dict, or array.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "40371214-3212-47eb-8da0-95f467b8b891",
+              "Text": "Elements are accessed by label using .loc[] or by integer position using .iloc[].",
+              "SortOrder": 1
+            },
+            {
+              "Id": "129747bb-4f53-4f86-8253-8653583b7a25",
+              "Text": "Arithmetic operations on Series are automatically aligned by index.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "8f4552e9-3994-4090-b52b-6527584a9791",
+          "TopicId": "bc3b40e0-10b8-4383-9fb6-b2a9f21fd25c",
+          "Title": "The Pandas DataFrame",
+          "BodyText": "A DataFrame is a two-dimensional labeled data structure with columns of potentially different types, analogous to a spreadsheet or SQL table. It is the primary pandas object for engineering datasets.",
+          "Notes": "A DataFrame can be thought of as a dictionary of Series objects sharing the same index. This makes column access intuitive: df[\u0027column_name\u0027] returns that column as a Series.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "e6ef0b9d-cd9e-45da-9a69-b022e086ffcd",
+              "Text": "DataFrames are created with pd.DataFrame(data) where data can be a dict of lists, a 2D NumPy array, or another DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "79030b25-8d57-4a43-978a-c1622729c1af",
+              "Text": "df.shape returns a tuple of (rows, columns), useful for quickly assessing dataset size.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "117f10fb-1637-4439-ad83-8dc112da3c60",
+              "Text": "df.dtypes shows the data type of each column, which affects available operations.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "c4831878-2ecc-4805-acb4-a8c4486521f2",
+          "TopicId": "bc3b40e0-10b8-4383-9fb6-b2a9f21fd25c",
+          "Title": "Inspecting a DataFrame",
+          "BodyText": "Pandas provides several methods for quickly exploring the structure and content of a newly loaded dataset. These are essential first steps in any data analysis workflow.",
+          "Notes": "Always inspect a dataset immediately after loading it to detect unexpected data types, missing values, or formatting issues before performing analysis.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "26980c52-cd51-486b-8cfb-a76c1a83f564",
+              "Text": "df.head(n) and df.tail(n) display the first or last n rows of the DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "83941d27-68a5-46a3-add1-cc8aa3438093",
+              "Text": "df.info() prints a concise summary of column names, non-null counts, and data types.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2c555683-59df-4fc6-a823-c399c609aebb",
+              "Text": "df.describe() generates summary statistics for all numeric columns.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+      "Title": "Reading, Filtering, and Sorting Data with Pandas",
+      "Summary": "Demonstrates how to load datasets from files and then select, filter, and sort rows and columns to extract meaningful subsets for engineering analysis.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "a52e5588-45ca-4fac-b550-ad6330515111",
+          "TopicId": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+          "Title": "Reading Data from Files",
+          "BodyText": "Pandas provides read functions that import data from common file formats directly into a DataFrame. Reading CSV files is the most common operation in engineering data workflows.",
+          "Notes": "pd.read_csv() includes many parameters for handling real-world data issues such as custom delimiters (sep), header rows (header), and encoding. For Excel files, use pd.read_excel().",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "75296a65-5608-4707-83ae-b1caee2904a9",
+              "Text": "pd.read_csv(\u0027filepath.csv\u0027) loads a comma-separated file into a DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "652f8c75-db25-408d-98b3-cf1810b222a4",
+              "Text": "The index_col parameter designates a column as the row index during import.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5ab08c6d-e7e5-4d00-808b-c156f095cc05",
+              "Text": "na_values specifies additional strings that should be interpreted as missing values.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "4f035db1-a67e-4719-90f7-03734dec4c69",
+          "TopicId": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+          "Title": "Selecting Columns and Rows",
+          "BodyText": "Pandas provides multiple methods for selecting subsets of a DataFrame by column name or row index. Mastery of these selection methods is fundamental to data manipulation.",
+          "Notes": "Using .loc[] with row and column labels is the most readable and explicit selection method. .iloc[] is preferred when working with positional integer-based indexing.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "f0c79c65-b663-4f0f-85e3-faa55c88c6cc",
+              "Text": "df[\u0027col\u0027] selects a single column as a Series; df[[\u0027col1\u0027, \u0027col2\u0027]] selects multiple columns as a DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "99cb4a7e-5bd5-44f1-80db-c65c9afaad39",
+              "Text": "df.loc[row_label, col_label] selects data by label; df.iloc[row_int, col_int] selects by position.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3fc6617f-83d4-49bb-a8b4-fb3606797b54",
+              "Text": "Row slices are supported: df.loc[0:5] returns the first six rows by label.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "c0c29b73-d96b-4f9b-893c-842a0f8f3bd0",
+          "TopicId": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+          "Title": "Filtering Rows with Boolean Conditions",
+          "BodyText": "Boolean indexing allows rows to be selected based on conditions applied to one or more columns. This is the standard method for subsetting engineering data by threshold or category.",
+          "Notes": "Multiple conditions are combined with \u0026 (and) and | (or) operators, and each condition must be wrapped in parentheses. The ~ operator negates a condition.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "f3e68528-38ba-4e6a-ac3d-b4f638cbb8b8",
+              "Text": "df[df[\u0027column\u0027] \u003E value] returns all rows where the column value exceeds a threshold.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "776aec9b-0d2c-40d9-965a-818b78138a51",
+              "Text": "Multiple conditions are combined with \u0026 or |: df[(df[\u0027A\u0027] \u003E 5) \u0026 (df[\u0027B\u0027] == \u0027X\u0027)].",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ecde30e2-ecc4-4fa9-8abc-dea757261395",
+              "Text": "df.query(\u0027column \u003E value\u0027) provides a string-based alternative for readable filtering.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "60bbc0fd-07a4-4754-a312-1288eae2b5ff",
+          "TopicId": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+          "Title": "Sorting DataFrames",
+          "BodyText": "Sorting a DataFrame rearranges rows based on the values in one or more columns. Sorted data is easier to inspect and is required as a preprocessing step for some analyses.",
+          "Notes": "Sorting does not modify the original DataFrame unless inplace=True is set. By default, sort_values() returns a new sorted DataFrame.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "31b08af3-7d72-4b31-b253-9c9f05dc43b6",
+              "Text": "df.sort_values(\u0027column\u0027) sorts the DataFrame in ascending order by the specified column.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "52698c3b-f224-4726-ae4d-dfb358973736",
+              "Text": "ascending=False reverses the sort order to descending.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "1a20dd43-9775-4295-9310-6526138a54dd",
+              "Text": "Sorting by multiple columns is supported by passing a list: df.sort_values([\u0027col1\u0027, \u0027col2\u0027]).",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "e2d0a088-1665-43b5-a5db-59842e662e4e",
+          "TopicId": "7849a8b7-024d-4ca9-a114-21d598e2063d",
+          "Title": "Adding and Modifying Columns",
+          "BodyText": "New columns can be added to a DataFrame through direct assignment, enabling derived variables to be computed from existing data. This is essential for feature engineering and unit conversions.",
+          "Notes": "Vectorized operations on columns are much faster than row-by-row Python loops and should always be preferred for performance-critical workflows.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "af21d75d-400a-4814-94ab-ae10691124c6",
+              "Text": "df[\u0027new_col\u0027] = df[\u0027col1\u0027] \u002B df[\u0027col2\u0027] creates a new column from existing ones.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c2bebec2-f71e-47c7-b49f-5289c819344b",
+              "Text": "df[\u0027col\u0027].apply(func) applies a custom Python function element-wise to a column.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "34da5da9-8733-42d9-ae26-306f3ebb4807",
+              "Text": "df.rename(columns={\u0027old\u0027: \u0027new\u0027}) renames columns without modifying data.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+      "Title": "Descriptive Statistics with Pandas",
+      "Summary": "Covers pandas methods for computing summary statistics, aggregating grouped data, and identifying missing values in engineering datasets.",
+      "SortOrder": 7,
+      "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+      "Elements": [
+        {
+          "Id": "415e5d2c-c1a9-4968-ac34-d32631d19e22",
+          "TopicId": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+          "Title": "Summary Statistics with describe()",
+          "BodyText": "The df.describe() method computes count, mean, standard deviation, min, max, and quartiles for all numeric columns simultaneously. It provides a rapid overview of dataset characteristics.",
+          "Notes": "Passing include=\u0027all\u0027 to df.describe() includes non-numeric columns, showing count, unique, top, and frequency statistics for categorical data.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "c7e35dad-dbdf-4fe3-a342-60caf47095ec",
+              "Text": "df.describe() returns a DataFrame of statistics, making it easy to compare columns.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fa1eaaf2-2cf6-4660-98ac-e3cfadae9cd5",
+              "Text": "Individual statistics are also available as methods: df[\u0027col\u0027].mean(), .std(), .min(), .max().",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3a6c4bf9-3753-4591-aca0-7c7a965cd9f6",
+              "Text": "df[\u0027col\u0027].value_counts() counts occurrences of each unique value in a categorical column.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "eaa872f0-6b64-4f2b-b85c-c8812f1d3712",
+          "TopicId": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+          "Title": "Aggregation with groupby()",
+          "BodyText": "The groupby() method splits a DataFrame into groups based on column values and applies aggregate functions to each group. It is the pandas equivalent of SQL GROUP BY.",
+          "Notes": "Chaining groupby with multiple aggregation functions is done with .agg(): df.groupby(\u0027category\u0027).agg({\u0027col1\u0027: \u0027mean\u0027, \u0027col2\u0027: \u0027sum\u0027}). This returns a multi-column summary table.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "628a8a0b-eac7-4467-8506-907663106c0a",
+              "Text": "df.groupby(\u0027col\u0027).mean() computes the mean of all numeric columns for each group.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2acf3b91-5475-4c3c-8330-3c6a852dde11",
+              "Text": "Multiple aggregation functions can be applied with .agg([\u0027mean\u0027, \u0027std\u0027, \u0027count\u0027]).",
+              "SortOrder": 1
+            },
+            {
+              "Id": "797a61f3-a714-442a-92e6-29c79c82c9c7",
+              "Text": "Grouping by multiple columns is supported: df.groupby([\u0027col1\u0027, \u0027col2\u0027]).sum().",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b476059c-d15b-4f49-a37a-f73f692deac9",
+          "TopicId": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+          "Title": "Handling Missing Values",
+          "BodyText": "Missing values represented as NaN are common in real engineering datasets from sensor dropouts or incomplete records. Pandas provides methods to detect, remove, or fill missing data.",
+          "Notes": "Blindly dropping all rows with missing values can significantly reduce dataset size. Imputation with mean or median values is a common alternative but should be applied carefully to avoid bias.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "7f8e1551-987a-4109-9dca-0eb432b0134d",
+              "Text": "df.isnull().sum() counts the number of missing values in each column.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4c784334-9208-4f1a-b7eb-bfae81396821",
+              "Text": "df.dropna() removes any row containing at least one NaN value.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "413f225a-dab0-4a6f-a5c3-76afce3b071c",
+              "Text": "df.fillna(value) replaces all NaN values with a specified constant or computed value.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b6d86ca5-2f17-48fa-8d76-5d235fcd925a",
+          "TopicId": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+          "Title": "Correlation and Relationships",
+          "BodyText": "Pandas can compute pairwise correlations between numeric columns, providing a quick measure of linear relationships within an engineering dataset.",
+          "Notes": "Correlation values range from -1 to 1. A value near 1 indicates strong positive linear correlation; near -1 indicates strong negative linear correlation; near 0 indicates little to no linear relationship.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "850255b4-6f64-4d61-af0d-981b5cd4292e",
+              "Text": "df.corr() returns a correlation matrix for all numeric columns.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d00bafe7-2897-4b05-9674-8bf0b0c5002e",
+              "Text": "df[\u0027col1\u0027].corr(df[\u0027col2\u0027]) computes the correlation between two specific columns.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3a0efc1d-d284-466e-be1e-027ebdbf16d0",
+              "Text": "Correlation matrices are often visualized as heatmaps using matplotlib or the seaborn library.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b93ea5c4-68a3-4b54-b7f8-a438c0be617a",
+          "TopicId": "bb85a137-8c94-4b42-b84e-aa4c64f391e0",
+          "Title": "Plotting Directly from Pandas",
+          "BodyText": "Pandas DataFrames and Series have built-in plot methods that call matplotlib internally, enabling quick exploratory visualizations with minimal code.",
+          "Notes": "df.plot() accepts a kind parameter for different chart types: \u0027line\u0027, \u0027bar\u0027, \u0027barh\u0027, \u0027hist\u0027, \u0027scatter\u0027. The resulting Axes object can be further customized with standard matplotlib commands.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "ModifiedDate": "2026-05-14T21:33:28.9453026-04:00",
+          "Items": [
+            {
+              "Id": "07a36584-206f-4ef1-8cf2-954e43c7b294",
+              "Text": "df.plot(x=\u0027col1\u0027, y=\u0027col2\u0027, kind=\u0027scatter\u0027) creates a scatter plot directly from a DataFrame.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1c192aa8-a90b-42f4-bb6d-ac694b015928",
+              "Text": "df[\u0027col\u0027].plot(kind=\u0027hist\u0027, bins=20) generates a histogram of a single column.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "135b0108-9b12-47dd-b05e-e6eb067dc960",
+              "Text": "The ax parameter passes an existing Axes object, allowing pandas plots to be embedded in subplot layouts.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 34
+}

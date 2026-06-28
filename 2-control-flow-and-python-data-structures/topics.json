@@ -1,0 +1,1099 @@
+{
+  "ModuleFolderName": "Control_Flow_and",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T12:17:48.3179919-04:00",
+  "ModifiedDate": "2026-05-14T12:17:48.3221026-04:00",
+  "Outcomes": [
+    {
+      "Id": "8617a21d-4afd-4608-8f83-25b931bad6ad",
+      "Text": "Explain how conditional statements control the flow of execution in a Python program.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "350b6891-afd1-4e7c-8686-83e92aadb6b1",
+      "Text": "Apply for and while loops to iterate over sequences and repeat operations in engineering contexts.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "c10ff1bc-753a-4407-8f2a-93bc9a34e671",
+      "Text": "Identify appropriate uses of break, continue, and the range() function within loop structures.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "b3609233-9098-441f-b3a8-42296f20f91a",
+      "Text": "Demonstrate how to create and manipulate Python lists, tuples, dictionaries, and sets.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "77cd93e7-1329-440b-995c-eac20c9d0f96",
+      "Text": "Analyze the characteristics of each core data structure to distinguish when each is appropriate.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "9c27bac3-682c-4578-a129-6afd32c191ca",
+      "Text": "Evaluate engineering problems and select the most suitable Python data structure for a given scenario.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+      "Title": "Conditional Statements",
+      "Summary": "Conditional statements allow a program to make decisions by executing different code blocks based on whether a condition evaluates to true or false. This topic covers if, elif, and else constructs in Python.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "61ed33f6-2d72-46b2-86ec-051a17dfa377",
+          "TopicId": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+          "Title": "The if Statement",
+          "BodyText": "The if statement is the most fundamental conditional construct in Python, executing a block of code only when a specified condition is True.",
+          "Notes": "Emphasize correct indentation as Python uses whitespace to define code blocks. A missing or incorrect indent is one of the most common beginner errors.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "316e466c-0606-4137-b326-18d6ea63463b",
+              "Text": "An if statement evaluates a Boolean expression and executes its indented block only when the result is True.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "321fbb03-3e8f-44ac-be0f-7cbf92ec9abf",
+              "Text": "Python uses indentation (typically four spaces) rather than braces to define the scope of a conditional block.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "578ec49b-ebbd-47ac-81c7-90d5a2e18295",
+              "Text": "Any expression that returns True or False can serve as the condition, including comparisons and logical operators.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "ba1cc07e-c704-4f5d-b11a-d87ad1f4f186",
+          "TopicId": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+          "Title": "The elif Clause",
+          "BodyText": "The elif (else-if) clause allows a program to check multiple conditions in sequence after an initial if condition fails.",
+          "Notes": "Multiple elif clauses can be chained together. Python evaluates them top to bottom and executes only the first block whose condition is True, skipping all remaining elif and else blocks.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "4532e652-77a6-4b2a-83d9-817953d45050",
+              "Text": "elif is evaluated only if all preceding if and elif conditions were False.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7e471f0b-08b3-4b2b-bfa0-21fd3133c610",
+              "Text": "Any number of elif clauses can follow a single if statement.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b2632e42-f16d-4db4-862b-640af28abd76",
+              "Text": "Using elif instead of multiple independent if statements avoids unnecessary condition evaluations once a match is found.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "967000cd-a535-4f7d-851d-d712a7aefee7",
+          "TopicId": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+          "Title": "The else Clause",
+          "BodyText": "The else clause defines a default block of code that executes when none of the preceding if or elif conditions are True.",
+          "Notes": "An else clause is optional but provides a useful catch-all for handling unexpected or default cases, which is particularly valuable in engineering input validation.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "ed2246a3-0b05-4daa-b0c0-b89d6ac4969b",
+              "Text": "else does not take a condition; it runs automatically when all prior conditions are False.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b638539d-0dee-4872-b35d-3371269c08a1",
+              "Text": "Only one else clause is permitted per if-elif-else chain, and it must appear last.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "16056255-4460-4e5c-b386-b162cc5b87bb",
+              "Text": "Including an else clause is good practice for handling edge cases and unexpected inputs.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "74679c60-363b-4303-8c38-1b77bbaf83d9",
+          "TopicId": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+          "Title": "Comparison and Logical Operators",
+          "BodyText": "Conditions in Python are built using comparison operators (==, !=, \u003C, \u003E, \u003C=, \u003E=) and logical operators (and, or, not) to form complex Boolean expressions.",
+          "Notes": "Remind learners that == tests equality while = is assignment. Mixing these up is a very common source of bugs. The \u0027not\u0027 operator inverts a Boolean value.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "4b8f5c81-2a2f-4b53-9916-6e59c3723b85",
+              "Text": "Comparison operators return True or False by comparing two values.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f0ddf4a3-e60b-4000-b88d-923dd08f5e50",
+              "Text": "The and operator returns True only if both operands are True.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ada2d00d-d024-4566-a621-ee8f9185f1d9",
+              "Text": "The or operator returns True if at least one operand is True.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "dd7e2a6a-e428-429a-ae1f-f303431824e9",
+              "Text": "The not operator negates a Boolean expression, turning True to False and vice versa.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "8e09e662-35d1-440e-935e-3e645de8c4f9",
+          "TopicId": "4ee5843f-bd5a-4b54-beb6-e1c42a1bdef3",
+          "Title": "Nested Conditionals",
+          "BodyText": "Conditional statements can be placed inside other conditional blocks to test additional conditions when an outer condition is True.",
+          "Notes": "While nesting is sometimes necessary, deeply nested conditionals reduce readability. Consider refactoring with elif or combining conditions using logical operators where possible.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "e868b900-082a-4a3f-9465-af0bc27e9396",
+              "Text": "A nested conditional is an if statement contained within the block of another if, elif, or else clause.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9a892cf9-aad8-446d-8b3e-24b70a6dcf4c",
+              "Text": "Each nested level requires an additional level of indentation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "aec58260-ccf5-4af0-b383-638bcb223f34",
+              "Text": "Excessive nesting can make code harder to read and maintain; flattening logic with logical operators is often preferred.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ad8ed949-8d43-4f9e-bbdf-8048c828966b",
+      "Title": "for Loops and the range() Function",
+      "Summary": "The for loop iterates over a sequence of items, making it ideal for processing collections of data. The range() function generates numeric sequences commonly used to control loop iterations.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "69dd62b5-0885-41d8-8571-964a09d11ce6",
+          "TopicId": "ad8ed949-8d43-4f9e-bbdf-8048c828966b",
+          "Title": "The for Loop",
+          "BodyText": "A for loop in Python iterates over each item in a sequence \u2014 such as a list, string, or range \u2014 executing the loop body once per item.",
+          "Notes": "Unlike C or Java, Python\u0027s for loop is inherently a \u0027for-each\u0027 loop. It does not require managing an index variable manually unless range() is used.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "72fcd214-55c3-4313-bb74-c28b3ab970a4",
+              "Text": "The loop variable takes on the value of each successive item in the iterable on each iteration.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "fdd54cdd-c7ee-4ca6-bf43-79996dee5388",
+              "Text": "Any iterable object \u2014 including lists, tuples, strings, and dictionaries \u2014 can be used with a for loop.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "add41fb4-d71d-4219-bd69-a7509fa237e0",
+              "Text": "The loop body is indented and executes once for every item in the sequence.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "25396fb2-210f-4fe0-af97-e9fd0d3c715d",
+          "TopicId": "ad8ed949-8d43-4f9e-bbdf-8048c828966b",
+          "Title": "The range() Function",
+          "BodyText": "The range() function generates an immutable sequence of integers and is commonly used with for loops to repeat an action a specific number of times.",
+          "Notes": "range(start, stop, step) \u2014 the stop value is exclusive. For example, range(0, 10, 2) produces 0, 2, 4, 6, 8. A negative step can be used to count down.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "672b93c1-adac-4d23-a89b-6b1e65d240e9",
+              "Text": "range(n) generates integers from 0 up to but not including n.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ef468f9b-5945-45d7-9c32-1bf837ca6379",
+              "Text": "range(start, stop) generates integers from start up to but not including stop.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "af6eeb23-298d-41b1-bf19-4e46424e35aa",
+              "Text": "range(start, stop, step) generates integers from start to stop, incrementing by step each time.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "359341f7-6099-4e19-81d4-42a4ca1253c9",
+              "Text": "range() produces values lazily, making it memory-efficient for large sequences.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d899e2fd-0d38-4aa7-acad-a4f4e66164b8",
+          "TopicId": "ad8ed949-8d43-4f9e-bbdf-8048c828966b",
+          "Title": "Iterating with an Index Using enumerate()",
+          "BodyText": "The enumerate() function allows a for loop to access both the index and the value of each item in an iterable simultaneously.",
+          "Notes": "enumerate() is preferred over manually maintaining a counter variable. It returns (index, value) tuples and accepts an optional start parameter to offset the index.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "e5050656-6901-4e2c-8d99-914c4c5e7db1",
+              "Text": "enumerate(iterable) returns pairs of (index, value) for each item in the sequence.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7b2cd42c-aa8c-492f-93c2-6d171b8a621d",
+              "Text": "Using enumerate() avoids the need for a separate counter variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5ff311d9-b850-4b14-a353-ded8fcf54b32",
+              "Text": "The start parameter of enumerate() allows the index to begin at a value other than zero.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "4e39696e-d4f7-4d00-82ce-626f9dec80f9",
+          "TopicId": "ad8ed949-8d43-4f9e-bbdf-8048c828966b",
+          "Title": "Looping Over Numeric Ranges in Engineering",
+          "BodyText": "Engineering applications frequently require iterating over a defined numeric range, such as time steps in a simulation or indices in a data array.",
+          "Notes": "Example: iterating over sensor readings at fixed time intervals, or summing force values across discrete structural nodes. The range() function maps directly to such use cases.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "d2b87f19-0131-4b02-9b0d-a5b9cf9b3fcb",
+              "Text": "range() is ideal for stepping through evenly spaced numeric intervals common in engineering computations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a34a937a-1381-4efb-879c-f7ee97272517",
+              "Text": "Combining range() with len() allows iteration over indices of any list or array.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c29ceb3a-114a-4327-9fcb-8777a3425d44",
+              "Text": "Careful selection of start, stop, and step values prevents off-by-one errors in numerical simulations.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "d99050cc-4bdb-4270-85b1-b489b6460f53",
+      "Title": "while Loops",
+      "Summary": "A while loop repeats a block of code for as long as a specified condition remains True, making it suitable for situations where the number of iterations is not known in advance.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "936250fc-bd5c-414a-ba03-45ffa8fe5e83",
+          "TopicId": "d99050cc-4bdb-4270-85b1-b489b6460f53",
+          "Title": "The while Loop Structure",
+          "BodyText": "A while loop continuously executes its body until its controlling condition evaluates to False, checking the condition before each iteration.",
+          "Notes": "Always ensure the loop body contains logic that will eventually make the condition False, otherwise the loop will run indefinitely, causing a program hang.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "53505ed2-8e55-48f2-b750-1948cec0a5e0",
+              "Text": "The condition is evaluated before each iteration; if it is False initially, the loop body never executes.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f771cf90-5dd3-43bb-87fb-4114b383f099",
+              "Text": "The loop body must include a statement that changes the condition\u0027s outcome to eventually terminate the loop.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "879e1071-e2b2-40b8-929f-2588f34b634a",
+              "Text": "while loops are well suited for event-driven loops, convergence checks, and user-input validation.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "9372b39e-209e-441f-a8ec-5814d913f430",
+          "TopicId": "d99050cc-4bdb-4270-85b1-b489b6460f53",
+          "Title": "Infinite Loops and Loop Guards",
+          "BodyText": "An infinite loop occurs when a while loop\u0027s condition never becomes False, causing the program to run indefinitely without halting.",
+          "Notes": "Infinite loops can be intentional (e.g., a server listening for connections) and controlled via break. In most computational engineering contexts they are accidental and must be avoided.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "b0392a95-f769-4577-b2eb-4bf9faf9f6b1",
+              "Text": "An infinite loop results when the loop condition is never updated to become False.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e7cd0a55-660e-4f00-98a8-bf444e297902",
+              "Text": "Common causes include forgetting to increment a counter or using an always-True condition.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "05ac36d3-00f5-4748-8a84-5dd1270c7463",
+              "Text": "A loop guard is a variable or condition that ensures the loop will eventually terminate.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b7ff30b2-a0ce-494f-a3ef-5e64685ae73d",
+          "TopicId": "d99050cc-4bdb-4270-85b1-b489b6460f53",
+          "Title": "Comparing for and while Loops",
+          "BodyText": "Choosing between a for loop and a while loop depends on whether the number of iterations is known in advance or determined dynamically during execution.",
+          "Notes": "Rule of thumb: use for when iterating over a known collection or fixed count; use while when continuing until a condition changes, such as convergence in an iterative solver.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "e982a88d-c081-4bef-b935-9acd30279742",
+              "Text": "Use a for loop when the number of iterations or the sequence to iterate over is known before the loop starts.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6c353879-4d17-4d91-bc81-c08c226e5c88",
+              "Text": "Use a while loop when the loop must continue until a runtime condition changes.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a3d6e45a-1ab9-4a0a-b437-339205936135",
+              "Text": "Both loop types can solve many of the same problems, but choosing appropriately improves code clarity.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "14c63d44-8f4c-419d-875e-308aadb13929",
+      "Title": "Loop Control: break and continue",
+      "Summary": "The break and continue statements provide fine-grained control over loop execution, allowing early termination or skipping specific iterations without exiting the loop entirely.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "4a4cbddf-60c0-448e-9d1a-41a412850a0b",
+          "TopicId": "14c63d44-8f4c-419d-875e-308aadb13929",
+          "Title": "The break Statement",
+          "BodyText": "The break statement immediately terminates the innermost loop it appears in, transferring control to the first statement after the loop.",
+          "Notes": "break is commonly used to exit a search loop once a target value is found, or to stop a while loop when a sentinel condition is met. In nested loops, break only exits the innermost loop.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "c439612b-0e51-42ec-ad45-4e83f0d8a151",
+              "Text": "break exits the loop immediately, regardless of whether the loop condition is still True.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8abef18d-3ff0-450d-8533-06176340261a",
+              "Text": "Execution continues with the first statement after the loop\u0027s closing block.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4321467f-7b79-439e-93e4-f35d78c6df15",
+              "Text": "In nested loops, break only terminates the innermost loop in which it appears.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "5a7bd1dc-4199-4554-8a71-5679e5c281f0",
+              "Text": "break is often paired with an if statement to conditionally exit a loop.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "96500e9e-6dda-4634-a3e2-3bd03e43fa45",
+          "TopicId": "14c63d44-8f4c-419d-875e-308aadb13929",
+          "Title": "The continue Statement",
+          "BodyText": "The continue statement skips the remainder of the current loop iteration and jumps directly to the next iteration\u0027s condition check.",
+          "Notes": "continue is useful for filtering out unwanted values during iteration, such as skipping invalid sensor readings or zero-valued entries in a dataset.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "7f2b8394-1a0a-4424-b428-c832f5cce075",
+              "Text": "continue does not exit the loop; it only skips the rest of the current iteration.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1ca8212c-c8ce-40f8-aecb-6798aead4c8c",
+              "Text": "After continue, a for loop moves to the next item and a while loop re-evaluates its condition.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c7a5d731-5474-4562-afe5-d023aa22d200",
+              "Text": "continue improves readability by avoiding deeply nested if statements inside loop bodies.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "31286211-2706-4e94-9999-22f5c60378ce",
+          "TopicId": "14c63d44-8f4c-419d-875e-308aadb13929",
+          "Title": "The else Clause on Loops",
+          "BodyText": "Python allows an optional else clause on both for and while loops, which executes only if the loop completed normally without encountering a break statement.",
+          "Notes": "This feature is unique to Python and is useful for search algorithms \u2014 the else block signals that no break was triggered, meaning the search item was not found.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "347e4599-7092-47c0-be0c-6f6363599343",
+              "Text": "A loop\u0027s else block runs after the loop finishes all iterations without hitting a break.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7348752c-115f-4bc9-b640-6635bddced29",
+              "Text": "If break is executed, the else block is skipped entirely.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "426e5182-17f3-4cde-b652-bc4fba851875",
+              "Text": "The loop else clause is particularly useful for implementing search logic with a clear \u0027not found\u0027 outcome.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b3f82cc7-17fa-4d70-b57d-7154ee6dd2e5",
+          "TopicId": "14c63d44-8f4c-419d-875e-308aadb13929",
+          "Title": "Practical Use Cases for break and continue",
+          "BodyText": "In engineering and data processing, break and continue are frequently used to handle exceptions in data, implement early-exit optimizations, and process conditional sequences.",
+          "Notes": "Example: iterating through a list of measurement values and using continue to skip negative (invalid) readings, or using break to stop processing once a threshold exceedance is detected.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "f31e74b8-a01f-479e-99d1-a0717c9934f2",
+              "Text": "Use break to stop iterating once a target condition or result is found, saving unnecessary computation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f19e6a0d-0d32-41a7-beb0-ea1b52e96bbb",
+              "Text": "Use continue to skip invalid, missing, or out-of-range values during data processing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cb97bac6-37c5-405a-ba93-75c4eee695f2",
+              "Text": "Combining break and continue with conditional logic creates efficient, readable loop structures.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+      "Title": "Lists",
+      "Summary": "Lists are ordered, mutable sequences that can hold items of any type, making them one of the most versatile and widely used data structures in Python.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "1762c8c1-94e0-43d9-babf-953151ed556b",
+          "TopicId": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+          "Title": "Creating and Accessing Lists",
+          "BodyText": "A list is created using square brackets and can store any mix of data types. Individual elements are accessed using zero-based integer indices.",
+          "Notes": "Negative indices count from the end of the list: my_list[-1] returns the last element. This is a common Python idiom worth highlighting.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "60443ac2-635d-4639-8416-6445c0469df6",
+              "Text": "Lists are defined with square brackets: my_list = [1, 2, 3].",
+              "SortOrder": 0
+            },
+            {
+              "Id": "296ae429-15b1-445c-8d52-1f2f7c3ea2d4",
+              "Text": "Elements are accessed by index starting at 0: my_list[0] returns the first element.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "500516e0-42fa-4c8e-8dbf-77ff6c2028c0",
+              "Text": "Negative indices access elements from the end of the list.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "09f787cc-e34f-4f20-8a4e-4f00578864e3",
+              "Text": "Lists can contain elements of different data types, including other lists.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "864c6389-22ec-427b-933f-82e1b5c48379",
+          "TopicId": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+          "Title": "Modifying Lists",
+          "BodyText": "Because lists are mutable, their elements can be changed, added, or removed after the list is created using built-in methods and direct assignment.",
+          "Notes": "Key methods: append() adds one item to the end, extend() adds multiple items, insert() adds at a specific index, remove() deletes by value, pop() removes by index and returns the value.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "6b75486c-5a1a-4da9-9554-1acc272ec8dc",
+              "Text": "Direct index assignment (my_list[0] = 10) replaces an existing element.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1250cdf7-1eef-48cb-9731-090d371b406b",
+              "Text": "append() adds a single element to the end of the list.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "27d19370-c450-4e15-903c-d4eae65aa84b",
+              "Text": "remove() deletes the first occurrence of a specified value.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "86a53651-98eb-44ec-8644-ebe8e4959a0d",
+              "Text": "pop() removes and returns the element at a given index, defaulting to the last element.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7b424407-11e5-47a1-b3ec-15b46bc1dccc",
+          "TopicId": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+          "Title": "List Slicing",
+          "BodyText": "Slicing extracts a sub-list from a list using the syntax list[start:stop:step], returning a new list containing the selected elements.",
+          "Notes": "Slicing does not modify the original list. Omitting start defaults to 0; omitting stop defaults to the end of the list. A step of -1 reverses the list.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "16bbd553-2f23-4a1a-9d44-1effc34d2775",
+              "Text": "The syntax list[start:stop] returns elements from index start up to but not including stop.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8d18b17e-5f2e-4743-9c1c-38cc47bb424d",
+              "Text": "An optional step value controls how many indices to skip between selected elements.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "eb25af63-a706-4505-ae46-fd422bf99938",
+              "Text": "Slicing creates a shallow copy of the selected portion, leaving the original list unchanged.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "54013665-e8d9-404e-bac7-9ad4c4b4d8cb",
+          "TopicId": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+          "Title": "List Comprehensions",
+          "BodyText": "A list comprehension provides a concise, readable way to create a new list by applying an expression to each item in an iterable, optionally filtered by a condition.",
+          "Notes": "Syntax: [expression for item in iterable if condition]. Example: squares = [x**2 for x in range(10)]. List comprehensions are generally faster and more Pythonic than equivalent for loops.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "36cd3209-edae-4990-9c7f-c357b1374678",
+              "Text": "List comprehensions replace many for-loop-based list-building patterns with a single line of code.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f3f592bf-8990-42b8-9e5b-6e3890739f0c",
+              "Text": "An optional if clause filters which items from the iterable are included.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "297798ac-b4d3-436d-ac26-229cc300c9da",
+              "Text": "List comprehensions improve readability and are considered idiomatic Python.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "4adecd0c-5ef3-4494-b80b-819785a232b1",
+          "TopicId": "afaea8b7-a909-4bf5-89da-0a9f80bea3b9",
+          "Title": "Common List Operations and Methods",
+          "BodyText": "Python provides a rich set of built-in functions and list methods for sorting, searching, counting, and transforming list data.",
+          "Notes": "Useful functions: len(), sum(), min(), max(), sorted(). Useful methods: list.sort(), list.reverse(), list.count(), list.index(). Note that sort() modifies in place while sorted() returns a new list.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "c749b7b4-03e9-4079-b596-bb569257902e",
+              "Text": "len() returns the number of elements in a list.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1b2e9e46-fe2f-4456-9e1f-5fd3b22858a9",
+              "Text": "sort() rearranges list elements in place; sorted() returns a new sorted list without modifying the original.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "62d16096-f781-4536-ad80-8fa191c37846",
+              "Text": "count() returns how many times a specific value appears in the list.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "556aad6a-f3af-485c-896d-da7314c61bfc",
+              "Text": "index() returns the position of the first occurrence of a specified value.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "bf67605b-9547-4de8-945d-a9df515b7c4d",
+      "Title": "Tuples",
+      "Summary": "Tuples are ordered, immutable sequences that are ideal for storing fixed collections of data that should not be changed after creation.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "6bf62483-592c-4a6f-9c94-c5f5d5610fd1",
+          "TopicId": "bf67605b-9547-4de8-945d-a9df515b7c4d",
+          "Title": "Creating and Accessing Tuples",
+          "BodyText": "Tuples are defined using parentheses (or simply commas) and support the same indexing and slicing operations as lists, but their contents cannot be modified.",
+          "Notes": "A single-element tuple requires a trailing comma: my_tuple = (42,). Without the comma, Python treats the parentheses as a grouping operator, not a tuple.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "e3a48a45-994d-453f-ad11-48a5bcccdbdf",
+              "Text": "Tuples are created with parentheses: my_tuple = (1, 2, 3), or without: my_tuple = 1, 2, 3.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "95c9e529-a06a-45cc-aadf-1795ac7db115",
+              "Text": "Elements are accessed by zero-based index, identical to list indexing.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9d05a278-8406-4108-b10d-aeb903919f14",
+              "Text": "A single-element tuple must include a trailing comma to distinguish it from a parenthesized expression.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "55193a31-3179-4ebd-a367-45140b5e5fce",
+          "TopicId": "bf67605b-9547-4de8-945d-a9df515b7c4d",
+          "Title": "Immutability of Tuples",
+          "BodyText": "Once a tuple is created, its elements cannot be added, removed, or changed, making tuples a safer choice when data integrity is important.",
+          "Notes": "Immutability means tuples are hashable (if all elements are hashable) and can be used as dictionary keys or set members, unlike lists.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "d005ec61-ab35-4bab-87ef-1900baa0224a",
+              "Text": "Attempting to assign a new value to a tuple element raises a TypeError.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "eb14379d-43ff-46d0-97a7-1515ec33e9a6",
+              "Text": "Immutability guarantees the data remains consistent throughout program execution.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b4c917d2-ac02-401f-97ea-56bc8a8326e0",
+              "Text": "Because tuples are immutable, they are hashable and can be used as dictionary keys.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "590fe458-444d-4513-bc0c-542adef4a11e",
+          "TopicId": "bf67605b-9547-4de8-945d-a9df515b7c4d",
+          "Title": "Tuple Packing and Unpacking",
+          "BodyText": "Tuple packing assigns multiple values into a single tuple, while tuple unpacking assigns the elements of a tuple to individual variables in one statement.",
+          "Notes": "Unpacking is widely used in Python for swapping variables (a, b = b, a) and for receiving multiple return values from a function.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "f5f894c8-bdbd-41f3-a641-e28062567307",
+              "Text": "Packing: coordinates = (10, 20) stores two values in one tuple.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "de66454d-85ce-41f1-91e1-5bf0448ba636",
+              "Text": "Unpacking: x, y = coordinates assigns each element to a separate variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0a2f2f13-8a8b-4c72-b305-046988708262",
+              "Text": "The number of variables on the left must match the number of elements in the tuple unless a starred expression is used.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "310b807e-0e66-425e-b1bf-66618bd2a5dc",
+              "Text": "Functions that return multiple values implicitly return a tuple.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2f1c9427-a5a1-4fe9-9dae-e2abe67093cf",
+          "TopicId": "bf67605b-9547-4de8-945d-a9df515b7c4d",
+          "Title": "When to Use Tuples vs. Lists",
+          "BodyText": "Tuples are preferred when the data represents a fixed record or should be protected from modification, while lists are better suited for collections that need to grow or change.",
+          "Notes": "Engineering examples: store (x, y, z) coordinates as a tuple since spatial coordinates are conceptually fixed; store a series of timestep values as a list since they may be filtered or sorted.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "c203a7bc-0500-4507-8eca-8130eae22588",
+              "Text": "Use a tuple when the number and meaning of elements are fixed, such as a coordinate pair or RGB color value.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4640cfae-4cd2-401b-b16f-365478a97b90",
+              "Text": "Use a list when items will be added, removed, or reordered during execution.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6d1f3b46-0132-45fa-8423-d5a9b55ec687",
+              "Text": "Tuples communicate intent to other developers that the data is not meant to change.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "8b1870ef-3e9d-4f41-914f-070e93d2adfd",
+      "Title": "Dictionaries",
+      "Summary": "Dictionaries store data as key-value pairs, enabling fast lookups by key rather than by position, and are ideal for representing structured, labeled data.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "9da004b6-ae88-48fd-bf94-84d3fbfefbf9",
+          "TopicId": "8b1870ef-3e9d-4f41-914f-070e93d2adfd",
+          "Title": "Creating and Accessing Dictionaries",
+          "BodyText": "Dictionaries are created using curly braces with colon-separated key-value pairs. Values are retrieved by supplying the corresponding key in square brackets.",
+          "Notes": "Keys must be immutable (e.g., strings, numbers, tuples) and unique within a dictionary. Using a key that does not exist raises a KeyError; the get() method avoids this by returning None or a default value.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "daa0da85-b4bc-4a4e-8c6d-5a1b174e5d6e",
+              "Text": "Dictionaries are defined as: my_dict = {\u0027key\u0027: value, ...}.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "7a80acc3-1918-49c0-8c43-774734b140c6",
+              "Text": "Values are accessed with my_dict[\u0027key\u0027]; using a missing key raises a KeyError.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "cb56aebb-afbe-4628-b20a-2601fae69206",
+              "Text": "The get() method returns a default value instead of raising an error when a key is not found.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9271ebc3-9a01-4da6-9f7b-8948fcb1f797",
+              "Text": "Dictionary keys must be unique; assigning to an existing key overwrites its value.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "29807c92-8d31-4040-888f-a925711097dc",
+          "TopicId": "8b1870ef-3e9d-4f41-914f-070e93d2adfd",
+          "Title": "Modifying Dictionaries",
+          "BodyText": "Dictionaries are mutable; entries can be added, updated, or deleted at any time using direct assignment and built-in methods.",
+          "Notes": "del my_dict[\u0027key\u0027] removes a key-value pair. pop(\u0027key\u0027) removes and returns the value. update() merges another dictionary into the current one.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "f67ca2b9-998f-454a-a549-c4c3ab828800",
+              "Text": "Assigning to a new key (my_dict[\u0027new_key\u0027] = value) adds the entry to the dictionary.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "56e3b9db-f347-4b12-9b6a-37555b8ca6c7",
+              "Text": "Assigning to an existing key replaces its current value.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "7d5f4c5a-7499-437f-9466-28b430d9e8e2",
+              "Text": "del removes a key-value pair; pop() removes and returns the value for a specified key.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "223e04a8-7f12-492b-9bcf-08658b1e1579",
+              "Text": "update() merges key-value pairs from another dictionary, overwriting duplicate keys.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "f1771805-cf18-48e6-a7b5-e81f72217fc1",
+          "TopicId": "8b1870ef-3e9d-4f41-914f-070e93d2adfd",
+          "Title": "Iterating Over Dictionaries",
+          "BodyText": "Python provides dedicated methods for iterating over a dictionary\u0027s keys, values, or key-value pairs using keys(), values(), and items().",
+          "Notes": "As of Python 3.7\u002B, dictionaries maintain insertion order. Iterating with items() returns (key, value) tuples, which can be unpacked directly in a for loop.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "c910347c-a2d1-4762-b468-a67f460a8d2e",
+              "Text": "keys() returns a view of all keys in the dictionary.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4b42332b-465e-4c14-8b7d-64923ae23f9a",
+              "Text": "values() returns a view of all values in the dictionary.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6b2c5c92-9ee9-46ed-b808-bd0716b7e1d9",
+              "Text": "items() returns a view of all (key, value) pairs, suitable for unpacking in a for loop.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "d2eb3f19-b89e-4804-b86d-87091afcb6f0",
+          "TopicId": "8b1870ef-3e9d-4f41-914f-070e93d2adfd",
+          "Title": "Engineering Applications of Dictionaries",
+          "BodyText": "Dictionaries are well suited for mapping labeled engineering data, such as material properties, configuration parameters, or named measurement channels.",
+          "Notes": "Example: {\u0027Young_modulus\u0027: 200e9, \u0027yield_strength\u0027: 250e6, \u0027density\u0027: 7850} stores steel properties with descriptive string keys, making code self-documenting.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "9bf7782e-5146-40c1-bf09-e2d83af4550f",
+              "Text": "Dictionaries allow data to be accessed by a meaningful label rather than a numeric index.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "8ce11ee6-69c3-4e45-a4df-4148b837bf5c",
+              "Text": "They are ideal for storing configuration settings, lookup tables, and named datasets.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f949c18c-2f4a-49f1-b53a-2831eb4dcf73",
+              "Text": "Using descriptive string keys makes engineering code easier to read and maintain.",
+              "SortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+      "Title": "Sets and Choosing the Right Data Structure",
+      "Summary": "Sets store unique, unordered elements and support efficient membership testing and set operations. This topic also provides guidance on selecting the appropriate data structure for engineering problems.",
+      "SortOrder": 7,
+      "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+      "Elements": [
+        {
+          "Id": "bb1897a3-3307-425f-8cfa-683914d1b7ab",
+          "TopicId": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+          "Title": "Creating and Using Sets",
+          "BodyText": "A set is an unordered collection of unique elements defined with curly braces or the set() constructor. It automatically discards duplicate values.",
+          "Notes": "To create an empty set, use set() \u2014 not {} which creates an empty dictionary. Sets are mutable but their elements must be immutable (hashable).",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "a91a8d96-9824-44da-a854-5282a75b91ed",
+              "Text": "Sets are created with curly braces: my_set = {1, 2, 3}, or with set().",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9e6a2a51-7ee1-42a1-a50d-4dee99a89a68",
+              "Text": "Duplicate values are automatically removed; each element appears only once.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "83c05c97-a340-401e-902b-e8e33d4f8380",
+              "Text": "An empty set must be created with set(), not {}, which creates an empty dictionary.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "2072841c-e21a-4e06-a5ef-e1efe14b98b0",
+          "TopicId": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+          "Title": "Set Operations",
+          "BodyText": "Sets support mathematical operations including union, intersection, difference, and symmetric difference, enabling powerful comparisons between groups of data.",
+          "Notes": "Operations can be applied using methods (union(), intersection()) or operators (|, \u0026, -, ^). These are useful in engineering for comparing sensor lists, active flags, or categories.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "f0a2716e-772b-47d2-bb8a-5517e309eccc",
+              "Text": "Union (| or union()) returns all elements present in either set.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "1db507ec-19c4-44d4-9271-1cb9bb3366de",
+              "Text": "Intersection (\u0026 or intersection()) returns only elements present in both sets.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "49ffcc06-fdd2-4e5e-9c9a-5989027b499b",
+              "Text": "Difference (- or difference()) returns elements in the first set not found in the second.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "74e7e908-ad1b-4e7b-a764-0886d217be4a",
+              "Text": "Symmetric difference (^ or symmetric_difference()) returns elements in one set but not both.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "359d6702-4fcf-46ec-bfe5-641ee6a6bbcf",
+          "TopicId": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+          "Title": "Membership Testing with Sets",
+          "BodyText": "Sets provide O(1) average-time membership testing using the in operator, making them significantly faster than lists for checking whether a value exists in a large collection.",
+          "Notes": "For large datasets where membership testing is frequent, converting a list to a set before repeated lookups can provide a substantial performance improvement.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "cb6cd2c9-934d-42c7-baaa-af667c597080",
+              "Text": "The in operator tests whether an element exists in a set in constant average time.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a5b4676c-5d55-4111-a8eb-4df662884e46",
+              "Text": "Membership testing in a set is much faster than in a list for large collections.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "76ae3f12-90f2-4b54-8336-baea7b0b8945",
+              "Text": "Sets are the preferred structure when the primary operation is checking for the presence of unique items.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "b269516a-4eca-4754-8195-9ac71811e694",
+          "TopicId": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+          "Title": "Comparing Core Data Structures",
+          "BodyText": "Lists, tuples, dictionaries, and sets each have distinct properties \u2014 ordered vs. unordered, mutable vs. immutable, indexed vs. keyed \u2014 that make them appropriate for different tasks.",
+          "Notes": "Quick reference: List \u2014 ordered, mutable, indexed by position; Tuple \u2014 ordered, immutable, indexed by position; Dictionary \u2014 unordered (insertion-ordered 3.7\u002B), mutable, keyed; Set \u2014 unordered, mutable, unique elements only.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "14162ac4-50fb-4c8b-b8f7-36a1ca85f275",
+              "Text": "Lists are best for ordered, changeable sequences accessed by position.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "cc9f98c3-cd7c-456c-a784-292d83d2e528",
+              "Text": "Tuples are best for fixed records where immutability and hashability are required.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "6c2d537b-7143-4f7f-ae6d-38f1167e88a6",
+              "Text": "Dictionaries are best for labeled data requiring fast lookup by a meaningful key.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "f214400e-44a6-424e-8777-81f4516a1af9",
+              "Text": "Sets are best for storing unique items and performing membership tests or set algebra.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "49258020-96da-48bd-9365-488fc6a7af1a",
+          "TopicId": "9efe99d8-9699-48f7-94e4-80f35719f0c9",
+          "Title": "Selecting the Right Structure for Engineering Problems",
+          "BodyText": "Choosing the appropriate data structure improves program correctness, performance, and readability, particularly in data-intensive engineering applications.",
+          "Notes": "Guide learners to ask: Do I need order? Do items need labels? Must values be unique? Will the collection change? Answers to these questions lead directly to the correct structure.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "ModifiedDate": "2026-05-14T12:17:48.3179919-04:00",
+          "Items": [
+            {
+              "Id": "48b7a1c3-9ebe-46a3-b45b-db8fb0fd6955",
+              "Text": "Ask whether the data needs to be ordered and accessed by position \u2014 if yes, consider a list or tuple.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "b8a73717-375f-4db6-bcfc-d2e69b07bbd4",
+              "Text": "Ask whether the data needs to be accessed by a descriptive label \u2014 if yes, use a dictionary.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "3b29c479-3c59-445a-97d3-36b9a019258a",
+              "Text": "Ask whether uniqueness of elements is required or membership testing will be frequent \u2014 if yes, use a set.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c9f6772e-8174-462d-8ba9-92841328e92d",
+              "Text": "Ask whether the data should be protected from modification \u2014 if yes, prefer a tuple over a list.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 34
+}

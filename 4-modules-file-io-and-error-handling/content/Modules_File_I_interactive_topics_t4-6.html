@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modules_File_I</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+  <header>
+    <h1>Modules_File_I</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>File I/O with the with Statement</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Python's <code>with</code> statement provides a clean, reliable way to work with files by guaranteeing that resources are released properly, even when errors occur. Understanding file modes, reading methods, and path handling gives you a solid foundation for any file-based workflow.</p>
+
+<ul>
+  <li><strong>Opening Files and File Modes</strong></li>
+  <li><strong>The first argument to <code>open()</code> is the file path as a string or Path object.</strong> This path can be absolute or relative to the current working directory, giving you flexibility in how you locate files.</li>
+  <li><strong>The mode argument controls whether the file is opened for reading, writing, or appending.</strong> Common modes include <code>'r'</code> for reading, <code>'w'</code> for writing (which overwrites existing content), and <code>'a'</code> for appending new content to the end.</li>
+  <li><strong>An optional <code>encoding</code> argument (e.g., <code>encoding='utf-8'</code>) prevents character-encoding errors on different platforms.</strong> Without specifying encoding, Python uses the system default, which can vary between Windows, macOS, and Linux and cause subtle bugs.</li>
+
+  <li><strong>The <code>with</code> Statement Context Manager</strong></li>
+  <li><strong>Use <code>with open(path, mode) as f:</code> to open a file within a managed context.</strong> The <code>with</code> statement calls the file object's <code>__enter__</code> method on entry and <code>__exit__</code> method on exit, handling setup and teardown automatically.</li>
+  <li><strong>The file object is bound to the alias after <code>as</code> and is available inside the block.</strong> You use this alias (commonly <code>f</code>) to call read, write, and other file methods throughout the indented body of the <code>with</code> block.</li>
+  <li><strong>The file is closed automatically when the <code>with</code> block exits, regardless of errors.</strong> This eliminates the need for explicit <code>f.close()</code> calls and prevents resource leaks that can occur if an exception is raised mid-operation.</li>
+
+  <li><strong>Reading Text Files</strong></li>
+  <li><strong><code>f.read()</code> returns the entire file content as a single string.</strong> This is convenient for small files, but loading very large files entirely into memory can be inefficient and should be avoided for large datasets.</li>
+  <li><strong><code>f.readline()</code> reads and returns one line at a time, including the newline character.</strong> Calling it repeatedly advances through the file line by line, making it useful when you need precise control over line-by-line processing.</li>
+  <li><strong><code>f.readlines()</code> returns a list of all lines in the file.</strong> Each element in the list corresponds to one line and retains its trailing newline, so you often need to call <code>.strip()</code> when processing individual lines.</li>
+
+  <li><strong>Writing Text Files</strong></li>
+  <li><strong><code>f.write(string)</code> writes the given string to the file and returns the number of characters written.</strong> Unlike <code>print()</code>, <code>write()</code> does not add a newline automatically, so you must include <code>'\n'</code> explicitly when needed.</li>
+  <li><strong><code>f.writelines(list)</code> writes each item in a list to the file without adding separators.</strong> You are responsible for including any newline characters within the list items themselves if line breaks are required in the output.</li>
+  <li><strong>Open in append mode (<code>'a'</code>) to add content to an existing file without erasing it.</strong> If the file does not yet exist, Python creates it automatically, making append mode safe to use even on first run.</li>
+
+  <li><strong>Working with File Paths Using <code>pathlib</code></strong></li>
+  <li><strong>Use <code>Path</code> from <code>pathlib</code> to create platform-independent path objects.</strong> Unlike raw strings, <code>Path</code> objects handle forward slashes, backslashes, and other OS-specific differences transparently.</li>
+  <li><strong>The <code>/</code> operator joins path components intuitively, e.g., <code>Path('data') / 'results.txt'</code>.</strong> This is far more readable than string concatenation and avoids common mistakes such as missing or doubled directory separators.</li>
+  <li><strong><code>Path.exists()</code> returns <code>True</code> if the path points to an existing file or directory.</strong> Checking existence before opening prevents <code>FileNotFoundError</code> exceptions and allows your code to handle missing files gracefully.</li>
+</ul>
+
+<pre><code># Reading a file with the with statement
+from pathlib import Path
+
+data_path = Path('data') / 'measurements.txt'
+
+with open(data_path, 'r', encoding='utf-8') as f:
+    contents = f.read()
+print(contents)
+
+# Writing results to a new file
+output_path = Path('data') / 'results.txt'
+
+lines = ['Trial 1: 23.4\n', 'Trial 2: 25.1\n', 'Trial 3: 22.8\n']
+with open(output_path, 'w', encoding='utf-8') as f:
+    f.writelines(lines)
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Explains how to open, read, and write text files safely using Python&#39;s with-statement context manager to guarantee proper resource cleanup.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">2</span><h2>Reading and Writing CSV Files</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>CSV (Comma-Separated Values) files are one of the most common formats for exchanging tabular data in engineering and science. Python's built-in <code>csv</code> module provides straightforward tools for reading and writing these files without relying on external libraries.</p>
+
+<ul>
+  <li><strong>What Is a CSV File?</strong></li>
+  <li><strong>The first row of a CSV file often contains column headers.</strong> These headers label each column and are used by tools like <code>csv.DictReader</code> to provide named access to fields rather than relying on positional indexing.</li>
+  <li><strong>Fields containing the delimiter or newlines are enclosed in quotation marks.</strong> This quoting convention allows complex data — such as addresses or notes — to be stored in a single field without breaking the row structure.</li>
+  <li><strong>The delimiter can be customized; tabs, semicolons, and pipes are common alternatives.</strong> You specify an alternative delimiter with the <code>delimiter</code> parameter when creating a reader or writer object, making the <code>csv</code> module flexible for many file variants.</li>
+
+  <li><strong>Reading CSV Files with <code>csv.reader</code></strong></li>
+  <li><strong>Pass the open file object to <code>csv.reader</code> to create a reader object.</strong> The reader handles the parsing of each line, correctly splitting fields and removing quotation marks around quoted values.</li>
+  <li><strong>Iterate over the reader to process each row as a list.</strong> Each iteration yields one row as a list of strings, so you will typically need to convert numeric fields explicitly using <code>int()</code> or <code>float()</code>.</li>
+  <li><strong>Use <code>next(reader)</code> to skip a header row before processing data rows.</strong> Calling <code>next()</code> once advances the reader past the first line, preventing header text from being treated as data values.</li>
+
+  <li><strong>Reading CSV Files with <code>csv.DictReader</code></strong></li>
+  <li><strong><code>DictReader</code> automatically uses the first row as field names unless <code>fieldnames</code> is specified.</strong> This removes the need to manually skip the header and makes your code more robust to changes in column order.</li>
+  <li><strong>Access row values by column name: <code>row['Temperature']</code>.</strong> Named access is more readable and less error-prone than index-based access, especially in files with many columns.</li>
+  <li><strong>Each row is returned as a dictionary-like object with consistent key ordering.</strong> Because keys come from the header row, your code documents itself — the column names appear directly in the source rather than as opaque index numbers.</li>
+
+  <li><strong>Writing CSV Files with <code>csv.writer</code></strong></li>
+  <li><strong>Create a writer object by passing the open file object to <code>csv.writer</code>.</strong> On Windows, open the file with <code>newline=''</code> to prevent the writer from adding extra blank lines between rows.</li>
+  <li><strong>Use <code>writer.writerow(list)</code> to write a single row.</strong> Each element of the list becomes a field in the output row, and the writer automatically adds quotation marks around fields that contain the delimiter.</li>
+  <li><strong>Use <code>writer.writerows(list_of_lists)</code> to write multiple rows at once.</strong> This is more efficient than calling <code>writerow()</code> in a loop and is preferred when all the data is available as a collection.</li>
+
+  <li><strong>Writing CSV Files with <code>csv.DictWriter</code></strong></li>
+  <li><strong>Pass <code>fieldnames</code> as a list when creating the <code>DictWriter</code> object.</strong> The <code>fieldnames</code> list controls both the order of columns in the output and which dictionary keys are written to the file.</li>
+  <li><strong>Call <code>writeheader()</code> before writing data rows to include column labels.</strong> Skipping this step produces a CSV without a header, which can confuse downstream tools and make the file harder to interpret.</li>
+  <li><strong>Use <code>writerow(dict)</code> or <code>writerows(list_of_dicts)</code> to write data.</strong> If a dictionary contains keys not listed in <code>fieldnames</code>, they are ignored by default, giving you control over which columns appear in the output.</li>
+</ul>
+
+<pre><code>import csv
+from pathlib import Path
+
+sensor_path = Path('data') / 'sensor_log.csv'
+
+# Reading with DictReader
+with open(sensor_path, 'r', encoding='utf-8', newline='') as f:
+    reader = csv.DictReader(f)
+    readings = []
+    for row in reader:
+        readings.append({
+            'time': row['Time'],
+            'temp': float(row['Temperature'])
+        })
+
+# Writing results with DictWriter
+output_path = Path('data') / 'summary.csv'
+fields = ['time', 'temp']
+
+with open(output_path, 'w', encoding='utf-8', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=fields)
+    writer.writeheader()
+    writer.writerows(readings)
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Covers using Python&#39;s built-in csv module to read tabular data from CSV files and write structured results, a common task in engineering data workflows.</div>
+      </div></div>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">3</span><h2>Working with JSON</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>JSON (JavaScript Object Notation) is a lightweight, human-readable format widely used for configuration files, web APIs, and data exchange between applications. Python's built-in <code>json</code> module makes it straightforward to convert between JSON text and native Python data structures.</p>
+
+<ul>
+  <li><strong>What Is JSON?</strong></li>
+  <li><strong>JSON supports six data types: strings, numbers, booleans, null, arrays, and objects.</strong> This limited but practical type set covers the vast majority of data-exchange needs and maps cleanly onto Python's core types.</li>
+  <li><strong>JSON objects correspond closely to Python dictionaries; arrays correspond to lists.</strong> This natural mapping means that most JSON data can be read directly into Python and manipulated with familiar dictionary and list operations.</li>
+  <li><strong>JSON files are plain text and can be opened and inspected in any text editor.</strong> This transparency makes debugging easier compared to binary formats and allows version control systems to show meaningful diffs when configuration files change.</li>
+
+  <li><strong>Parsing JSON with <code>json.loads</code> and <code>json.load</code></strong></li>
+  <li><strong><code>json.loads(string)</code> parses a JSON-formatted string and returns a Python object.</strong> The <em>s</em> in <code>loads</code> stands for "string," distinguishing it from the file-based variant; use it when JSON arrives as text from a network response or variable.</li>
+  <li><strong><code>json.load(file_object)</code> reads and parses JSON directly from an open file.</strong> Pairing it with the <code>with</code> statement ensures the file is closed after parsing, keeping resource management clean and consistent.</li>
+  <li><strong>JSON objects become Python dicts, arrays become lists, and JSON <code>null</code> becomes <code>None</code>.</strong> Understanding this type mapping prevents confusion when you inspect parsed data and find <code>None</code> where the original JSON contained <code>null</code>.</li>
+
+  <li><strong>Serializing Data with <code>json.dumps</code> and <code>json.dump</code></strong></li>
+  <li><strong><code>json.dumps(object)</code> returns a JSON-formatted string from a Python object.</strong> The optional <code>indent</code> parameter (e.g., <code>indent=2</code>) produces pretty-printed output that is easier for humans to read and review.</li>
+  <li><strong><code>json.dump(object, file_object)</code> writes JSON directly to an open file.</strong> Like <code>json.load</code>, it is best used inside a <code>with</code> block so the file is properly closed after writing.</li>
+  <li><strong>Python dicts, lists, strings, numbers, booleans, and <code>None</code> are natively serializable.</strong> As long as your data consists only of these types, no additional configuration is needed to convert it to valid JSON.</li>
+
+  <li><strong>JSON for Configuration Files</strong></li>
+  <li><strong>Define default parameters in a <code>.json</code> file and load them at script startup.</strong> Storing parameters externally separates configuration from logic, making scripts easier to reuse across different experiments or deployment environments.</li>
+  <li><strong>Updating the config file changes script behavior without touching Python code.</strong> This is especially valuable in collaborative projects where team members need to adjust parameters without understanding or modifying the underlying implementation.</li>
+  <li><strong>Nested JSON objects allow hierarchical grouping of related parameters.</strong> For example, sensor settings, output preferences, and algorithm thresholds can each live in their own nested object, making the configuration file self-documenting and organized.</li>
+
+  <li><strong>Limitations of Python's <code>json</code> Module</strong></li>
+  <li><strong>Sets, tuples (stored as arrays), and custom class instances are not natively JSON-serializable.</strong> Attempting to serialize these types raises a <code>TypeError</code>, so you must convert them to supported types before calling <code>json.dump</code> or <code>json.dumps</code>.</li>
+  <li><strong>A custom <code>JSONEncoder</code> subclass can extend serialization to additional types.</strong> By overriding the <code>default()</code> method, you can teach the encoder how to handle sets, NumPy arrays, datetime objects, or any other custom type.</li>
+  <li><strong>Always validate JSON output when working with mixed Python and NumPy numeric types.</strong> NumPy scalars such as <code>np.float64</code> are not standard Python floats and will raise a <code>TypeError</code> unless converted with <code>float()</code> or handled by a custom encoder.</li>
+</ul>
+
+<pre><code>import json
+from pathlib import Path
+
+# Loading a JSON configuration file
+config_path = Path('config') / 'experiment.json'
+
+with open(config_path, 'r', encoding='utf-8') as f:
+    config = json.load(f)
+
+sample_rate = config['acquisition']['sample_rate_hz']
+output_dir  = config['output']['directory']
+
+# Saving results as JSON
+results = {
+    'trial': 1,
+    'mean_temp': 24.7,
+    'passed': True,
+    'notes': None
+}
+
+results_path = Path('data') / 'results.json'
+
+with open(results_path, 'w', encoding='utf-8') as f:
+    json.dump(results, f, indent=2)
+</code></pre>
+        <div class="notes"><strong>Notes</strong>Introduces JSON as a human-readable data interchange format and demonstrates how Python&#39;s json module serializes and deserializes data for configuration files and APIs.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

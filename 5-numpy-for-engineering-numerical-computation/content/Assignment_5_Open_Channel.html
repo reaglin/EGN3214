@@ -1,0 +1,51 @@
+﻿<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div><h2>Assignment 5 – Find Depth of Flow in an Open Channel</h2>
+<h3>Outcome</h3>
+<p>Use an iterative numerical technique to calculate a value<br><br>Note: This assignment must be submitted in Colab (Jupyter format). You can cut/paste code and report from other tools into Colab or do the entire assignment directly in Colab. Colab has a share notebook link that you can copy and paste as your submission.</p>
+<p><a rel="noopener" href="https://colab.research.google.com/">https://colab.research.google.com/</a></p>
+<h3>Assignment</h3>
+<p>The Mannings Equation finds the Flow Q (cubic feet per second or cfs) in an open channel. The equation is</p>
+<p>Q = 1.49/n * A * R^2/3 * S^1/2</p>
+<p>Where</p>
+<p>Q = Flowrate in cfs<br>A = Cross Sectional Area of Flow (square feet)<br>R = Hydraulic Radius (A/ Wetted Perimeter )<br>S = Downward Slope of the Channel (fraction)</p>
+<p>The Wetted Perimeter and the Cross-Section of Flow are both dependent on the channel's geometry. For this assignment, we will use a Trapezoidal Channel.</p>
+<p><img style="height: auto;" height="300" width="300" alt="" src="https://roneaglin.online/EGN3214/wp-content/uploads/2018/06/Trapezoidal-Channeljpg-300x300.jpg"></p>
+<p>If you work out the Flow Area, you will find it is</p>
+<p>A = b*y + y*(z*y) = by + z*y^2</p>
+<p>The Wetted Perimeter is a little trickier, but a little geometry will show it to be</p>
+<p>W = b + 2y(1 + z^2)^1/2</p>
+<p>where b = base width (ft); z = Side slope (horizontal to vertical =1); y = depth.</p>
+<p>Putting it all together gives a Hydraulic Radius of</p>
+<p>R = (b*y + z*y^2)/(b + 2y*(1+z^2))^1/2</p>
+<p>All this goes into the Mannings Equations</p>
+<p>Q = 1/49/n * (b*y + z*y^2) *&nbsp;&nbsp;((b*y + z*y^2)/(b + 2y(1+z^2))^1/2)^2/3 * S^1/2</p>
+<p>Luckily, I will give you the code for this equation in Python. You are free to use this code. Please note that using iterative techniques, YOU will solve for y (depth in this function).</p>
+<table style="width: 669.109px;">
+<tbody>
+<tr>
+<td>
+<pre>def TrapezoidalQ(n,b,y,z,s):
+   # n is Manning's n - table at 
+   # <a rel="noopener" href="https://www.engineeringtoolbox.com/mannings-roughness-d_799.html">https://www.engineeringtoolbox.com/mannings-roughness-d_799.html</a>
+   # b = Bottom width of channel (ft)
+   # y = Depth of channel (ft)
+   # z = Side slope of channel (horizontal)
+   # s = Directional slope of channel - direction of flow
+   A = b*y + z*y*y
+   W = b + 2*y*math.sqrt(1 + z*z)
+   R = A/W
+   Q = 1.49/n * A * math.pow(R, 2.0/3.0) * math.sqrt(s)
+   return Q</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p>As an engineer, you are designing a warning system that must trigger when the flow is 50 cfs, but your measuring system measures depth. What will be the depth at which you trigger the alarm?</p>
+<p>Values to Use:</p>
+<p>Manning’s n for&nbsp; "Earth Channel – Clean" (you need to look this up - you can use <a rel="noopener" href="https://www.engineeringtoolbox.com/mannings-roughness-d_799.html">https://www.engineeringtoolbox.com/mannings-roughness-d_799.html</a>&nbsp;)<br>b = 3 foot bottom<br>z = 2 Horiz : 1 Vert Side Slope<br>s = 1 foot drop for every 100 feet</p>
+<p>(hint: A depth of 1 foot will give you Q =&nbsp; 25.1 cfs)</p>
+<p>Write the program code and create a document that demonstrates you can use the code to solve this problem using iterative techniques.</p>
+<p>You should call your function CalculateDepth(Q, n, w, z, s).&nbsp; Inputs should be flowrate (variable Q) ,&nbsp; Manning’s roughness coefficient (n), Bottom Width (b), Side Slope (z), and Longitudinal Slope (s). Your code should demonstrate an iterative method to converge on a solution with 0.01 foot accuracy or use existing functions from Python libraries to do this iteration.</p>
+<p>As always, this will be done as an engineering report. Python includes libraries to work on iterative solutions to equations. You must either learn these libraries OR write your own code. You need to (1) figure out the algorithm for iterative solutions, (2) translate that into code, (3) use the code to solve this problem, (4) write a report of using this to solve the problem. You should also include a plot of Flow (Q) vs. Depth</p>
+<p><strong>Report</strong></p>
+<p>The methodology of your report should include the methods you used to solve for the depth. You must also report the depth for the specified flow rate. A plot of flow rate (Q) vs. depth with the solution labeled on the plot is required in the report.<br><br><strong>Report Format (Details at&nbsp;<a rel="noopener" href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou={orgUnitId}&amp;type=content&amp;rcode=DBC-5077119" target="_blank">Submission Guidelines (Engineering Reports)</a> )</strong><br><strong>Cover</strong> - Name/Date/Class/Assignment #<br><strong>Problem Statement</strong> - Copy/Paste and then modify to state problem<br><strong>Methodology </strong>- The approach to the problem, not code, equations and explanation here<br><strong>Results</strong> -Be sure to answer the problem asked in the problem statement<br><strong>Conclusion</strong> - This can be short, any additional notes you want to make here<br><strong>Appendices</strong> - Code or any additional information here&nbsp;</p>
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>

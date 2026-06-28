@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar Charts and Histograms</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+  <header>
+    <h1>Bar Charts and Histograms</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Bar Charts and Histograms</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Bar charts and histograms are two of the most fundamental and widely used tools in data visualization, particularly in engineering and scientific contexts. Although they look superficially similar — both display rectangular bars — they serve entirely different purposes. A <strong>bar chart</strong> is used to compare discrete, categorical quantities: the tensile strength of five different alloys, the failure count across different machine types, or the average response time of several algorithms. A <strong>histogram</strong>, by contrast, is used to examine the <em>distribution</em> of a single continuous numerical variable: how are the measured diameters of a batch of machined parts spread across a range? Are they clustered tightly around the target value, or is there significant spread? Understanding which tool to use — and how to use it effectively — is essential for communicating data-driven findings clearly and accurately.</p>
+
+<p>In Python, both chart types are produced using <strong>Matplotlib</strong>, specifically through the <code>plt.bar()</code> and <code>plt.hist()</code> functions. These functions are highly configurable, and mastering their parameters allows you to produce publication-quality, information-dense figures with relatively little code.</p>
+
+<p><strong>Creating a Bar Chart</strong></p>
+
+<p>The most basic bar chart requires only two arguments: a sequence of category labels (or positions) for the x-axis, and a corresponding sequence of numerical values for the heights of the bars. Consider a simple engineering scenario where you want to compare the average yield strength (in MPa) of four structural materials:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+materials = ['Steel', 'Aluminum', 'Titanium', 'Copper']
+yield_strength = [250, 95, 880, 70]
+
+plt.bar(materials, yield_strength)
+plt.xlabel('Material')
+plt.ylabel('Yield Strength (MPa)')
+plt.title('Average Yield Strength by Material')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>This produces a clean, readable chart. However, Matplotlib's <code>plt.bar()</code> function accepts many additional keyword arguments that dramatically improve the chart's visual quality and informational content.</p>
+
+<p>The <strong><code>width</code> parameter</strong> controls how wide each bar is, expressed as a fraction of the unit interval between bar positions (the default is <code>0.8</code>). Reducing it to, say, <code>0.5</code> creates gaps between bars and gives each bar a slimmer profile, which can be useful when you want to visually emphasize that the categories are discrete and unrelated. Increasing it closer to <code>1.0</code> makes the bars nearly touching, which can emphasize comparisons across categories. The <strong><code>color</code> parameter</strong> accepts a single color string to apply uniformly, but more powerfully, it accepts a <em>list</em> of colors — one per bar — enabling you to visually distinguish individual categories without a legend:</p>
+
+<pre><code>colors = ['steelblue', 'darkorange', 'forestgreen', 'firebrick']
+
+plt.bar(materials, yield_strength, width=0.6, color=colors)
+</code></pre>
+
+<p>This is a common technique in engineering dashboards where each category has a persistent color identity across multiple figures.</p>
+
+<p><strong>Error bars</strong> are a critical addition to bar charts in engineering, where measurements always carry uncertainty. The <strong><code>yerr</code> parameter</strong> accepts either a scalar (the same error applied to all bars), a list (a different error per bar), or a 2×N array (asymmetric errors, where the first row is the lower error and the second is the upper error). Adding error bars transforms a bar chart from a simple comparison into a statistically honest one:</p>
+
+<pre><code>yield_strength = [250, 95, 880, 70]
+errors = [12, 5, 35, 4]  # one standard deviation for each material
+
+plt.bar(materials, yield_strength, width=0.6, color=colors,
+        yerr=errors, capsize=6, error_kw={'elinewidth': 1.5, 'ecolor': 'black'})
+</code></pre>
+
+<p>Here, <code>capsize</code> controls the width of the horizontal cap at the end of each error bar, and <code>error_kw</code> is a dictionary of keyword arguments passed directly to the underlying error bar rendering. Without error bars, a reader might incorrectly conclude that the difference between two similar values is meaningful when it falls within measurement noise.</p>
+
+<p><strong>Grouped bar charts</strong> allow you to compare multiple subcategories side by side within each categorical group. Matplotlib does not have a single function call for grouped bars; instead, you construct them by making <em>multiple calls to <code>plt.bar()</code></em>, each time offsetting the x-positions by the bar width. Suppose you want to compare yield strength and ultimate tensile strength (UTS) for the same four materials:</p>
+
+<pre><code>materials = ['Steel', 'Aluminum', 'Titanium', 'Copper']
+yield_strength = [250, 95, 880, 70]
+uts = [400, 140, 950, 220]
+
+x = np.arange(len(materials))  # numerical positions: [0, 1, 2, 3]
+bar_width = 0.35
+
+fig, ax = plt.subplots()
+bars1 = ax.bar(x - bar_width/2, yield_strength, width=bar_width,
+               label='Yield Strength', color='steelblue')
+bars2 = ax.bar(x + bar_width/2, uts, width=bar_width,
+               label='UTS', color='darkorange')
+
+ax.set_xticks(x)
+ax.set_xticklabels(materials)
+ax.set_ylabel('Stress (MPa)')
+ax.set_title('Mechanical Properties by Material')
+ax.legend()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>The key idea is that <code>x - bar_width/2</code> shifts the first group of bars to the left of each tick mark, and <code>x + bar_width/2</code> shifts the second group to the right. For three groups, you would use offsets of <code>-bar_width</code>, <code>0</code>, and <code>+bar_width</code>, and so on. This pattern scales predictably to any number of subgroups.</p>
+
+<p><strong>Annotating Bar Charts</strong></p>
+
+<p>Annotations transform a visual chart into a self-contained communication tool. The reader should not need to squint at the y-axis to determine a bar's value — important values can and should be printed directly on or above the bars. Matplotlib provides two main mechanisms for this: the high-level <code>ax.bar_label()</code> function (available since Matplotlib 3.4) and the more powerful, lower-level <strong><code>plt.annotate()</code></strong> function.</p>
+
+<p><code>plt.annotate()</code> is far more capable than simple text placement. It supports rich customization of the annotation text, its position, and the arrow or line connecting the annotation to the data point it describes. Its core signature is:</p>
+
+<pre><code>plt.annotate(text, xy=(x_point, y_point), xytext=(x_text, y_text),
+             arrowprops=dict(arrowstyle='->', color='black'))
+</code></pre>
+
+<p>Here, <code>xy</code> is the point being annotated (the tip of the arrow), and <code>xytext</code> is where the annotation text will be placed. The <code>arrowprops</code> dictionary controls the appearance of the connecting arrow. The <code>arrowstyle</code> key accepts strings like <code>'->'</code>, <code>'fancy'</code>, <code>'wedge'</code>, and <code>'simple'</code>, while <code>connectionstyle</code> can be used to curve the connecting line:</p>
+
+<pre><code>plt.annotate('Highest Strength',
+             xy=(2, 880),
+             xytext=(2.5, 750),
+             fontsize=10,
+             ha='left',
+             arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.2'))
+</code></pre>
+
+<p>This draws a curved arrow from the text label to the top of the Titanium bar, clearly identifying the highest value without cluttering the chart.</p>
+
+<p>For <strong>programmatic placement of value labels</strong> on every bar, it is most efficient to iterate over the bar container object returned by <code>plt.bar()</code>. Each element of this container is a <code>Rectangle</code> patch, and you can query its height and position dynamically:</p>
+
+<pre><code>bars = plt.bar(materials, yield_strength, color=colors)
+
+for bar in bars:
+    height = bar.get_height()
+    x_pos = bar.get_x() + bar.get_width() / 2  # center of the bar
+    plt.annotate(f'{height} MPa',
+                 xy=(x_pos, height),
+                 xytext=(0, 4),           # 4 points vertical offset
+                 textcoords='offset points',
+                 ha='center', va='bottom',
+                 fontsize=9)
+</code></pre>
+
+<p>Using <code>textcoords='offset points'</code> and <code>xytext=(0, 4)</code> places the label 4 typographic points above the top of the bar, regardless of the data scale. This is preferable to adding a fixed numerical offset in data coordinates, which would behave inconsistently across charts with different y-axis scales.</p>
+
+<p>The <strong><code>fontsize</code></strong> keyword controls the size of annotation text and accepts either an integer (point size) or a string such as <code>'small'</code>, <code>'medium'</code>, or <code>'large'</code>. The <strong><code>ha</code></strong> (horizontal alignment) keyword accepts <code>'left'</code>, <code>'center'</code>, or <code>'right'</code>, and correspondingly <strong><code>va</code></strong> (vertical alignment) accepts <code>'bottom'</code>, <code>'center'</code>, or <code>'top'</code>. When placing labels above bars, <code>ha='center'</code> and <code>va='bottom'</code> is the conventional choice, as it aligns the bottom of the text with the annotation point.</p>
+
+<p><strong>Creating a Histogram</strong></p>
+
+<p>A histogram answers a fundamentally different question than a bar chart: <em>how is a set of continuous measurements distributed?</em> Rather than plotting one bar per category, a histogram divides a continuous range of values into equally spaced <strong>bins</strong> and plots the count (or density) of observations that fall into each bin. The shape of the resulting chart reveals whether the data is symmetric, skewed, multimodal, or contains outliers.</p>
+
+<p>The <code>plt.hist()</code> function takes a 1D array-like of numerical values as its primary argument. The <code>bins</code> parameter controls how many bins to use (default is 10), and its choice critically affects how the histogram looks. Too few bins obscures the shape of the distribution; too many introduces noise that hides the underlying pattern. Common guidance suggests using the square root of the sample size as a starting point:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+# Simulated shaft diameter measurements (mm), target = 50.00 mm
+diameters = np.random.normal(loc=50.00, scale=0.05, size=500)
+
+plt.hist(diameters, bins=30)
+plt.xlabel('Diameter (mm)')
+plt.ylabel('Frequency')
+plt.title('Distribution of Shaft Diameters')
+plt.show()
+</code></pre>
+
+<p>The <strong><code>density=True</code></strong> parameter is extremely important for statistical work. When set, it normalizes the histogram so that the <em>total area of all bars equals 1.0</em>, converting raw counts into a <strong>probability density function (PDF)</strong> estimate. The y-axis then represents probability per unit of x, not count. This is essential when you want to overlay a theoretical probability distribution (such as a normal curve) on top of the histogram, because the theoretical curve also integrates to 1:</p>
+
+<pre><code>from scipy.stats import norm
+
+fig, ax = plt.subplots()
+ax.hist(diameters, bins=30, density=True, color='steelblue', alpha=0.7)
+
+# Overlay the theoretical normal distribution
+x = np.linspace(diameters.min(), diameters.max(), 300)
+ax.plot(x, norm.pdf(x, loc=50.00, scale=0.05), 'r-', linewidth=2,
+        label='Theoretical Normal PDF')
+
+ax.set_xlabel('Diameter (mm)')
+ax.set_ylabel('Probability Density')
+ax.legend()
+plt.show()
+</code></pre>
+
+<p>Without <code>density=True</code>, the y-axis shows raw counts and the overlaid PDF curve would appear as a nearly flat line, because its values are typically much smaller than the raw counts.</p>
+
+<p>The <strong><code>edgecolor</code></strong> parameter draws visible borders between adjacent bars. By default, histogram bars are drawn without borders, which can make them blend together visually, especially when printed in grayscale. Adding <code>edgecolor='black'</code> or <code>edgecolor='white'</code> gives each bin a distinct boundary and substantially improves clarity:</p>
+
+<pre><code>plt.hist(diameters, bins=30, density=True,
+         color='steelblue', edgecolor='black', linewidth=0.5)
+</code></pre>
+
+<p>When you have <strong>overlapping histograms</strong> — for example, comparing the diameter measurements from two different manufacturing machines — the <strong><code>alpha</code></strong> parameter controls transparency, where <code>0.0</code> is fully transparent and <code>1.0</code> is fully opaque. Setting alpha to around <code>0.5</code> to <code>0.6</code> allows both histograms to be visible simultaneously, with the overlapping region showing a blended color that visually indicates where the distributions coincide:</p>
+
+<pre><code>machine_A = np.random.normal(loc=50.00, scale=0.04, size=500)
+machine_B = np.random.normal(loc=50.02, scale=0.06, size=500)
+
+plt.hist(machine_A, bins=30, alpha=0.6, color='steelblue', label='Machine A')
+plt.hist(machine_B, bins=30, alpha=0.6, color='darkorange', label='Machine B')
+plt.xlabel('Diameter (mm)')
+plt.ylabel('Frequency')
+plt.legend()
+plt.show()
+</code></pre>
+
+<p>Without <code>alpha</code>, one histogram would completely obscure the other wherever they overlap, making the comparison uninformative.</p>
+
+<p><strong>Comparing Distributions with Histograms</strong></p>
+
+<p>One of the most common analytical tasks in engineering is comparing the distributions of two or more datasets: before vs. after a process change, two suppliers' parts, two sensor arrays measuring the same phenomenon. Matplotlib makes this straightforward because <strong>calling <code>plt.hist()</code> twice on the same axes overlays both histograms automatically</strong>. There is no need for any special "overlay" syntax — each successive call to <code>plt.hist()</code> draws on the currently active axes, stacking the visual layers in the order they are called:</p>
+
+<pre><code>fig, ax = plt.subplots(figsize=(8, 5))
+
+ax.hist(machine_A, bins=40, density=True, alpha=0.55,
+        color='steelblue', edgecolor='white', linewidth=0.4,
+        label='Machine A (μ=50.00, σ=0.04)')
+
+ax.hist(machine_B, bins=40, density=True, alpha=0.55,
+        color='darkorange', edgecolor='white', linewidth=0.4,
+        label='Machine B (μ=50.02, σ=0.06)')
+
+ax.set_xlabel('Diameter (mm)', fontsize=12)
+ax.set_ylabel('Probability Density', fontsize=12)
+ax.set_title('Shaft Diameter Distributions: Machine A vs. Machine B')
+ax.legend(fontsize=10)
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>When overlaying distributions, <strong><code>plt.legend()</code></strong> is not optional — it is essential. Without it, the reader has no way to determine which color corresponds to which dataset. The <code>label</code> parameter passed to each <code>plt.hist()</code> call is what populates the legend. Best practice is to include meaningful statistical information (mean, standard deviation, or sample size) in the label string itself, as shown above, so the chart is self-documenting.</p>
+
+<p>A particularly powerful variant for engineering quality control is the <strong>cumulative histogram</strong>, enabled by setting <strong><code>cumulative=True</code></strong>. Rather than showing how many observations fall within each bin, a cumulative histogram shows how many observations fall <em>at or below</em> each value. When combined with <code>density=True</code>, the y-axis becomes a cumulative probability (ranging from 0 to 1), and the chart directly represents the empirical cumulative distribution function (ECDF). This is invaluable for <strong>reading off percentile thresholds</strong>: you can immediately see, for example, that 95% of Machine A's parts fall below a certain diameter, allowing direct comparison to engineering tolerances:</p>
+
+<pre><code>fig, ax = plt.subplots(figsize=(8, 5))
+
+ax.hist(machine_A, bins=100, density=True, cumulative=True,
+        histtype='step', linewidth=2, color='steelblue', label='Machine A')
+ax.hist(machine_B, bins=100, density=True, cumulative=True,
+        histtype='step', linewidth=2, color='darkorange', label='Machine B')
+
+# Draw reference lines for the upper tolerance limit
+ax.axvline(x=50.10, color='red', linestyle='--', linewidth=1.5,
+           label='Upper Tolerance Limit (50.10 mm)')
+ax.axhline(y=0.95, color='gray', linestyle=':', linewidth=1.2,
+           label='95th Percentile')
+
+ax.set_xlabel('Diameter (mm)')
+ax.set_ylabel('Cumulative Probability')
+ax.set_title('Cumulative Distribution of Shaft Diameters')
+ax.legend()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>Here, <code>histtype='step'</code> draws the histogram as an unfilled step curve rather than filled bars, which is a common choice for cumulative plots because it avoids the visual clutter of overlapping filled regions. The combination of <code>density=True</code> and <code>cumulative=True</code> produces a curve that rises from 0 at the minimum data value to 1.0 at the maximum. By adding reference lines with <code>axvline()</code> and <code>axhline()</code>, you can visually identify what fraction of parts from each machine fall within specification — a direct, actionable insight from a data visualization.</p>
+
+<p>Together, bar charts and histograms form an indispensable pair. Whenever you encounter a dataset, asking "is this categorical or continuous?" immediately points you to the right tool. Bar charts compare distinct groups; histograms reveal the shape, spread, and central tendency of numerical measurements. With Matplotlib's extensive parameter set — controlling widths, colors, transparency, error bars, annotations, normalization, and cumulative representation — both chart types can be tailored precisely to the demands of rigorous engineering communication.</p>
+        <div class="notes"><strong>Notes</strong>Consider encouraging learners to experiment with different bin counts when creating histograms, as this is one of the most common sources of misinterpretation. The `bins` parameter can also accept an explicit array of bin edges (e.g., `np.linspace(49.8, 50.2, 41)`) for precise control. Additionally, `histtype=&#39;barstacked&#39;` is a useful option when comparing distributions without overlap, and `np.histogram()` can be used to extract bin counts and edges programmatically for downstream calculations.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

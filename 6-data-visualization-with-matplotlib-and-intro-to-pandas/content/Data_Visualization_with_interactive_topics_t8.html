@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Descriptive Statistics with Pandas</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 6 - Data Visualization with Matplotlib and Intro to Pandas</a></div>
+  <header>
+    <h1>Descriptive Statistics with Pandas</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Descriptive Statistics with Pandas</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Pandas is the cornerstone library for data analysis in Python, and one of its greatest strengths is the rich set of tools it provides for <strong>descriptive statistics</strong> — methods that summarize, aggregate, and explore datasets without requiring you to write statistical formulas from scratch. Whether you are working with sensor readings, experimental measurements, survey responses, or financial records, these tools let you rapidly understand the shape, spread, and relationships hidden inside your data. This topic walks through each major category of descriptive analysis in depth, with practical examples drawn from realistic engineering and scientific contexts.</p>
+
+<p><strong>Summary Statistics with <code>describe()</code></strong></p>
+
+<p>The fastest way to get a broad overview of a DataFrame is the <code>describe()</code> method. When called on an entire DataFrame it returns a new DataFrame whose rows are named statistical measures — <code>count</code>, <code>mean</code>, <code>std</code>, <code>min</code>, the 25th percentile (<code>25%</code>), the median (<code>50%</code>), the 75th percentile (<code>75%</code>), and <code>max</code> — and whose columns match every <em>numeric</em> column in the original data. This side-by-side layout makes it trivial to compare the scale and variability of different variables at a glance.</p>
+
+<pre><code>import pandas as pd
+
+# Suppose we have temperature and pressure readings from a reactor
+data = {
+    'temperature_C': [210, 215, 209, 222, 218, 211, None, 216],
+    'pressure_bar':  [1.2, 1.3, 1.1, 1.5, 1.4, 1.2,  1.3, 1.3],
+    'flow_rate_Ls':  [5.1, 5.3, 5.0, 5.8, 5.6, 5.1,  5.2, 5.4]
+}
+df = pd.DataFrame(data)
+
+print(df.describe())
+</code></pre>
+
+<p>The output will show, for example, that <code>temperature_C</code> has a <code>count</code> of 7 (because one value is missing), a mean near 214 °C, and a standard deviation that reflects the spread of readings. You can immediately see whether columns share a similar scale or whether one variable dominates the others numerically — essential information before feeding data into any model or visualization.</p>
+
+<p>By default <code>describe()</code> operates only on numeric columns. To include object (string) or categorical columns you can pass <code>include='all'</code>, which adds statistics like <code>unique</code>, <code>top</code> (the most frequent value), and <code>freq</code> (its frequency count) for non-numeric columns.</p>
+
+<pre><code>print(df.describe(include='all'))
+</code></pre>
+
+<p>Individual statistical methods are also available directly on a Series (a single column). These are useful when you need one specific number rather than the full summary table, or when you are computing statistics programmatically inside a function.</p>
+
+<ul>
+  <li><strong><code>df['temperature_C'].mean()</code></strong> — arithmetic mean, ignoring NaN values by default (<code>skipna=True</code>).</li>
+  <li><strong><code>df['temperature_C'].std()</code></strong> — sample standard deviation (divides by <em>n − 1</em> by default, matching the Bessel-corrected formula used in most engineering standards).</li>
+  <li><strong><code>df['temperature_C'].min()</code></strong> and <strong><code>df['temperature_C'].max()</code></strong> — the extreme values, useful for setting axis limits or checking for physically impossible readings.</li>
+  <li><strong><code>df['temperature_C'].median()</code></strong> — the 50th percentile; robust to outliers in a way the mean is not.</li>
+  <li><strong><code>df['temperature_C'].quantile(0.9)</code></strong> — arbitrary quantile; here the 90th percentile.</li>
+</ul>
+
+<pre><code>print("Mean temperature:", df['temperature_C'].mean())
+print("Std deviation:",    df['temperature_C'].std())
+print("Max pressure:",     df['pressure_bar'].max())
+print("Min flow rate:",    df['flow_rate_Ls'].min())
+</code></pre>
+
+<p>For <em>categorical</em> or discrete data, <code>value_counts()</code> is the go-to method. It counts how many times each unique value appears in the column and returns the results sorted from most to least frequent. This is invaluable for understanding the distribution of labels, product codes, failure modes, or any other non-numeric variable.</p>
+
+<pre><code>status_data = pd.Series(['pass', 'fail', 'pass', 'pass', 'fail',
+                         'pass', 'inconclusive', 'pass', 'fail'])
+
+print(status_data.value_counts())
+# pass            5
+# fail            3
+# inconclusive    1
+# dtype: int64
+</code></pre>
+
+<p>You can also normalize the counts to proportions by passing <code>normalize=True</code>, which immediately gives you the relative frequency — equivalent to the empirical probability of each category.</p>
+
+<pre><code>print(status_data.value_counts(normalize=True))
+# pass            0.555556
+# fail            0.333333
+# inconclusive    0.111111
+</code></pre>
+
+<p><strong>Aggregation with <code>groupby()</code></strong></p>
+
+<p>Summary statistics computed over an entire column treat every row the same. In practice, data almost always contains one or more <em>grouping variables</em> — a plant site, a shift identifier, an experimental condition, a material grade — and the interesting question is how numeric outcomes differ <em>between</em> those groups. The <code>groupby()</code> method splits the DataFrame into sub-groups defined by the values of one or more columns, applies a statistical function to each group, and combines the results into a new DataFrame.</p>
+
+<pre><code>data2 = {
+    'shift':        ['A','A','A','B','B','B','C','C','C'],
+    'temperature_C':[210,215,209,222,218,221,211,213,210],
+    'yield_pct':    [88.1,89.0,87.5,91.2,90.8,91.5,88.8,89.1,88.5]
+}
+df2 = pd.DataFrame(data2)
+
+# Mean of every numeric column, grouped by shift
+print(df2.groupby('shift').mean())
+</code></pre>
+
+<p>The result has one row per unique value of <code>shift</code> (A, B, C) and one column per numeric variable. You can instantly see that shift B operates at a higher temperature and achieves a higher yield, which might warrant further investigation.</p>
+
+<p>When you need more than one statistic per group, use <code>.agg()</code> and pass a list of function names as strings. Pandas applies every function in the list to every numeric column and returns a hierarchically indexed result.</p>
+
+<pre><code>grouped = df2.groupby('shift')['yield_pct'].agg(['mean', 'std', 'count'])
+print(grouped)
+#           mean       std  count
+# shift
+# A     88.2000  0.762972      3
+# B     91.1667  0.360555      3
+# C     88.8000  0.300000      3
+</code></pre>
+
+<p>You can also apply <em>different</em> aggregation functions to different columns in a single call by passing a dictionary to <code>.agg()</code>, where keys are column names and values are the functions to apply to each.</p>
+
+<pre><code>result = df2.groupby('shift').agg({
+    'temperature_C': ['mean', 'max'],
+    'yield_pct':     ['mean', 'std']
+})
+print(result)
+</code></pre>
+
+<p>Grouping by <em>multiple columns simultaneously</em> works by passing a list of column names to <code>groupby()</code>. The resulting index is a MultiIndex with one level per grouping column. This is particularly useful in factorial experimental designs or when data is segmented by two independent factors, such as plant site and shift.</p>
+
+<pre><code>data3 = {
+    'site':  ['North','North','South','South','North','South'],
+    'shift': ['A','B','A','B','A','B'],
+    'yield': [88.0, 91.0, 87.5, 90.5, 88.5, 91.5]
+}
+df3 = pd.DataFrame(data3)
+
+print(df3.groupby(['site', 'shift']).mean())
+#                   yield
+# site  shift
+# North A        88.250
+#       B        91.000
+# South A        87.500
+#       B        91.000
+</code></pre>
+
+<p>After grouping by multiple columns you can call <code>.reset_index()</code> on the result to flatten the MultiIndex back into regular columns, which is often necessary before plotting or merging with another DataFrame.</p>
+
+<p><strong>Handling Missing Values</strong></p>
+
+<p>Real-world datasets almost always contain missing values — sensors drop packets, operators skip fields, instruments go offline. Ignoring missing data without understanding its extent and pattern can silently corrupt every downstream calculation. Pandas represents missing data as <code>NaN</code> (Not a Number) for numeric columns and as <code>None</code> or <code>pd.NA</code> in other contexts, and it provides a consistent set of methods for detecting, removing, and imputing these gaps.</p>
+
+<p>The first step is always to <em>count</em> the missing values. <code>df.isnull()</code> returns a boolean DataFrame of the same shape as <code>df</code>, with <code>True</code> wherever a value is missing. Chaining <code>.sum()</code> collapses that boolean DataFrame column-by-column, yielding the count of missing entries in each column.</p>
+
+<pre><code>print(df.isnull().sum())
+# temperature_C    1
+# pressure_bar     0
+# flow_rate_Ls     0
+# dtype: int64
+</code></pre>
+
+<p>Dividing by <code>len(df)</code> converts counts to fractions, giving you the <em>missing rate</em> per column — a useful diagnostic when deciding whether a column is reliable enough to use.</p>
+
+<pre><code>print(df.isnull().sum() / len(df))
+</code></pre>
+
+<p>Once you understand where the gaps are, you have two main strategies: <strong>removal</strong> and <strong>imputation</strong>.</p>
+
+<p><em>Removal</em> with <code>df.dropna()</code> deletes every row that contains at least one NaN. This is the safest option when missing values are rare and random — the remaining data is complete and unbiased. However, if missingness is systematic (e.g., a sensor always fails at high temperatures), dropping those rows introduces bias.</p>
+
+<pre><code># Drop every row with any missing value
+df_clean = df.dropna()
+print(df_clean.shape)   # (7, 3) — one row removed
+</code></pre>
+
+<p>You can restrict removal to specific columns with the <code>subset</code> parameter, and use <code>thresh</code> to keep rows that have at least a given number of non-NaN values — useful when a row missing only one of ten sensors is still valuable.</p>
+
+<pre><code># Only drop rows where 'temperature_C' is missing
+df_clean2 = df.dropna(subset=['temperature_C'])
+</code></pre>
+
+<p><em>Imputation</em> with <code>df.fillna(value)</code> replaces NaN values with a specified constant or computed value instead of removing the row. Common strategies include:</p>
+
+<ul>
+  <li><strong>Constant fill</strong>: Replace with a domain-specific sentinel, e.g., 0 for a counter that never ran, or -999 as a flag for a downstream system.</li>
+  <li><strong>Mean or median fill</strong>: Replace with the column's average (suitable for approximately normal data) or median (more robust to outliers).</li>
+  <li><strong>Forward fill (<code>method='ffill'</code>)</strong>: Propagate the last known value forward in time — natural for sensor time series where a brief dropout should carry the previous reading.</li>
+  <li><strong>Backward fill (<code>method='bfill'</code>)</strong>: Fill from the next valid observation backwards.</li>
+</ul>
+
+<pre><code># Fill with the column mean
+df['temperature_C'] = df['temperature_C'].fillna(df['temperature_C'].mean())
+
+# Or forward-fill for time series data
+df['temperature_C'] = df['temperature_C'].fillna(method='ffill')
+</code></pre>
+
+<p>It is important to compute the fill value (e.g., the mean) on the <em>training</em> portion of your data when working in a machine-learning context, then apply the same value to validation and test sets. Computing the mean on the full dataset before splitting leads to <em>data leakage</em>.</p>
+
+<p><strong>Correlation and Relationships</strong></p>
+
+<p>Descriptive statistics for individual columns tell you about each variable in isolation. Correlation measures the <em>linear relationship between pairs of variables</em> — whether they tend to move together (positive correlation), in opposite directions (negative correlation), or independently (near-zero correlation). The Pearson correlation coefficient ranges from −1 (perfect inverse linear relationship) to +1 (perfect direct linear relationship), with 0 indicating no linear association.</p>
+
+<p><code>df.corr()</code> computes the pairwise Pearson correlation for every combination of numeric columns in the DataFrame and returns a symmetric matrix. The diagonal is always 1.0 (a variable is perfectly correlated with itself).</p>
+
+<pre><code>import numpy as np
+
+np.random.seed(42)
+n = 100
+df4 = pd.DataFrame({
+    'ambient_temp':  np.random.normal(25, 3, n),
+    'power_draw_W':  np.random.normal(500, 50, n),
+    'efficiency_pct': np.random.normal(85, 2, n)
+})
+# Introduce a real relationship: efficiency drops as ambient temp rises
+df4['efficiency_pct'] -= 0.4 * df4['ambient_temp']
+
+print(df4.corr())
+</code></pre>
+
+<p>Reading the matrix: the value in the row <code>ambient_temp</code> and column <code>efficiency_pct</code> reveals how strongly ambient temperature and efficiency are linearly related. A value near −0.9 would confirm a strong inverse relationship — as the environment heats up, efficiency falls.</p>
+
+<p>When you only care about the correlation between two specific columns, you can call the method on one Series and pass the other as an argument:</p>
+
+<pre><code>r = df4['ambient_temp'].corr(df4['efficiency_pct'])
+print(f"Pearson r = {r:.4f}")
+</code></pre>
+
+<p>You can also select a non-default correlation method by passing <code>method='spearman'</code> or <code>method='kendall'</code> to either <code>df.corr()</code> or <code>Series.corr()</code>. Spearman correlation measures monotonic (not necessarily linear) relationships and is more robust to outliers, making it a better choice when data is ordinal or skewed.</p>
+
+<p>Correlation matrices are most informative when displayed as a <strong>heatmap</strong>, because the human eye can quickly spot clusters of high or low correlation that would be invisible in a table of numbers. The seaborn library provides <code>seaborn.heatmap()</code> for this purpose:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import seaborn as sns
+
+fig, ax = plt.subplots(figsize=(6, 5))
+sns.heatmap(df4.corr(), annot=True, fmt='.2f', cmap='coolwarm',
+            vmin=-1, vmax=1, ax=ax)
+ax.set_title('Correlation Matrix — Reactor Data')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>In the heatmap, colors near deep red (or blue, depending on the colormap) indicate strong positive (or negative) correlations, while pale or white cells indicate weak associations. The <code>annot=True</code> argument overlays the numeric values, combining the precision of a table with the readability of a color map.</p>
+
+<p>A critical caveat: <em>correlation does not imply causation</em>. Two variables can be highly correlated because both are driven by a third (confounding) variable. Always interpret correlations alongside domain knowledge.</p>
+
+<p><strong>Plotting Directly from Pandas</strong></p>
+
+<p>Pandas integrates directly with matplotlib, allowing you to produce publication-quality plots with a single method call on a DataFrame or Series — without manually extracting arrays and passing them to <code>plt.plot()</code>. Under the hood, <code>df.plot()</code> calls matplotlib, so any plot it creates can be further customized with standard matplotlib commands.</p>
+
+<p>The core interface is <code>df.plot(kind=...)</code>, where <code>kind</code> specifies the chart type. The most common options are <code>'line'</code> (default), <code>'scatter'</code>, <code>'bar'</code>, <code>'barh'</code>, <code>'hist'</code>, <code>'box'</code>, <code>'kde'</code>, and <code>'pie'</code>.</p>
+
+<p>A <strong>scatter plot</strong> between two columns is created by specifying both <code>x</code> and <code>y</code> and setting <code>kind='scatter'</code>:</p>
+
+<pre><code>ax = df4.plot(x='ambient_temp', y='efficiency_pct', kind='scatter',
+              alpha=0.6, color='steelblue',
+              xlabel='Ambient Temperature (°C)',
+              ylabel='Efficiency (%)',
+              title='Efficiency vs Ambient Temperature')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>The negative slope in the scatter plot visually confirms the negative correlation computed earlier. Adding <code>alpha=0.6</code> makes overlapping points semi-transparent, revealing data density in crowded regions.</p>
+
+<p>A <strong>histogram</strong> of a single column is produced by calling <code>.plot(kind='hist')</code> on a Series. The <code>bins</code> parameter controls how finely the range is divided — too few bins hide the shape of the distribution; too many bins show noise rather than structure. A common starting rule is to try the square root of the number of observations.</p>
+
+<pre><code>ax = df4['power_draw_W'].plot(kind='hist', bins=20, edgecolor='black',
+                              color='coral',
+                              title='Distribution of Power Draw')
+ax.set_xlabel('Power Draw (W)')
+ax.set_ylabel('Frequency')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>One of the most practical features of pandas plotting is the <strong><code>ax</code> parameter</strong>. By passing an existing matplotlib <code>Axes</code> object to <code>df.plot(ax=ax)</code>, you embed the pandas-generated plot inside a larger subplot layout. This allows you to arrange multiple diagnostics — a time series, a histogram, a scatter plot — in a single figure, which is standard practice in engineering reports and dashboards.</p>
+
+<pre><code>fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+
+# Panel 1: histogram of ambient temperature
+df4['ambient_temp'].plot(kind='hist', bins=15, ax=axes[0],
+                         title='Ambient Temp Distribution',
+                         color='skyblue', edgecolor='black')
+
+# Panel 2: histogram of efficiency
+df4['efficiency_pct'].plot(kind='hist', bins=15, ax=axes[1],
+                           title='Efficiency Distribution',
+                           color='salmon', edgecolor='black')
+
+# Panel 3: scatter plot
+df4.plot(x='ambient_temp', y='efficiency_pct', kind='scatter',
+         ax=axes[2], alpha=0.5, color='purple',
+         title='Efficiency vs Temperature')
+
+for ax in axes:
+    ax.set_xlabel(ax.get_xlabel() or '')  # tidy up labels
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>The key insight is that <code>fig, axes = plt.subplots(1, 3)</code> creates the figure and three Axes objects; each pandas <code>.plot(ax=axes[i])</code> call fills one of those slots. Without the <code>ax</code> parameter, each <code>.plot()</code> call would open a new figure window, making it impossible to assemble a composite layout.</p>
+
+<p>Together, these tools — summary statistics, grouped aggregation, missing-value management, correlation analysis, and direct plotting — form a complete workflow for the <em>exploratory data analysis</em> (EDA) phase of any data-driven project. Running them in sequence on a new dataset typically surfaces 80 % of the insights you need to ask the right follow-up questions and choose appropriate next steps, whether that means cleaning the data further, engineering new features, or selecting a statistical model.</p>
+        <div class="notes"><strong>Notes</strong>Covers pandas methods for computing summary statistics, aggregating grouped data, and identifying missing values in engineering datasets. Examples use realistic sensor and reactor data. All code is self-contained and runnable with pandas, numpy, matplotlib, and seaborn installed.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

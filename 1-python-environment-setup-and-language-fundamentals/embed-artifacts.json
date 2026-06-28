@@ -1,0 +1,42 @@
+﻿[
+  {
+    "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Topics \u0026 Learning Outcomes",
+    "href": "topics-outcomes.html",
+    "type": "Page"
+  },
+  {
+    "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Module Topics",
+    "href": "topics.html",
+    "type": "Page"
+  },
+  {
+    "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Module Topics",
+    "href": "content/module_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Python_Environment_Setup",
+    "href": "content/Python_Environment_Setup_interactive_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Python_Environment_Setup",
+    "href": "content/_interactive.html",
+    "type": "Content"
+  },
+  {
+    "title": "Python_Environment_Setup",
+    "href": "content/_interactive_v2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Python_Environment_Setup",
+    "href": "content/_interactive_v3.html",
+    "type": "Content"
+  },
+  {
+    "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Topic Prompt (Source)",
+    "href": "source-materials/source-1.html",
+    "type": "Source-materials"
+  }
+]

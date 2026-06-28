@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 - Modules, File I/O, and Error Handling — Topics &amp; Learning Outcomes</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:880px;margin:0 auto;padding:32px 24px;color:#222;line-height:1.55}
+h1{font-size:1.6rem;border-bottom:2px solid #dcdcdc;padding-bottom:8px}
+h2{font-size:1.25rem;margin-top:30px;color:#1a3c6e;border-bottom:1px solid #ececec;padding-bottom:4px}
+h3{font-size:1.05rem;margin-top:22px;color:#1a3c6e}
+.toc{border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:14px 0 6px;display:flex;gap:18px;flex-wrap:wrap}
+.toc a{color:#1a3c6e;font-weight:600;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.summary{color:#555;font-style:italic;margin:4px 0 10px}
+ul{margin:6px 0 6px 4px}
+li{margin:5px 0}
+.el-body{color:#555}
+.prefix{color:#555;font-style:italic;margin:6px 0 14px}
+.mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
+.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .statement{font-weight:600;margin:4px 0 8px}
+.meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
+.meta .map{background:#eaf6ec;color:#137333}
+.co{margin:7px 0}
+.co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
+.empty{color:#888}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>4 - Modules, File I/O, and Error Handling — Topics &amp; Learning Outcomes</h1>
+<div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
+
+<h2 id="topics">Module Topics</h2>
+<h3>Introduction to Python Modules</h3>
+<div class="summary">Explains what modules are, why they are used, and how Python locates and loads them at runtime.</div>
+<ul>
+<li><strong>What Is a Module?</strong> <span class="el-body">— A module is a single Python file containing definitions, functions, classes, and variables that can be reused in other scripts.</span></li>
+<li><strong>Importing Modules with import</strong> <span class="el-body">— The import statement loads a module into the current namespace, making its contents accessible via dot notation.</span></li>
+<li><strong>Selective Imports with from…import</strong> <span class="el-body">— The from…import syntax lets you import specific names from a module directly into the current namespace.</span></li>
+<li><strong>Module Aliases</strong> <span class="el-body">— The &#39;as&#39; keyword creates a shorter or more descriptive alias for an imported module or name.</span></li>
+<li><strong>The Module Search Path</strong> <span class="el-body">— When Python encounters an import statement it searches a sequence of directories defined in sys.path to locate the module file.</span></li>
+</ul>
+<h3>Writing and Using Custom Modules</h3>
+<div class="summary">Covers how to design, write, and import your own Python modules to share reusable engineering functions across projects.</div>
+<ul>
+<li><strong>Creating a Custom Module File</strong> <span class="el-body">— A custom module is created by writing functions, classes, or constants in a .py file and saving it in a location accessible to your scripts.</span></li>
+<li><strong>The __name__ == &#39;__main__&#39; Guard</strong> <span class="el-body">— This guard allows a module file to contain both reusable code and a standalone test or demo block that only executes when the file is run directly.</span></li>
+<li><strong>Organizing Functions and Constants</strong> <span class="el-body">— Group related functions and constants logically within a module to make the interface clear to other developers and scripts.</span></li>
+<li><strong>Importing Your Custom Module</strong> <span class="el-body">— Once saved in the correct directory, a custom module is imported using the same syntax as any standard library module.</span></li>
+<li><strong>Documenting a Custom Module</strong> <span class="el-body">— Good documentation within a module enables other engineers to understand and correctly use its functions without reading the implementation.</span></li>
+</ul>
+<h3>Using Standard Library Modules</h3>
+<div class="summary">Introduces key modules included with Python that are immediately useful for engineering scripting tasks without additional installation.</div>
+<ul>
+<li><strong>The math Module</strong> <span class="el-body">— The math module provides mathematical functions and constants commonly needed in engineering calculations.</span></li>
+<li><strong>The os and os.path Modules</strong> <span class="el-body">— The os module provides operating-system-independent functions for interacting with the file system and environment.</span></li>
+<li><strong>The sys Module</strong> <span class="el-body">— The sys module exposes interpreter-level variables and functions, including command-line arguments and the module search path.</span></li>
+<li><strong>The datetime Module</strong> <span class="el-body">— The datetime module supplies classes for manipulating dates and times, which is useful for timestamping engineering data logs.</span></li>
+<li><strong>The random Module</strong> <span class="el-body">— The random module generates pseudo-random numbers and provides tools for random sampling, useful in simulations and testing.</span></li>
+</ul>
+<h3>File I/O with the with Statement</h3>
+<div class="summary">Explains how to open, read, and write text files safely using Python&#39;s with-statement context manager to guarantee proper resource cleanup.</div>
+<ul>
+<li><strong>Opening Files and File Modes</strong> <span class="el-body">— Python&#39;s built-in open() function returns a file object that provides methods for reading and writing; the mode argument determines how the file is accessed.</span></li>
+<li><strong>The with Statement Context Manager</strong> <span class="el-body">— The with statement ensures a file is automatically closed when the indented block exits, even if an exception occurs.</span></li>
+<li><strong>Reading Text Files</strong> <span class="el-body">— File objects provide multiple methods for reading text content depending on whether you need the entire file, one line, or all lines as a list.</span></li>
+<li><strong>Writing Text Files</strong> <span class="el-body">— Opening a file in write or append mode allows you to output strings to the file using the write or writelines methods.</span></li>
+<li><strong>Working with File Paths Using pathlib</strong> <span class="el-body">— The pathlib module provides an object-oriented interface for constructing and manipulating file paths that works consistently across operating systems.</span></li>
+</ul>
+<h3>Reading and Writing CSV Files</h3>
+<div class="summary">Covers using Python&#39;s built-in csv module to read tabular data from CSV files and write structured results, a common task in engineering data workflows.</div>
+<ul>
+<li><strong>What Is a CSV File?</strong> <span class="el-body">— A CSV (Comma-Separated Values) file stores tabular data as plain text, with each row on a new line and columns separated by a delimiter, typically a comma.</span></li>
+<li><strong>Reading CSV Files with csv.reader</strong> <span class="el-body">— csv.reader wraps a file object and returns an iterator that yields each row as a list of strings.</span></li>
+<li><strong>Reading CSV Files with csv.DictReader</strong> <span class="el-body">— csv.DictReader reads each row as an ordered dictionary, using the header row as keys, which makes column access by name more readable.</span></li>
+<li><strong>Writing CSV Files with csv.writer</strong> <span class="el-body">— csv.writer provides methods to write rows to a CSV file, handling quoting and delimiter escaping automatically.</span></li>
+<li><strong>Writing CSV Files with csv.DictWriter</strong> <span class="el-body">— csv.DictWriter writes dictionaries as CSV rows, with field names specified at construction time.</span></li>
+</ul>
+<h3>Working with JSON</h3>
+<div class="summary">Introduces JSON as a human-readable data interchange format and demonstrates how Python&#39;s json module serializes and deserializes data for configuration files and APIs.</div>
+<ul>
+<li><strong>What Is JSON?</strong> <span class="el-body">— JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data using key-value pairs, arrays, and nested objects.</span></li>
+<li><strong>Parsing JSON with json.loads and json.load</strong> <span class="el-body">— Python&#39;s json module converts a JSON string or file into native Python data structures using the loads and load functions.</span></li>
+<li><strong>Serializing Data with json.dumps and json.dump</strong> <span class="el-body">— The json module converts Python objects into JSON-formatted strings or writes them to a file using dumps and dump.</span></li>
+<li><strong>JSON for Configuration Files</strong> <span class="el-body">— Storing simulation parameters or tool settings in a JSON file allows engineers to modify inputs without editing source code.</span></li>
+<li><strong>Limitations of Python&#39;s json Module</strong> <span class="el-body">— Not all Python objects can be directly serialized to JSON; certain types require custom handling or conversion before they can be encoded.</span></li>
+</ul>
+<h3>Error Handling with try-except</h3>
+<div class="summary">Explains Python&#39;s exception handling model and demonstrates how to use try-except blocks to build resilient engineering scripts that recover gracefully from runtime errors.</div>
+<ul>
+<li><strong>What Is an Exception?</strong> <span class="el-body">— An exception is a runtime error that interrupts normal program flow; if not handled, it terminates the script and displays a traceback.</span></li>
+<li><strong>Basic try-except Structure</strong> <span class="el-body">— A try block contains code that might raise an exception; the except block defines how to respond if a specific exception type is raised.</span></li>
+<li><strong>The else and finally Clauses</strong> <span class="el-body">— The optional else clause runs only if no exception was raised; the finally clause runs unconditionally and is used for cleanup actions.</span></li>
+<li><strong>Accessing Exception Information</strong> <span class="el-body">— Using &#39;as&#39; in an except clause binds the exception object to a variable, providing access to its message and attributes for logging or debugging.</span></li>
+<li><strong>Raising Exceptions</strong> <span class="el-body">— The raise statement lets you deliberately trigger an exception when your code detects an invalid condition, signaling errors clearly to calling code.</span></li>
+<li><strong>Practical Error Handling in Engineering Scripts</strong> <span class="el-body">— Combining try-except with file I/O, user input, and numeric operations produces robust scripts that handle real-world data quality issues gracefully.</span></li>
+</ul>
+<h2 id="outcomes">Student Learning Outcomes</h2>
+<p class="prefix">By the end of this module, students will be able to:</p>
+<div class="mo">
+<div class="code">MO1</div>
+<div class="statement">Construct a custom Python module containing reusable engineering functions, organized with a __name__ == &#39;__main__&#39; guard and module-level documentation</div>
+<div class="meta"><span>Level: Create</span><span>Type: Cognitive</span><span class="map">Course mapping: CO2</span></div>
+</div>
+<div class="mo">
+<div class="code">MO2</div>
+<div class="statement">Apply the with-statement context manager to read from and write to text and CSV files using Python&#39;s built-in open() function and csv module</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO3</div>
+<div class="statement">Serialize and deserialize structured engineering data between Python objects and JSON format using the json module&#39;s load, loads, dump, and dumps functions</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO1</span></div>
+</div>
+<div class="mo">
+<div class="code">MO4</div>
+<div class="statement">Implement try-except blocks with else, finally, and raise clauses to handle runtime exceptions in scripts that perform file I/O and numeric operations</div>
+<div class="meta"><span>Level: Apply</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<div class="mo">
+<div class="code">MO5</div>
+<div class="statement">Select appropriate standard library modules — including math, os, datetime, and pathlib — to accomplish specified engineering scripting tasks</div>
+<div class="meta"><span>Level: Analyze</span><span>Type: Cognitive</span><span class="map">Course mapping: CO3</span></div>
+</div>
+<h3>Course Outcomes (reference)</h3>
+<div class="co"><span class="code">CO1</span>Use variables, arrays and object structures appropriate to solve engineering problems.</div>
+<div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
+<div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

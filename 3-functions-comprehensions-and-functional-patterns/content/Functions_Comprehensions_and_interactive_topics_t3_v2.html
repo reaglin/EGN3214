@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functions_Comprehensions_and</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; margin: .75rem 0 1rem; }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 3 - Functions, Comprehensions, and Functional Patterns</a></div>
+  <header>
+    <h1>Functions_Comprehensions_and</h1>
+  </header><main>
+    <div class="slide-card">
+      <div class="slide-header"><span class="slide-num">1</span><h2>Variable-Length Arguments: *args and **kwargs</h2><span class="chevron">▶</span></div>
+      <div class="slide-body">
+        <p>Python provides two special syntactic mechanisms — <strong>*args</strong> and <strong>**kwargs</strong> — that let functions accept a variable number of arguments. These tools are essential for writing flexible, reusable APIs and for building patterns like decorators and middleware that must forward arguments without knowing them in advance.</p>
+
+<ul>
+  <li><strong>Collecting Positional Arguments with *args</strong></li>
+  <ul>
+    <li><strong>The <code>*</code> prefix collects remaining positional arguments into an immutable tuple.</strong> Any positional values passed beyond the explicitly named parameters are gathered together into a single <code>tuple</code> that the function body can work with.</li>
+    <li><strong>The conventional name is <code>args</code>, but the asterisk is what activates the behavior.</strong> You could write <code>*numbers</code> or <code>*values</code> and the mechanism works identically — the name <code>args</code> is simply a widely adopted convention.</li>
+    <li><strong><code>*args</code> allows a function to accept any number of positional arguments, including zero.</strong> If no extra positional arguments are supplied by the caller, <code>args</code> will simply be an empty tuple rather than causing an error.</li>
+    <li><strong>Inside the function, <code>args</code> can be iterated, indexed, or passed to other functions.</strong> Because it is a regular tuple, you can loop over it with <code>for</code>, access elements by index, check its length, or unpack it into another call.</li>
+  </ul>
+</ul>
+
+<pre><code># *args example
+def total(*args):
+    return sum(args)
+
+print(total(1, 2, 3))   # 6
+print(total())          # 0
+</code></pre>
+
+<ul>
+  <li><strong>Collecting Keyword Arguments with **kwargs</strong></li>
+  <ul>
+    <li><strong>The <code>**</code> prefix collects remaining keyword arguments into a regular dictionary.</strong> Any named arguments passed by the caller that do not match an explicitly declared parameter are bundled into a <code>dict</code> keyed by argument name.</li>
+    <li><strong>The conventional name is <code>kwargs</code>, but only the double asterisk is syntactically required.</strong> Naming the parameter <code>**options</code> or <code>**config</code> is perfectly valid; the double-star syntax alone determines the collection behavior.</li>
+    <li><strong><code>**kwargs</code> allows callers to pass any named arguments not explicitly declared.</strong> This is especially useful when designing functions that need to remain open to future options without breaking existing call sites.</li>
+    <li><strong>The resulting dictionary can be iterated with <code>.items()</code> to process each key-value pair.</strong> Standard dictionary operations — including <code>.get()</code>, membership testing, and comprehension — are all available on <code>kwargs</code> inside the function body.</li>
+  </ul>
+</ul>
+
+<pre><code># **kwargs example
+def greet(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+greet(name="Alice", language="Python")
+</code></pre>
+
+<ul>
+  <li><strong>Combining *args and **kwargs</strong></li>
+  <ul>
+    <li><strong>Regular parameters, <code>*args</code>, and <code>**kwargs</code> can all appear in a single function signature.</strong> This gives a function the ability to handle a fixed interface for required data while remaining open to arbitrary additional inputs.</li>
+    <li><strong>The required declaration order is: positional, <code>*args</code>, keyword-only, <code>**kwargs</code>.</strong> Python enforces this order at definition time; violating it raises a <code>SyntaxError</code>, so understanding the hierarchy is critical.</li>
+    <li><strong>This pattern is heavily used in decorator and middleware design.</strong> A wrapper function that accepts <code>*args, **kwargs</code> and forwards them to the wrapped callable can handle <em>any</em> underlying function signature transparently.</li>
+    <li><strong>Callers can still supply regular positional and keyword arguments alongside variadic ones.</strong> Python assigns values to named parameters first, then routes any leftovers into <code>args</code> or <code>kwargs</code> as appropriate.</li>
+  </ul>
+</ul>
+
+<pre><code># Combined signature
+def mixed(required, *args, flag=False, **kwargs):
+    print(required, args, flag, kwargs)
+
+mixed("hello", 1, 2, flag=True, extra="yes")
+</code></pre>
+
+<ul>
+  <li><strong>Unpacking Arguments at the Call Site</strong></li>
+  <ul>
+    <li><strong>Using <code>*iterable</code> in a call unpacks the iterable into individual positional arguments.</strong> For example, <code>func(*my_list)</code> is equivalent to passing each element of <code>my_list</code> as a separate positional argument, saving you from writing them out explicitly.</li>
+    <li><strong>Using <code>**mapping</code> in a call unpacks the dictionary into individual keyword arguments.</strong> Each key becomes a parameter name and its associated value becomes the argument, so <code>func(**config)</code> is equivalent to spelling out every <code>key=value</code> pair by hand.</li>
+    <li><strong>Both operators can be combined in a single call for maximum flexibility.</strong> A call like <code>func(*positional_data, **option_dict)</code> merges both forms simultaneously, and Python resolves the full argument list before invoking the function.</li>
+    <li><strong>This technique is commonly used to forward arguments from one function to another.</strong> Decorator wrappers, proxy objects, and adapter layers all rely on <code>*args, **kwargs</code> unpacking to pass through arguments without hard-coding any specific signature.</li>
+  </ul>
+</ul>
+
+<pre><code># Unpacking at the call site
+values = [10, 20, 30]
+options = {"sep": ", ", "end": "!\n"}
+print(*values, **options)
+</code></pre>
+
+        <div class="notes"><strong>Notes</strong>Covers the special *args and **kwargs syntax that allows functions to accept an arbitrary number of positional or keyword arguments. Explains how these mechanisms support flexible and reusable API design. Slides: 1, 2, 3, 4.</div>
+      </div></div>
+  </main>
+  <script>
+    document.querySelectorAll('.slide-header').forEach(function(h){
+      h.addEventListener('click',function(){
+        var b=this.nextElementSibling,c=this.querySelector('.chevron'),o=b.classList.contains('open');
+        b.classList.toggle('open',!o);c.style.transform=o?'':'rotate(90deg)';
+      });});
+    var f=document.querySelector('.slide-body');
+    if(f){f.classList.add('open');var c=f.previousElementSibling.querySelector('.chevron');if(c)c.style.transform='rotate(90deg)';}
+  </script>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

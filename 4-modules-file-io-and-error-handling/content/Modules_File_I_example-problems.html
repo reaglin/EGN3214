@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modules_File_I</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+ul{margin:.4rem 0 1rem 1.2rem}
+li{margin:.25rem 0}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>Modules_File_I</h1>
+<h2>What Is an Exception? – Identifying Runtime Errors</h2>
+<ul>
+<li>**Problem:** A student writes the following script to divide two numbers entered by the user. Identify which line will raise an exception, name the exception type, and explain why it occurs.</li>
+<li>```</li>
+<li>x = int(input(&quot;Enter numerator: &quot;))</li>
+<li>y = int(input(&quot;Enter denominator: &quot;))</li>
+<li>result = x / y</li>
+<li>print(&quot;Result:&quot;, result)</li>
+<li>```</li>
+<li>The user enters 10 for x and 0 for y.</li>
+<li>**Step 1 – Trace execution line by line.**</li>
+<li>Line 1 executes successfully: x = 10.</li>
+<li>Line 2 executes successfully: y = 0.</li>
+<li>Line 3 attempts to evaluate 10 / 0.</li>
+<li>**Step 2 – Identify the exception.**</li>
+<li>Python raises a ZeroDivisionError because division by zero is mathematically undefined and Python cannot produce a numeric result.</li>
+<li>**Step 3 – Understand what &quot;exception&quot; means.**</li>
+<li>An exception is an event that disrupts the normal flow of a program during execution (a runtime error). It is different from a syntax error, which is caught before the program runs. When Python raises ZeroDivisionError, execution stops immediately and an error message (traceback) is printed unless the exception is caught.</li>
+<li>**Step 4 – Other common exceptions to know.**</li>
+<li>ValueError: raised when a function receives an argument of the correct type but an inappropriate value (e.g., int(&quot;abc&quot;)).</li>
+<li>TypeError: raised when an operation is applied to an object of an inappropriate type (e.g., &quot;5&quot; + 5).</li>
+<li>IndexError: raised when a sequence index is out of range.</li>
+<li>FileNotFoundError: raised when a file cannot be found.</li>
+<li>**Answer:** Line 3 raises ZeroDivisionError because y equals 0.</li>
+</ul>
+<h2>Basic try-except Structure – Guarding Against ZeroDivisionError</h2>
+<ul>
+<li>**Problem:** Rewrite the division script from the previous problem so that it catches the ZeroDivisionError and prints a friendly message instead of crashing.</li>
+<li>**Step 1 – Recall the basic try-except syntax.**</li>
+<li>```</li>
+<li>try:</li>
+<li># code that might raise an exception</li>
+<li>except ExceptionType:</li>
+<li># code that runs if that exception occurs</li>
+<li>```</li>
+<li>Python first executes the try block. If no exception occurs, the except block is skipped. If the specified exception occurs, Python jumps immediately to the except block.</li>
+<li>**Step 2 – Write the guarded script.**</li>
+<li>```</li>
+<li>x = int(input(&quot;Enter numerator: &quot;))</li>
+<li>y = int(input(&quot;Enter denominator: &quot;))</li>
+<li>try:</li>
+<li>result = x / y</li>
+<li>print(&quot;Result:&quot;, result)</li>
+<li>except ZeroDivisionError:</li>
+<li>print(&quot;Error: Cannot divide by zero. Please enter a non-zero denominator.&quot;)</li>
+<li>```</li>
+<li>**Step 3 – Trace execution for y = 0.**</li>
+<li>x = 10, y = 0.</li>
+<li>Python enters the try block and attempts 10 / 0.</li>
+<li>ZeroDivisionError is raised; Python immediately exits the try block.</li>
+<li>Python matches the exception to ZeroDivisionError in the except clause.</li>
+<li>The message &quot;Error: Cannot divide by zero.&quot; is printed.</li>
+<li>The program ends normally (no crash, no traceback).</li>
+<li>**Step 4 – Trace execution for y = 2.**</li>
+<li>x = 10, y = 2.</li>
+<li>10 / 2 = 5.0 is computed without error.</li>
+<li>&quot;Result: 5.0&quot; is printed.</li>
+<li>The except block is never entered.</li>
+<li>**Key rule:** Place only the code that might fail inside the try block; keep unrelated code outside it to avoid accidentally hiding other errors.</li>
+</ul>
+<h2>else and finally Clauses – Sensor Data Reader</h2>
+<ul>
+<li>**Problem:** An engineering script opens a file called sensor_data.txt, reads a floating-point temperature value from the first line, and converts it. Use a try-except-else-finally structure so that: the file is always closed, a success message only prints when no error occurs, and file-not-found and value errors are handled separately.</li>
+<li>**Step 1 – Understand the clause roles.**</li>
+<li>else: runs only when the try block raised NO exception. Good for code that should execute on success but is not itself risky.</li>
+<li>finally: runs ALWAYS, whether an exception occurred or not. Ideal for cleanup (closing files, releasing resources).</li>
+<li>**Step 2 – Write the script.**</li>
+<li>```</li>
+<li>file_handle = None</li>
+<li>try:</li>
+<li>file_handle = open(&quot;sensor_data.txt&quot;, &quot;r&quot;)</li>
+<li>raw = file_handle.read().strip()</li>
+<li>temperature = float(raw)</li>
+<li>except FileNotFoundError:</li>
+<li>print(&quot;Error: sensor_data.txt was not found.&quot;)</li>
+<li>except ValueError:</li>
+<li>print(f&quot;Error: &#39;{raw}&#39; is not a valid floating-point number.&quot;)</li>
+<li>else:</li>
+<li>print(f&quot;Temperature read successfully: {temperature} &#176;C&quot;)</li>
+<li>finally:</li>
+<li>if file_handle is not None:</li>
+<li>file_handle.close()</li>
+<li>print(&quot;File closed.&quot;)</li>
+<li>```</li>
+<li>**Step 3 – Trace when file exists and contains &quot;23.7&quot;.**</li>
+<li>open() succeeds; float(&quot;23.7&quot;) = 23.7 – no exception.</li>
+<li>else block runs: prints &quot;Temperature read successfully: 23.7 &#176;C&quot;.</li>
+<li>finally block runs: file is closed.</li>
+<li>**Step 4 – Trace when file does not exist.**</li>
+<li>open() raises FileNotFoundError.</li>
+<li>Python jumps to the first except clause; prints the not-found message.</li>
+<li>else block is SKIPPED (an exception occurred).</li>
+<li>finally block still runs (file_handle is None so close is skipped safely).</li>
+<li>**Step 5 – Trace when file contains &quot;ABC&quot;.**</li>
+<li>open() succeeds; raw = &quot;ABC&quot;; float(&quot;ABC&quot;) raises ValueError.</li>
+<li>Second except clause runs; prints the invalid-value message.</li>
+<li>else skipped; finally runs and closes the file.</li>
+<li>**Answer:** The else clause fires only on clean success; finally fires unconditionally, making it the correct place for resource cleanup.</li>
+</ul>
+<h2>Accessing Exception Information – Logging Detailed Error Messages</h2>
+<ul>
+<li>**Problem:** A script processes a list of voltage readings stored as strings. For each string, it converts the value to a float and computes power using P = V&#178;/R with R = 50 Ω. If conversion fails, print the specific error message supplied by Python and indicate which reading caused it. Use the list: [&quot;120.5&quot;, &quot;115.0&quot;, &quot;BAD&quot;, &quot;118.3&quot;, &quot;110/5&quot;].</li>
+<li>**Step 1 – Syntax for accessing exception details.**</li>
+<li>```</li>
+<li>except ExceptionType as e:</li>
+<li>print(e)          # prints the error message string</li>
+<li>print(type(e))    # prints the exception class</li>
+<li>```</li>
+<li>The variable e (any name works) is bound to the exception object, which contains a human-readable description.</li>
+<li>**Step 2 – Write the processing loop.**</li>
+<li>```</li>
+<li>R = 50</li>
+<li>readings = [&quot;120.5&quot;, &quot;115.0&quot;, &quot;BAD&quot;, &quot;118.3&quot;, &quot;110/5&quot;]</li>
+<li>for i, reading in enumerate(readings):</li>
+<li>try:</li>
+<li>V = float(reading)</li>
+<li>P = V**2 / R</li>
+<li>print(f&quot;Reading {i}: V={V} V, P={P:.2f} W&quot;)</li>
+<li>except ValueError as e:</li>
+<li>print(f&quot;Reading {i}: Conversion error for &#39;{reading}&#39; -&gt; {e}&quot;)</li>
+<li>```</li>
+<li>**Step 3 – Trace each iteration.**</li>
+<li>i=0, &quot;120.5&quot;: float(&quot;120.5&quot;)=120.5; P=120.5&#178;/50=290.405 W. Prints success.</li>
+<li>i=1, &quot;115.0&quot;: float(&quot;115.0&quot;)=115.0; P=115&#178;/50=264.50 W. Prints success.</li>
+<li>i=2, &quot;BAD&quot;: float(&quot;BAD&quot;) raises ValueError. e contains: could not convert string to float: &#39;BAD&#39;. Prints error message.</li>
+<li>i=3, &quot;118.3&quot;: float(&quot;118.3&quot;)=118.3; P≈280.34 W. Prints success.</li>
+<li>i=4, &quot;110/5&quot;: float(&quot;110/5&quot;) raises ValueError because the slash makes it invalid as a float literal. Prints error message.</li>
+<li>**Step 4 – Why &quot;110/5&quot; fails.**</li>
+<li>float() does not evaluate arithmetic expressions. It only parses numeric strings. &quot;110/5&quot; contains a slash, so it is not a valid float representation.</li>
+<li>**Key takeaway:** Using as e gives programmers detailed diagnostics useful for logging and debugging in real engineering applications.</li>
+</ul>
+<h2>Raising Exceptions – Validating Engineering Input</h2>
+<ul>
+<li>**Problem:** Write a function compute_strain(delta_L, L0) that calculates engineering strain as ε = ΔL / L0. The function must raise a ValueError if L0 ≤ 0 (non-physical original length) and raise a TypeError if either argument is not a number. Demonstrate calling the function with valid and invalid inputs.</li>
+<li>**Step 1 – Syntax for raising exceptions.**</li>
+<li>```</li>
+<li>raise ExceptionType(&quot;descriptive message&quot;)</li>
+<li>```</li>
+<li>raise intentionally triggers an exception. Use it to enforce preconditions (contracts) that callers must satisfy.</li>
+<li>**Step 2 – Write the function.**</li>
+<li>```</li>
+<li>def compute_strain(delta_L, L0):</li>
+<li># Type check</li>
+<li>if not isinstance(delta_L, (int, float)):</li>
+<li>raise TypeError(f&quot;delta_L must be a number, got {type(delta_L).__name__}&quot;)</li>
+<li>if not isinstance(L0, (int, float)):</li>
+<li>raise TypeError(f&quot;L0 must be a number, got {type(L0).__name__}&quot;)</li>
+<li># Value check</li>
+<li>if L0 &lt;= 0:</li>
+<li>raise ValueError(f&quot;L0 must be positive (original length), got {L0}&quot;)</li>
+<li>return delta_L / L0</li>
+<li>```</li>
+<li>**Step 3 – Test with valid input.**</li>
+<li>compute_strain(0.005, 2.0)</li>
+<li>Both values pass isinstance check.</li>
+<li>L0 = 2.0 &gt; 0, passes value check.</li>
+<li>Returns 0.005 / 2.0 = 0.0025.</li>
+<li>**Step 4 – Test with L0 = -1.**</li>
+<li>compute_strain(0.005, -1)</li>
+<li>isinstance checks pass (both are numbers).</li>
+<li>L0 = -1 ≤ 0 → raise ValueError(&quot;L0 must be positive, got -1&quot;).</li>
+<li>Execution stops in the function and propagates the exception to the caller.</li>
+<li>**Step 5 – Test with a string argument.**</li>
+<li>compute_strain(&quot;5mm&quot;, 2.0)</li>
+<li>isinstance(&quot;5mm&quot;, (int, float)) is False.</li>
+<li>raise TypeError(&quot;delta_L must be a number, got str&quot;).</li>
+<li>**Step 6 – Catching raised exceptions in calling code.**</li>
+<li>```</li>
+<li>try:</li>
+<li>strain = compute_strain(0.005, 0)</li>
+<li>except ValueError as e:</li>
+<li>print(f&quot;Input error: {e}&quot;)</li>
+<li>```</li>
+<li>Output: Input error: L0 must be positive (original length), got 0</li>
+<li>**Best practice:** Raise specific, descriptive exceptions early (fail fast) so bugs are caught at the source rather than producing silent wrong answers downstream.</li>
+</ul>
+<h2>Practical Error Handling – Robust Engineering Data Pipeline</h2>
+<ul>
+<li>**Problem:** Write a complete Python script that reads a CSV file named beam_loads.csv where each row contains two values: beam_id (string) and load_kN (number). The script must: (1) handle a missing file gracefully, (2) skip rows with non-numeric load values while logging them, (3) raise a ValueError if any valid load is negative, (4) print a summary of successfully processed beams, and (5) always report how many rows were attempted. Use the following simulated file content (create it programmatically in the script for testing): rows = [(&quot;B001&quot;,&quot;150.5&quot;), (&quot;B002&quot;,&quot;ABC&quot;), (&quot;B003&quot;,&quot;200.0&quot;), (&quot;B004&quot;,&quot;-50&quot;), (&quot;B005&quot;,&quot;175.0&quot;)].</li>
+<li>**Step 1 – Plan the error-handling layers.**</li>
+<li>Outer layer: FileNotFoundError when opening the file.</li>
+<li>Middle layer: ValueError from float() for non-numeric strings (skip row, log it).</li>
+<li>Inner layer: ValueError raised manually for negative loads (skip row, log it).</li>
+<li>finally layer: always print the row-attempt count.</li>
+<li>**Step 2 – Write the full script.**</li>
+<li>```</li>
+<li>import csv, os</li>
+<li>-</li>
+<li># --- Create test file ---</li>
+<li>rows = [(&quot;B001&quot;,&quot;150.5&quot;),(&quot;B002&quot;,&quot;ABC&quot;),(&quot;B003&quot;,&quot;200.0&quot;),</li>
+<li>(&quot;B004&quot;,&quot;-50&quot;),(&quot;B005&quot;,&quot;175.0&quot;)]</li>
+<li>with open(&quot;beam_loads.csv&quot;,&quot;w&quot;,newline=&quot;&quot;) as f:</li>
+<li>writer = csv.writer(f)</li>
+<li>writer.writerow([&quot;beam_id&quot;,&quot;load_kN&quot;])</li>
+<li>writer.writerows(rows)</li>
+<li>-</li>
+<li># --- Process file ---</li>
+<li>processed = []</li>
+<li>skipped   = []</li>
+<li>attempted = 0</li>
+<li>-</li>
+<li>try:</li>
+<li>file = open(&quot;beam_loads.csv&quot;,&quot;r&quot;,newline=&quot;&quot;)</li>
+<li>except FileNotFoundError:</li>
+<li>print(&quot;CRITICAL: beam_loads.csv not found. Pipeline aborted.&quot;)</li>
+<li>file = None</li>
+<li>-</li>
+<li>if file is not None:</li>
+<li>try:</li>
+<li>reader = csv.DictReader(file)</li>
+<li>for row in reader:</li>
+<li>attempted += 1</li>
+<li>beam_id = row[&quot;beam_id&quot;]</li>
+<li>raw_load = row[&quot;load_kN&quot;]</li>
+<li>try:</li>
+<li>load = float(raw_load)</li>
+<li>if load &lt; 0:</li>
+<li>raise ValueError(</li>
+<li>f&quot;Negative load {load} kN is physically invalid.&quot;)</li>
+<li>processed.append((beam_id, load))</li>
+<li>except ValueError as e:</li>
+<li>skipped.append((beam_id, raw_load, str(e)))</li>
+<li>finally:</li>
+<li>file.close()</li>
+<li>print(f&quot;\nRows attempted: {attempted}&quot;)</li>
+<li>-</li>
+<li>print(&quot;\n--- Successfully Processed Beams ---&quot;)</li>
+<li>for bid, load in processed:</li>
+<li>print(f&quot;  {bid}: {load} kN&quot;)</li>
+<li>-</li>
+<li>print(&quot;\n--- Skipped Rows ---&quot;)</li>
+<li>for bid, raw, reason in skipped:</li>
+<li>print(f&quot;  {bid} (raw=&#39;{raw}&#39;): {reason}&quot;)</li>
+<li>```</li>
+<li>**Step 3 – Trace row by row.**</li>
+<li>B001, &quot;150.5&quot;: float(&quot;150.5&quot;)=150.5; 150.5 ≥ 0 → added to processed.</li>
+<li>B002, &quot;ABC&quot;: float(&quot;ABC&quot;) raises ValueError(&quot;could not convert...&quot;); caught → added to skipped.</li>
+<li>B003, &quot;200.0&quot;: float OK; 200.0 ≥ 0 → processed.</li>
+<li>B004, &quot;-50&quot;: float(&quot;-50&quot;)= -50.0; -50 &lt; 0 → manual raise ValueError(&quot;Negative load...&quot;); caught → skipped.</li>
+<li>B005, &quot;175.0&quot;: float OK; processed.</li>
+<li>**Step 4 – Expected output.**</li>
+<li>Rows attempted: 4  (header row excluded by DictReader)</li>
+<li>Processed: B001 150.5 kN, B003 200.0 kN, B005 175.0 kN.</li>
+<li>Skipped: B002 (non-numeric), B004 (negative load).</li>
+<li>**Step 5 – Key design principles demonstrated.**</li>
+<li>Nest try-except blocks at the appropriate granularity: file-open errors are fatal; per-row errors are recoverable.</li>
+<li>Use finally for guaranteed cleanup (file.close()) regardless of what happens inside the loop.</li>
+<li>Use raise to enforce domain rules (no negative loads) with the same mechanism as built-in errors, keeping error handling uniform.</li>
+<li>Log enough information (beam_id, raw value, reason) so engineers can correct the source data.</li>
+</ul>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

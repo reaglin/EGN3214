@@ -1,0 +1,1238 @@
+{
+  "ModuleFolderName": "Numerical_Methods_with",
+  "CourseName": "Egn3214",
+  "GeneratedDate": "2026-05-14T21:38:08.1399602-04:00",
+  "ModifiedDate": "2026-05-14T21:38:08.1401204-04:00",
+  "Outcomes": [
+    {
+      "Id": "982dc601-d5af-4fd2-b4f9-82fe4f89aa6c",
+      "Text": "Explain the role of SciPy in solving common numerical problems encountered in engineering and scientific computing.",
+      "SortOrder": 0
+    },
+    {
+      "Id": "5634f43f-a60d-46c1-9568-06aaa8ce7457",
+      "Text": "Apply root-finding algorithms from scipy.optimize to locate zeros of scalar and multivariate functions.",
+      "SortOrder": 1
+    },
+    {
+      "Id": "82c2c4a6-8c4b-4e1f-9980-334f082f8eec",
+      "Text": "Apply numerical integration techniques using scipy.integrate to evaluate definite integrals and solve ODEs with solve_ivp.",
+      "SortOrder": 2
+    },
+    {
+      "Id": "d6b7d8d0-020c-4aa4-b44e-d04ae26e9d80",
+      "Text": "Identify appropriate curve-fitting strategies\u2014linear or nonlinear\u2014based on the structure of engineering datasets.",
+      "SortOrder": 3
+    },
+    {
+      "Id": "8e15ea34-e9d3-4942-a83e-7f12abd402f9",
+      "Text": "Demonstrate the use of numpy.polyfit and scipy.optimize.curve_fit to fit models to experimental data.",
+      "SortOrder": 4
+    },
+    {
+      "Id": "9ee5c2c0-3532-45eb-9a5e-1a4727330a4f",
+      "Text": "Analyze residuals to evaluate the quality and validity of a fitted curve against real engineering data.",
+      "SortOrder": 5
+    }
+  ],
+  "Topics": [
+    {
+      "Id": "be62026a-5b06-4a24-aadf-99e366691f14",
+      "Title": "Introduction to SciPy for Numerical Computing",
+      "Summary": "Introduces the SciPy library, its ecosystem, and how it extends NumPy to support numerical methods used in engineering and science.",
+      "SortOrder": 0,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "382feb18-f77a-4177-99a3-efc0beed2fee",
+          "TopicId": "be62026a-5b06-4a24-aadf-99e366691f14",
+          "Title": "What is SciPy?",
+          "BodyText": "SciPy is an open-source Python library built on top of NumPy that provides a wide collection of algorithms for scientific and technical computing.",
+          "Notes": "SciPy is organized into submodules such as scipy.optimize, scipy.integrate, scipy.linalg, and scipy.stats, each targeting a specific domain of numerical methods.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "bc5d47a8-3edf-4d46-b333-1753dd4c656c",
+              "Text": "SciPy provides reliable, well-tested implementations of standard numerical algorithms.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "90c806d1-84c3-4eef-9c91-78c80288ff56",
+              "Text": "It is organized into domain-specific submodules to keep imports focused and efficient.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2da6cb19-e962-4fc5-ba2d-12fcbad8bcc9",
+              "Text": "SciPy depends on NumPy arrays as its primary data structure.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "92dc577a-19eb-47c8-8acd-9d208bfdcc1b",
+              "Text": "It is widely adopted in engineering, physics, and data science workflows.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "f0b2efd6-1f14-42f4-9619-39132bff66bd",
+          "TopicId": "be62026a-5b06-4a24-aadf-99e366691f14",
+          "Title": "SciPy vs NumPy: Complementary Roles",
+          "BodyText": "While NumPy handles array creation and basic mathematical operations, SciPy provides higher-level algorithms such as optimization, integration, and signal processing.",
+          "Notes": "A common pattern is to construct data arrays with NumPy and then pass them to SciPy routines for advanced computation.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "9829b03c-cbe2-4439-b50d-b8924e33fa36",
+              "Text": "NumPy focuses on array operations and linear algebra primitives.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "4374fe52-cae9-4748-8612-8e854e400080",
+              "Text": "SciPy builds higher-level numerical routines on top of NumPy arrays.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d914e55c-6019-46e9-a9e9-53468788a762",
+              "Text": "Together they form the foundational scientific Python stack alongside Matplotlib.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "efb9ae68-b022-42df-b81b-d438479c5273",
+          "TopicId": "be62026a-5b06-4a24-aadf-99e366691f14",
+          "Title": "Installing and Importing SciPy Submodules",
+          "BodyText": "SciPy submodules must be imported explicitly; importing the top-level scipy package does not automatically load all submodules.",
+          "Notes": "Best practice is to import only the submodule you need, e.g., from scipy.optimize import brentq, to keep namespaces clean and reduce load time.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "7d1fcfbd-d7d4-4b5a-853c-7ca213d03289",
+              "Text": "Use \u0027from scipy.optimize import ...\u0027 rather than importing scipy directly.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "87469f18-11ad-4931-adab-0baa8ced12bd",
+              "Text": "Each submodule is independently documented in the official SciPy reference guide.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "367ce32d-ba11-443f-b004-4706556f88ee",
+              "Text": "Version compatibility between NumPy and SciPy should be verified in production environments.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "62f4c8a7-b684-4c4d-86f0-7f9860e8d0b3",
+          "TopicId": "be62026a-5b06-4a24-aadf-99e366691f14",
+          "Title": "Overview of Numerical Problem Categories",
+          "BodyText": "This module focuses on three core numerical problem types: root finding, numerical integration (including ODEs), and curve fitting.",
+          "Notes": "Each category maps to a specific SciPy submodule: scipy.optimize for roots, scipy.integrate for integrals and ODEs, and a combination of numpy.polyfit with scipy.optimize.curve_fit for fitting.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "f611082a-d2c8-46b4-9054-bb52dcc3e182",
+              "Text": "Root finding identifies input values where a function equals zero.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "242b3022-061c-4711-a013-0db8f59673e4",
+              "Text": "Numerical integration approximates definite integrals and solves differential equations.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "5d65ae38-6ed0-47f1-bb05-6f4071f73506",
+              "Text": "Curve fitting finds model parameters that best match observed data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "1e195206-c703-4f44-b3f1-eded9a12c1a6",
+              "Text": "Each category has multiple algorithm choices depending on problem characteristics.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "355077c2-0715-4642-a222-0d47937c552b",
+      "Title": "Root Finding with scipy.optimize",
+      "Summary": "Covers scalar and multivariate root-finding methods available in scipy.optimize, including bracket-based and derivative-based approaches.",
+      "SortOrder": 1,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "f0ae1ec4-5432-496b-8fb2-6390d9b26002",
+          "TopicId": "355077c2-0715-4642-a222-0d47937c552b",
+          "Title": "Concept of Root Finding",
+          "BodyText": "Root finding is the process of locating values of x such that f(x) = 0, a fundamental task in engineering analysis such as finding equilibrium points or solving implicit equations.",
+          "Notes": "Many engineering problems\u2014such as finding the natural frequency of a structure or the operating point of a circuit\u2014reduce to a root-finding problem.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "ecaac8b5-e07f-4bad-8fed-2a38b579ea42",
+              "Text": "A root (or zero) of a function is an input value where the function output equals zero.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "a82ee47a-f5f9-40c1-8dcf-e8b704b5df2b",
+              "Text": "Root finding is used when algebraic rearrangement to isolate a variable is not possible.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c35bda8f-6f08-4c30-bf63-f00d37f4ad0a",
+              "Text": "Graphical inspection can help identify approximate root locations before numerical solving.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "a67ec913-d64a-4a66-af70-45d9b6e0f5e6",
+          "TopicId": "355077c2-0715-4642-a222-0d47937c552b",
+          "Title": "Bracket-Based Methods: brentq and bisect",
+          "BodyText": "Bracket-based methods require an interval [a, b] where the function changes sign, guaranteeing convergence to a root within that interval.",
+          "Notes": "brentq is generally preferred over bisect because it combines bisection with inverse quadratic interpolation, converging much faster while retaining the robustness of a bracketing method.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "12f8f727-a095-43c9-bb9b-02562e876b5d",
+              "Text": "scipy.optimize.bisect repeatedly halves the search interval until the root is found.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "14fd629c-aae5-4af8-bf7e-b5fa76ac5acc",
+              "Text": "scipy.optimize.brentq is faster than bisect and is the recommended default for scalar bracketed roots.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "efc3c5eb-9abd-4eb1-a4dd-40b4944c3070",
+              "Text": "Both methods require f(a) and f(b) to have opposite signs as a starting condition.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "6dfbe5a6-4bec-4606-b0e8-c7d35b60e3df",
+              "Text": "The tolerance and maximum iterations can be controlled via function arguments.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d021604b-61e0-4e7c-a235-54a84e39a6cb",
+          "TopicId": "355077c2-0715-4642-a222-0d47937c552b",
+          "Title": "Derivative-Based Methods: fsolve and newton",
+          "BodyText": "Derivative-based methods such as Newton-Raphson use the function\u0027s slope to converge rapidly to a root but may fail if started far from the solution.",
+          "Notes": "scipy.optimize.fsolve wraps MINPACK\u0027s hybrd routine and works for systems of equations. scipy.optimize.newton applies Newton-Raphson (or secant method if no derivative is provided).",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "17bb43c5-b45a-4eec-acc2-51c3bc66bce7",
+              "Text": "scipy.optimize.newton implements Newton-Raphson when the derivative fprime is supplied.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "e56a7b98-b9bd-47ec-9dbe-add490171366",
+              "Text": "scipy.optimize.fsolve handles systems of nonlinear equations and returns an array of roots.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "62317a25-dcb2-4eef-ae62-d4f6fc01f6da",
+              "Text": "Derivative-based methods converge quadratically near the root but are sensitive to initial guesses.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "709e89d5-50c4-4073-98dd-f9976a8c5ab3",
+              "Text": "Providing a good initial guess significantly improves reliability.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "95ead4bd-03a7-431d-b779-5836a414465b",
+          "TopicId": "355077c2-0715-4642-a222-0d47937c552b",
+          "Title": "General Scalar Minimization and root_scalar",
+          "BodyText": "scipy.optimize.root_scalar provides a unified interface for choosing among multiple root-finding algorithms using a common function signature.",
+          "Notes": "root_scalar accepts a \u0027method\u0027 keyword allowing the user to switch between \u0027brentq\u0027, \u0027newton\u0027, \u0027secant\u0027, and others without changing the rest of the code.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "67b79696-00a1-47b9-b73e-a45715840ad7",
+              "Text": "root_scalar unifies multiple algorithms under one function call.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "23e2eab3-1d1b-40f3-a9c0-b4c1065b744c",
+              "Text": "The method keyword argument selects the algorithm, making code easy to experiment with.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2761d875-9365-4460-9fb5-c7da462c634d",
+              "Text": "Results are returned as an object with attributes such as root, converged, and iterations.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "6f7d257d-1d29-4036-95ac-ca05b7a19bf2",
+          "TopicId": "355077c2-0715-4642-a222-0d47937c552b",
+          "Title": "Practical Considerations for Root Finding",
+          "BodyText": "Choosing an appropriate root-finding method depends on function continuity, availability of derivatives, and whether a bracketing interval can be identified.",
+          "Notes": "Always verify convergence by checking the returned flag or converged attribute. A returned root that has not converged may still look numerically plausible.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "f28d6ec3-3213-473f-b603-f378f58d313c",
+              "Text": "Bracket methods are safer when the function is well-behaved and an interval is known.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2baf7389-f0a1-48b1-9e9b-5071a6fcf667",
+              "Text": "Newton-based methods are faster but require smooth functions and good initial guesses.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c5ced32b-1864-4cef-8ea5-85cd447bdd99",
+              "Text": "Always check the convergence status of the solver output before using the result.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e10a6d19-4835-48a0-a791-82ffbc47ba80",
+              "Text": "Plotting the function before solving helps identify multiplicity and approximate root locations.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "87617aff-1a39-41f5-ab82-c31bd4765157",
+      "Title": "Numerical Integration with scipy.integrate",
+      "Summary": "Covers numerical quadrature for definite integrals and the integration of systems of ordinary differential equations using scipy.integrate.",
+      "SortOrder": 2,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "26bd2d8c-9aee-499f-a4ed-acc18cd3c9d5",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Numerical Quadrature: quad and dblquad",
+          "BodyText": "scipy.integrate.quad computes definite integrals of scalar functions over a finite or infinite interval using adaptive Gaussian quadrature.",
+          "Notes": "quad returns both the integral estimate and an absolute error bound. For two-dimensional integrals, scipy.integrate.dblquad provides nested adaptive integration.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "488e3d1f-1b64-4566-b625-be198a93a897",
+              "Text": "scipy.integrate.quad accepts a Python function and integration limits as arguments.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "56b843b0-0e82-4881-bce1-96ac6a6ec07d",
+              "Text": "It returns a tuple of (result, absolute_error) providing built-in accuracy information.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "d0eb8037-dd31-45fb-96f2-088ad5fa8e93",
+              "Text": "Infinite limits can be specified using numpy.inf.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "7d118f45-e4e6-4a79-9d33-a4f308fe539d",
+              "Text": "scipy.integrate.dblquad extends this to double integrals over rectangular domains.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "118a1e80-3538-4ebb-8f76-f3dd0f6fb04d",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Integrating Tabular Data: simpson and trapezoid",
+          "BodyText": "When data is given as discrete arrays rather than a function, methods such as simpson and trapezoid approximate the integral from the sample points.",
+          "Notes": "scipy.integrate.simpson uses Simpson\u0027s rule for higher accuracy than the trapezoidal rule when data spacing is uniform. Both functions accept NumPy arrays directly.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "70af968f-3e2a-4d95-9d9f-67d1f5477eae",
+              "Text": "scipy.integrate.trapezoid approximates the area using linear interpolation between data points.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "487f2ead-4bc9-44af-a00a-2fc0a3a6221c",
+              "Text": "scipy.integrate.simpson applies a quadratic approximation and is more accurate for smooth data.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "55ca9ef8-ad6f-4c6d-8483-da9074be1dbd",
+              "Text": "Both methods require equally or unequally spaced x-values passed alongside the y-values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "c878b98c-9c46-4184-850a-fd1a609bd1a9",
+              "Text": "These methods are essential when analytical functions are unavailable, such as with sensor data.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "674057b2-3c89-4b63-abdf-7bf060b6825c",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Introduction to Ordinary Differential Equations (ODEs)",
+          "BodyText": "An ODE describes how a quantity changes with respect to an independent variable, and solve_ivp integrates such equations forward from a set of initial conditions.",
+          "Notes": "Engineering examples include modeling mass-spring-damper systems, population dynamics, chemical reaction kinetics, and heat transfer transients.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "27b10574-56ab-401a-a017-8742ff3fd4b4",
+              "Text": "A first-order ODE has the form dy/dt = f(t, y) and requires one initial condition.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "ee96a152-0a1d-4148-897c-06729e6c9b3a",
+              "Text": "Higher-order ODEs are rewritten as systems of first-order equations before solving.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4ec30d6c-1714-49df-bca8-cdba278677b5",
+              "Text": "The initial value problem (IVP) specifies the state of the system at a starting time.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "c1948ce9-0e5b-4a75-937d-5149159f5373",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Solving ODEs with solve_ivp",
+          "BodyText": "scipy.integrate.solve_ivp is the modern interface for integrating systems of ODEs, supporting multiple integration methods and dense output.",
+          "Notes": "The default method is RK45 (explicit Runge-Kutta of order 4-5). Stiff problems should use \u0027Radau\u0027 or \u0027BDF\u0027 methods. The t_eval argument controls which time points are included in the output.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "d300038e-a418-4b80-9f5a-a931d98f84fd",
+              "Text": "solve_ivp takes the derivative function, time span, initial state vector, and optional time evaluation points.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c87c43af-b7c1-481d-86f2-0fe77a1fa574",
+              "Text": "The result object contains solution arrays accessed via result.t and result.y.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "8265699a-670a-45ee-980e-1afe91f2e562",
+              "Text": "The method argument selects the integration algorithm, with RK45 as the default.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "4cf97fa0-5acc-471d-83af-4508e7560b58",
+              "Text": "Stiff ODEs require implicit methods such as Radau or BDF for stable integration.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "5dc65f05-38a1-43cf-a69c-c7547c3ef214",
+              "Text": "The dense_output=True option enables continuous interpolation of the solution between steps.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "dcd34fa7-98ac-45c8-a13d-8556923b169c",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Defining the Derivative Function for solve_ivp",
+          "BodyText": "The user-defined function passed to solve_ivp must accept time t and state vector y and return the vector of derivatives dy/dt.",
+          "Notes": "The state vector y is a NumPy array. For a second-order ODE like a mass-spring system, define y = [position, velocity] and return [velocity, acceleration].",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "b5353799-1af1-4554-bf60-8cce36bb490f",
+              "Text": "The derivative function signature must be f(t, y) where y is a NumPy array.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "469e8849-bbb4-40cc-b32a-9b5faaaf12f9",
+              "Text": "Each element of the returned array corresponds to the derivative of one state variable.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "9fc7344a-d2c4-4089-b7d3-c2153dae082d",
+              "Text": "Parameters such as damping coefficients can be passed via closures or lambda functions.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8362f392-2111-4905-bc42-22542dabb0c3",
+              "Text": "Consistent units in the derivative function are critical to obtaining correct results.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "978ea8f5-7bdc-42f4-9fa5-94ea128ba1eb",
+          "TopicId": "87617aff-1a39-41f5-ab82-c31bd4765157",
+          "Title": "Interpreting and Visualizing ODE Solutions",
+          "BodyText": "Once solve_ivp returns a result, the solution arrays can be plotted with Matplotlib to visualize the system\u0027s transient and steady-state behavior.",
+          "Notes": "Always verify the solution by checking energy conservation, known analytical limits, or convergence with tighter tolerances. result.success should be True and result.message should be checked.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "364f7e28-9135-4934-beae-2a14a31bfe3f",
+              "Text": "result.t holds the time points and result.y holds state variable arrays indexed by row.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9b53f730-1ff8-42fe-bf75-6509248ca4c8",
+              "Text": "Phase portraits (plotting one state variable against another) reveal qualitative system behavior.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a06fa243-a914-4f48-9c86-5d9d94004aac",
+              "Text": "Reducing atol and rtol improves accuracy at the cost of computation time.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "87c3c842-e545-42a5-a020-6cba555ce87a",
+              "Text": "Checking result.success confirms the integrator reached the end of the time span without error.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+      "Title": "Linear Curve Fitting with numpy.polyfit",
+      "Summary": "Explains polynomial regression using numpy.polyfit, including model selection, coefficient interpretation, and generating fitted curves for visualization.",
+      "SortOrder": 3,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "b259fd13-d939-4b84-b3d3-4d73b0d5aebb",
+          "TopicId": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+          "Title": "What is Curve Fitting?",
+          "BodyText": "Curve fitting finds the parameters of a mathematical model that minimize the difference between the model\u0027s predictions and observed data points.",
+          "Notes": "Curve fitting is distinct from interpolation: interpolation passes exactly through data points, while fitting finds the best overall trend and is more robust to measurement noise.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "f6e92fe1-1ee8-4ef0-a554-227c60b34d3b",
+              "Text": "Curve fitting produces a smooth model that generalizes from noisy discrete measurements.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c049e315-ce67-4334-ae8a-6e8da24f09ad",
+              "Text": "The goal is to minimize a measure of error, most commonly the sum of squared residuals.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ded85d79-35b9-495a-b534-f39b8734e5fb",
+              "Text": "A good fit balances model complexity against accuracy to avoid overfitting.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "6829bb8e-cef7-4704-a709-0df247f76eb2",
+          "TopicId": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+          "Title": "Using numpy.polyfit for Polynomial Regression",
+          "BodyText": "numpy.polyfit fits a polynomial of specified degree to x-y data using the least-squares method and returns the polynomial coefficients.",
+          "Notes": "The coefficients are returned in descending power order, so for degree 2 the output is [a, b, c] representing ax\u00B2 \u002B bx \u002B c. numpy.poly1d or numpy.polyval can be used to evaluate the polynomial.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "0863e613-e43f-4c1a-99ad-b9c914d3fb18",
+              "Text": "numpy.polyfit(x, y, deg) returns an array of coefficients for the best-fit polynomial.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9960fd05-feea-460a-8373-d52f830ca931",
+              "Text": "Degree 1 produces a linear fit; higher degrees produce polynomial curves.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e1259c63-d985-4867-80fd-e542b38be21d",
+              "Text": "numpy.polyval or numpy.poly1d can evaluate the fitted polynomial at new x values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b903a6be-67d0-4346-b667-2fcbef082947",
+              "Text": "Increasing polynomial degree always reduces training error but may overfit noisy data.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "ee0e6b4a-d349-41df-88cc-ce96ba8e6a8e",
+          "TopicId": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+          "Title": "Selecting Polynomial Degree",
+          "BodyText": "Choosing the right polynomial degree requires balancing fit accuracy with model simplicity, guided by domain knowledge and residual analysis.",
+          "Notes": "A common approach is to try degrees 1 through 4, plot residuals for each, and select the lowest degree that yields randomly scattered residuals without systematic patterns.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "17a02e6e-8026-48cd-80d1-c433bfda8cfa",
+              "Text": "Underfitting occurs when the chosen degree is too low to capture the data\u0027s trend.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f5a28866-dca0-4d2f-ae7f-2481efee022f",
+              "Text": "Overfitting occurs when the degree is too high, fitting noise rather than the true signal.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "27812ae0-134c-47f9-a58c-00c8d0f131e6",
+              "Text": "Plotting the fitted curve alongside data provides a quick visual check of degree suitability.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "92a6bf91-d1c4-4463-8c2f-82e7c8106546",
+              "Text": "Residual plots are a more rigorous tool for diagnosing underfitting and overfitting.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "e14c5610-3aa6-4307-8cbd-48d4f5fc6efa",
+          "TopicId": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+          "Title": "Linearization of Nonlinear Data",
+          "BodyText": "Some nonlinear relationships such as exponential or power-law models can be transformed into linear form, allowing numpy.polyfit to be applied after a variable substitution.",
+          "Notes": "For example, taking the logarithm of both sides of y = a * e^(bx) yields ln(y) = ln(a) \u002B bx, which is linear in ln(y). polyfit is then applied to the transformed data.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "012331dc-e649-4f07-8211-4f69ebb7d722",
+              "Text": "Exponential models y = a*e^(bx) become linear after taking the natural log of y.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "f63f30f7-2d49-4752-bf30-607b7b2233db",
+              "Text": "Power-law models y = a*x^b become linear after taking the log of both x and y.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "b627d297-d507-49b5-8d59-43b6f1f37821",
+              "Text": "Coefficients obtained from the linearized fit must be back-transformed to the original scale.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "85fb91e5-7753-4832-813d-6e5cb7e5bcd5",
+              "Text": "Linearization assumes multiplicative rather than additive noise, which may not always be valid.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "dd11898e-4df9-497a-990f-51d67cabcc73",
+          "TopicId": "409bc461-c2f0-450b-b4ed-ee71dba81007",
+          "Title": "Generating and Plotting Fitted Curves",
+          "BodyText": "After obtaining polynomial coefficients, a smooth fitted curve is generated by evaluating the polynomial on a dense array of x values and overlaying it on the scatter plot of the data.",
+          "Notes": "Use numpy.linspace to create a dense x array spanning the data range, then evaluate with numpy.poly1d or numpy.polyval. Always label axes and include units in engineering plots.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "f39aeff7-d078-40c3-adf0-4759846125dd",
+              "Text": "numpy.linspace creates evenly spaced evaluation points for a smooth curve.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "163a182a-b9e1-4eac-a15a-edb988002f5a",
+              "Text": "numpy.poly1d creates a callable object from polyfit coefficients for convenient evaluation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "78e28ce0-d49d-4a52-aca4-fa26fb0042a4",
+              "Text": "The fitted curve should be plotted with a distinct color or line style from the raw data.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "104a63c9-2a1a-4ac7-90f5-77bd9ccc1a4e",
+              "Text": "Plot titles, axis labels, and legends are required for engineering-quality figures.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+      "Title": "Nonlinear Curve Fitting with scipy.optimize.curve_fit",
+      "Summary": "Covers fitting arbitrary nonlinear models to data using scipy.optimize.curve_fit, including defining model functions, interpreting fit parameters, and assessing uncertainty.",
+      "SortOrder": 4,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "02e09394-14b6-4089-8def-5f9a96fe588f",
+          "TopicId": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+          "Title": "When to Use Nonlinear Fitting",
+          "BodyText": "Nonlinear curve fitting is required when the relationship between variables cannot be described by a polynomial or linearized form, and the model has parameters that appear nonlinearly.",
+          "Notes": "Examples include fitting logistic growth curves to population data, exponential decay to radioactive measurements, or a sinusoidal model to vibration data where frequency is unknown.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "57828cc4-43a6-40d6-8b24-2d1ebff628bc",
+              "Text": "Nonlinear models have parameters that cannot be isolated by linear algebra alone.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "aabfba32-166d-4186-a6c2-ccc46f2c7efa",
+              "Text": "scipy.optimize.curve_fit uses iterative nonlinear least-squares optimization internally.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0b555c67-6d28-49e5-9124-e3e2a9974efa",
+              "Text": "Initial parameter guesses must be provided and significantly affect convergence.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b45fd735-e000-4499-9ba0-d085f0bfd159",
+              "Text": "Nonlinear fitting is more flexible than polyfit but requires more careful setup.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "f1625160-6306-4080-b34a-c9930fbaa7fa",
+          "TopicId": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+          "Title": "Defining a Model Function for curve_fit",
+          "BodyText": "The user supplies a Python function that takes the independent variable as its first argument followed by the model parameters, returning the predicted dependent variable values.",
+          "Notes": "For example, def model(x, a, b, c): return a * np.exp(-b * x) \u002B c defines a decaying exponential with offset. The function must operate element-wise on NumPy arrays.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "c99ed167-d1b1-4431-af6a-091a05faa4ef",
+              "Text": "The model function signature is f(x, param1, param2, ...) where x is the independent variable array.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "6ca5673a-f9a7-440a-bc26-f28733d20ff5",
+              "Text": "The function must return a NumPy array of predicted values, one per input x value.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "a6dc1a11-f810-4a9b-9aec-7a33e710e145",
+              "Text": "NumPy ufuncs such as np.exp and np.sin should be used for element-wise operations.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "537856c7-fb88-44bd-af1b-40d0d149cc83",
+              "Text": "Parameter names in the function are purely for readability; curve_fit identifies them by position.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "2c33138a-b0e9-42ad-94c5-a6382b12e733",
+          "TopicId": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+          "Title": "Calling curve_fit and Interpreting Output",
+          "BodyText": "scipy.optimize.curve_fit returns the optimal parameter array popt and the covariance matrix pcov, which together describe the best-fit model and parameter uncertainty.",
+          "Notes": "The standard errors of parameters are the square root of the diagonal of pcov: perr = np.sqrt(np.diag(pcov)). Large standard errors indicate poor constraint of that parameter by the data.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "10d4caf5-2ecc-427f-9927-8cdcf67bb374",
+              "Text": "curve_fit returns popt (optimal parameters) and pcov (parameter covariance matrix).",
+              "SortOrder": 0
+            },
+            {
+              "Id": "531d594b-3fa8-4502-aced-c1d8f66493aa",
+              "Text": "popt values are substituted back into the model function to generate the fitted curve.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "84db630f-9486-4a9b-9455-a80d7fc551cd",
+              "Text": "The diagonal of pcov gives the variance of each parameter estimate.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b52dff8e-5b0e-4da9-a7db-7ff82ad257da",
+              "Text": "numpy.sqrt(numpy.diag(pcov)) gives the one-sigma uncertainty of each parameter.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "09914cd6-d1f9-41dd-bd36-8c22106002da",
+          "TopicId": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+          "Title": "Setting Initial Guesses and Bounds",
+          "BodyText": "Providing good initial parameter estimates via the p0 argument and restricting parameter ranges with bounds improves convergence and prevents physically unreasonable solutions.",
+          "Notes": "Bounds are specified as ([lower1, lower2, ...], [upper1, upper2, ...]). For example, if a parameter represents a time constant it must be positive, so a lower bound of 0 is appropriate.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "9cd75909-68d3-4712-9438-886cd877c008",
+              "Text": "The p0 argument accepts a list or array of initial parameter guesses.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "862cb592-c9fb-4ae1-9a74-e0a10b281b34",
+              "Text": "Poor initial guesses can cause curve_fit to converge to a local minimum or fail entirely.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "080adf6e-639f-444a-92ac-f7f0cf384fed",
+              "Text": "The bounds argument restricts parameters to physically meaningful ranges.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "9a1164f1-f308-4012-a54f-de4310c3d4b6",
+              "Text": "Visual inspection of the data and domain knowledge guide selection of p0 and bounds.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "953a4c6e-5dc7-4571-8aa0-a2486b4e8f55",
+          "TopicId": "a70fdefa-0e86-4027-b6e2-9cfdd35978f3",
+          "Title": "Handling Convergence Failures",
+          "BodyText": "If curve_fit cannot converge, it raises a RuntimeError; diagnosing and resolving convergence failures is an important practical skill.",
+          "Notes": "Common causes of failure: p0 is far from the true solution, the model is structurally inappropriate for the data, the data contains outliers, or the problem is poorly scaled. Try rescaling x and y data to order-of-magnitude unity.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "e4db6a16-2580-44c9-bb12-7e4b74fb8efb",
+              "Text": "A RuntimeError from curve_fit indicates the optimizer exceeded the maximum function evaluations.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "040e9735-f9e0-4d68-af11-56eb8a2c6cda",
+              "Text": "Improving p0 by plotting the model with guessed parameters before fitting is a useful diagnostic.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "77a8b810-9911-49a2-bd05-7b217c02950a",
+              "Text": "The maxfev argument increases the maximum number of function evaluations allowed.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "e6b1c88e-630e-43d6-88fc-8fc3d33c276d",
+              "Text": "If convergence fails repeatedly, reconsider whether the model function is appropriate.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "3c035402-c3ee-4844-8551-0a198a2f2102",
+      "Title": "Residuals Analysis",
+      "Summary": "Explains how to compute, visualize, and interpret residuals to evaluate curve-fit quality and identify model inadequacy on engineering datasets.",
+      "SortOrder": 5,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "f31d4418-b3f7-41ec-b144-f8c3f9771c9b",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "What are Residuals?",
+          "BodyText": "Residuals are the differences between observed data values and the corresponding values predicted by the fitted model, quantifying the pointwise error of the fit.",
+          "Notes": "Residual = observed value \u2212 fitted value. Residuals are signed quantities; positive residuals indicate underprediction and negative residuals indicate overprediction by the model.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "f9b6f738-58b9-492c-b2fb-a81d83a57da8",
+              "Text": "Each data point has exactly one residual equal to its observed minus predicted value.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "18d5282b-d8af-4f9e-9da3-7babc1fe5c19",
+              "Text": "The sum of residuals is zero for least-squares fits that include an intercept term.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "64297e83-8473-49c8-95c6-50587b1a2ed0",
+              "Text": "Residuals encode all information about how the model deviates from the data.",
+              "SortOrder": 2
+            }
+          ]
+        },
+        {
+          "Id": "06870208-9217-4b89-99fc-a2a168e7963a",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "Computing Residuals in Python",
+          "BodyText": "Residuals are computed by evaluating the fitted model at the original x data points and subtracting the predicted values from the observed y values.",
+          "Notes": "For polyfit: residuals = y_data - numpy.polyval(coeffs, x_data). For curve_fit: residuals = y_data - model(x_data, *popt). Both are straightforward NumPy array operations.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "ab1c232e-b960-49e5-8766-08fc61ea0dca",
+              "Text": "numpy.polyval evaluates a polyfit polynomial at specified x points for residual computation.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "d8288fca-ec89-4512-9f26-1c75e650d04e",
+              "Text": "For curve_fit models, unpack popt with the asterisk operator when calling the model function.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "c9ae0c20-d5fc-49ac-9bd9-0b3637a537d8",
+              "Text": "Residual arrays have the same length as the original data arrays.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "0dc169a3-3088-4c06-9413-45e65ce4b839",
+              "Text": "Residual computation is a simple element-wise subtraction between observed and predicted arrays.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "7b242a58-33b0-4d3b-8bbd-11a974b39e2b",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "Residual Plots and What They Reveal",
+          "BodyText": "Plotting residuals against the independent variable (or fitted values) is the primary diagnostic tool for evaluating whether the chosen model is appropriate.",
+          "Notes": "A well-fitted model produces residuals that appear randomly scattered around zero with no discernible pattern. Patterns such as curves, funnels, or cycles indicate model misspecification or heteroscedasticity.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "6c925cff-9602-4e3c-8529-4876e18fa526",
+              "Text": "Random scatter of residuals around zero indicates the model captures the data\u0027s structure well.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "c997c7af-fd57-4dd9-8bd8-07d1edf7c10e",
+              "Text": "A curved residual pattern suggests the polynomial degree or model form is insufficient.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "fdbba668-0d2b-4f0a-9b42-d2c8e0e086d9",
+              "Text": "A funnel-shaped pattern (increasing spread) indicates variance is not constant across x values.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "b2a7107a-ba6d-436d-a1c2-cded3bef293e",
+              "Text": "Systematic oscillation in residuals may indicate a missing periodic component in the model.",
+              "SortOrder": 3
+            },
+            {
+              "Id": "6cee053b-28e6-4b53-8f76-95ee99b6673d",
+              "Text": "A horizontal reference line at zero should be included in all residual plots.",
+              "SortOrder": 4
+            }
+          ]
+        },
+        {
+          "Id": "69a3bfab-520b-4098-9be0-be0b75f87dc9",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "Quantitative Fit Metrics",
+          "BodyText": "Alongside visual residual plots, quantitative metrics such as the coefficient of determination R\u00B2 and root mean square error (RMSE) provide summary measures of fit quality.",
+          "Notes": "R\u00B2 = 1 - SS_res / SS_tot, where SS_res is the sum of squared residuals and SS_tot is the total sum of squares. An R\u00B2 close to 1 indicates a strong fit, but R\u00B2 alone can be misleading for nonlinear models.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "7ae6bc67-99bc-44ad-8b46-958d55de54b9",
+              "Text": "RMSE is the square root of the mean squared residual and has the same units as the dependent variable.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "60dd8a82-51b8-4683-82a5-6839365ada98",
+              "Text": "R\u00B2 measures the proportion of variance in the data explained by the model.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "f1600671-feba-4e24-8d0b-1efe2f999fc6",
+              "Text": "R\u00B2 approaching 1.0 indicates high explanatory power, but does not confirm model correctness.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "de53ab92-bd04-4f66-9d00-db69efa5a5b7",
+              "Text": "Both metrics should be reported alongside residual plots for a complete fit assessment.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "c5f74044-11e0-44dd-882a-72df5ab3b0e0",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "Applying Residuals Analysis to Engineering Datasets",
+          "BodyText": "On real engineering datasets, residuals analysis guides iterative model improvement by revealing systematic errors tied to physical phenomena not yet captured by the model.",
+          "Notes": "For example, if residuals show a sinusoidal pattern when fitting a decay model to vibration data, this suggests an undamped oscillatory component that should be added to the model.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "46f9e4ad-379c-4328-8491-456f0fc579d7",
+              "Text": "Engineering data often contains noise, outliers, and sensor artifacts that affect residual patterns.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "da4d8771-7a6b-40c9-ba19-bf5d042dd96d",
+              "Text": "Outlier data points appear as residuals with unusually large magnitude and warrant investigation.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "ce078ead-2332-4ab5-8fe5-ca1fa7630133",
+              "Text": "Residual patterns can suggest additional physical effects to incorporate into the model.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "52291733-35fe-4b18-a475-d38ec5f17f72",
+              "Text": "Iterating between model refinement and residual inspection is standard engineering practice.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "cdfd93f9-781c-4783-a78a-f0762f64d525",
+          "TopicId": "3c035402-c3ee-4844-8551-0a198a2f2102",
+          "Title": "Overfitting and Model Complexity",
+          "BodyText": "Increasing model complexity will always reduce residuals on training data, but may degrade predictive performance on new data\u2014a phenomenon known as overfitting.",
+          "Notes": "Cross-validation or use of a held-out test dataset is the rigorous way to detect overfitting. In practice, Occam\u0027s razor applies: prefer the simplest model whose residuals show no systematic pattern.",
+          "SortOrder": 5,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "614856ad-0581-4efb-800b-2415e13eff70",
+              "Text": "Overfitting produces very small training residuals but large errors on unseen data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0fbf5d28-44b9-4b30-9e30-996d36b6b7c5",
+              "Text": "Adding parameters to a model reduces sum-of-squared residuals by definition.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "13365f72-84e1-4a15-8659-b269990133a5",
+              "Text": "The adjusted R\u00B2 penalizes model complexity and is more appropriate than R\u00B2 for model comparison.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d83124d7-7353-440a-aea0-eb7cfe310070",
+              "Text": "Physical interpretability of model parameters is a strong argument for preferring simpler models.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+      "Title": "Applying Numerical Methods to Engineering Datasets",
+      "Summary": "Brings together root finding, integration, ODE solving, and curve fitting in end-to-end workflows applied to realistic engineering problems.",
+      "SortOrder": 6,
+      "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+      "Elements": [
+        {
+          "Id": "b9e50a33-44dd-4c3e-8c01-3c82414a5214",
+          "TopicId": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+          "Title": "Structuring an End-to-End Numerical Workflow",
+          "BodyText": "A complete numerical workflow involves loading and inspecting data, selecting and applying an appropriate method, validating results, and communicating outputs clearly.",
+          "Notes": "Following a consistent workflow reduces errors and makes analysis reproducible. Document each step with comments or Jupyter notebook markdown cells describing the problem setup and assumptions.",
+          "SortOrder": 0,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "884ceaf5-8a98-4772-afdd-0d826ee6345b",
+              "Text": "Start by visualizing raw data to understand trends, ranges, and anomalies.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2559d819-73b3-4b60-8565-421e6d245a13",
+              "Text": "Select numerical methods based on problem type and data characteristics.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "2b869865-b4b6-4bd5-990a-58637015bff3",
+              "Text": "Validate results against physical expectations or known analytical limits.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "8b292f55-da91-49bc-83a5-67667baefba4",
+              "Text": "Document assumptions, parameter choices, and convergence diagnostics.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "5dfd9e74-cef7-41f7-aebf-cf808b6b4829",
+          "TopicId": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+          "Title": "Loading and Preprocessing Engineering Data",
+          "BodyText": "Real engineering datasets typically require preprocessing steps such as unit conversion, removal of missing values, and normalization before applying numerical methods.",
+          "Notes": "pandas is commonly used alongside NumPy and SciPy for data loading and cleaning. Always inspect data shape, data types, and summary statistics before proceeding to analysis.",
+          "SortOrder": 1,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "e23ebce4-9ebb-4c74-bc7d-3a42e3083e2a",
+              "Text": "pandas.read_csv and similar functions load tabular engineering data into DataFrames.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "08d3a157-8862-4089-a41a-fefd7169e29e",
+              "Text": "Missing values must be handled before passing arrays to SciPy functions.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "557c5028-441f-45b3-9ddd-ad4ddd937e17",
+              "Text": "Unit consistency must be verified across all columns used in calculations.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "75857acb-144e-44ce-9be9-994bc0a11528",
+              "Text": "Normalization or scaling can improve the numerical stability of fitting and optimization routines.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "d58ebf1b-06b9-49af-a980-5d4c066e09b8",
+          "TopicId": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+          "Title": "Combining Root Finding and Integration",
+          "BodyText": "Some engineering problems require both root finding and integration, for example locating where a cumulative quantity reaches a threshold by combining quad with a root solver.",
+          "Notes": "Example: find the time at which the total heat transferred (an integral over time) reaches a specified value. This can be formulated as a root-finding problem on a function that internally calls quad.",
+          "SortOrder": 2,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "b6cc6cee-fcfe-47e8-bc6f-57f25d9b28e8",
+              "Text": "Root-finding and integration can be composed by wrapping an integral call inside the objective function.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "0ae8efbb-48c9-4c78-a689-daed122083be",
+              "Text": "scipy.integrate.quad can be called inside a function passed to scipy.optimize.brentq.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "e2b97761-927a-4d70-8ded-30338c6aeafd",
+              "Text": "This pattern is common in heat transfer, fluid mechanics, and chemical engineering.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "ac822ebb-eb77-497f-9e44-2a8f44fd4748",
+              "Text": "Performance can be improved by caching or using vectorized integration where possible.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "6f5b1e7f-b916-4775-b491-82d79bc3d8af",
+          "TopicId": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+          "Title": "Fitting ODE Model Parameters to Experimental Data",
+          "BodyText": "A powerful workflow combines solve_ivp with curve_fit to estimate parameters of a dynamic model from time-series measurements.",
+          "Notes": "The model function passed to curve_fit calls solve_ivp internally, returning simulated outputs at the same time points as the experimental data. This is sometimes called \u0027grey-box\u0027 or \u0027physics-informed\u0027 fitting.",
+          "SortOrder": 3,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "d16780e9-e533-4674-a4c1-8ad4c5c47852",
+              "Text": "curve_fit can wrap solve_ivp to fit ODE parameters to measured time-series data.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "2b632fcb-77ec-4e19-8d02-bf374adcd018",
+              "Text": "The model function must interpolate or evaluate ODE output at the experimental time points.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "4a2ace68-57af-4e0f-9b29-40f80a229795",
+              "Text": "Initial parameter guesses should be informed by physical reasoning about the system.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d4af8297-eabd-47e5-8845-6eb557241325",
+              "Text": "This approach enables identification of damping coefficients, rate constants, and other physical parameters.",
+              "SortOrder": 3
+            }
+          ]
+        },
+        {
+          "Id": "a7344535-9ba8-4ebf-890c-78ee431b4c32",
+          "TopicId": "cdb263ed-c6a1-4d94-b4fd-052bda34367f",
+          "Title": "Communicating Numerical Results in Engineering Reports",
+          "BodyText": "Effective communication of numerical results requires presenting fitted parameters with uncertainties, fit quality metrics, and clearly labeled plots that support engineering decisions.",
+          "Notes": "In professional contexts, parameter uncertainty (from pcov) and convergence information should always be reported alongside best-fit values. Tables summarizing fit metrics and parameter values are standard in engineering reports.",
+          "SortOrder": 4,
+          "CreatedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "ModifiedDate": "2026-05-14T21:38:08.1399602-04:00",
+          "Items": [
+            {
+              "Id": "84eb3fbd-cd85-4201-bb33-b36849983229",
+              "Text": "Report fitted parameters with their units and one-sigma uncertainties from pcov.",
+              "SortOrder": 0
+            },
+            {
+              "Id": "9b489a77-7117-4f5a-a0a3-3e7a44a535ad",
+              "Text": "Include both the raw data scatter plot and the fitted model curve in result figures.",
+              "SortOrder": 1
+            },
+            {
+              "Id": "0d114e54-c8f9-454e-b9f4-48bee741d645",
+              "Text": "State R\u00B2 and RMSE values in figure captions or accompanying tables.",
+              "SortOrder": 2
+            },
+            {
+              "Id": "d3bd772f-21ad-4575-92a3-9c4f9324246d",
+              "Text": "Discuss whether residual patterns indicate model adequacy or suggest further refinement.",
+              "SortOrder": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TotalElementCount": 36
+}
