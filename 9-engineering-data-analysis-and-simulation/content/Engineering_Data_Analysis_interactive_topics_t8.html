@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulating Thermal Systems</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Simulating Thermal Systems</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Simulating Thermal Systems</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Thermal simulation is one of the most accessible and practically valuable applications of numerical ODE solving. Nearly every engineering system — an electronic component cooling down after shutdown, a metal billet being quenched in a bath, a room losing heat through its walls overnight — can be described by a differential equation relating stored thermal energy to the rate at which heat flows in or out. When the geometry and material are simple enough that we can treat the entire body as having a single, uniform temperature at any instant, we arrive at what is called a <strong>lumped parameter thermal model</strong>. This topic develops that model thoroughly, derives and simulates Newton's Law of Cooling, extends the approach to networks of thermally connected nodes, and closes the loop by comparing simulation output against real measured data.</p>
+
+<p><strong>Lumped Parameter Thermal Models</strong></p>
+
+<p>The central assumption of the lumped model is spatial uniformity: temperature is treated as a function of time only, not of position within the body. This is a significant simplification. In reality, if you drop a cold steel ball into hot oil, the surface heats up before the core does. But if the ball is small enough and conducts heat internally much faster than heat flows across its surface, then the temperature gradient inside the ball is negligible compared with the temperature difference between the ball and the fluid. In that regime, a single number — the ball's temperature T(t) — describes its thermal state entirely.</p>
+
+<p>The criterion that justifies this assumption is the <strong>Biot number</strong>:</p>
+
+<pre><code>Bi = h · L_c / k</code></pre>
+
+<p>where <em>h</em> is the convective heat transfer coefficient (W/m²·K), <em>L_c</em> is a characteristic length (volume divided by surface area for a convex body), and <em>k</em> is the thermal conductivity of the solid (W/m·K). When <em>Bi &lt; 0.1</em>, the internal conduction resistance is at least ten times smaller than the external convection resistance, so the temperature inside the body is nearly uniform at every instant and the lumped model is valid. A copper sphere in slow air flow easily satisfies this (copper has very high <em>k</em>); a large block of insulating foam in the same flow would not.</p>
+
+<p>The thermal analogy to an electrical RC circuit is exact and deeply useful. Define:</p>
+
+<ul>
+  <li><strong>Thermal capacitance:</strong> <code>C = m · cp</code> (J/K), where <em>m</em> is mass (kg) and <em>cp</em> is specific heat at constant pressure (J/kg·K). This quantity represents the body's ability to store thermal energy — just as electrical capacitance stores charge.</li>
+  <li><strong>Thermal resistance:</strong> <code>R = 1 / (h · A)</code> (K/W), where <em>A</em> is the surface area (m²). This quantity opposes the flow of heat just as electrical resistance opposes the flow of current. A large surface area or a high heat transfer coefficient both lower the resistance.</li>
+</ul>
+
+<p>The product <em>R·C = m·cp / (h·A)</em> has units of seconds and is the system's <strong>time constant</strong> τ. This single parameter controls the speed of the thermal response, exactly as τ = RC controls the speed of an electrical transient.</p>
+
+<p><strong>Newton's Law of Cooling</strong></p>
+
+<p>With the lumped assumption in place, an energy balance on the body is straightforward. The rate of change of stored thermal energy equals the net rate of heat transfer to the body. Convection to an ambient fluid at temperature T∞ removes heat at a rate <em>h·A·(T − T∞)</em>, so:</p>
+
+<pre><code>m · cp · dT/dt = -h · A · (T - T∞)</code></pre>
+
+<p>This is Newton's Law of Cooling expressed as a first-order linear ODE. The negative sign indicates that if the body is hotter than the ambient (T &gt; T∞), heat flows out and the body cools; if the body is colder, heat flows in and the body warms. Dividing both sides by <em>m·cp</em> isolates the derivative:</p>
+
+<pre><code>dT/dt = -(h · A) / (m · cp) · (T - T∞)
+      = -(1/τ) · (T - T∞)</code></pre>
+
+<p>where τ = m·cp / (h·A). This equation is separable. Introducing the excess temperature θ = T − T∞ (which is constant since T∞ is constant), we get dθ/dt = −θ/τ, which integrates immediately to:</p>
+
+<pre><code>T(t) = T∞ + (T₀ - T∞) · exp(-t / τ)</code></pre>
+
+<p>Here T₀ is the body's initial temperature. This is an exponential decay (or rise) toward T∞. After one time constant the body has covered 63.2% of the gap to T∞; after five time constants it is within 0.7% of T∞ and is effectively at equilibrium. A small τ (small mass, small specific heat, large surface area, or vigorous convection) means fast equilibration; a large τ means sluggish response.</p>
+
+<p>As a concrete example, consider a 0.5 kg aluminum block (cp = 900 J/kg·K) with a surface area of 0.05 m² cooled by natural convection with h = 10 W/m²·K, starting at T₀ = 150 °C in a room at T∞ = 25 °C:</p>
+
+<pre><code>τ = (0.5 × 900) / (10 × 0.05) = 450 / 0.5 = 900 s  (15 minutes)</code></pre>
+
+<p>After 15 minutes the block is at 25 + (150−25)·e⁻¹ ≈ 71 °C. After an hour (≈ 4τ) it is within about 2 °C of room temperature.</p>
+
+<p><strong>Simulating Cooling and Heating Transients</strong></p>
+
+<p>Even though this ODE has an exact analytical solution, implementing it numerically is the foundation for everything that follows — because more complex systems (multiple nodes, nonlinear radiation, time-varying boundary conditions) do not have closed-form solutions. The workflow has four steps.</p>
+
+<p>First, define all physical parameters as named Python constants. This makes the code readable and makes parameter sweeps trivial:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+# Physical parameters
+m   = 0.5       # mass, kg
+cp  = 900.0     # specific heat, J/(kg·K)
+h   = 10.0      # heat transfer coefficient, W/(m²·K)
+A   = 0.05      # surface area, m²
+T_inf = 25.0    # ambient temperature, °C
+T0    = 150.0   # initial temperature, °C
+
+tau = m * cp / (h * A)
+print(f"Time constant τ = {tau:.1f} s")</code></pre>
+
+<p>Second, implement the derivative function. Its signature must accept the current time and current state (temperature) and return dT/dt:</p>
+
+<pre><code>def dTdt(t, T):
+    return -(h * A) / (m * cp) * (T - T_inf)</code></pre>
+
+<p>Third, run the numerical integration loop. Here we use the classical fourth-order Runge-Kutta (RK4) method, which is far more accurate than Euler for the same step size:</p>
+
+<pre><code>dt   = 10.0          # time step, s
+t_end = 5 * tau      # integrate for 5 time constants
+t_arr = np.arange(0, t_end + dt, dt)
+T_arr = np.zeros(len(t_arr))
+T_arr[0] = T0
+
+for i in range(len(t_arr) - 1):
+    t = t_arr[i]
+    T = T_arr[i]
+    k1 = dTdt(t,        T)
+    k2 = dTdt(t + dt/2, T + dt/2 * k1)
+    k3 = dTdt(t + dt/2, T + dt/2 * k2)
+    k4 = dTdt(t + dt,   T + dt   * k3)
+    T_arr[i+1] = T + (dt/6) * (k1 + 2*k2 + 2*k3 + k4)</code></pre>
+
+<p>Fourth, compute the analytical solution at every time point and overlay it on the plot to validate accuracy:</p>
+
+<pre><code>T_analytical = T_inf + (T0 - T_inf) * np.exp(-t_arr / tau)
+
+plt.figure()
+plt.plot(t_arr / 60, T_arr,        label='RK4 simulation')
+plt.plot(t_arr / 60, T_analytical, '--', label='Analytical')
+plt.xlabel('Time (min)')
+plt.ylabel('Temperature (°C)')
+plt.legend()
+plt.title('Lumped-Parameter Cooling Transient')
+plt.tight_layout()
+plt.show()</code></pre>
+
+<p>With a step size of 10 s and τ = 900 s, RK4 produces results visually indistinguishable from the analytical curve. The maximum absolute error across 5τ will typically be well under 0.01 °C — a reassuring validation before moving to more complex models.</p>
+
+<p><strong>Multi-Node Thermal Networks</strong></p>
+
+<p>Many real systems cannot be treated as a single lump. A printed circuit board has a processor die, a heat spreader, a thermal interface material, a heat sink base, and fins, each with its own thermal mass and connected to neighbors through thermal resistances. The appropriate model is a network of <em>N</em> nodes, each with its own capacitance Cᵢ and exchanging heat with adjacent nodes through conductances Gᵢⱼ = 1/Rᵢⱼ.</p>
+
+<p>The energy balance on node <em>i</em> is:</p>
+
+<pre><code>Cᵢ · dTᵢ/dt = Σⱼ Gᵢⱼ · (Tⱼ - Tᵢ) + Qᵢ</code></pre>
+
+<p>where the sum runs over all nodes <em>j</em> connected to <em>i</em>, and Qᵢ is any external heat source at node <em>i</em> (e.g., power dissipation). Collecting all nodes into a state vector <strong>T</strong> = [T₁, T₂, …, Tₙ]ᵀ, this system of ODEs takes the matrix form:</p>
+
+<pre><code>C · dT/dt = A · T + b</code></pre>
+
+<p>where <strong>C</strong> is the diagonal capacitance matrix (Cᵢᵢ = Cᵢ), <strong>A</strong> is the conductance matrix (Aᵢⱼ = Gᵢⱼ for i ≠ j; Aᵢᵢ = −Σⱼ Gᵢⱼ), and <strong>b</strong> contains boundary conditions and heat sources. To put it in standard form for numerical integration, multiply both sides by C⁻¹:</p>
+
+<pre><code>dT/dt = C⁻¹ · (A · T + b)</code></pre>
+
+<p>Consider a simple three-node model: a heat source (node 1) attached to a spreader (node 2) attached to ambient through a convective resistance (node 3 = ambient, fixed). With NumPy this becomes:</p>
+
+<pre><code>import numpy as np
+
+# Capacitances (J/K)
+C1, C2 = 0.5, 2.0
+C_mat = np.diag([C1, C2])
+
+# Conductances (W/K)
+G12 = 2.0   # between node 1 and node 2
+G2a = 1.0   # between node 2 and ambient (node fixed at T_inf)
+T_inf = 25.0
+Q1   = 5.0  # heat source at node 1, W
+
+# Conductance matrix A (2×2, node 3 = ambient absorbed into b)
+A_mat = np.array([[-G12,  G12],
+                  [ G12, -(G12 + G2a)]])
+
+# Forcing vector b
+b_vec = np.array([Q1, G2a * T_inf])
+
+C_inv = np.linalg.inv(C_mat)
+
+def dTdt_multi(t, T_vec):
+    return C_inv @ (A_mat @ T_vec + b_vec)
+
+# Initial conditions and RK4 loop
+T0_vec = np.array([25.0, 25.0])
+dt = 1.0
+t_end = 300.0
+t_arr = np.arange(0, t_end + dt, dt)
+T_history = np.zeros((len(t_arr), 2))
+T_history[0] = T0_vec
+
+for i in range(len(t_arr) - 1):
+    t  = t_arr[i]
+    Tv = T_history[i]
+    k1 = dTdt_multi(t,        Tv)
+    k2 = dTdt_multi(t + dt/2, Tv + dt/2 * k1)
+    k3 = dTdt_multi(t + dt/2, Tv + dt/2 * k2)
+    k4 = dTdt_multi(t + dt,   Tv + dt   * k3)
+    T_history[i+1] = Tv + (dt/6) * (k1 + 2*k2 + 2*k3 + k4)</code></pre>
+
+<p>The derivative function now returns a NumPy array of length 2 — one derivative per node — and the matrix-vector multiply <code>@</code> operator handles the coupling cleanly. Steady state can be verified analytically: set dT/dt = 0, so <strong>A·T* + b = 0</strong>, giving <strong>T* = −A⁻¹·b</strong>. For the parameters above this yields T₁* ≈ 32.5 °C and T₂* ≈ 30.0 °C, values that the simulation should approach asymptotically.</p>
+
+<p>As the network grows to dozens or hundreds of nodes (a full finite-element thermal model of a PCB, for instance), building <strong>A</strong> by hand becomes impractical. The standard approach is to assemble the conductance matrix programmatically from a list of node connections, then use <code>scipy.integrate.solve_ivp</code> with a stiff solver such as <code>method='Radau'</code> or <code>method='BDF'</code>, since multi-node thermal networks with very different time constants can be stiff systems where explicit methods like RK4 require impractically small time steps.</p>
+
+<p><strong>Comparison with Analytical and Experimental Data</strong></p>
+
+<p>A simulation that has never been compared to ground truth is of limited value. Validation — checking that the model reproduces known behavior — is an essential engineering step.</p>
+
+<p>For a single-node system the analytical solution is known exactly. Plotting it alongside the numerical result is the first check. To go further, compute the root-mean-square error (RMSE) between the two:</p>
+
+<pre><code>rmse = np.sqrt(np.mean((T_arr - T_analytical)**2))
+print(f"RMSE between RK4 and analytical: {rmse:.4f} °C")</code></pre>
+
+<p>A small RMSE (typically much less than 0.1 °C for reasonable step sizes) confirms that the numerical scheme is implemented correctly and the step size is adequate.</p>
+
+<p>When experimental data exist — say, a thermocouple reading from a cooling test — the comparison is more informative. Load the data, align the time axes, interpolate if the sampling rate differs from the simulation's, then compute RMSE between simulation and measurement. A large discrepancy points to an incorrect parameter (wrong h, wrong cp, unexpected radiation losses) or a violated assumption (Bi ≥ 0.1, multi-dimensional conduction).</p>
+
+<p><strong>Parameter sensitivity analysis</strong> answers the question: which parameter matters most? Perturb each parameter by ±10% in isolation and observe how much the temperature response changes. For the single-node model, τ = m·cp/(h·A), so temperature at any fixed time depends on all four parameters, but because h and A always appear together as the product h·A, they are indistinguishable from cooling data alone — an important identifiability insight.</p>
+
+<p><strong>Curve fitting</strong> using <code>scipy.optimize.curve_fit</code> can extract thermal properties directly from measured data. If you trust the analytical form, fit T∞, T₀, and τ to the measured time series:</p>
+
+<pre><code>from scipy.optimize import curve_fit
+
+def cooling_model(t, T_inf, T0, tau):
+    return T_inf + (T0 - T_inf) * np.exp(-t / tau)
+
+# t_meas and T_meas are 1-D arrays from the experiment
+popt, pcov = curve_fit(cooling_model, t_meas, T_meas,
+                       p0=[25.0, 150.0, 900.0])
+T_inf_fit, T0_fit, tau_fit = popt
+print(f"Fitted τ = {tau_fit:.1f} s")</code></pre>
+
+<p>Once τ is known, and if you independently measure mass and surface area, you can back-calculate <em>h</em> — a non-trivial experimental heat transfer result obtained from a simple cooling test.</p>
+
+<p><strong>Connecting Data Analysis to Thermal Simulation</strong></p>
+
+<p>Real experiments produce CSV files, not perfect analytical signals. The full workflow of loading, cleaning, and using measured data as a simulation input ties data analysis skills directly to physical modeling.</p>
+
+<p>Load and inspect the data with pandas:</p>
+
+<pre><code>import pandas as pd
+
+df = pd.read_csv('cooling_test.csv')
+print(df.head())
+print(df.dtypes)
+df.dropna(inplace=True)
+df['time_s'] = pd.to_numeric(df['time_s'], errors='coerce')
+df['T_sample'] = pd.to_numeric(df['T_sample'], errors='coerce')
+df['T_ambient'] = pd.to_numeric(df['T_ambient'], errors='coerce')
+df.dropna(inplace=True)</code></pre>
+
+<p>A critical subtlety: the ambient temperature T∞ is often not perfectly constant during an experiment — the room heats up, or the bath temperature drifts. Rather than assuming T∞ is fixed, use the measured ambient as a time-varying boundary condition. The ODE becomes:</p>
+
+<pre><code>dT/dt = -(h*A)/(m*cp) * (T - T_inf(t))</code></pre>
+
+<p>where T∞(t) is now a function of time. Implement this with NumPy interpolation so the derivative function can look up the ambient temperature at any instant during integration:</p>
+
+<pre><code>from scipy.interpolate import interp1d
+
+T_inf_func = interp1d(df['time_s'].values, df['T_ambient'].values,
+                      kind='linear', fill_value='extrapolate')
+
+def dTdt_varying(t, T):
+    return -(h * A) / (m * cp) * (T - T_inf_func(t))</code></pre>
+
+<p>Pass this function to <code>scipy.integrate.solve_ivp</code> for clean, robust integration:</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+
+t_span = (df['time_s'].iloc[0], df['time_s'].iloc[-1])
+t_eval = df['time_s'].values
+sol = solve_ivp(dTdt_varying, t_span, [T0], t_eval=t_eval,
+                method='RK45', rtol=1e-6, atol=1e-8)
+T_sim = sol.y[0]</code></pre>
+
+<p>Now plot simulation and measurement on the same axes:</p>
+
+<pre><code>plt.figure()
+plt.plot(df['time_s'] / 60, df['T_sample'], 'o', ms=3, label='Measured')
+plt.plot(df['time_s'] / 60, T_sim,          '-',       label='Simulation')
+plt.xlabel('Time (min)')
+plt.ylabel('Temperature (°C)')
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+
+<p>If the curves diverge significantly, the next step is parameter iteration — adjusting h (or equivalently τ) to minimize RMSE. This can be automated with <code>curve_fit</code> or <code>scipy.optimize.minimize</code>, using the simulation output (not the analytical formula) as the model. This closes the full engineering loop: physical model → numerical simulation → comparison with data → parameter refinement → improved model → re-simulate. Each iteration produces a model that better represents reality, and the RMSE provides an objective, quantitative measure of progress.</p>
+        <div class="notes"><strong>Notes</strong>Biot number check is a prerequisite that students should perform before applying any lumped model to a real problem; emphasize that the model breaks down silently if Bi ≥ 0.1. The electrical RC analogy is very effective for students with circuits background. For the multi-node section, mentioning stiff solvers (Radau, BDF) is important because students who try RK45 on a stiff network will see instability or unacceptably small automatic step sizes. The curve_fit section naturally motivates why simulation is necessary when the boundary condition is time-varying or when the system has multiple nodes with no closed-form solution.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

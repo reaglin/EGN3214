@@ -1,0 +1,62 @@
+﻿[
+  {
+    "title": "9 - Engineering Data Analysis and Simulation \u2014 Topics \u0026 Learning Outcomes",
+    "href": "topics-outcomes.html",
+    "type": "Page"
+  },
+  {
+    "title": "9 - Engineering Data Analysis and Simulation \u2014 Module Topics",
+    "href": "topics.html",
+    "type": "Page"
+  },
+  {
+    "title": "Introduction to Engineering Data Workflows",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t1.html",
+    "type": "Content"
+  },
+  {
+    "title": "Loading and Inspecting Engineering Data",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Data Cleaning and Preprocessing",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t3.html",
+    "type": "Content"
+  },
+  {
+    "title": "Visualizing Engineering Data with matplotlib",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t4.html",
+    "type": "Content"
+  },
+  {
+    "title": "Time-Stepping Simulation Fundamentals",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t5.html",
+    "type": "Content"
+  },
+  {
+    "title": "Simulating Mechanical Systems",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t6.html",
+    "type": "Content"
+  },
+  {
+    "title": "Simulating Electrical Systems",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t7.html",
+    "type": "Content"
+  },
+  {
+    "title": "Simulating Thermal Systems",
+    "href": "content/Engineering_Data_Analysis_interactive_topics_t8.html",
+    "type": "Content"
+  },
+  {
+    "title": "9 - Engineering Data Analysis and Simulation \u2014 Module Topics",
+    "href": "content/module_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Simulating Thermal Systems",
+    "href": "content/_interactive.html",
+    "type": "Content"
+  }
+]

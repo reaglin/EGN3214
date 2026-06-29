@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading and Inspecting Engineering Data</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Loading and Inspecting Engineering Data</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Loading and Inspecting Engineering Data</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Engineering data analysis begins long before any model is trained or any chart is drawn. The very first step — loading raw data into a Python environment and understanding its structure — is arguably the most consequential. Mistakes made here, such as silently misinterpreted data types, undetected duplicate rows, or a misaligned time index, propagate through every downstream calculation. This topic covers the practical mechanics of reading data into pandas DataFrames, inspecting those DataFrames thoroughly, handling time-series indices correctly, filtering and selecting data with precision, and combining data from multiple sources into a unified, trustworthy dataset.</p>
+
+<p><strong>Reading CSV Files with pandas</strong></p>
+
+<p>The comma-separated values (CSV) format is the most common file type encountered in engineering data workflows. Sensor logs, SCADA exports, lab measurements, and test-bench outputs are routinely saved as CSVs. The pandas function <code>pd.read_csv()</code> is the primary tool for importing this data, and understanding its parameters deeply prevents many subtle bugs.</p>
+
+<p>At its simplest, <code>pd.read_csv()</code> accepts a file path as its first argument:</p>
+
+<pre><code>import pandas as pd
+
+df = pd.read_csv('sensor_log.csv')
+</code></pre>
+
+<p>The first argument is extremely flexible. It can be a relative or absolute file path string, a URL pointing to a remote file, or even a Python file-like object opened with <code>open()</code>. This means you can read data directly from a web server or from an in-memory buffer without saving it to disk first:</p>
+
+<pre><code># Reading from a URL
+df = pd.read_csv('https://example.com/data/pressure_readings.csv')
+
+# Reading from a file-like object
+with open('sensor_log.csv', 'r') as f:
+    df = pd.read_csv(f)
+</code></pre>
+
+<p>One of the most important parameters to understand is <strong><code>dtype</code></strong>. By default, pandas infers the data type of each column by scanning its contents. While convenient, this inference can cause silent errors. For example, a column of equipment IDs like <code>001</code>, <code>002</code>, <code>003</code> will be read as integers, stripping leading zeros. A voltage column that contains a single erroneous entry like <code>'N/A'</code> will cause the entire column to be inferred as <code>object</code> (string) rather than <code>float64</code>, causing arithmetic operations to fail or silently produce wrong results. Specifying <code>dtype</code> explicitly removes this ambiguity:</p>
+
+<pre><code>df = pd.read_csv('sensor_log.csv', dtype={
+    'equipment_id': str,
+    'voltage': float,
+    'current': float,
+    'status_code': str
+})
+</code></pre>
+
+<p>When you specify types explicitly, pandas will raise an error if a value cannot be converted, alerting you to data quality issues immediately rather than letting them slip through undetected.</p>
+
+<p>The <strong><code>parse_dates</code></strong> parameter instructs pandas to parse specified columns as datetime objects during loading rather than leaving them as plain strings. This avoids a common two-step workflow of loading and then separately converting:</p>
+
+<pre><code># Parse the 'timestamp' column as a datetime during loading
+df = pd.read_csv('sensor_log.csv', parse_dates=['timestamp'])
+
+# Combine separate date and time columns into one datetime column
+df = pd.read_csv('sensor_log.csv', parse_dates=[['date', 'time']])
+</code></pre>
+
+<p>When two column names are passed in a nested list, pandas concatenates them with a space separator and parses the result, creating a single combined datetime column named <code>date_time</code>.</p>
+
+<p>For very large files — gigabyte-scale logs from industrial systems — loading the entire file into memory at once may be impractical. The <strong><code>chunksize</code></strong> parameter enables incremental reading by returning an iterable of DataFrames, each containing the specified number of rows:</p>
+
+<pre><code>chunk_iter = pd.read_csv('large_sensor_log.csv', chunksize=10000)
+
+results = []
+for chunk in chunk_iter:
+    # Process each chunk independently, e.g., compute the mean pressure
+    results.append(chunk['pressure'].mean())
+
+overall_mean = sum(results) / len(results)
+</code></pre>
+
+<p>This pattern lets you aggregate statistics, filter rows, or transform data without ever holding the entire dataset in RAM. It is a foundational technique for production engineering data pipelines.</p>
+
+<p><strong>Initial Data Inspection</strong></p>
+
+<p>Once data is loaded, the immediate priority is to understand its shape, types, completeness, and statistical properties. Skipping this step is a common source of downstream errors. pandas provides a concise set of inspection tools that together give a complete picture of a DataFrame's health.</p>
+
+<p><strong><code>df.shape</code></strong> returns a tuple of <code>(rows, columns)</code>. This is always the first thing to check because it confirms that the file loaded completely and that the expected number of columns is present:</p>
+
+<pre><code>print(df.shape)
+# (52560, 8)  →  52560 rows, 8 columns
+</code></pre>
+
+<p>If you expected a year's worth of hourly readings (8760 rows) but see 52560, you immediately know something about the data structure warrants investigation — perhaps readings are at 10-minute intervals.</p>
+
+<p><strong><code>df.dtypes</code></strong> shows the inferred or assigned data type of each column. This is critical for catching type mismatches before they cause errors in calculations:</p>
+
+<pre><code>print(df.dtypes)
+# timestamp     datetime64[ns]
+# voltage              float64
+# current              float64
+# status_code           object
+# equipment_id          object
+</code></pre>
+
+<p>If <code>voltage</code> appears as <code>object</code> instead of <code>float64</code>, that is a red flag indicating non-numeric values exist in that column — perhaps a header was repeated mid-file, or a sensor dropout was logged as the string <code>'ERR'</code>.</p>
+
+<p><strong><code>df.head()</code></strong> and <strong><code>df.tail()</code></strong> display the first and last five rows by default, though you can pass an integer argument to change the count. Together they let you verify that the file loaded with the correct column headers, that data begins and ends where expected, and that values are in a plausible range:</p>
+
+<pre><code>print(df.head(3))
+#            timestamp  voltage  current status_code equipment_id
+# 0 2024-01-01 00:00:00   230.1     15.3          OK         E001
+# 1 2024-01-01 00:10:00   229.8     15.1          OK         E001
+# 2 2024-01-01 00:20:00   231.0     15.4          OK         E001
+</code></pre>
+
+<p><strong><code>df.info()</code></strong> provides a compact, all-in-one summary that shows column names, the count of non-null entries in each column, and data types. It is particularly useful for identifying missing data at a glance:</p>
+
+<pre><code>df.info()
+# &lt;class 'pandas.core.frame.DataFrame'&gt;
+# RangeIndex: 52560 entries, 0 to 52559
+# Data columns (total 5 columns):
+#  #   Column        Non-Null Count  Dtype
+# ---  ------        --------------  -----
+#  0   timestamp     52560 non-null  datetime64[ns]
+#  1   voltage       52543 non-null  float64
+#  2   current       52560 non-null  float64
+#  3   status_code   52560 non-null  object
+#  4   equipment_id  52560 non-null  object
+</code></pre>
+
+<p>Here, <code>voltage</code> has only 52543 non-null entries out of 52560, meaning 17 values are missing. This finding would immediately trigger an investigation into the cause and a decision about how to handle the gaps.</p>
+
+<p><strong><code>df.describe()</code></strong> computes summary statistics for all numeric columns: count, mean, standard deviation, minimum, 25th percentile, median (50th percentile), 75th percentile, and maximum. For engineering data, these statistics provide immediate sanity checks:</p>
+
+<pre><code>print(df.describe())
+#           voltage       current
+# count  52543.000    52560.000
+# mean     230.021       15.287
+# std        1.453        0.812
+# min      198.300       -0.500
+# 25%      229.200       14.800
+# 50%      230.100       15.300
+# 75%      230.900       15.800
+# max      245.000       18.900
+</code></pre>
+
+<p>The minimum voltage of 198.3 V is significantly below the 25th percentile of 229.2 V, which immediately suggests outliers or transient fault events worth investigating. A negative current value of -0.5 A might indicate reverse power flow or a sensor offset error. These are findings that <code>df.describe()</code> surfaces in seconds.</p>
+
+<p>To include non-numeric columns in the description (for categorical inspection), pass <code>include='all'</code>:</p>
+
+<pre><code>print(df.describe(include='all'))
+</code></pre>
+
+<p>This adds statistics like the number of unique values and the most frequent value (mode) for string columns, which is useful for auditing categorical columns like <code>status_code</code>.</p>
+
+<p><strong>Working with Time-Series Indices</strong></p>
+
+<p>Engineering data is almost always time-stamped. Setting up the time index correctly unlocks a wide range of powerful pandas functionality for slicing, resampling, and feature extraction. The foundational function here is <strong><code>pd.to_datetime()</code></strong>, which converts string or numeric representations of dates and times into pandas <code>Timestamp</code> objects:</p>
+
+<pre><code># Converting a string column to datetime
+df['timestamp'] = pd.to_datetime(df['timestamp'])
+
+# Converting Unix epoch timestamps (in seconds) to datetime
+df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+
+# Specifying a format string for non-standard formats
+df['timestamp'] = pd.to_datetime(df['timestamp'], format='%d/%m/%Y %H:%M:%S')
+</code></pre>
+
+<p>Specifying a <code>format</code> string is both faster (pandas skips format inference) and safer (ambiguous dates like 04/05/2024 are interpreted correctly as April 5th rather than May 4th when you write <code>%m/%d/%Y</code>).</p>
+
+<p>Once the column is properly typed, setting it as the DataFrame index with <strong><code>df.set_index()</code></strong> transforms it into a <code>DatetimeIndex</code>, enabling time-based selection and resampling:</p>
+
+<pre><code>df = df.set_index('timestamp')
+print(df.index)
+# DatetimeIndex(['2024-01-01 00:00:00', '2024-01-01 00:10:00', ...],
+#               dtype='datetime64[ns]', name='timestamp', freq=None)
+</code></pre>
+
+<p>With a <code>DatetimeIndex</code>, you can slice rows using human-readable string labels. This is one of the most ergonomic features pandas offers for time-series work:</p>
+
+<pre><code># Select all rows in January 2024
+january_data = df['2024-01']
+
+# Select all rows on a specific date
+day_data = df['2024-03-15']
+
+# Select a specific time range
+range_data = df['2024-03-15 08:00':'2024-03-15 17:00']
+</code></pre>
+
+<p>pandas interprets partial string labels intelligently, so <code>'2024-01'</code> correctly selects every row whose index falls within January 2024, regardless of time-of-day. This is far more readable than constructing boolean masks with explicit start and end timestamps.</p>
+
+<p>The <code>DatetimeIndex</code> also exposes a rich set of <strong>accessor attributes</strong> through the <code>.dt</code> accessor (for Series) or directly on the index, enabling rapid feature extraction without loops:</p>
+
+<pre><code># Extract hour-of-day, day-of-week, and month as new columns
+df['hour'] = df.index.hour
+df['day_of_week'] = df.index.dayofweek   # Monday=0, Sunday=6
+df['month'] = df.index.month
+df['is_weekend'] = df.index.dayofweek >= 5
+</code></pre>
+
+<p>These derived features are invaluable for engineering analysis. For example, separating weekday from weekend behavior in power consumption data, or identifying night-shift vs. day-shift operation patterns, requires exactly this kind of temporal decomposition. Other commonly useful attributes include <code>.year</code>, <code>.minute</code>, <code>.second</code>, <code>.quarter</code>, and <code>.is_month_end</code>.</p>
+
+<p><strong>Selecting and Filtering Data</strong></p>
+
+<p>Once data is loaded and its index is configured, you frequently need to work with subsets — specific columns, specific rows, or rows that meet particular conditions. pandas provides several complementary mechanisms for this.</p>
+
+<p><strong>Column selection</strong> uses bracket notation. Passing a single column name as a string returns a <code>Series</code>, which is a one-dimensional labeled array. Passing a list of column names returns a <code>DataFrame</code>:</p>
+
+<pre><code># Returns a Series
+voltage_series = df['voltage']
+
+# Returns a DataFrame (note the double brackets)
+subset_df = df[['voltage', 'current']]
+</code></pre>
+
+<p>This distinction matters. A <code>Series</code> has a single data type and behaves like a 1D array. A <code>DataFrame</code> is a 2D table. Many functions behave differently depending on which you pass.</p>
+
+<p><strong><code>loc[]</code></strong> selects data by <em>label</em>. For a DataFrame with a <code>DatetimeIndex</code>, this means selecting rows by timestamp label and columns by name. The syntax is <code>df.loc[row_selector, column_selector]</code>:</p>
+
+<pre><code># Select a specific date range and specific columns
+subset = df.loc['2024-02-01':'2024-02-28', ['voltage', 'current']]
+
+# Select a single row by exact index label
+row = df.loc['2024-03-15 12:00:00']
+</code></pre>
+
+<p><strong><code>iloc[]</code></strong> selects data by <em>integer position</em>, ignoring labels entirely. This is useful when you want the first N rows, or every other row, regardless of what the index labels are:</p>
+
+<pre><code># First 100 rows, all columns
+first_100 = df.iloc[:100]
+
+# Rows 50 through 99, first three columns
+subset = df.iloc[50:100, :3]
+
+# Last row
+last_row = df.iloc[-1]
+</code></pre>
+
+<p><strong>Boolean masks</strong> are arrays of <code>True</code>/<code>False</code> values produced by comparison operations on a column. Passing a boolean mask to <code>df[...]</code> returns only the rows where the mask is <code>True</code>:</p>
+
+<pre><code># Rows where voltage dropped below 220 V (potential undervoltage events)
+low_voltage = df[df['voltage'] < 220]
+
+# Rows where both voltage is high AND current is high
+overload = df[(df['voltage'] > 240) & (df['current'] > 18)]
+
+# Rows where status code is a fault condition
+faults = df[df['status_code'].isin(['FAULT', 'ERR', 'WARN'])]
+</code></pre>
+
+<p>When combining multiple conditions, each must be wrapped in parentheses, and you use <code>&</code> (and), <code>|</code> (or), and <code>~</code> (not) rather than Python's <code>and</code>, <code>or</code>, <code>not</code> keywords, which do not work element-wise on arrays.</p>
+
+<p>The <strong><code>query()</code></strong> method offers a more readable string-based syntax for filtering, particularly useful when column names are clear and conditions are complex:</p>
+
+<pre><code># Equivalent to df[(df['voltage'] < 220) & (df['current'] > 15)]
+low_v_high_i = df.query('voltage < 220 and current > 15')
+
+# Reference external Python variables using the @ prefix
+threshold = 220
+low_voltage = df.query('voltage < @threshold')
+</code></pre>
+
+<p><code>query()</code> is generally more readable and less prone to parenthesis errors for multi-condition filters. However, it has limitations with column names containing spaces or special characters.</p>
+
+<p><strong>Importing Data from Multiple Sources</strong></p>
+
+<p>Real engineering projects rarely have all relevant data in a single file. You might have temperature readings from one sensor system, pressure readings from another, and maintenance event logs from a CMMS (Computerized Maintenance Management System) — each in separate CSVs. Combining them correctly is essential.</p>
+
+<p><strong><code>pd.concat()</code></strong> stacks DataFrames together. Setting <code>axis=0</code> (the default) stacks them vertically, row by row — useful when the same measurements continue across multiple files (e.g., monthly exports):</p>
+
+<pre><code>jan_df = pd.read_csv('readings_jan.csv', parse_dates=['timestamp'], index_col='timestamp')
+feb_df = pd.read_csv('readings_feb.csv', parse_dates=['timestamp'], index_col='timestamp')
+mar_df = pd.read_csv('readings_mar.csv', parse_dates=['timestamp'], index_col='timestamp')
+
+combined = pd.concat([jan_df, feb_df, mar_df])
+combined = combined.sort_index()  # Ensure chronological order after concatenation
+</code></pre>
+
+<p>Setting <code>axis=1</code> stacks DataFrames horizontally, column by column — useful when combining different measurement channels that share the same index:</p>
+
+<pre><code>voltage_df = pd.read_csv('voltage_readings.csv', index_col='timestamp', parse_dates=True)
+current_df = pd.read_csv('current_readings.csv', index_col='timestamp', parse_dates=True)
+
+combined = pd.concat([voltage_df, current_df], axis=1)
+</code></pre>
+
+<p><strong><code>pd.merge()</code></strong> performs relational-style joins, equivalent to SQL JOIN operations. It aligns rows based on matching values in one or more key columns rather than on the index. This is appropriate when combining datasets that share a common identifier but may not be time-aligned:</p>
+
+<pre><code>readings_df = pd.read_csv('sensor_readings.csv')
+metadata_df = pd.read_csv('equipment_metadata.csv')
+
+# Inner join: only rows where equipment_id exists in both DataFrames
+merged = pd.merge(readings_df, metadata_df, on='equipment_id', how='inner')
+
+# Left join: keep all rows from readings_df, match metadata where available
+merged = pd.merge(readings_df, metadata_df, on='equipment_id', how='left')
+</code></pre>
+
+<p>The <code>how</code> parameter controls join type: <code>'inner'</code> keeps only matching rows, <code>'left'</code> keeps all rows from the left DataFrame, <code>'right'</code> keeps all from the right, and <code>'outer'</code> keeps all rows from both, filling gaps with <code>NaN</code>.</p>
+
+<p>The <strong><code>join()</code></strong> method is a convenient shorthand for merging on indices rather than columns. It is particularly well-suited to combining time-aligned sensor data where each DataFrame's index is the shared timestamp:</p>
+
+<pre><code>temp_df = pd.read_csv('temperature.csv', index_col='timestamp', parse_dates=True)
+pressure_df = pd.read_csv('pressure.csv', index_col='timestamp', parse_dates=True)
+
+# Combine on the shared timestamp index
+combined = temp_df.join(pressure_df, how='outer')
+</code></pre>
+
+<p>Using <code>how='outer'</code> here is important if the two sensors do not record at exactly the same timestamps — it preserves all timestamps from both sources, with <code>NaN</code> where one sensor has no reading at a given moment.</p>
+
+<p>A critical issue that arises after any merge or concatenation is <strong>duplicate rows</strong>. These can occur when the same event appears in multiple source files, or when a join creates Cartesian products due to non-unique keys. pandas provides <code>duplicated()</code> to detect them and <code>drop_duplicates()</code> to resolve them:</p>
+
+<pre><code># Check how many duplicate rows exist
+num_duplicates = combined.duplicated().sum()
+print(f"Duplicate rows: {num_duplicates}")
+
+# Inspect the duplicate rows
+print(combined[combined.duplicated(keep=False)])
+
+# Remove duplicates, keeping the first occurrence
+combined = combined.drop_duplicates()
+
+# Remove duplicates based only on specific columns
+combined = combined.drop_duplicates(subset=['timestamp', 'equipment_id'])
+</code></pre>
+
+<p>It is important to distinguish between exact duplicates (every column matches) and key duplicates (only the join key matches but other values differ, which may indicate conflicting records rather than simple repetition). The <code>subset</code> parameter helps make this distinction explicit.</p>
+
+<p>Taken together, these techniques — reading with explicit type control, inspecting rigorously, indexing by time, filtering with precision, and combining sources cleanly — form the essential foundation of any robust engineering data analysis workflow. Every subsequent step, from visualization to predictive modeling, depends on the data being correctly loaded and understood at this stage.</p>
+        <div class="notes"><strong>Notes</strong>The code examples use realistic engineering contexts (voltage, current, pressure, temperature, equipment IDs) throughout to maintain relevance to the module theme. The coverage of chunksize for large files and the distinction between loc/iloc/boolean/query filtering goes beyond minimal summary depth as required. The note about &amp; vs and in boolean masks is a common source of real errors worth explicit mention.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

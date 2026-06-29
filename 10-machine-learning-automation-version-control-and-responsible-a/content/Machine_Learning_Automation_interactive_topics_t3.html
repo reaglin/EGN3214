@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Automation and Parameter Sweep Pipelines</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 10 - Machine Learning, Automation, Version Control, and Responsible AI</a></div>
+  <header>
+    <h1>Engineering Automation and Parameter Sweep Pipelines</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Engineering Automation and Parameter Sweep Pipelines</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Engineering work is full of repetitive computational tasks: running the same simulation hundreds of times with slightly different inputs, evaluating a surrogate model across a grid of design conditions, post-processing batches of output files, or generating standardized reports at the end of each project phase. When engineers perform these tasks manually — adjusting a variable in a spreadsheet, clicking "run," copying the result, incrementing the variable, and repeating — they introduce a class of errors that no amount of careful attention can fully eliminate. Automation addresses this at the root by encoding the procedure once, as a script, and letting the computer execute it exactly and consistently every time. This section develops a thorough understanding of how to design, implement, and operate automated engineering pipelines for parameter sweeps, surrogate model queries, and large result management, with practical Python examples throughout.</p>
+
+<p><strong>Why Automate Engineering Workflows?</strong></p>
+
+<p>The most immediate motivation for automation is <em>error reduction</em>. A repetitive manual process that involves, say, 500 simulation runs requires the engineer to correctly set inputs, launch the job, capture the output, and record it 500 times. Even a diligent professional will occasionally mis-transcribe a value, run the wrong configuration, or overwrite a result file. A script that performs those same 500 runs executes the identical logic each time, with no fatigue, no transcription step, and no ambiguity about which input produced which output.</p>
+
+<p>Beyond accuracy, automation provides <em>reproducibility</em>. When a result is produced by running a script, the script itself is the complete description of the computation. Anyone who obtains the script and the same input data can reproduce the result exactly. This is invaluable for engineering audits, regulatory submissions, peer review, and knowledge transfer when team members change. A notebook full of manually recorded numbers provides no such guarantee — there is no way to verify that the documented procedure was actually followed or that all steps were captured.</p>
+
+<p>Automation also changes how engineers spend their time. Manual execution is cognitively low-value work: the engineer is acting as an intermediary between the computer and the results, performing tasks the computer could handle itself. A well-written automation script moves the engineer upstream, to the work that actually requires human judgment: interpreting trends, identifying anomalies, making design decisions, and communicating findings. This reallocation of cognitive effort is one of the most concrete productivity gains from scripted workflows.</p>
+
+<p>Finally, scripts are <em>maintainable artifacts</em>. When a workflow is encoded in a well-structured Python script — with clear variable names, comments, and modular functions — updating it is straightforward. If the simulation tool changes its input format, you update one function. If the team decides to add a new output metric, you add one column to the results DataFrame. Contrast this with a manual workflow documented in a Word file: the documentation must be updated, re-distributed, and re-learned. Code changes propagate automatically the next time the script runs.</p>
+
+<p><strong>Designing a Parameter Sweep</strong></p>
+
+<p>A parameter sweep is a systematic exploration of how one or more outputs respond to changes across a defined input space. Before writing a single line of code, the engineer must make three decisions: which parameters to vary, over what ranges, and at what resolution.</p>
+
+<p>Defining the parameter space means specifying, for each variable, a minimum, a maximum, and a step size (for uniform grids) or a list of specific values. For example, a structural analysis might sweep beam cross-sectional area from 0.001 m² to 0.010 m² in steps of 0.001, and material yield strength from 200 MPa to 500 MPa in steps of 50 MPa. The resolution is a balance between coverage and computational cost: finer grids reveal more detail but require more evaluations. For expensive simulations, a coarser initial grid followed by local refinement around interesting regions is often more efficient than a uniform fine grid.</p>
+
+<p>In Python, <code>numpy.linspace</code> and <code>numpy.arange</code> are the standard tools for building parameter vectors, and <code>itertools.product</code> or nested <code>numpy.meshgrid</code> calls produce the full combinatorial grid:</p>
+
+<pre><code>import numpy as np
+import itertools
+import pandas as pd
+
+areas = np.linspace(0.001, 0.010, 10)       # 10 values
+strengths = np.arange(200, 550, 50)          # [200, 250, ..., 500]
+
+# All combinations: 10 × 7 = 70 rows
+combinations = list(itertools.product(areas, strengths))
+param_df = pd.DataFrame(combinations, columns=["area_m2", "yield_strength_MPa"])
+print(param_df.head())
+</code></pre>
+
+<p>With the parameter grid in a DataFrame, you can iterate row by row, pass each combination to your simulation or model function, and collect results. A clean pattern is to write a function that takes a single parameter set and returns a result, then apply it across the DataFrame:</p>
+
+<pre><code>def evaluate(area, strength):
+    # Placeholder for a real simulation or model call
+    safety_factor = strength * area / 1.5   # simplified formula
+    return safety_factor
+
+param_df["safety_factor"] = param_df.apply(
+    lambda row: evaluate(row["area_m2"], row["yield_strength_MPa"]),
+    axis=1
+)
+param_df.to_csv("sweep_results.csv", index=False)
+</code></pre>
+
+<p>Storing results with the parameter values in every row is essential. A results file that contains only output columns with no record of the inputs that produced them is nearly useless for analysis. Every row must be self-describing.</p>
+
+<p>Visualizing sweep results is where the engineering insight emerges. For two-parameter sweeps, a heatmap or contour plot maps the output value over the input grid, immediately revealing regions of high or low performance, nonlinearities, and interaction effects between parameters. For single-parameter sweeps, a line plot suffices. Python's matplotlib and seaborn libraries make these straightforward:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import seaborn as sns
+
+pivot = param_df.pivot(index="yield_strength_MPa", columns="area_m2", values="safety_factor")
+sns.heatmap(pivot, annot=True, fmt=".1f", cmap="viridis")
+plt.title("Safety Factor Heatmap")
+plt.tight_layout()
+plt.savefig("sweep_heatmap.png", dpi=150)
+plt.close()
+</code></pre>
+
+<p><strong>Integrating ML Models into Automation Pipelines</strong></p>
+
+<p>In many engineering contexts, the "simulation" being automated is not a first-principles solver but a <em>surrogate model</em>: a machine learning model trained to predict simulation outputs from inputs at a fraction of the computational cost. Surrogate models enable sweeps that would be prohibitively expensive if each evaluation required a full CFD or FEA solve.</p>
+
+<p>The workflow for integrating a surrogate model into a sweep pipeline has a clear structure. First, the model is trained offline on a dataset of simulation runs and saved to disk using <code>joblib</code> (preferred for scikit-learn models) or <code>pickle</code>:</p>
+
+<pre><code>import joblib
+from sklearn.ensemble import GradientBoostingRegressor
+
+# Training phase (done once, separately)
+model = GradientBoostingRegressor()
+model.fit(X_train, y_train)
+joblib.dump(model, "surrogate_model_v1.pkl")
+</code></pre>
+
+<p>In the sweep pipeline, the saved model is loaded at the start and queried for every parameter combination. Because loading and prediction are both fast, the entire sweep runs in seconds even for thousands of combinations:</p>
+
+<pre><code>model = joblib.load("surrogate_model_v1.pkl")
+
+features = param_df[["area_m2", "yield_strength_MPa"]].values
+param_df["predicted_safety_factor"] = model.predict(features)
+</code></pre>
+
+<p>A critical discipline when using surrogate models in automation pipelines is <em>validation</em>. A surrogate model is an approximation, and its predictions can be systematically wrong in regions of the input space that were poorly covered by training data, or for input combinations that lie outside the training distribution entirely (extrapolation). Before trusting a surrogate-based sweep for design decisions, you must verify its predictions against ground-truth results — whether from high-fidelity simulations or physical experiments — across the sweep region of interest. Validation metrics (RMSE, R², maximum error) and validation plots (predicted vs. actual) should be computed and reviewed.</p>
+
+<p>Good practice also demands that you <em>document the surrogate model alongside the pipeline</em>: which version of the model file is being used, what training data it was built from (including the date, source, and any preprocessing), what validation was performed and what the results were, and what the known limitations and valid input ranges are. Without this provenance information, results produced by the pipeline cannot be audited or reproduced reliably.</p>
+
+<p><strong>Handling Large Result Sets</strong></p>
+
+<p>A sweep over three parameters with 20 values each produces 8,000 rows. Add a fourth parameter and you reach 160,000. At this scale, ad-hoc analysis becomes impractical, and the structure of the results file matters enormously.</p>
+
+<p>The most important rule is already stated: every row must contain all parameter values and all output values. Never store results in a "wide" format where parameter values are implied by row position or encoded only in file names. When you come back to a results file three months later, implicit information will be lost.</p>
+
+<p>Pandas provides powerful tools for summarizing large sweep results. <code>groupby</code> combined with aggregation functions lets you compute statistics for any parameter slice:</p>
+
+<pre><code>import pandas as pd
+
+results = pd.read_csv("sweep_results.csv")
+
+# Mean and max safety factor for each yield strength level
+summary = results.groupby("yield_strength_MPa")["safety_factor"].agg(["mean", "max", "min"])
+print(summary)
+
+# Find the parameter combination with the highest safety factor
+best = results.loc[results["safety_factor"].idxmax()]
+print("Best configuration:", best)
+</code></pre>
+
+<p>Automating the generation of summary statistics and visualizations <em>as part of the sweep script itself</em> — not as a separate manual step — ensures that every run produces a complete, self-contained record. The script should end with a block that writes a summary CSV, generates and saves all key plots, and writes a brief plain-text summary file. This means that launching the script is a single action that produces everything needed for a design review.</p>
+
+<p>Result files should be versioned alongside the script in a version control system such as Git (using Git LFS for large binary files if necessary). The combination of a versioned script and versioned results means you can always answer the question: "What code produced this output, and what inputs were used?" This is not merely good practice — in regulated industries it is a compliance requirement.</p>
+
+<p>For very large result sets that exceed memory, consider using chunked reading with <code>pd.read_csv(chunksize=...)</code>, or storing results in a database (SQLite via Python's built-in <code>sqlite3</code> module works well for engineering datasets up to tens of millions of rows) or in a columnar format like Parquet via <code>pandas.DataFrame.to_parquet</code>, which offers much faster read performance than CSV for analytical queries.</p>
+
+<p><strong>Scheduling and Running Long Jobs</strong></p>
+
+<p>When a sweep involves thousands of evaluations — or when each evaluation calls an external solver that takes seconds or minutes — the total runtime can stretch from minutes to hours or days. Long-running jobs require additional engineering discipline: you need to know whether the job is making progress, you need to be able to recover from failures without restarting from scratch, and you need a record of what happened during execution.</p>
+
+<p><em>Progress indicators</em> are easy to add and have high value. The <code>tqdm</code> library wraps any iterable and prints a progress bar with elapsed time, estimated time remaining, and iteration rate:</p>
+
+<pre><code>from tqdm import tqdm
+
+results = []
+for idx, row in tqdm(param_df.iterrows(), total=len(param_df), desc="Sweep"):
+    result = evaluate(row["area_m2"], row["yield_strength_MPa"])
+    results.append(result)
+</code></pre>
+
+<p>For jobs that may fail partway through — due to a crashed solver, a network interruption, or a machine restart — <em>checkpointing</em> is essential. The idea is to save results incrementally so that a restarted script can detect which combinations have already been evaluated and skip them:</p>
+
+<pre><code>import os
+
+checkpoint_file = "sweep_checkpoint.csv"
+
+if os.path.exists(checkpoint_file):
+    completed = pd.read_csv(checkpoint_file)
+    completed_keys = set(zip(completed["area_m2"], completed["yield_strength_MPa"]))
+else:
+    completed = pd.DataFrame()
+    completed_keys = set()
+
+new_results = []
+for _, row in tqdm(param_df.iterrows(), total=len(param_df)):
+    key = (row["area_m2"], row["yield_strength_MPa"])
+    if key in completed_keys:
+        continue  # already done, skip
+    result = evaluate(row["area_m2"], row["yield_strength_MPa"])
+    new_results.append({**row.to_dict(), "safety_factor": result})
+    # Append to checkpoint file immediately
+    pd.DataFrame([new_results[-1]]).to_csv(
+        checkpoint_file, mode="a", header=not os.path.exists(checkpoint_file), index=False
+    )
+</code></pre>
+
+<p><em>Structured logging</em> complements progress bars by creating a persistent, searchable record of what happened during a run. Python's built-in <code>logging</code> module lets you write timestamped messages to a file at configurable severity levels:</p>
+
+<pre><code>import logging
+
+logging.basicConfig(
+    filename="sweep_run.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s"
+)
+
+logging.info("Sweep started. Total combinations: %d", len(param_df))
+
+for _, row in param_df.iterrows():
+    try:
+        result = evaluate(row["area_m2"], row["yield_strength_MPa"])
+        logging.debug("area=%.4f strength=%.1f result=%.4f",
+                      row["area_m2"], row["yield_strength_MPa"], result)
+    except Exception as e:
+        logging.error("Evaluation failed for area=%.4f strength=%.1f: %s",
+                      row["area_m2"], row["yield_strength_MPa"], str(e))
+
+logging.info("Sweep completed.")
+</code></pre>
+
+<p>The log file captures warnings and errors that might otherwise be lost in console output, and its timestamps allow you to identify slow evaluations or patterns in failures after the fact.</p>
+
+<p>Finally, one of the most important operational practices is <em>testing on a small subset before launching a full run</em>. Before committing to a 10,000-combination overnight sweep, run the script on a 3×3 grid of nine combinations. Verify that the output file is correctly structured, that the checkpoint logic works, that the visualizations are generated and look sensible, and that the log is being written. Catching a bug at this stage costs minutes; catching it after an eight-hour run costs the entire eight hours plus the restart time. A simple way to enable this is a <code>DEBUG</code> flag at the top of the script that slices the parameter grid to a small subset when set to <code>True</code>:</p>
+
+<pre><code>DEBUG = True  # Set to False for full production run
+
+if DEBUG:
+    param_df = param_df.sample(n=9, random_state=42).reset_index(drop=True)
+    logging.warning("DEBUG mode: running on %d combinations only.", len(param_df))
+</code></pre>
+
+<p>Together, these practices — thoughtful parameter space definition, clean result storage, surrogate model integration with validation, incremental checkpointing, progress monitoring, structured logging, and pre-flight testing — form a mature engineering automation workflow. The investment in building a pipeline this way pays dividends immediately in reliability and reproducibility, and compounds over time as the pipeline is reused, extended, and shared across a team.</p>
+        <div class="notes"><strong>Notes</strong>Examples use Python with numpy, pandas, matplotlib, seaborn, scikit-learn, joblib, tqdm, and the standard logging module. All code is illustrative and uses a simplified safety-factor formula as a stand-in for real simulation calls. Instructors may wish to substitute a domain-specific model function relevant to their engineering discipline.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

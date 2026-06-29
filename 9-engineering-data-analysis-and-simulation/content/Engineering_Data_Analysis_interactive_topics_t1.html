@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Engineering Data Workflows</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Introduction to Engineering Data Workflows</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Introduction to Engineering Data Workflows</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Engineering projects generate data at every stage — sensor readings from test rigs, simulation outputs, quality-control measurements, field survey logs, and more. Raw data, however, is rarely ready for analysis the moment it is collected. It must be acquired, loaded into a computing environment, cleaned and validated, explored statistically, visualized, and finally interpreted to produce actionable engineering insight. This end-to-end journey is called an <strong>engineering data workflow</strong>, and understanding it as a structured pipeline — rather than a loose collection of ad-hoc scripts — is the foundation of reliable, reproducible technical analysis. This topic introduces that pipeline and the three core Python libraries — <strong>pandas</strong>, <strong>NumPy</strong>, and <strong>matplotlib</strong> — that together handle almost every step of it.</p>
+
+<p><strong>The Engineering Data Pipeline</strong></p>
+
+<p>Think of the data pipeline as an assembly line where each station has a clearly defined job, accepts material in a known condition, and hands off a product in a better-defined condition to the next station. The six canonical stages are <em>acquire</em>, <em>load</em>, <em>clean</em>, <em>explore</em>, <em>visualize</em>, and <em>interpret</em>. Skipping or rushing any stage almost always forces a costly return to an earlier one.</p>
+
+<ul>
+  <li><strong>Acquire</strong> — Data originates from somewhere: a data-acquisition (DAQ) system writing CSV files to a shared drive, an API streaming sensor telemetry, a laboratory instrument exporting Excel workbooks, or a colleague emailing a hand-typed table. The acquisition stage defines <em>where</em> data comes from and establishes its initial format and completeness. The input to this stage is the real world; the output is a raw file or stream.</li>
+  <li><strong>Load</strong> — Raw files are read into the computing environment. At this stage the goal is fidelity: load exactly what is on disk without silently transforming values. The input is a raw file; the output is an in-memory data structure (typically a pandas DataFrame). Validation here includes checking that row and column counts match expectations and that data types are sensibly inferred.</li>
+  <li><strong>Clean</strong> — Real engineering data is messy. Sensors drop out and leave <code>NaN</code> values, timestamps drift, units are inconsistently recorded, and duplicate rows appear when two measurement systems overlap. Cleaning resolves these issues systematically. The input is a raw DataFrame; the output is a validated, consistent DataFrame with documented decisions about how anomalies were handled.</li>
+  <li><strong>Explore</strong> — Exploratory data analysis (EDA) is the process of interrogating the cleaned data with summary statistics, correlation matrices, and distribution checks before committing to any model or conclusion. Engineers ask questions like "what is the typical operating temperature range?", "do load and deflection vary together linearly?", or "are there outliers that suggest instrument malfunction?". The output is a set of findings and hypotheses that guide the next stages.</li>
+  <li><strong>Visualize</strong> — Charts and plots communicate structure in data that tables of numbers cannot. A well-constructed time-series plot can reveal a cyclic pattern invisible in a summary statistic. Visualization both serves the engineer doing the analysis and communicates results to colleagues and stakeholders. Effective engineering plots are always labeled with axis units, titles, and legends.</li>
+  <li><strong>Interpret</strong> — The final stage translates statistical and visual findings back into engineering language: "the fatigue life at this stress amplitude is approximately 10<sup>6</sup> cycles", "the process is operating within three-sigma limits", or "the measured natural frequency is 12% lower than the FEA prediction, suggesting a modeling assumption needs revision". Interpretation requires domain knowledge and is the stage where data science meets engineering judgment.</li>
+</ul>
+
+<p>Two principles make the pipeline robust rather than fragile. First, <strong>each stage must validate its outputs before passing them to the next stage</strong>. A simple assertion that a DataFrame contains no all-NaN columns, or that a timestamp column is strictly monotonically increasing, catches errors immediately at their source rather than propagating them silently into analysis. Second, <strong>automation of repetitive steps reduces human error and improves reproducibility</strong>. If loading and cleaning a file requires the same fifteen manual operations every time, those operations should be wrapped in a function or script so they execute identically every run. Paired with <strong>documentation at each stage</strong> — code comments, notebook markdown cells, or a lab notebook — this automation creates an audit trail that supports peer review, regulatory compliance, and future work by a different engineer months later.</p>
+
+<p><strong>Overview of pandas</strong></p>
+
+<p>pandas is the workhorse library for tabular data in Python. Its two fundamental data structures map cleanly onto the kinds of data engineers work with daily.</p>
+
+<p>A <strong>DataFrame</strong> is a two-dimensional labeled table, directly analogous to a spreadsheet or a SQL table. Rows are indexed (by default with integers, but often with timestamps or sample IDs), and columns each carry a name and a data type. A DataFrame holding thermocouple data might have columns <code>time_s</code>, <code>temp_C_channel1</code>, <code>temp_C_channel2</code>, and <code>pressure_kPa</code>, with one row per sample. This structure means data is accessed by meaningful names rather than by position, which makes code far easier to read and debug.</p>
+
+<pre><code>import pandas as pd
+
+# Load a CSV file produced by a DAQ system
+df = pd.read_csv('thermocouple_run_042.csv')
+
+# Inspect the first five rows
+print(df.head())
+
+# Check column names, dtypes, and non-null counts
+print(df.info())
+
+# Summary statistics for every numeric column
+print(df.describe())
+</code></pre>
+
+<p>A <strong>Series</strong> is a single column or a one-dimensional labeled array. It is what you get when you select one column from a DataFrame: <code>df['temp_C_channel1']</code> returns a Series. Series objects support vectorized arithmetic, boolean masking, and the full range of aggregation functions (mean, std, min, max, etc.) without writing any explicit loops.</p>
+
+<p>pandas is built on top of NumPy — every column in a DataFrame is backed by a NumPy array — which means that numerical operations on DataFrames are as fast as equivalent NumPy operations. This integration is seamless: you can pass a DataFrame column directly to a NumPy function, and you can construct a DataFrame from NumPy arrays.</p>
+
+<p>pandas provides <strong>built-in I/O functions</strong> that cover the file formats most common in engineering practice:</p>
+
+<ul>
+  <li><code>pd.read_csv()</code> and <code>df.to_csv()</code> for comma-separated and tab-separated text files</li>
+  <li><code>pd.read_excel()</code> and <code>df.to_excel()</code> for multi-sheet Excel workbooks</li>
+  <li><code>pd.read_json()</code>, <code>pd.read_parquet()</code>, <code>pd.read_sql()</code>, and more for other sources</li>
+</ul>
+
+<p>These functions handle encoding detection, header inference, date parsing, and type coercion, so the engineer can focus on the data rather than on file-parsing mechanics.</p>
+
+<p><strong>Overview of NumPy</strong></p>
+
+<p>NumPy underpins almost all numerical computing in Python. At its core is the <strong>ndarray</strong> (n-dimensional array), a homogeneous, fixed-type block of memory that supports fast element-wise operations. Because all elements share a single data type (e.g., <code>float64</code>), NumPy can execute operations in compiled C code rather than interpreted Python, achieving speeds that pure Python loops cannot match even for moderately sized arrays.</p>
+
+<pre><code>import numpy as np
+
+# Create an array of 1000 stress measurements (MPa)
+stress = np.array([210.3, 198.7, 215.1, 204.4])  # abbreviated example
+
+# Compute mean, standard deviation, and max in one line each
+print(np.mean(stress), np.std(stress), np.max(stress))
+
+# Generate 10,000 sample points from 0 to 2*pi
+theta = np.linspace(0, 2 * np.pi, 10000)
+displacement = 5.0 * np.sin(theta)  # vectorized, no loop required
+</code></pre>
+
+<p><strong>Broadcasting</strong> is one of NumPy's most powerful and frequently misunderstood features. When two arrays have compatible but not identical shapes, NumPy automatically expands the smaller array along dimensions of size 1 so that element-wise operations work without copying data or writing loops. For example, subtracting a vector of channel calibration offsets (shape <code>(4,)</code>) from a matrix of measurements (shape <code>(1000, 4)</code>) requires no loop — NumPy broadcasts the offset vector across all 1000 rows automatically. Understanding the broadcasting rules (dimensions are compared from the trailing end; a dimension of size 1 is stretched to match the other) prevents a whole class of subtle bugs.</p>
+
+<p>Beyond basic arithmetic, NumPy includes modules for engineering mathematics that would otherwise require specialist libraries:</p>
+
+<ul>
+  <li><strong>Linear algebra</strong> (<code>np.linalg</code>): matrix multiplication, eigenvalue decomposition, singular value decomposition, and solving systems of linear equations — all essential for structural analysis, control systems, and regression.</li>
+  <li><strong>Fourier transforms</strong> (<code>np.fft</code>): the Fast Fourier Transform converts a time-domain signal into its frequency-domain representation, enabling vibration analysis, filter design, and spectral characterization.</li>
+  <li><strong>Statistical functions</strong>: percentiles, histograms, covariance, and correlation are built in.</li>
+  <li><strong>Random number generation</strong> (<code>np.random</code>): reproducible pseudo-random samples from dozens of statistical distributions support Monte Carlo simulation (e.g., propagating measurement uncertainty through a calculation) and stochastic modelling (e.g., simulating load spectra for fatigue analysis).</li>
+</ul>
+
+<pre><code># Monte Carlo uncertainty propagation example
+rng = np.random.default_rng(seed=42)  # reproducible
+
+diameter_samples = rng.normal(loc=25.0, scale=0.05, size=100_000)  # mm, manufacturing tolerance
+force_samples    = rng.normal(loc=5000.0, scale=50.0, size=100_000)  # N, load uncertainty
+
+area_samples   = np.pi * (diameter_samples / 2) ** 2
+stress_samples = force_samples / area_samples  # MPa
+
+print(f"Mean stress: {np.mean(stress_samples):.4f} MPa")
+print(f"Std  stress: {np.std(stress_samples):.4f} MPa")
+print(f"99th pctile: {np.percentile(stress_samples, 99):.4f} MPa")
+</code></pre>
+
+<p><strong>Overview of matplotlib</strong></p>
+
+<p>matplotlib is Python's foundational plotting library. It can produce publication-quality figures for journal papers, engineering reports, and presentations, and it integrates naturally with both NumPy arrays and pandas DataFrames.</p>
+
+<p>matplotlib uses an <strong>object-oriented interface</strong> built around two core objects. A <strong>Figure</strong> is the entire canvas — the top-level container for everything that will be drawn. An <strong>Axes</strong> is a single plot within that canvas, containing the coordinate system, the plotted data, axis labels, a title, and a legend. A Figure can contain multiple Axes objects arranged in a grid (via <code>plt.subplots()</code>), which is how multi-panel engineering figures are constructed. Working directly with Figure and Axes objects gives precise, explicit control over every element of the plot, which is strongly preferred over the implicit <code>pyplot</code> state-machine interface for anything beyond quick exploratory sketches.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+time = np.linspace(0, 10, 500)          # seconds
+signal = np.exp(-0.3 * time) * np.sin(2 * np.pi * 1.5 * time)  # damped oscillation
+
+fig, ax = plt.subplots(figsize=(8, 4))
+
+ax.plot(time, signal, color='steelblue', linewidth=1.5, label='Damped response')
+ax.axhline(0, color='black', linewidth=0.8, linestyle='--')
+
+ax.set_xlabel('Time (s)')
+ax.set_ylabel('Displacement (mm)')
+ax.set_title('Free Vibration — Damped Single-Degree-of-Freedom System')
+ax.legend()
+ax.grid(True, linestyle=':', alpha=0.6)
+
+fig.tight_layout()
+fig.savefig('damped_vibration.pdf')   # vector format for reports
+plt.show()
+</code></pre>
+
+<p>The chart types that cover the vast majority of engineering visualization needs are:</p>
+
+<ul>
+  <li><strong>Line plots</strong> (<code>ax.plot()</code>): time-series data, frequency-response curves, load-displacement curves</li>
+  <li><strong>Scatter plots</strong> (<code>ax.scatter()</code>): paired measurements, correlation analysis, experimental data overlaid on model predictions</li>
+  <li><strong>Histograms</strong> (<code>ax.hist()</code>): distribution of measurement populations, inspection of normality assumptions</li>
+  <li><strong>Bar charts</strong> (<code>ax.bar()</code>): comparison of discrete categories such as material grades, test configurations, or system components</li>
+</ul>
+
+<p>Every engineering plot should be <strong>self-documenting</strong>: axis labels must include physical units (not just variable names), titles should identify the system or experiment, legends must distinguish every data series, and grid lines aid in reading off values. A plot without units is not an engineering plot — it is an ambiguous picture.</p>
+
+<p>matplotlib supports exporting figures to <strong>PNG</strong> (raster, suitable for web or slide decks), <strong>PDF</strong> and <strong>SVG</strong> (vector, scalable without loss of quality for journal papers and formal reports), and several other formats via <code>fig.savefig('filename.ext')</code>. The <code>dpi</code> parameter controls resolution for raster formats; 300 dpi is the standard minimum for print.</p>
+
+<p><strong>Setting Up the Python Environment</strong></p>
+
+<p>A reproducible analysis is one that produces identical results when run by a different person on a different machine six months later. Environment management is the first line of defence against the "it works on my machine" problem.</p>
+
+<p><strong>Virtual environments</strong> (created with <code>python -m venv env_name</code>) and <strong>conda environments</strong> (created with <code>conda create -n env_name python=3.11</code>) isolate a project's installed libraries from the system Python and from other projects. This prevents version conflicts where project A requires <code>pandas 1.5</code> and project B requires <code>pandas 2.1</code>. The rule is simple: one project, one environment.</p>
+
+<p>Pinning library versions in a <strong><code>requirements.txt</code></strong> file (for pip-based workflows) or an <strong><code>environment.yml</code></strong> file (for conda) makes the environment exactly reproducible:</p>
+
+<pre><code># requirements.txt example
+numpy==1.26.4
+pandas==2.2.1
+matplotlib==3.8.4
+jupyterlab==4.1.5
+</code></pre>
+
+<pre><code># environment.yml example
+name: eng_data_workflow
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy=1.26.4
+  - pandas=2.2.1
+  - matplotlib=3.8.4
+  - jupyterlab=4.1.5
+</code></pre>
+
+<p>A colleague can recreate this environment exactly with <code>pip install -r requirements.txt</code> or <code>conda env create -f environment.yml</code>. Without pinned versions, a future <code>pip install</code> might pull in a newer library with changed default behaviour and silently alter results.</p>
+
+<p><strong>Jupyter Notebooks</strong> (<code>.ipynb</code> files) provide an interactive environment where code cells, their outputs (including plots and tables), and narrative markdown cells coexist in a single document. This makes them ideal for the explore and visualize pipeline stages, because the engineer can iterate rapidly, see results inline, and annotate findings in plain English immediately below the code that produced them. A well-structured notebook is itself a form of documentation: it records what was tried, what was found, and what was concluded, in the order it happened.</p>
+
+<p><strong>Version control with Git</strong> should be applied from the very first commit of a project, not added as an afterthought. Notebooks and scripts committed to a Git repository give the engineer a complete history of every change, the ability to revert to any earlier state, and a mechanism for collaborating without overwriting each other's work. Best practices include:</p>
+
+<ul>
+  <li>Commit small, logical units of change with descriptive commit messages ("add calibration offset correction to load_data function" rather than "update stuff")</li>
+  <li>Use <code>.gitignore</code> to exclude large raw data files, compiled cache directories (<code>__pycache__</code>), and environment folders from the repository — store raw data separately (e.g., a shared network drive or cloud storage) and reference it by path</li>
+  <li>Clear notebook outputs before committing if the outputs are large or contain sensitive data, to keep the repository lean</li>
+  <li>Consider using tags or branches to mark the state of the codebase at the time a report or publication was produced, enabling exact reproduction of those results later</li>
+</ul>
+
+<p>Taken together — a pinned environment, Jupyter Notebooks for interactive analysis, and Git for version history — these practices transform a collection of scripts into a <em>reproducible engineering workflow</em> that withstands the tests of time, scrutiny, and collaboration.</p>
+        <div class="notes"><strong>Notes</strong>Establishes the end-to-end pipeline from raw data acquisition to actionable insight. Introduces the key Python libraries used throughout the module. Code examples are illustrative and self-contained; instructors may wish to provide matching data files for hands-on exercises aligned with the thermocouple and vibration examples shown.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

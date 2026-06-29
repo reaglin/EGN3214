@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizing Engineering Data with matplotlib</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Visualizing Engineering Data with matplotlib</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Visualizing Engineering Data with matplotlib</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Matplotlib is the cornerstone plotting library for Python-based engineering work. Whether you are analyzing sensor time-series, comparing simulated results against bench measurements, or communicating statistical distributions of manufacturing tolerances, matplotlib provides the primitives needed to produce publication-quality figures. Understanding how to use these primitives correctly — and how to combine them with NumPy and pandas — transforms raw numerical output into clear, defensible visual arguments. This topic covers the full pipeline: drawing basic plots, choosing the right chart type for the data, composing multi-panel figures, annotating and formatting professionally, and overlaying simulation results on measured data for model validation.</p>
+
+<p><strong>Line Plots for Time-Series Data</strong></p>
+
+<p>A line plot is the natural choice whenever the independent axis represents an ordered sequence — most commonly time. The underlying assumption is that adjacent points are meaningfully connected, so drawing a line between them communicates continuity. In matplotlib the workhorse function is <code>ax.plot(x, y)</code> (or equivalently <code>plt.plot(x, y)</code> in the stateful interface). Given arrays of timestamps and corresponding signal values, a single call produces a connected curve:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 1.0, 500)          # 500 samples over 1 second
+voltage = 3.3 * np.sin(2 * np.pi * 50 * t) + 0.05 * np.random.randn(500)
+
+fig, ax = plt.subplots()
+ax.plot(t, voltage, color='steelblue', linewidth=1.2)
+ax.set_xlabel('Time (s)')
+ax.set_ylabel('Voltage (V)')
+ax.set_title('50 Hz Voltage Signal with Noise')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>When multiple signals must appear on the same axes — for instance, three channels from a data acquisition board — each signal gets its own <code>ax.plot()</code> call. Matplotlib automatically cycles through a default color sequence, but for professional figures it is better to specify colors explicitly so the distinction survives black-and-white printing:</p>
+
+<pre><code>ax.plot(t, ch1, color='steelblue',  linewidth=1.2, label='Channel 1')
+ax.plot(t, ch2, color='darkorange', linewidth=1.2, label='Channel 2')
+ax.plot(t, ch3, color='seagreen',   linewidth=1.2, label='Channel 3')
+ax.legend(loc='upper right')
+</code></pre>
+
+<p>A legend becomes <em>mandatory</em> once more than one series appears on the same axes. Without it a reader cannot determine which curve corresponds to which physical quantity. Pass <code>label='...'</code> to each <code>plot()</code> call and then call <code>ax.legend()</code>; matplotlib collects the labels automatically.</p>
+
+<p>Axis limits deserve explicit attention. By default matplotlib pads the data range by a small margin, which is usually fine, but in engineering contexts you often want to zoom in on a specific transient or steady-state window. Use <code>ax.set_xlim(t_start, t_end)</code> and <code>ax.set_ylim(v_min, v_max)</code>. For example, to focus on the first 20 milliseconds of a startup transient:</p>
+
+<pre><code>ax.set_xlim(0, 0.02)
+ax.set_ylim(-0.5, 4.0)
+</code></pre>
+
+<p>Setting limits explicitly also guards against misleading figures where auto-scaling magnifies noise so dramatically that it looks like a large deviation.</p>
+
+<p><strong>Scatter Plots for Correlation Analysis</strong></p>
+
+<p>A scatter plot is the right tool when you want to reveal the <em>relationship</em> between two continuous variables rather than their evolution over time. Each observation becomes a marker positioned at coordinates <code>(x_i, y_i)</code>; the absence of connecting lines emphasizes that the ordering of the points is irrelevant. In matplotlib, <code>plt.scatter(x, y)</code> or <code>ax.scatter(x, y)</code> produces this chart:</p>
+
+<pre><code>load    = np.array([10, 20, 35, 50, 65, 80, 100, 120, 140, 160])  # N
+deflect = np.array([0.12, 0.25, 0.43, 0.61, 0.80, 0.99, 1.24, 1.49, 1.73, 1.98])  # mm
+
+fig, ax = plt.subplots()
+ax.scatter(load, deflect, color='firebrick', s=50, zorder=3, label='Measurements')
+ax.set_xlabel('Applied Load (N)')
+ax.set_ylabel('Beam Deflection (mm)')
+</code></pre>
+
+<p>To communicate the general trend, add a best-fit line using NumPy's polynomial fitting routine. <code>np.polyfit(x, y, deg)</code> returns the coefficients of a degree-<code>deg</code> polynomial in least-squares sense; <code>np.polyval(coeffs, x_range)</code> evaluates it:</p>
+
+<pre><code>coeffs = np.polyfit(load, deflect, 1)          # linear fit
+x_fit  = np.linspace(load.min(), load.max(), 200)
+y_fit  = np.polyval(coeffs, x_fit)
+
+ax.plot(x_fit, y_fit, color='navy', linewidth=1.5,
+        linestyle='--', label=f'Linear fit  y={coeffs[0]:.4f}x+{coeffs[1]:.4f}')
+ax.legend()
+</code></pre>
+
+<p>Quantifying the relationship objectively requires a correlation coefficient. NumPy's <code>np.corrcoef(x, y)</code> returns a 2×2 matrix; the off-diagonal element is the Pearson r:</p>
+
+<pre><code>r = np.corrcoef(load, deflect)[0, 1]
+print(f'Pearson r = {r:.4f}')
+</code></pre>
+
+<p>An r value close to ±1 indicates a strong linear relationship; values near 0 suggest no linear association (though non-linear relationships may still exist). With pandas, <code>df['load'].corr(df['deflect'])</code> yields the same result and is convenient when working with DataFrame columns.</p>
+
+<p>When data spans several orders of magnitude — for example, plotting resistivity values from 10⁻⁴ Ω·m to 10⁸ Ω·m — linear axes compress most of the data into an unreadable cluster at one end. Logarithmic scaling fixes this:</p>
+
+<pre><code>ax.set_xscale('log')
+ax.set_yscale('log')
+</code></pre>
+
+<p>On a log-log plot a power-law relationship <code>y = a·x^b</code> appears as a straight line, which is extremely useful for identifying and fitting power-law models common in materials science and fluid mechanics.</p>
+
+<p><strong>Histograms and Distribution Plots</strong></p>
+
+<p>When the goal is to understand how a measured quantity is distributed — not how it varies over time or against another variable — histograms are the standard tool. <code>plt.hist(data, bins=n)</code> partitions the data range into <code>n</code> equal-width bins and draws a bar whose height equals the count of values falling in that bin:</p>
+
+<pre><code>diameters = np.random.normal(loc=25.00, scale=0.05, size=500)  # mm
+
+fig, ax = plt.subplots()
+ax.hist(diameters, bins=30, color='slategray', edgecolor='white', linewidth=0.5)
+ax.set_xlabel('Shaft Diameter (mm)')
+ax.set_ylabel('Count')
+</code></pre>
+
+<p>For comparison across datasets of different sizes — or for overlaying a theoretical density function — normalize the histogram to a probability density by passing <code>density=True</code>. The area of all bars then sums to 1.0, matching the convention for probability density functions (PDFs):</p>
+
+<pre><code>ax.hist(diameters, bins=30, density=True,
+        color='slategray', edgecolor='white', linewidth=0.5, alpha=0.6)
+</code></pre>
+
+<p>Kernel density estimation (KDE) offers a smooth, continuous alternative to the histogram. It places a small kernel function (typically Gaussian) over each data point and sums them into a single curve. The bandwidth controls the smoothness. Using <code>scipy.stats.gaussian_kde</code>:</p>
+
+<pre><code>from scipy.stats import gaussian_kde
+
+kde = gaussian_kde(diameters, bw_method='scott')
+x_range = np.linspace(diameters.min() - 0.1, diameters.max() + 0.1, 400)
+ax.plot(x_range, kde(x_range), color='navy', linewidth=2, label='KDE')
+</code></pre>
+
+<p>KDE is particularly valuable when the sample size is small and histogram bar heights are sensitive to the number and placement of bins. If you are using pandas, <code>series.plot.kde()</code> provides a convenient wrapper.</p>
+
+<p>A common engineering task is checking whether measurement noise is Gaussian — a fundamental assumption in many statistical tests and Kalman filter designs. Overlay a normal distribution curve parameterized by the sample mean and standard deviation:</p>
+
+<pre><code>from scipy.stats import norm
+
+mu, sigma = diameters.mean(), diameters.std()
+ax.plot(x_range, norm.pdf(x_range, mu, sigma),
+        color='firebrick', linewidth=2, linestyle='--', label='Normal fit')
+ax.legend()
+</code></pre>
+
+<p>If the histogram bars follow the red dashed curve closely, Gaussian noise is a reasonable assumption. Systematic departures — heavy tails, skewness, multimodal humps — indicate that the noise model may need revision, which has direct consequences for any downstream filtering or uncertainty analysis.</p>
+
+<p><strong>Subplots and Multi-Panel Figures</strong></p>
+
+<p>Engineering reports routinely need to show several related plots side-by-side or stacked vertically: for instance, a voltage signal above and its frequency spectrum below, or three different test conditions across a row. Matplotlib's <code>plt.subplots(nrows, ncols)</code> creates a grid of <code>Axes</code> objects sharing a single <code>Figure</code>:</p>
+
+<pre><code>fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(10, 8))
+
+axes[0].plot(t, position, color='steelblue')
+axes[0].set_ylabel('Position (m)')
+
+axes[1].plot(t, velocity, color='darkorange')
+axes[1].set_ylabel('Velocity (m/s)')
+
+axes[2].plot(t, acceleration, color='seagreen')
+axes[2].set_ylabel('Acceleration (m/s²)')
+axes[2].set_xlabel('Time (s)')
+</code></pre>
+
+<p>When the Axes grid is 2-D (multiple rows <em>and</em> columns), the returned <code>axes</code> array is indexed as <code>axes[row, col]</code>. For a 2×2 grid you would write <code>axes[0, 0]</code>, <code>axes[0, 1]</code>, and so on.</p>
+
+<p>The <code>sharex</code> and <code>sharey</code> parameters are especially valuable when stacking time-series panels. Setting <code>sharex=True</code> links the x-axis limits and ticks across all subplots so that zooming or panning one panel updates all of them simultaneously, and tick labels are suppressed on interior axes to avoid clutter:</p>
+
+<pre><code>fig, axes = plt.subplots(3, 1, sharex=True, figsize=(10, 8))
+</code></pre>
+
+<p><code>sharey=True</code> is useful when comparing distributions or signals that should be evaluated on the same scale. Use it when the y-axis meaning is identical across panels; avoid it when each panel has a different physical unit.</p>
+
+<p>Figure size must be scaled deliberately with the number of panels. The default <code>figsize=(6.4, 4.8)</code> inches is fine for a single plot but becomes cramped for a 3×1 or 2×3 grid. A reasonable heuristic is approximately 4 inches of height per row and 5 inches of width per column:</p>
+
+<pre><code>fig, axes = plt.subplots(2, 3, figsize=(15, 8))
+</code></pre>
+
+<p>Always call <code>plt.tight_layout()</code> (or the newer <code>fig.tight_layout()</code>) after placing all content. It automatically adjusts subplot spacing to prevent axis labels from overlapping adjacent panels — a common problem that makes figures unpresentable without this step.</p>
+
+<p><strong>Formatting and Annotating Plots</strong></p>
+
+<p>A figure without descriptive labels is incomplete regardless of how accurate the data is. At minimum every axis needs a label with its physical quantity and unit, and every multi-series plot needs a legend. The standard pattern using the object-oriented interface is:</p>
+
+<pre><code>ax.set_xlabel('Time (s)', fontsize=12)
+ax.set_ylabel('Force (N)', fontsize=12)
+ax.set_title('Step Response — Hydraulic Actuator', fontsize=13)
+</code></pre>
+
+<p>For annotations — drawing a reader's eye to a specific feature such as a peak value, a failure threshold crossing, or a resonance frequency — <code>ax.annotate()</code> provides both a text label and an optional arrow:</p>
+
+<pre><code>ax.annotate(
+    'Peak: 4.82 N',
+    xy=(0.045, 4.82),           # point to annotate
+    xytext=(0.065, 4.60),       # text position
+    arrowprops=dict(arrowstyle='->', color='black'),
+    fontsize=10
+)
+</code></pre>
+
+<p>The <code>xy</code> argument is the data coordinate of the feature; <code>xytext</code> is where the label text should appear. An arrow connecting the two makes the association unambiguous. This is far more informative than just noting a peak value in a figure caption.</p>
+
+<p>Exporting figures for reports or journal submissions uses <code>plt.savefig()</code>. The file format is inferred from the extension. For raster images such as PNG, set <code>dpi</code> appropriately; 150 dpi is adequate for screen, 300 dpi for print. For vector formats such as PDF or SVG, resolution is irrelevant because the geometry is stored analytically:</p>
+
+<pre><code>plt.savefig('actuator_response.pdf', bbox_inches='tight')
+plt.savefig('actuator_response.png', dpi=300, bbox_inches='tight')
+</code></pre>
+
+<p><code>bbox_inches='tight'</code> trims excess whitespace around the figure, which is nearly always desirable.</p>
+
+<p>Many engineering organizations and journals enforce style guidelines specifying font sizes (commonly 10–12 pt for axis labels, 8–10 pt for tick labels), minimum line widths (often 1.5 pt for data lines), and restricted color palettes chosen for color-blind accessibility. Rather than setting these properties figure by figure, configure them once via matplotlib's rc system:</p>
+
+<pre><code>import matplotlib as mpl
+
+mpl.rcParams['font.size']       = 11
+mpl.rcParams['axes.linewidth']  = 1.2
+mpl.rcParams['lines.linewidth'] = 1.5
+mpl.rcParams['xtick.major.width'] = 1.2
+mpl.rcParams['ytick.major.width'] = 1.2
+</code></pre>
+
+<p>Place these settings at the top of a script or in a shared configuration module and every subsequent figure in the project will inherit them automatically.</p>
+
+<p><strong>Visualizing Simulation Results Alongside Measured Data</strong></p>
+
+<p>Model validation is one of the most critical activities in engineering, and its visual representation must be unambiguous. The universally accepted convention is to plot measured data as a <em>solid</em> line (or markers) and simulated results as a <em>dashed</em> or <em>dotted</em> line. This signals immediately to any reader which curve was recorded from hardware and which was produced by a computational model:</p>
+
+<pre><code>ax.plot(t_meas, y_meas, color='steelblue',  linewidth=1.5,
+        linestyle='solid',  label='Measured')
+ax.plot(t_sim,  y_sim,  color='firebrick', linewidth=1.5,
+        linestyle='dashed', label='Simulated')
+ax.legend()
+</code></pre>
+
+<p>Before overlaying two signals it is essential to verify that their time bases are aligned. A simulated output typically starts at <code>t=0</code>, but a measured record may carry an absolute timestamp offset or may start recording mid-transient. Failure to align time axes produces apparent phase shifts that can be mistakenly attributed to modeling error. Correct the offset explicitly:</p>
+
+<pre><code>t_meas_aligned = t_meas - t_meas[0]   # shift so measurement starts at t=0
+</code></pre>
+
+<p>Additionally, if the simulation and measurement have different sample rates, one must be interpolated onto the time grid of the other before computing a difference. NumPy's <code>np.interp()</code> is the simplest tool for this:</p>
+
+<pre><code>y_sim_resampled = np.interp(t_meas_aligned, t_sim, y_sim)
+</code></pre>
+
+<p>With time alignment confirmed and both signals on the same grid, compute and plot the <em>residual</em> — the point-by-point difference between the simulation output and the measurement. A residual plot is arguably the most diagnostic view in model validation:</p>
+
+<pre><code>residual = y_meas - y_sim_resampled
+
+fig, axes = plt.subplots(2, 1, sharex=True, figsize=(10, 6))
+
+axes[0].plot(t_meas_aligned, y_meas,          color='steelblue',
+             linestyle='solid',  label='Measured')
+axes[0].plot(t_meas_aligned, y_sim_resampled, color='firebrick',
+             linestyle='dashed', label='Simulated')
+axes[0].set_ylabel('Output Signal')
+axes[0].legend()
+
+axes[1].plot(t_meas_aligned, residual, color='dimgray', linewidth=1.0)
+axes[1].axhline(0, color='black', linewidth=0.8, linestyle='--')
+axes[1].set_ylabel('Residual (Measured − Simulated)')
+axes[1].set_xlabel('Time (s)')
+
+plt.tight_layout()
+plt.savefig('validation_plot.pdf', bbox_inches='tight')
+</code></pre>
+
+<p>Interpreting the residual panel is straightforward: if the residuals are small in magnitude and randomly distributed around zero, the model captures the dominant dynamics well. A systematic offset suggests a steady-state error or gain mismatch. Periodic structure in the residuals indicates unmodeled dynamics at a specific frequency. A drift that grows with time points to an integrating error such as an incorrect initial condition or an unmodeled slow process.</p>
+
+<p>Quantitative summary statistics of the residual — root mean square error (RMSE), maximum absolute error, or mean absolute percentage error — should be computed and displayed, either in the figure title or as an annotation:</p>
+
+<pre><code>rmse = np.sqrt(np.mean(residual**2))
+axes[1].set_title(f'RMSE = {rmse:.4f}  |  Max |error| = {np.max(np.abs(residual)):.4f}')
+</code></pre>
+
+<p>A legend identifying each series is not optional in a validation figure. Anyone reading the report must be able to immediately identify measured versus simulated without referring to surrounding text. Where multiple simulation runs are shown (for example, with different model parameter values), each run should have a distinct line style or color, and all must appear in the legend with descriptive labels.</p>
+
+<p>Combining all of these elements — correct chart type for the data, explicit axis limits and labels, normalized histograms for distribution analysis, shared axes in multi-panel layouts, consistent style settings, and properly formatted validation plots — enables engineers to produce figures that communicate findings clearly, withstand scrutiny, and satisfy the standards of professional technical reporting.</p>
+        <div class="notes"><strong>Notes</strong>Consider demonstrating pandas integration explicitly (e.g., df.plot(), series.plot.kde()) in exercises to reinforce the connection between DataFrame workflows and matplotlib. The residual/validation section pairs well with a follow-up module on goodness-of-fit statistics and formal model validation criteria.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

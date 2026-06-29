@@ -1,0 +1,47 @@
+﻿[
+  {
+    "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI \u2014 Topics \u0026 Learning Outcomes",
+    "href": "topics-outcomes.html",
+    "type": "Page"
+  },
+  {
+    "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI \u2014 Module Topics",
+    "href": "topics.html",
+    "type": "Page"
+  },
+  {
+    "title": "Foundations of Supervised Machine Learning",
+    "href": "content/Machine_Learning_Automation_interactive_topics_t1.html",
+    "type": "Content"
+  },
+  {
+    "title": "Machine Learning with scikit-learn",
+    "href": "content/Machine_Learning_Automation_interactive_topics_t2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Engineering Automation and Parameter Sweep Pipelines",
+    "href": "content/Machine_Learning_Automation_interactive_topics_t3.html",
+    "type": "Content"
+  },
+  {
+    "title": "Git and GitHub Version Control",
+    "href": "content/Machine_Learning_Automation_interactive_topics_t4.html",
+    "type": "Content"
+  },
+  {
+    "title": "Responsible AI Integration in Engineering Practice",
+    "href": "content/Machine_Learning_Automation_interactive_topics_t5.html",
+    "type": "Content"
+  },
+  {
+    "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI \u2014 Module Topics",
+    "href": "content/module_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Responsible AI Integration in Engineering Practice",
+    "href": "content/_interactive.html",
+    "type": "Content"
+  }
+]

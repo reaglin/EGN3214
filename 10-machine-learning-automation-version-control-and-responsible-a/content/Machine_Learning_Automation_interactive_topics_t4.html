@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git and GitHub Version Control</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 10 - Machine Learning, Automation, Version Control, and Responsible AI</a></div>
+  <header>
+    <h1>Git and GitHub Version Control</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Git and GitHub Version Control</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Version control is one of the most important professional practices an engineer can adopt, and Git combined with GitHub has become the dominant toolchain for implementing it across nearly every technical discipline. Whether you are writing data analysis scripts, simulation models, firmware, or automation pipelines, your code is a living artifact that evolves over time. Without a disciplined system for tracking that evolution, projects quickly become unmanageable — changes become mysterious, errors become untraceable, and collaboration becomes a source of anxiety rather than productivity. Git solves all of these problems by maintaining a complete, navigable history of every meaningful change ever made to a project, while GitHub extends that capability into a collaborative, cloud-hosted platform where teams can coordinate work, review code, and enforce quality standards.</p>
+
+<p><strong>Why Version Control Matters for Engineers</strong></p>
+
+<p>At its core, version control answers a deceptively simple question: <em>what changed, when, and why?</em> Engineers working on complex systems need to answer that question constantly. A simulation that produced correct results last Tuesday is now producing anomalous output — what changed between then and now? A calculation script was updated by a colleague — which lines were modified, and does the change affect downstream analysis? These questions are trivially answerable with version control and essentially unanswerable without it.</p>
+
+<p>The most fundamental concept in Git is the <strong>commit</strong>. Every commit captures a complete snapshot of the tracked files in the project at a specific moment in time. Attached to each snapshot is a <em>commit message</em> — a short, human-readable explanation of what changed and why. A good commit message reads like a useful annotation in a lab notebook: <code>Add Reynolds number correction to turbulent flow model</code> tells you far more than a filename like <code>flow_model_v3_revised.py</code> ever could. The commit also records the author's name and email, the exact timestamp, and a unique cryptographic hash that permanently identifies it. This combination of information creates an audit trail that satisfies rigorous engineering documentation requirements and makes the project's history genuinely useful rather than merely present.</p>
+
+<p>Without version control, engineers typically resort to manual file-naming conventions — the infamous <code>script_v2_final_FINAL.py</code> pattern. This approach fails in multiple compounding ways. It does not record <em>what</em> changed between versions. It does not record <em>why</em> a change was made. It fragments the project into dozens of redundant copies that consume disk space and create confusion about which file is actually current. It breaks down entirely when more than one person is working on the project. Git eliminates all of these failure modes by making the versioning system intrinsic to the project itself rather than encoded in filenames.</p>
+
+<p>Perhaps the most powerful benefit of version control for engineering work is the ability for multiple team members to work concurrently on the same codebase without overwriting each other's contributions. Git's branching model makes this possible: each engineer works in an isolated context, and changes are integrated deliberately through merging. This is not merely a convenience — it is the structural foundation that allows large engineering software projects to scale to teams of dozens or hundreds of contributors.</p>
+
+<p><strong>Core Git Concepts and Commands</strong></p>
+
+<p>Before Git can track anything, a repository must be initialized. Running <code>git init</code> inside a project directory creates a hidden <code>.git</code> folder that contains the entire version history and configuration for that repository. From that point forward, Git is aware of every file in the directory, though it does not automatically track all of them.</p>
+
+<p>Git uses a deliberate two-step process for recording changes: <strong>staging</strong> followed by <strong>committing</strong>. This design is intentional and powerful. The staging area — sometimes called the index — lets you carefully compose a commit from a specific subset of your current changes. Imagine you spent an afternoon fixing a bug in a thermal model and also refactoring some unrelated helper functions. Rather than bundling these unrelated changes into one messy commit, you stage and commit them separately, keeping the history clean and meaningful.</p>
+
+<ul>
+  <li><code>git add filename.py</code> stages a specific file, preparing it for the next commit.</li>
+  <li><code>git add .</code> stages all modified and new files in the current directory tree.</li>
+  <li><code>git commit -m "Fix enthalpy calculation for two-phase flow region"</code> records the staged snapshot permanently with the provided message.</li>
+</ul>
+
+<p>Two commands you will use constantly while working are <code>git status</code> and <code>git log</code>. Running <code>git status</code> gives you an immediate summary of the current state of the working directory: which files have been modified since the last commit, which modifications have been staged, and which files are present but not yet tracked by Git at all. It is the equivalent of looking around your workspace to take stock of what is in progress.</p>
+
+<p><code>git log</code> displays the full commit history of the current branch, listing each commit's hash, author, date, and message. For a more compact view, <code>git log --oneline</code> shows just the short hash and message for each commit, which is extremely useful for quickly scanning recent history. A typical log might look like this:</p>
+
+<pre><code>a3f9c21 Add cross-validation loop to regression pipeline
+7b84e10 Normalize input features before model training
+c192d4a Load dataset from CSV with configurable path
+e001f3a Initial project structure and requirements.txt
+</code></pre>
+
+<p>Reading this history from bottom to top tells a clear story of how the project evolved — something that a folder of versioned filenames could never communicate.</p>
+
+<p><strong>Branching and Merging</strong></p>
+
+<p>Branching is the feature that makes Git truly powerful for collaborative engineering work. A <strong>branch</strong> is an independent line of development — a pointer to a specific commit that moves forward as new commits are added. The default branch is typically called <code>main</code> (or historically <code>master</code>). When you create a new branch, you are creating a parallel workspace where you can make changes freely without affecting the stable code on <code>main</code>.</p>
+
+<ul>
+  <li><code>git branch feature/add-regression-model</code> creates a new branch with a descriptive name.</li>
+  <li><code>git switch feature/add-regression-model</code> moves your working context to that branch. The older equivalent command is <code>git checkout feature/add-regression-model</code>; both work.</li>
+  <li><code>git switch -c feature/add-regression-model</code> creates the branch and switches to it in a single step.</li>
+</ul>
+
+<p>Once on the feature branch, all commits you make are isolated from <code>main</code>. Your colleagues working on <code>main</code> or on their own branches are completely unaffected by your work until you choose to integrate it. This isolation is what enables concurrent development. If your experiment turns out to be a dead end, you can simply delete the branch — the main codebase is untouched.</p>
+
+<p>Descriptive branch names are a professional convention that communicates intent at a glance. Names like <code>feature/add-regression-model</code>, <code>bugfix/correct-units-in-pressure-calc</code>, or <code>refactor/modularize-data-loading</code> follow the widely used <code>type/short-description</code> pattern. When a team has dozens of open branches in a repository, this naming discipline makes the purpose of each branch immediately clear without needing to inspect its commits.</p>
+
+<p>When the work on a feature branch is complete, <code>git merge</code> integrates it back into the target branch. Standing on <code>main</code> and running <code>git merge feature/add-regression-model</code> replays the commits from the feature branch into the main history. If the two branches have made changes to the same lines of the same files, Git cannot automatically decide which version to keep — this is a <strong>merge conflict</strong>. Git pauses the merge and marks the conflicting sections in the affected files with clear visual indicators:</p>
+
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+result = pressure * volume / temperature
+=======
+result = (pressure * volume) / (temperature + 273.15)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/fix-temperature-units
+</code></pre>
+
+<p>The engineer resolves the conflict by editing the file to the correct final state, removing the conflict markers, staging the resolved file, and completing the merge with a commit. Conflicts sound intimidating but become routine with experience. They are Git's way of asking you to make an informed decision rather than silently discarding someone's work.</p>
+
+<p><strong>Working with GitHub Remote Repositories</strong></p>
+
+<p>Git is a distributed version control system, meaning every clone of a repository is a full, self-contained copy with the entire history. GitHub provides a centralized hosting platform where a canonical copy of the repository lives, making it accessible to all collaborators and serving as the authoritative source of truth for the project.</p>
+
+<p>Connecting a local Git repository to a GitHub remote is done with a single command:</p>
+
+<pre><code>git remote add origin https://github.com/yourusername/your-repo.git
+</code></pre>
+
+<p>The name <code>origin</code> is a conventional alias for the primary remote — it is just a shorthand so you do not need to type the full URL every time. You can verify the connection with <code>git remote -v</code>, which lists all configured remotes and their URLs.</p>
+
+<p>Once connected, <code>git push origin main</code> uploads your local commits on the <code>main</code> branch to GitHub. After the initial push, <code>git push</code> alone is usually sufficient if the local branch is configured to track its remote counterpart. Every push makes your commits visible and accessible to your entire team.</p>
+
+<p><code>git pull</code> does the opposite: it fetches changes from the remote and merges them into your current local branch. Running <code>git pull</code> frequently — especially before starting new work — is a good habit that keeps your local copy synchronized and minimizes the size and complexity of merge conflicts when they do occur. Under the hood, <code>git pull</code> is equivalent to running <code>git fetch</code> followed by <code>git merge</code>; some engineers prefer this two-step process because it lets them inspect the incoming changes before integrating them.</p>
+
+<p>Authenticating with GitHub requires either <strong>SSH keys</strong> or <strong>personal access tokens (PATs)</strong>. SSH authentication involves generating a public/private key pair on your machine (<code>ssh-keygen -t ed25519</code>), uploading the public key to your GitHub account settings, and using the SSH remote URL (<code>git@github.com:yourusername/your-repo.git</code>). Once configured, SSH authentication is seamless — you never need to enter a password. Personal access tokens are used with HTTPS remotes and function like passwords with configurable expiration and permission scopes. Both methods are far more secure than plain password authentication, which GitHub no longer supports.</p>
+
+<p><strong>Pull Requests and Code Review</strong></p>
+
+<p>The pull request — often abbreviated PR — is the central collaboration mechanism on GitHub and one of the most important professional practices in software engineering. When a feature branch is ready for integration, the engineer opens a pull request from that branch targeting the destination branch (usually <code>main</code>). GitHub then presents a clear, side-by-side or unified diff showing exactly what lines were added, modified, or removed.</p>
+
+<p>A pull request is not merely a merge button — it is a structured conversation about the proposed changes. Reviewers can leave comments on specific lines of the diff, ask clarifying questions, suggest alternative implementations, or flag potential bugs. The author responds to feedback, makes additional commits to the branch, and the discussion continues until the reviewers are satisfied. This process catches errors that automated tests cannot find: logic errors, misunderstood requirements, violations of project conventions, or calculations that are technically correct but poorly structured for maintainability.</p>
+
+<p>Modern engineering teams configure <strong>continuous integration (CI)</strong> systems — such as GitHub Actions — to automatically run test suites, linters, and other checks whenever a pull request is opened or updated. The results appear directly in the pull request interface. A reviewer can immediately see whether the proposed changes pass all automated checks before spending time on a deeper code review. If the CI pipeline fails, the author knows exactly what needs to be fixed before the PR can proceed.</p>
+
+<p>Many teams enforce a policy of requiring at least one approved review and all CI checks to pass before a pull request can be merged. This is not bureaucratic friction — it is a quality control gate that protects the stability and correctness of the shared codebase. For engineering software where results inform real decisions, this kind of enforced review discipline is especially important. The main branch becomes a reliable record of work that has been examined by more than one set of eyes.</p>
+
+<p><strong>Repository Hygiene and .gitignore</strong></p>
+
+<p>A well-maintained repository is as important as well-written code. The first element of repository hygiene is the <strong>.gitignore</strong> file — a plain text file placed in the root of the repository that lists file patterns Git should never track. Any file matching a listed pattern is invisible to <code>git add</code> and will never appear as an untracked file in <code>git status</code>.</p>
+
+<p>Common entries in an engineering Python project's <code>.gitignore</code> include:</p>
+
+<ul>
+  <li><code>__pycache__/</code> and <code>*.pyc</code> — Python bytecode cache directories and compiled files that are machine-generated and machine-specific.</li>
+  <li><code>.env</code> — environment variable files that frequently contain credentials or configuration secrets.</li>
+  <li><code>*.csv</code>, <code>*.h5</code>, <code>*.parquet</code> — large data files that do not belong in a code repository.</li>
+  <li><code>.DS_Store</code> — macOS filesystem metadata files that have no relevance to the project.</li>
+  <li><code>venv/</code> or <code>env/</code> — virtual environment directories, which are large and entirely reproducible from a <code>requirements.txt</code> file.</li>
+</ul>
+
+<p>The rule regarding <strong>credentials</strong> deserves special emphasis: API keys, passwords, database connection strings, and private tokens must <em>never</em> be committed to a repository, even a private one. This is not overcaution — it is a hard rule with serious consequences. Private repositories can be accidentally made public. Repositories can be shared with contractors. GitHub's secret scanning tools flag exposed tokens but do so after the fact. The correct pattern is to store secrets in environment variables or in a <code>.env</code> file that is listed in <code>.gitignore</code>, and to load them at runtime using a library like <code>python-dotenv</code>. If a secret is ever accidentally committed, it must be treated as compromised and rotated immediately — simply deleting it in a subsequent commit does not remove it from the repository history.</p>
+
+<p>Large binary files — CAD models, trained machine learning models, experimental datasets, video files — present a different problem. Git is designed to track text-based source code efficiently; its internal compression and delta-encoding work extremely well for source files but poorly for binary data. Committing large binary files inflates repository size rapidly, slows down clones and fetches for all collaborators, and can make a repository effectively unusable. The solutions are <strong>Git Large File Storage (Git LFS)</strong>, which replaces large files in the repository with lightweight pointer files while storing the actual data separately, or simply hosting large datasets on purpose-built storage systems like cloud object storage and referencing them from the code.</p>
+
+<p>Finally, every shared repository should include a well-written <strong>README.md</strong> file at the root level. This Markdown file is automatically rendered by GitHub as the repository's landing page and serves as the project's front door. A good README explains what the project is and what problem it solves, lists prerequisites and dependencies, provides step-by-step setup instructions so a new collaborator can get the code running on a fresh machine, describes how to run the code and what the expected outputs are, and notes any important caveats, known limitations, or links to further documentation. A repository without a README forces every new collaborator to reverse-engineer the project from scratch — an unnecessary cost that a few hours of documentation work eliminates entirely.</p>
+        <div class="notes"><strong>Notes</strong>Covers all six subtopic clusters from the outline: rationale for version control, core commands, branching and merging, remote repositories and authentication, pull requests and CI, and repository hygiene including .gitignore, secrets management, large files, and README conventions. Examples are grounded in engineering contexts (simulation models, regression pipelines, pressure calculations) to reinforce relevance.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

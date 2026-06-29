@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Learning with scikit-learn</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 10 - Machine Learning, Automation, Version Control, and Responsible AI</a></div>
+  <header>
+    <h1>Machine Learning with scikit-learn</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Machine Learning with scikit-learn</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Scikit-learn is the most widely used machine learning library in Python for classical (non-deep-learning) tasks. It provides a consistent, carefully designed API that covers the entire machine learning workflow: preprocessing raw data, training models, evaluating performance, tuning hyperparameters, and interpreting results. Engineers working with sensor data, quality control measurements, predictive maintenance logs, or simulation outputs will find scikit-learn's breadth of algorithms and utilities especially valuable. Understanding how the library is structured — and why it was designed that way — is the foundation for using it effectively.</p>
+
+<p><strong>The scikit-learn API Design</strong></p>
+
+<p>One of scikit-learn's greatest strengths is its deliberate uniformity. Regardless of whether you are training a simple linear model or a complex ensemble, the interface looks almost identical. This consistency is not accidental; it follows three core design principles: estimators expose a <code>fit</code> method, predictors expose a <code>predict</code> method, and transformers expose a <code>transform</code> method. Objects that both transform and predict (such as pipelines) combine these roles. This predictability dramatically reduces cognitive load and allows rapid experimentation.</p>
+
+<p>The <strong><code>fit</code> method</strong> is the training step. It accepts at minimum a two-dimensional feature array <code>X</code> (shape: n_samples × n_features) and, for supervised models, a one-dimensional target array <code>y</code> (shape: n_samples). Internally, <code>fit</code> adjusts the model's internal parameters — regression coefficients, tree split thresholds, support vectors, and so on — to best explain the relationship between <code>X</code> and <code>y</code> in the training data. After <code>fit</code> completes, the learned parameters are stored as attributes on the estimator object, typically indicated by a trailing underscore (for example, <code>model.coef_</code> for a linear model). This trailing-underscore convention signals that an attribute was learned from data rather than set by the user.</p>
+
+<pre><code>from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Simulate temperature vs. pressure data
+X_train = np.array([[100], [150], [200], [250], [300]])
+y_train = np.array([1.2, 1.8, 2.5, 3.1, 3.9])
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+print(model.coef_)       # Learned slope, e.g. [0.0135]
+print(model.intercept_)  # Learned intercept, e.g. -0.126
+</code></pre>
+
+<p>The <strong><code>predict</code> method</strong> applies the fitted model to new input data to generate output predictions. It accepts the same kind of two-dimensional feature array as <code>fit</code> and returns a prediction array with one value per sample. Importantly, <code>predict</code> must only be called after <code>fit</code>; calling it before training raises a <code>NotFittedError</code>. For classifiers, <code>predict</code> returns the most likely class label. For regressors, it returns the estimated continuous value. Some classifiers also expose <code>predict_proba</code>, which returns the probability of each class rather than a hard label — useful when you need a calibrated confidence score alongside a decision.</p>
+
+<pre><code># Predict pressure at new temperatures
+X_new = np.array([[175], [225]])
+predictions = model.predict(X_new)
+print(predictions)  # e.g. [2.238, 2.913]
+</code></pre>
+
+<p>The <strong><code>score</code> method</strong> provides a quick, default evaluation of the fitted model on a labeled dataset. For regressors, it returns the coefficient of determination R², where 1.0 is a perfect fit and values near or below 0 indicate the model performs no better than simply predicting the mean. For classifiers, it returns accuracy — the fraction of samples predicted correctly. The convenience of <code>score</code> makes it ideal for rapid sanity checks, but engineers should always consider whether the default metric is appropriate for their problem (for example, accuracy is misleading on imbalanced fault-detection datasets).</p>
+
+<pre><code>X_test = np.array([[120], [280]])
+y_test = np.array([1.45, 3.65])
+print(model.score(X_test, y_test))  # R² on held-out data
+</code></pre>
+
+<p>The profound benefit of this <strong>consistent interface</strong> is that swapping one algorithm for another requires almost no code changes — only the estimator class itself changes. This makes A/B comparisons between algorithms straightforward and reproducible:</p>
+
+<pre><code>from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import Ridge
+
+models = {
+    "Linear":       LinearRegression(),
+    "Ridge":        Ridge(alpha=1.0),
+    "RandomForest": RandomForestRegressor(n_estimators=100, random_state=42),
+}
+
+for name, mdl in models.items():
+    mdl.fit(X_train, y_train)
+    print(f"{name}: R² = {mdl.score(X_test, y_test):.4f}")
+</code></pre>
+
+<p><strong>Data Preprocessing and Pipelines</strong></p>
+
+<p>Raw engineering data almost never arrives in a form that machine learning models can consume directly. Sensor readings may span vastly different numerical ranges; log files may contain categorical identifiers; some measurements may be missing entirely. Preprocessing addresses these issues before training begins, and doing it correctly — especially in the context of model evaluation — is one of the most common sources of subtle bugs in machine learning projects.</p>
+
+<p><strong>StandardScaler</strong> transforms each feature so that it has zero mean and unit variance across the training set. This is achieved by subtracting the feature's mean and dividing by its standard deviation: <em>z = (x − μ) / σ</em>. Many algorithms are sensitive to the scale of input features. Gradient descent converges faster when features are on similar scales because the loss landscape becomes more spherical. Distance-based algorithms such as k-nearest neighbors and support vector machines produce results that depend directly on the Euclidean distances between samples — a feature measured in megapascals would otherwise dominate one measured in millimeters. Tree-based models are scale-invariant, but scaling rarely hurts them either.</p>
+
+<pre><code>from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+# Two features: temperature (°C) and vibration amplitude (mm)
+X = np.array([[80, 0.02], [100, 0.05], [120, 0.08], [140, 0.11]])
+
+scaler = StandardScaler()
+scaler.fit(X)           # Compute mean and std from training data
+X_scaled = scaler.transform(X)
+
+print(scaler.mean_)     # e.g. [110.0, 0.065]
+print(scaler.scale_)    # e.g. [22.36, 0.033]
+print(X_scaled)
+# Each column now has mean ≈ 0 and std ≈ 1
+</code></pre>
+
+<p>A critical subtlety: the scaler must be <code>fit</code> only on training data and then applied (using <code>transform</code>, not <code>fit_transform</code>) to both training and test data. Fitting on the combined dataset causes <em>data leakage</em> — the model indirectly sees statistical properties of the test set during training, producing overly optimistic evaluation scores that do not generalize.</p>
+
+<p><strong>Categorical encoding</strong> is necessary because mathematical operations on raw category strings (such as "pump_A", "pump_B", "compressor") are undefined. The most common strategy is <strong>one-hot encoding</strong>, which creates a new binary column for each unique category. A feature with three categories becomes three binary columns, with exactly one column equal to 1 for each sample. Scikit-learn's <code>OneHotEncoder</code> handles this, and <code>ColumnTransformer</code> allows applying different transformers to different columns of a mixed dataset simultaneously.</p>
+
+<pre><code>from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler
+
+# Mixed dataset: numerical column + categorical column
+import pandas as pd
+df = pd.DataFrame({
+    "temperature": [80, 100, 120, 140],
+    "component":   ["pump", "valve", "pump", "compressor"]
+})
+
+preprocessor = ColumnTransformer([
+    ("num", StandardScaler(),    ["temperature"]),
+    ("cat", OneHotEncoder(),     ["component"]),
+])
+
+X_processed = preprocessor.fit_transform(df)
+print(X_processed.shape)  # (4, 4): 1 scaled + 3 one-hot columns
+</code></pre>
+
+<p>An important practical note: with <em>k</em> categories, one-hot encoding creates <em>k</em> columns, but some linear models require dropping one (the "dummy variable trap" or perfect multicollinearity). <code>OneHotEncoder</code> provides a <code>drop='first'</code> parameter for this purpose.</p>
+
+<p><strong>sklearn.pipeline.Pipeline</strong> solves a fundamental workflow problem: how to chain multiple preprocessing steps and the final model together so they behave as a single, coherent unit. A Pipeline accepts a list of (name, transformer) tuples, with the final element being the estimator. When you call <code>pipeline.fit(X, y)</code>, it calls <code>fit_transform</code> on each transformer in sequence and then calls <code>fit</code> on the estimator using the transformed data. When you call <code>pipeline.predict(X_new)</code>, it applies <code>transform</code> to each preprocessing step first and then passes the result to the estimator's <code>predict</code> method.</p>
+
+<pre><code>from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import Ridge
+
+pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model",  Ridge(alpha=1.0)),
+])
+
+pipe.fit(X_train, y_train)
+predictions = pipe.predict(X_test)
+score = pipe.score(X_test, y_test)
+</code></pre>
+
+<p>The most important benefit of using a pipeline during <strong>cross-validation</strong> is correctness. When scikit-learn's cross-validation tools (such as <code>cross_val_score</code>) split data into folds, a pipeline ensures that the scaler is refit on the training fold of each split, with the validation fold then transformed using <em>that fold's</em> statistics. Without a pipeline, if you scale the entire dataset before cross-validation, each fold's validation data has already influenced the scaler's parameters — a subtle but consequential form of leakage that inflates performance estimates.</p>
+
+<pre><code>from sklearn.model_selection import cross_val_score
+
+scores = cross_val_score(pipe, X_all, y_all, cv=5, scoring="r2")
+print(scores)        # R² for each of 5 folds
+print(scores.mean()) # Mean cross-validated R²
+</code></pre>
+
+<p><strong>Regression Models in scikit-learn</strong></p>
+
+<p>Regression predicts a continuous numeric output from input features. In engineering, typical regression targets include remaining useful life of a component, predicted yield of a process, energy consumption, or structural deflection under load. Scikit-learn provides a rich selection of regression algorithms that differ in assumptions, interpretability, computational cost, and predictive power.</p>
+
+<p><strong>LinearRegression</strong> fits a model of the form <em>ŷ = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ</em> by minimizing the sum of squared residuals (ordinary least squares, OLS). The solution is computed analytically (via matrix decomposition), making it exact and fast. Its primary virtue is interpretability: each coefficient <em>βᵢ</em> represents the expected change in the output per unit increase in feature <em>xᵢ</em>, holding all other features constant — a statement engineers can often explain to domain experts and present in technical reports. Its limitation is that it assumes a linear relationship between features and target, which may be a poor approximation for nonlinear physical systems.</p>
+
+<pre><code>from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Inspect coefficients
+for feature, coef in zip(feature_names, model.coef_):
+    print(f"{feature}: {coef:.4f}")
+</code></pre>
+
+<p><strong>Ridge and Lasso regression</strong> extend linear regression by adding a regularization penalty to the loss function, which discourages the model from fitting noise in the training data (overfitting). Ridge (L2 regularization) adds a penalty proportional to the sum of squared coefficients: <em>loss = RSS + α Σ βᵢ²</em>. This shrinks all coefficients toward zero but rarely sets them exactly to zero, so all features remain in the model. Lasso (L1 regularization) uses a penalty proportional to the sum of absolute values of coefficients: <em>loss = RSS + α Σ |βᵢ|</em>. The L1 penalty has the geometric property of producing sparse solutions — many coefficients become exactly zero — effectively performing automatic feature selection. This is particularly useful in high-dimensional sensor datasets where only a subset of sensors truly predict the outcome.</p>
+
+<pre><code>from sklearn.linear_model import Ridge, Lasso
+
+ridge = Ridge(alpha=10.0)
+ridge.fit(X_train, y_train)
+# All coefficients remain nonzero but shrunk
+
+lasso = Lasso(alpha=0.1)
+lasso.fit(X_train, y_train)
+# Some coefficients exactly zero — those features eliminated
+print((lasso.coef_ == 0).sum(), "features zeroed out")
+</code></pre>
+
+<p>The hyperparameter <em>α</em> controls the strength of regularization. Larger <em>α</em> increases the penalty and pushes coefficients further toward zero, increasing bias but reducing variance. The optimal <em>α</em> is typically found via cross-validated grid search (discussed later). <code>RidgeCV</code> and <code>LassoCV</code> are convenient variants that perform this search internally.</p>
+
+<p><strong>Ensemble regressors</strong> such as <code>RandomForestRegressor</code> aggregate predictions from many individual decision trees, each trained on a random bootstrap sample of the data and considering only a random subset of features at each split. This combination of bagging (bootstrap aggregating) and feature randomization reduces variance substantially relative to a single decision tree, while retaining the ability to model complex nonlinear relationships. Random forests require little preprocessing (no scaling needed), handle mixed feature types gracefully, and are robust to outliers. Their main downsides are computational cost (especially for large numbers of trees) and reduced interpretability compared to linear models.</p>
+
+<pre><code>from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+
+rf = RandomForestRegressor(n_estimators=200, max_depth=10, random_state=42)
+rf.fit(X_train, y_train)
+print("RF R²:", rf.score(X_test, y_test))
+
+gb = GradientBoostingRegressor(n_estimators=200, learning_rate=0.05, random_state=42)
+gb.fit(X_train, y_train)
+print("GB R²:", gb.score(X_test, y_test))
+</code></pre>
+
+<p>The principle of <strong>comparing multiple models on a held-out test set</strong> before making a final selection is fundamental to sound engineering practice. The held-out test set — data that was never seen during training or hyperparameter tuning — provides an unbiased estimate of how the model will perform on genuinely new data in production. Evaluating on training data alone will almost always produce optimistic and misleading results due to overfitting. A standard workflow partitions data into training (60–70%), validation or cross-validation (15–20%), and test (15–20%) portions, with the test set locked away until the final evaluation.</p>
+
+<p><strong>Classification Models in scikit-learn</strong></p>
+
+<p>Classification predicts a discrete class label. Engineering applications include fault detection (normal vs. faulty), quality classification (pass/fail/rework), anomaly detection in process control, and categorization of operational modes. Scikit-learn's classifiers share the same API as regressors, making it straightforward to benchmark several approaches.</p>
+
+<p><strong>LogisticRegression</strong> is, despite its name, a classification algorithm. It models the log-odds of class membership as a linear combination of features and passes the result through the logistic (sigmoid) function to produce a probability between 0 and 1. For binary classification: <em>P(y=1|x) = 1 / (1 + e^(−(β₀ + β₁x₁ + … + βₙxₙ)))</em>. A threshold (default 0.5) converts this probability to a class label. Logistic regression is highly interpretable — its coefficients indicate how each feature shifts the log-odds of belonging to the positive class — and it is fast to train. It can also be extended to multi-class problems using one-vs-rest or softmax strategies. Like linear regression, it benefits from feature scaling and supports L1/L2 regularization via the <code>penalty</code> parameter.</p>
+
+<pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+X, y = make_classification(n_samples=500, n_features=10, random_state=42)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+
+clf = LogisticRegression(C=1.0, max_iter=1000)
+clf.fit(X_tr, y_tr)
+print("Accuracy:", clf.score(X_te, y_te))
+print("Probabilities:", clf.predict_proba(X_te[:3]))
+</code></pre>
+
+<p><strong>Decision tree classifiers</strong> partition the feature space into rectangular regions using a series of binary splits chosen to maximize a purity criterion such as Gini impurity or information gain. The resulting model can be visualized as a flowchart of if-then rules, which is an especially valuable property in engineering contexts: a maintenance engineer can follow the tree's logic manually, verify that it aligns with domain knowledge, and explain decisions to non-technical stakeholders. Scikit-learn's <code>export_graphviz</code> or <code>plot_tree</code> functions render the tree visually. The main risk is overfitting — an unconstrained tree will perfectly memorize training data. Controlling <code>max_depth</code>, <code>min_samples_split</code>, and <code>min_samples_leaf</code> prevents this.</p>
+
+<pre><code>from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+dt = DecisionTreeClassifier(max_depth=4, random_state=42)
+dt.fit(X_tr, y_tr)
+print("DT Accuracy:", dt.score(X_te, y_te))
+
+# Visualize (requires matplotlib)
+fig, ax = plt.subplots(figsize=(20, 8))
+plot_tree(dt, feature_names=[f"feat_{i}" for i in range(10)],
+          class_names=["normal","fault"], filled=True, ax=ax)
+plt.savefig("decision_tree.png", dpi=150, bbox_inches="tight")
+</code></pre>
+
+<p><strong>Support Vector Machines (SVMs)</strong> find the hyperplane in feature space that maximizes the margin — the distance between the hyperplane and the nearest training samples from each class (the support vectors). This maximum-margin principle provides good generalization even in high-dimensional spaces, which is why SVMs were historically popular for text classification and genomics where features far outnumber samples. The kernel trick allows SVMs to implicitly operate in very high-dimensional or even infinite-dimensional feature spaces without explicitly computing coordinates there. Common kernels include the radial basis function (RBF), polynomial, and sigmoid kernels. SVMs are sensitive to feature scale, so StandardScaler is nearly always necessary. Their main disadvantages are computational cost on large datasets and difficulty interpreting the final model.</p>
+
+<pre><code>from sklearn.svm import SVC
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+svm_pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("svm",    SVC(kernel="rbf", C=10.0, gamma=0.1, probability=True)),
+])
+svm_pipe.fit(X_tr, y_tr)
+print("SVM Accuracy:", svm_pipe.score(X_te, y_te))
+</code></pre>
+
+<p><strong>Class imbalance</strong> is a pervasive problem in engineering fault-detection datasets. In real facilities, faults are rare events; a dataset might contain 950 normal samples and only 50 fault samples. A naive classifier that always predicts "normal" achieves 95% accuracy — a misleadingly high score that reflects no useful learning. Scikit-learn provides several remedies. The <code>class_weight='balanced'</code> parameter (available in LogisticRegression, SVC, DecisionTreeClassifier, and others) automatically adjusts the contribution of each sample to the loss function inversely proportional to class frequency, effectively penalizing misclassification of the minority class more heavily. The <code>imbalanced-learn</code> library (compatible with scikit-learn) provides oversampling algorithms such as SMOTE (Synthetic Minority Oversampling Technique), which generates synthetic minority samples by interpolating between existing ones. Undersampling removes majority class samples. In imbalanced settings, evaluation should use metrics such as F1-score, precision-recall AUC, or the Matthews Correlation Coefficient rather than accuracy.</p>
+
+<pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+
+# Use balanced class weights for imbalanced fault detection
+clf_balanced = LogisticRegression(class_weight='balanced', max_iter=1000)
+clf_balanced.fit(X_tr, y_tr)
+y_pred = clf_balanced.predict(X_te)
+
+# Detailed per-class metrics
+print(classification_report(y_te, y_pred, target_names=["normal", "fault"]))
+</code></pre>
+
+<p><strong>Hyperparameter Tuning</strong></p>
+
+<p>Every machine learning algorithm exposes hyperparameters — configuration choices that govern how the algorithm trains but are not learned from data themselves. Examples include the regularization strength <em>α</em> in Ridge regression, the number of trees in a random forest, the kernel type and margin parameter <em>C</em> in an SVM, and the learning rate in gradient boosting. Choosing good hyperparameters is crucial: poor choices can mean the difference between a model that generalizes well and one that dramatically overfits or underfits. Since the right hyperparameters depend on the specific dataset, they must be selected empirically.</p>
+
+<p><strong>Cross-validated grid search</strong> (<code>GridSearchCV</code>) is the systematic approach. You define a parameter grid — a dictionary mapping hyperparameter names to lists of candidate values — and <code>GridSearchCV</code> trains and evaluates every possible combination using k-fold cross-validation. The combination that produces the best mean cross-validated score is selected. After the search completes, the best model is retrained on the full training set. <code>GridSearchCV</code> wraps any estimator or pipeline and exposes the same <code>fit</code>/<code>predict</code>/<code>score</code> API, so it can itself be used as an estimator.</p>
+
+<pre><code>from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+param_grid = {
+    "n_estimators": [50, 100, 200],
+    "max_depth":    [None, 5, 10, 20],
+    "min_samples_split": [2, 5, 10],
+}
+
+rf = RandomForestClassifier(random_state=42)
+grid_search = GridSearchCV(
+    estimator=rf,
+    param_grid=param_grid,
+    cv=5,
+    scoring="f1",
+    n_jobs=-1,       # Use all CPU cores
+    verbose=1,
+)
+grid_search.fit(X_tr, y_tr)
+
+print("Best params:", grid_search.best_params_)
+print("Best CV F1:", grid_search.best_score_)
+print("Test F1:", grid_search.score(X_te, y_te))
+</code></pre>
+
+<p>The parameter grid above has 3 × 4 × 3 = 36 combinations. With 5-fold cross-validation, this means 180 model fits. For large datasets or models with many parameters, this becomes computationally prohibitive — which is where <strong>randomized search</strong> offers a practical advantage.</p>
+
+<p><strong>RandomizedSearchCV</strong> samples a specified number of hyperparameter combinations at random from the defined parameter distributions rather than exhaustively evaluating all combinations. A key insight from research (Bergstra & Bengio, 2012) is that random search is more efficient than grid search when only a few hyperparameters strongly affect performance — grid search wastes evaluations on redundant combinations along irrelevant dimensions, whereas random search spreads exploration more broadly. Distributions can be specified using scipy probability distributions (e.g., <code>randint</code>, <code>uniform</code>), allowing continuous sampling rather than discrete lists.</p>
+
+<pre><code>from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint, uniform
+
+param_dist = {
+    "n_estimators":      randint(50, 500),
+    "max_depth":         [None, 5, 10, 20, 30],
+    "min_samples_split": randint(2, 20),
+    "max_features":      uniform(0.3, 0.7),  # Fraction of features
+}
+
+rand_search = RandomizedSearchCV(
+    estimator=RandomForestClassifier(random_state=42),
+    param_distributions=param_dist,
+    n_iter=50,         # Evaluate 50 random combinations
+    cv=5,
+    scoring="f1",
+    n_jobs=-1,
+    random_state=42,
+)
+rand_search.fit(X_tr, y_tr)
+print("Best params:", rand_search.best_params_)
+</code></pre>
+
+<p>The principle that <strong>hyperparameter tuning must never use the test set</strong> cannot be overstated. If you evaluate many hyperparameter combinations against the test set and pick the best, you are effectively fitting the hyperparameters to the test set, causing optimistically biased performance estimates. The test set must remain completely unseen until the very final evaluation of the single selected model. Cross-validation on the training set provides an unbiased proxy for generalization performance during the tuning phase.</p>
+
+<p>Good engineering practice also demands <strong>documenting the tuning process</strong>. This includes recording the hyperparameter search space explored, the scoring metric used, the cross-validation strategy, the winning combination, and the final test set performance. This documentation supports reproducibility (a colleague or auditor can re-run the search and obtain the same result given the same <code>random_state</code> seeds), traceability (demonstrating that a safety-critical model was selected through a rigorous, systematic process), and future refinement (knowing what was already tried prevents redundant work when revisiting the project).</p>
+
+<p><strong>Model Interpretability and Feature Importance</strong></p>
+
+<p>Predictive accuracy alone is often insufficient in engineering practice. A regulatory agency certifying a predictive maintenance system, a process engineer validating a quality model, or a safety manager approving an anomaly detection system all need to understand <em>why</em> a model makes its predictions — not just how accurate it is. Interpretability techniques bridge the gap between model outputs and domain understanding.</p>
+
+<p><strong>Feature importance from tree-based models</strong> is the most accessible interpretability tool. During the training of a decision tree or random forest, every split in every tree is associated with a reduction in impurity (Gini impurity for classifiers, mean squared error for regressors). Summing these impurity reductions across all splits that involve a given feature, weighted by the number of samples passing through each node and normalized across all features, gives that feature's importance score. In a random forest, these values are averaged across all trees. The result is a score between 0 and 1 for each feature, with higher values indicating greater contribution to the model's predictions.</p>
+
+<pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+feature_names = [f"sensor_{i}" for i in range(10)]
+importances = rf.feature_importances_
+
+importance_df = pd.DataFrame({
+    "feature":    feature_names,
+    "importance": importances,
+}).sort_values("importance", ascending=False)
+
+print(importance_df)
+
+importance_df.plot(kind="bar", x="feature", y="importance", legend=False)
+plt.ylabel("Gini Importance")
+plt.title("Feature Importances — Random Forest")
+plt.tight_layout()
+plt.savefig("feature_importances.png")
+</code></pre>
+
+<p>A known limitation of impurity-based importances is their bias toward high-cardinality features (features with many unique values), since such features offer more split opportunities and can appear important even if their relationship with the target is weak. This is where <strong>permutation importance</strong> provides a more reliable alternative.</p>
+
+<p><strong>Permutation importance</strong> is model-agnostic: it can be applied to any fitted model, not just tree-based ones. The procedure is: (1) evaluate the model's performance on a validation set; (2) randomly shuffle the values of one feature across all samples, breaking its relationship with the target while leaving all other features intact; (3) re-evaluate performance; (4) the drop in performance is the permutation importance of that feature. A large drop means the model relied heavily on that feature. A negligible drop means the feature contributed little (or that another correlated feature compensated). This is repeated for each feature, and optionally repeated multiple times with different shuffles to produce a confidence interval.</p>
+
+<pre><code>from sklearn.inspection import permutation_importance
+
+result = permutation_importance(
+    rf,
+    X_te, y_te,
+    n_repeats=30,
+    random_state=42,
+    scoring="f1",
+)
+
+perm_df = pd.DataFrame({
+    "feature": feature_names,
+    "importance_mean": result.importances_mean,
+    "importance_std":  result.importances_std,
+}).sort_values("importance_mean", ascending=False)
+
+print(perm_df)
+</code></pre>
+
+<p>If impurity-based and permutation importance give substantially different rankings, it is often worth investigating whether correlated features are masking each other's contributions — a common situation when multiple sensors measure related physical quantities.</p>
+
+<p><strong>Partial dependence plots (PDPs)</strong> visualize the marginal effect of one or two features on the model's predicted outcome, averaging out the effects of all other features. For a chosen feature <em>xⱼ</em>, the PDP is computed by: (1) for each unique value in a grid spanning <em>xⱼ</em>'s range, replace all samples' values of <em>xⱼ</em> with that grid value; (2) run the modified dataset through the model; (3) average the predictions. The resulting curve shows how the predicted output changes as <em>xⱼ</em> varies, marginalizing over the distribution of all other features. This can reveal whether a relationship is linear, monotonic, U-shaped, or has threshold effects — physical insights that complement the quantitative accuracy metrics.</p>
+
+<pre><code>from sklearn.inspection import PartialDependenceDisplay
+
+fig, ax = plt.subplots(figsize=(12, 4))
+PartialDependenceDisplay.from_estimator(
+    rf,
+    X_tr,
+    features=[0, 2, (0, 2)],   # Feature 0, feature 2, and their interaction
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

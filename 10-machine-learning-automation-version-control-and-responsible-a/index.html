@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 10 – Machine Learning, Automation, Version Control, and Responsible AI | EGN3214</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f9;
+      color: #1e2530;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #25567e 60%, #1e7ca8 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    header .course-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+      padding: 0.2rem 0.7rem;
+      margin-bottom: 0.9rem;
+      color: #cde8f7;
+    }
+
+    header h1 {
+      font-size: clamp(1.3rem, 3.5vw, 2rem);
+      font-weight: 700;
+      line-height: 1.3;
+      max-width: 820px;
+      margin: 0 auto 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    header p.intro {
+      font-size: 0.97rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #d0e9f5;
+      line-height: 1.7;
+    }
+
+    /* ── Main Container ── */
+    main {
+      max-width: 1080px;
+      margin: 2.5rem auto 3rem;
+      padding: 0 1.25rem;
+    }
+
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5a7292;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #d6e2ed;
+    }
+
+    /* ── Card Grid ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #dce6ef;
+      border-radius: 8px;
+      padding: 1.35rem 1.4rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: 0 1px 4px rgba(30,60,100,0.06);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 14px rgba(30,60,100,0.11);
+      border-color: #b0c8de;
+    }
+
+    /* ── Card Header Row ── */
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .card-name {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #1a3a5c;
+      flex: 1 1 auto;
+      line-height: 1.4;
+    }
+
+    .card-name a {
+      color: #1a5fa8;
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .card-name a:hover,
+    .card-name a:focus {
+      color: #0d3f78;
+      border-bottom-color: #0d3f78;
+      outline: none;
+    }
+
+    .card-name a:focus-visible {
+      outline: 2px solid #1a5fa8;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* ── Source Link ── */
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #4a7fa5;
+      text-decoration: none;
+      background: #eaf3fb;
+      border: 1px solid #bcd7ee;
+      border-radius: 3px;
+      padding: 0.18rem 0.5rem;
+      white-space: nowrap;
+      align-self: flex-start;
+      margin-top: 0.1rem;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .source-link:hover,
+    .source-link:focus {
+      background: #d0e8f7;
+      color: #0d3f78;
+      outline: none;
+    }
+
+    .source-link:focus-visible {
+      outline: 2px solid #1a5fa8;
+      outline-offset: 2px;
+    }
+
+    .source-link svg {
+      flex-shrink: 0;
+    }
+
+    /* ── Badges ── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.69rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      padding: 0.18rem 0.52rem;
+    }
+
+    .badge-type {
+      background: #e8eef6;
+      color: #3a5476;
+      border: 1px solid #ccd8e8;
+    }
+
+    .badge-filetype {
+      background: #f0f7ee;
+      color: #2f6a45;
+      border: 1px solid #b8d9c4;
+      font-family: "Courier New", monospace;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Description ── */
+    .card-description {
+      font-size: 0.855rem;
+      color: #4a5568;
+      line-height: 1.65;
+      flex: 1 1 auto;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.78rem;
+      color: #8a9bb0;
+      border-top: 1px solid #dce6ef;
+      background: #fff;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 2rem 1rem 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
+<div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
+
+  <header>
+    <div class="course-label">EGN3214</div>
+    <h1>Module 10 — Machine Learning, Automation, Version Control, and Responsible AI</h1>
+    <p class="intro">
+      This module introduces engineers to practical machine learning workflows, Python-based automation and parameter sweep pipelines, Git/GitHub version control, and the ethical obligations of integrating AI tools into professional engineering practice. Use the resources below to navigate the module content.
+    </p>
+  </header>
+
+  <main>
+    <p class="section-title">Module Artifacts &mdash; 7 items</p>
+
+    <div class="card-grid">
+
+      <!-- Card 1: Module Topics -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/module_topics.html">Module Topics</a>
+          </span>
+          <a class="source-link" href="source/hierarchy.json" title="View source file">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4 1h5.5L13 4.5V15H4V1zm1 1v12h7V5.5L9.5 2H5zm4 0v3h3l-3-3z"/>
+            </svg>
+            source file
+          </a>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Module Topics</span>
+          <span class="badge badge-filetype">.json</span>
+        </div>
+        <p class="card-description">Outlines the module's core topics—supervised machine learning concepts, scikit-learn workflows, engineering automation and parameter sweeps, version control, and responsible AI—serving as a navigation guide for learners to understand what will be covered and for instructors to align their teaching materials.</p>
+      </article>
+
+      <!-- Card 2: Responsible AI Integration (interactive) -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/_interactive.html">Responsible AI Integration in Engineering Practice</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading covers the professional and ethical obligations engineers have when using AI tools such as large language models and code-generation assistants, guiding learners in critically evaluating, validating, and responsibly integrating AI outputs into engineering work.</p>
+      </article>
+
+      <!-- Card 3: Foundations of Supervised ML -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/Machine_Learning_Automation_interactive_topics_t1.html">Foundations of Supervised Machine Learning</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading introduces the core concepts of supervised machine learning—including labeled training data, model fitting, prediction, and generalization—with engineering-relevant examples, serving as a conceptual foundation for learners before applying ML techniques.</p>
+      </article>
+
+      <!-- Card 4: Machine Learning with scikit-learn -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/Machine_Learning_Automation_interactive_topics_t2.html">Machine Learning with scikit-learn</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading explains how to use the scikit-learn Python library to execute the full machine learning workflow—data preprocessing, model training, evaluation, hyperparameter tuning, and result interpretation—providing learners and instructors with a practical implementation reference.</p>
+      </article>
+
+      <!-- Card 5: Engineering Automation and Parameter Sweep Pipelines -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/Machine_Learning_Automation_interactive_topics_t3.html">Engineering Automation and Parameter Sweep Pipelines</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading explains how to design and implement engineering automation scripts and parameter sweep pipelines in Python to replace repetitive simulation and data-processing tasks, teaching learners to systematically explore design spaces and automate report generation.</p>
+      </article>
+
+      <!-- Card 6: Git and GitHub Version Control -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/Machine_Learning_Automation_interactive_topics_t4.html">Git and GitHub Version Control</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading covers the fundamentals of Git version control and GitHub collaboration workflows—including commits, branches, and repositories—so learners can manage code changes and collaborate on engineering scripts and automation projects professionally.</p>
+      </article>
+
+      <!-- Card 7: Responsible AI Integration (t5) -->
+      <article class="card">
+        <div class="card-header">
+          <span class="card-name">
+            <a href="content/Machine_Learning_Automation_interactive_topics_t5.html">Responsible AI Integration in Engineering Practice</a>
+          </span>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">This reading covers the professional and ethical obligations engineers have when using AI tools such as large language models and code-generation assistants, guiding learners in critically evaluating, validating, and responsibly integrating AI outputs into engineering work.</p>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    EGN3214 &mdash; Module 10 &nbsp;|&nbsp; Machine Learning, Automation, Version Control, and Responsible AI
+  </footer>
+
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<section class="presemaker-extras" style="max-width:1000px;margin:2rem auto;padding:0 1rem;"><h2>Topics &amp; Learning Outcomes</h2><p><a href="topics-outcomes.html">View Topics &amp; Learning Outcomes</a></p></section><script src="embed-inject.js" defer></script></body>
+</html>

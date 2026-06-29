@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time-Stepping Simulation Fundamentals</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Time-Stepping Simulation Fundamentals</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Time-Stepping Simulation Fundamentals</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Almost every dynamic system in engineering — a vibrating bridge, a charging capacitor, a rocket ascending through the atmosphere, a chemical reactor approaching equilibrium — evolves continuously through time according to rules that relate how quickly something changes to what it currently is. These rules are <strong>ordinary differential equations (ODEs)</strong>, and they sit at the heart of engineering simulation. Because most real-world systems cannot be solved by pen and paper, engineers rely on <strong>time-stepping simulation</strong>: a numerical strategy that advances a system's state forward in small, discrete increments of time, approximating the true continuous solution at each step. Understanding the principles behind this strategy — what can go wrong, how to choose an appropriate method, and how to implement it efficiently — is essential for any practicing engineer who works with dynamic models.</p>
+
+<p><strong>Ordinary Differential Equations in Engineering</strong></p>
+
+<p>An <strong>ordinary differential equation</strong> describes how a quantity changes with respect to a single independent variable, almost always time in engineering simulations. The simplest and most important form is the <strong>first-order ODE</strong>, which relates the rate of change of a <em>state variable</em> directly to the current value of that state variable and, optionally, time itself:</p>
+
+<pre><code>dx/dt = f(x, t)</code></pre>
+
+<p>Here, <code>x</code> is the state variable (for example, temperature, charge, population, velocity), <code>t</code> is time, and <code>f(x, t)</code> is a function — possibly nonlinear — that computes the instantaneous rate of change. As a concrete example, Newton's law of cooling states that the rate at which an object loses heat is proportional to the difference between the object's temperature and the surrounding air temperature:</p>
+
+<pre><code>dT/dt = -k * (T - T_ambient)</code></pre>
+
+<p>This is a first-order ODE where the state variable is temperature <code>T</code>, the parameter <code>k</code> is a positive cooling constant, and <code>T_ambient</code> is a fixed environmental value. The equation tells us everything about how the temperature evolves — but only once we know where it starts.</p>
+
+<p><strong>Second-order ODEs</strong> introduce the second derivative of the state variable and appear naturally wherever inertia or inductance matters. Newton's second law for a mass-spring-damper system is the canonical example:</p>
+
+<pre><code>m * d²x/dt² + c * dx/dt + k * x = F(t)</code></pre>
+
+<p>where <code>m</code> is mass, <code>c</code> is the damping coefficient, <code>k</code> is the spring constant, <code>x</code> is displacement, and <code>F(t)</code> is an external force. An RLC circuit obeys an equation of exactly the same mathematical form, with inductance, resistance, and capacitance playing the roles of mass, damping, and stiffness, respectively. Second-order ODEs are handled numerically by a standard trick: they are <em>converted into a system of two first-order ODEs</em> by introducing an auxiliary state variable for the first derivative. Defining <code>v = dx/dt</code> (velocity), the above equation becomes:</p>
+
+<pre><code>dx/dt = v
+dv/dt = (F(t) - c*v - k*x) / m</code></pre>
+
+<p>Now the system has a two-element state vector <code>[x, v]</code>, and any first-order ODE solver can handle it directly. This trick generalises: an <em>n</em>th-order ODE always reduces to a system of <em>n</em> coupled first-order ODEs.</p>
+
+<p><strong>Initial conditions</strong> are not optional details — they are what make a specific physical scenario emerge from the abstract equation. The ODE describes a whole family of possible trajectories; the initial conditions pick out the one that matches reality. For the mass-spring system, the initial displacement <code>x(0)</code> and initial velocity <code>v(0) = dx/dt(0)</code> together pin down the entire future trajectory. In general, a system of <em>n</em> first-order ODEs requires exactly <em>n</em> initial conditions.</p>
+
+<p><strong>Analytical solutions</strong> — closed-form expressions like <code>x(t) = A*exp(-k*t)</code> — exist only for a restricted class of problems: linear ODEs with constant coefficients, driven by simple forcing functions like sinusoids or step inputs. As soon as coefficients become time-varying, or the equation becomes nonlinear (think of a pendulum with large angles, where <code>sin(θ)</code> cannot be approximated by <code>θ</code>), analytical solutions generally disappear. Numerical time-stepping methods fill this gap for the vast majority of engineering ODEs encountered in practice.</p>
+
+<p><strong>Euler's Method</strong></p>
+
+<p>Euler's method is the most direct translation of the ODE definition into a computational algorithm. It reasons as follows: if we know the state <code>x</code> at time <code>t</code>, and we know the rate of change <code>f(x, t)</code> at that moment, then over a small time step <code>h</code> we can approximate the new state by assuming the rate stays constant across the entire step:</p>
+
+<pre><code>x(t + h) = x(t) + h * f(x(t), t)</code></pre>
+
+<p>This is the <strong>Euler update rule</strong>. It is essentially a linear extrapolation: start at the current point, travel in the direction of the current slope for a horizontal distance of <code>h</code>, and land at the next approximate state. For the cooling example above, with <code>k = 0.1</code>, <code>T_ambient = 20</code>, and initial temperature <code>T(0) = 100</code>, a single step of size <code>h = 1</code> second gives:</p>
+
+<pre><code>f(T, t) = -0.1 * (T - 20)
+f(100, 0) = -0.1 * (100 - 20) = -8
+
+T(1) ≈ 100 + 1 * (-8) = 92</code></pre>
+
+<p>The true answer (from the analytical solution <code>T(t) = T_ambient + (T0 - T_ambient)*exp(-k*t)</code>) is approximately <code>92.31</code>, so the error here is small. However, if we had used a much larger step — say <code>h = 10</code> — the accumulated error over the simulation would become significant.</p>
+
+<p><strong>Step size and accuracy</strong> are directly linked. Euler's method is said to be <em>first-order accurate</em>, meaning the local error at each step is proportional to <code>h²</code>, and the global (accumulated) error over a fixed time interval is proportional to <code>h</code>. Halving the step size roughly halves the global error. This sounds acceptable, but in practice, achieving engineering accuracy with Euler's method can require step sizes so small that the computation becomes prohibitively slow, or so large that the method becomes <em>unstable</em>.</p>
+
+<p><strong>Instability</strong> is a critical concern. For many ODEs, Euler's method works only if <code>h</code> stays below a certain system-dependent threshold. For the linear decay ODE <code>dx/dt = -k*x</code>, the stability condition is <code>h < 2/k</code>. If <code>k</code> is large (a fast-decaying, or "stiff" system), this forces an extremely small step size. Exceed the limit even slightly, and the numerical solution oscillates with growing amplitude, diverging wildly from the true solution that quietly decays to zero. This sensitivity to step size is the central weakness of so-called <em>explicit</em> methods like Euler.</p>
+
+<p>A simple Python implementation of Euler's method illustrates the loop structure clearly:</p>
+
+<pre><code>import numpy as np
+
+# System parameters
+k = 0.1
+T_ambient = 20.0
+T0 = 100.0
+
+# Time settings
+h = 0.5          # step size in seconds
+t_end = 50.0
+t = np.arange(0, t_end + h, h)
+
+# Pre-allocate result array
+T = np.zeros(len(t))
+T[0] = T0        # initial condition
+
+# Derivative function
+def dTdt(T, t):
+    return -k * (T - T_ambient)
+
+# Euler time-stepping loop
+for i in range(len(t) - 1):
+    T[i+1] = T[i] + h * dTdt(T[i], t[i])
+</code></pre>
+
+<p>Notice that the result array <code>T</code> is <em>pre-allocated</em> with <code>np.zeros</code> before the loop begins. This is a crucial performance habit: repeatedly appending to a Python list inside a loop causes repeated memory reallocations, slowing large simulations significantly. Allocating the full array upfront and filling it by index is far more efficient.</p>
+
+<p><strong>Runge-Kutta Methods</strong></p>
+
+<p>The shortcomings of Euler's method motivate a family of more sophisticated algorithms collectively called <strong>Runge-Kutta (RK) methods</strong>. The central idea is to estimate the derivative not just at the beginning of the time step, but at several carefully chosen points within the step, then combine those estimates in a weighted average that cancels out leading error terms. The result is a much more accurate approximation without requiring a dramatically smaller step size.</p>
+
+<p>The workhorse of this family is the <strong>classical fourth-order Runge-Kutta method (RK4)</strong>. For a step from <code>t</code> to <code>t + h</code> with state <code>x(t)</code>, RK4 computes four slope estimates:</p>
+
+<pre><code>k1 = f(x,          t)
+k2 = f(x + h*k1/2, t + h/2)
+k3 = f(x + h*k2/2, t + h/2)
+k4 = f(x + h*k3,   t + h)
+
+x(t + h) = x(t) + (h/6) * (k1 + 2*k2 + 2*k3 + k4)</code></pre>
+
+<p><code>k1</code> is the slope at the start of the interval — identical to what Euler uses. <code>k2</code> uses <code>k1</code> to make a half-step and estimates the slope at the interval's midpoint. <code>k3</code> refines the midpoint estimate using <code>k2</code>. <code>k4</code> estimates the slope at the end of the interval using the full step. The final update weights the two midpoint estimates twice as heavily as the endpoint estimates, in analogy with Simpson's rule for numerical integration. This specific weighting is what produces <strong>fourth-order accuracy</strong>: the local error at each step scales as <code>h⁵</code>, and the global error over a fixed interval scales as <code>h⁴</code>. To achieve the same accuracy as Euler, RK4 needs far fewer — and therefore larger — steps, making it dramatically more efficient in most situations.</p>
+
+<p>In concrete terms: if Euler with step size <code>h</code> produces a global error of <code>0.01</code>, then to cut that error to <code>0.0001</code> (100× improvement) you must reduce <code>h</code> by a factor of 100, increasing computation by 100×. With RK4, you only need to reduce <code>h</code> by a factor of about 3.16 (since <code>3.16⁴ ≈ 100</code>), increasing computation by just 3.16× — and each RK4 step costs only 4 function evaluations versus Euler's 1, so the real savings are roughly a factor of 25. For engineering problems where <code>f(x, t)</code> is expensive to evaluate, this difference is enormous.</p>
+
+<p>Here is a Python implementation of RK4 for the same cooling problem:</p>
+
+<pre><code>import numpy as np
+
+k = 0.1
+T_ambient = 20.0
+T0 = 100.0
+h = 2.0
+t_end = 50.0
+t = np.arange(0, t_end + h, h)
+T = np.zeros(len(t))
+T[0] = T0
+
+def dTdt(T, t):
+    return -k * (T - T_ambient)
+
+for i in range(len(t) - 1):
+    ti = t[i]
+    Ti = T[i]
+    k1 = dTdt(Ti,           ti)
+    k2 = dTdt(Ti + h*k1/2,  ti + h/2)
+    k3 = dTdt(Ti + h*k2/2,  ti + h/2)
+    k4 = dTdt(Ti + h*k3,    ti + h)
+    T[i+1] = Ti + (h/6) * (k1 + 2*k2 + 2*k3 + k4)
+</code></pre>
+
+<p>Even with a step size of 2 seconds — four times larger than the Euler example — RK4 produces results accurate to many more decimal places. RK4 is the standard first choice for simulating non-stiff engineering ODEs and is used throughout scientific computing as a reliable, general-purpose integrator.</p>
+
+<p>For problems where you cannot easily predict the right step size, or where the system's behaviour changes dramatically over time (fast transients followed by slow drift), <strong>adaptive Runge-Kutta solvers</strong> are the professional solution. These methods automatically estimate the local error at each step — by comparing, for instance, a 4th-order and a 5th-order solution — and adjust <code>h</code> up or down to keep the error within a specified tolerance. The user sets a desired accuracy, and the solver figures out how large a step is safe. SciPy's <code>solve_ivp</code> function implements several such adaptive methods.</p>
+
+<p><strong>Implementing a Time-Stepping Loop</strong></p>
+
+<p>Whether using Euler or RK4, the structure of a time-stepping simulation in Python follows a consistent pattern. Getting this structure right — efficiently, clearly, and correctly — is a foundational skill.</p>
+
+<p>The first task is <strong>defining the time array</strong>. Two NumPy functions are commonly used. <code>np.linspace(t_start, t_end, n_points)</code> generates exactly <code>n_points</code> values evenly spaced from start to end, guaranteeing that the endpoint is included. <code>np.arange(t_start, t_end, h)</code> generates values spaced by <code>h</code>, but due to floating-point rounding it may or may not include the exact endpoint. For most simulations, <code>np.linspace</code> is preferable when you want a specific number of output points, while <code>np.arange</code> is natural when the step size is the primary concern. Note that the number of time steps is one less than the number of time points: with <code>n</code> points you perform <code>n-1</code> update steps.</p>
+
+<p>The second task is <strong>initialising the state vector</strong>. For a scalar problem, this is just <code>x[0] = x0</code>. For a multi-state system (like the mass-spring-damper with states <code>[x, v]</code>), the state at each time step is a 1D array, and the full storage is a 2D array with shape <code>(n_points, n_states)</code>:</p>
+
+<pre><code>import numpy as np
+
+# Mass-spring-damper parameters
+m = 1.0    # kg
+c = 0.5    # Ns/m
+k = 4.0    # N/m
+
+# Time setup
+h = 0.01
+t = np.arange(0, 10 + h, h)
+n = len(t)
+
+# State storage: columns are [x, v]
+state = np.zeros((n, 2))
+state[0] = [0.5, 0.0]   # initial displacement 0.5m, initial velocity 0m/s
+
+# Derivative function for the system
+def derivatives(s, t):
+    x, v = s
+    dxdt = v
+    dvdt = (-c*v - k*x) / m
+    return np.array([dxdt, dvdt])
+
+# RK4 loop
+for i in range(n - 1):
+    s = state[i]
+    ti = t[i]
+    k1 = derivatives(s,           ti)
+    k2 = derivatives(s + h*k1/2,  ti + h/2)
+    k3 = derivatives(s + h*k2/2,  ti + h/2)
+    k4 = derivatives(s + h*k3,    ti + h)
+    state[i+1] = s + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
+
+x = state[:, 0]   # displacement over time
+v = state[:, 1]   # velocity over time
+</code></pre>
+
+<p>This pattern — pre-allocate, initialise, loop, extract — should become second nature. Pre-allocating the full <code>state</code> array before the loop is critical. If you instead build the solution by appending to a list at each step, Python must occasionally copy the entire list to a new memory location, introducing unpredictable slowdowns in long simulations. The pre-allocated array approach is both faster and cleaner for downstream analysis and plotting.</p>
+
+<p>At each step, the loop extracts the current state, evaluates the derivative(s), applies the update rule, and writes the new state into the next row of the array. After the loop, individual state variables are extracted by slicing columns from the 2D array.</p>
+
+<p><strong>Step Size Selection and Accuracy</strong></p>
+
+<p>Choosing an appropriate time step is one of the most consequential decisions in time-stepping simulation. Choose too large a step and you sacrifice accuracy, or worse, trigger instability. Choose too small a step and the computation takes unnecessarily long, potentially accumulating significant <em>floating-point rounding errors</em> from millions of tiny arithmetic operations.</p>
+
+<p>The fundamental rule is that the time step must be <strong>small relative to the fastest characteristic time scale</strong> of the system. Every dynamic system has one or more <em>time constants</em> that describe how quickly it responds. For the exponential decay <code>dx/dt = -k*x</code>, the time constant is <code>τ = 1/k</code>: the state falls to about 37% of its initial value in one time constant. A safe rule of thumb for explicit methods is to use <code>h ≤ τ/10</code>, though the exact stability limit depends on the method. For Euler's method applied to this system, the hard stability limit is <code>h < 2τ</code>, but accuracy usually requires much smaller steps well before instability is reached.</p>
+
+<p><strong>Stiffness</strong> is the term for a particularly challenging situation where a system contains multiple time scales that differ by orders of magnitude. Imagine a system with two components: one with time constant <code>τ₁ = 0.001</code> seconds and another with <code>τ₂ = 1000</code> seconds. The stability limit forces <code>h</code> to be on the order of <code>0.001</code> seconds, but the simulation must run for thousands of seconds to capture the slow dynamics — requiring millions of steps. Explicit methods like Euler and RK4 handle stiff problems very poorly. Specialised <em>implicit</em> methods (such as backward differentiation formulas, implemented in SciPy's <code>'BDF'</code> and <code>'Radau'</code> solvers) are designed for stiff systems and can take much larger steps without instability.</p>
+
+<p><strong>Convergence testing</strong> is the practical way to verify that your chosen step size is producing trustworthy results. The procedure is straightforward: run the simulation with step size <code>h</code>, then repeat with <code>h/2</code>, and compare the results at corresponding time points. If the maximum difference is smaller than your acceptable tolerance, the solution has "converged" and the original step size is adequate. If the difference is still significant, halve again. For a first-order method like Euler, halving <code>h</code> should roughly halve the error; for RK4, it should reduce the error by a factor of about 16. Observing this expected reduction is reassuring evidence that the simulation is behaving as intended.</p>
+
+<pre><code># Convergence test example: run with h and h/2, compare final values
+import numpy as np
+
+def run_euler(k, T0, T_amb, h, t_end):
+    t = np.arange(0, t_end + h, h)
+    T = np.zeros(len(t))
+    T[0] = T0
+    for i in range(len(t)-1):
+        T[i+1] = T[i] + h * (-k * (T[i] - T_amb))
+    return T[-1]   # return final temperature
+
+k, T0, T_amb, t_end = 0.1, 100.0, 20.0, 30.0
+T_h   = run_euler(k, T0, T_amb, h=1.0,  t_end=t_end)
+T_h2  = run_euler(k, T0, T_amb, h=0.5,  t_end=t_end)
+T_h4  = run_euler(k, T0, T_amb, h=0.25, t_end=t_end)
+
+print(f"h=1.0:  T={T_h:.6f}")
+print(f"h=0.5:  T={T_h2:.6f}")
+print(f"h=0.25: T={T_h4:.6f}")
+print(f"Diff h->h/2: {abs(T_h - T_h2):.6f}")
+print(f"Diff h/2->h/4: {abs(T_h2 - T_h4):.6f}")
+</code></pre>
+
+<p>If the difference between successive runs is consistently halving (for Euler), convergence is confirmed and the solution is reliable at the chosen tolerance.</p>
+
+<p><strong>Using SciPy for ODE Integration</strong></p>
+
+<p>Writing your own Euler or RK4 loop is invaluable for understanding what is happening under the hood. But for production simulations, Python's SciPy library provides <code>scipy.integrate.solve_ivp</code> — a professional-grade ODE solver with adaptive step sizing, multiple algorithm options, event detection, and dense output. It is the right tool once the fundamentals are understood.</p>
+
+<p>The function signature is:</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+
+sol = solve_ivp(fun, t_span, y0, method='RK45', t_eval=None, dense_output=False, ...)</code></pre>
+
+<p>The arguments are:</p>
+<ul>
+  <li><strong>fun</strong>: the derivative function, which must accept arguments <code>(t, y)</code> — note the order is <em>t first, then y</em>, which is the reverse of many hand-written conventions. It must return an array of derivatives with the same shape as <code>y</code>.</li>
+  <li><strong>t_span</strong>: a two-element tuple <code>(t_start, t_end)</code> specifying the integration interval.</li>
+  <li><strong>y0</strong>: a 1D array of initial conditions, one element per state variable.</li>
+  <li><strong>method</strong>: the integration algorithm. <code>'RK45'</code> (the default) is an adaptive Runge-Kutta method of 4th/5th order, suitable for non-stiff problems. <code>'RK23'</code> is a lower-order adaptive method. <code>'Radau'</code> and <code>'BDF'</code> are implicit methods for stiff problems. <code>'DOP853'</code> is an 8th-order explicit method for high-accuracy requirements.</li>
+  <li><strong>t_eval</strong>: an optional array of times at which to store the solution. Without this, <code>solve_ivp</code> chooses its own internal steps and returns results only at those times, which may not align with a uniform grid.</li>
+  <li><strong>dense_output</strong>: if <code>True</code>, the solver builds a continuous interpolating function across the entire time span, accessible as <code>sol.sol(t)</code> for any <code>t</code> within the span.</li>
+</ul>
+
+<p>Here is the mass-spring-damper problem solved with <code>solve_ivp</code>:</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+import numpy as np
+
+m, c, k = 1.0, 0.5, 4.0
+
+def derivatives(t, y):
+    x, v = y
+    dxdt = v
+    dvdt = (-c*v - k*x) / m
+    return [dxdt, dvdt]
+
+y0 = [0.5, 0.0]          # initial displacement and velocity
+t_span = (0, 10)
+t_eval = np.linspace(0, 10, 1000)
+
+sol = solve_ivp(derivatives, t_span, y0, method='RK45',
+                t_eval=t_eval, rtol=1e-8, atol=1e-10)
+
+x = sol.y[0]   # displacement
+v = sol.y[1]   # velocity
+t = sol.t      # time points
+
+print(f"Solver succeeded: {sol.success}")
+print(f"Number of function evaluations: {sol.nfev}")
+</code></pre>
+
+<p>The <code>rtol</code> and <code>atol</code> parameters control the relative and absolute error tolerances, respectively. The solver internally adjusts its step size at every step to keep the estimated local error below <code>atol + rtol * |y|</code>. This adaptive strategy is far more robust than any fixed step size: in regions of rapid change, the solver automatically takes smaller steps; in calm regions, it stretches the step as large as accuracy allows, minimising the total number of function evaluations.</p>
+
+<p>The result object <code>sol</code> contains not just the solution arrays but also diagnostic information: <code>sol.nfev</code> counts how many times the derivative function was called, <code>sol.message</code> describes the termination condition, and <code>sol.success</code> is <code>True</code> if the solver completed without error.</p>
+
+<p><strong>Comparing custom implementations against <code>solve_ivp</code></strong> is an excellent validation strategy. If you have written a hand-coded RK4 loop and obtained results, running the same problem through <code>solve_ivp</code> with tight tolerances gives you a high-accuracy reference solution. Plotting the difference between the two over time reveals how your fixed-step implementation's error grows. This kind of cross-validation builds confidence that both implementations are correct and helps calibrate the step size needed for your custom solver to achieve adequate accuracy.</p>
+
+<p>Taken together, these concepts — the structure of ODEs and their initial conditions, the Euler update rule and its limitations, the superior accuracy of RK4, the discipline of pre-allocated loops, the importance of step-size selection and convergence testing, and the professional capabilities of <code>scipy.integrate.solve_ivp</code> — form the complete foundation for simulating dynamic engineering systems in Python. Mastery of these tools opens the door to modelling phenomena across mechanical, electrical, thermal, chemical, and aerospace engineering with confidence and computational efficiency.</p>
+        <div class="notes"><strong>Notes</strong>Consider pairing this content with plotting exercises using matplotlib to visualise how Euler and RK4 solutions diverge for larger step sizes, and how solve_ivp adaptively selects internal steps. A stiffness demonstration (e.g., a system with two very different time constants) makes the motivation for implicit solvers tangible.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

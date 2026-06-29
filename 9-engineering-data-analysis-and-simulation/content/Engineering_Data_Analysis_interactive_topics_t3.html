@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Cleaning and Preprocessing</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Data Cleaning and Preprocessing</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Data Cleaning and Preprocessing</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Raw engineering datasets are rarely clean. Sensors malfunction, communication links drop packets, analog-to-digital converters saturate, and manual data entry introduces typos. Before any meaningful analysis or model training can take place, every dataset must pass through a disciplined cleaning and preprocessing pipeline. This process involves detecting and filling gaps, identifying anomalous readings, enforcing correct data types, removing duplicate records, scaling numerical features into comparable ranges, and reshaping time-series data into the temporal resolution the analysis requires. Each of these steps is both a technical operation and an engineering judgment call — the right choice depends on the physical process being measured, the downstream task, and the acceptable trade-off between data retention and data integrity.</p>
+
+<p><strong>Detecting and Handling Missing Values</strong></p>
+
+<p>Missing values appear in a pandas DataFrame as <code>NaN</code> (Not a Number) for numeric columns or <code>None</code> for object columns. The first diagnostic step is always to count them. The method <code>df.isnull().sum()</code> returns the number of missing entries in every column, giving an immediate picture of which signals are most affected.</p>
+
+<pre><code>import pandas as pd
+import numpy as np
+
+df = pd.read_csv("sensor_log.csv", parse_dates=["timestamp"], index_col="timestamp")
+
+# Count missing values per column
+missing_counts = df.isnull().sum()
+print(missing_counts)
+
+# Express as a percentage of total rows
+missing_pct = df.isnull().mean() * 100
+print(missing_pct.round(2))
+</code></pre>
+
+<p>A column with fewer than 1–2 % of values missing behaves very differently from one with 40 % missing. The percentage guides the choice of remedy: a tiny fraction can be imputed safely; a large fraction may indicate a faulty sensor whose readings should be discarded entirely for that period.</p>
+
+<p><strong>Visualizing missing data patterns</strong> before selecting a strategy is crucial. If gaps are random and short, simple interpolation is appropriate. If an entire sensor channel is missing for a contiguous block of hours, that block almost certainly reflects a sensor fault or communication outage, and filling it with statistics computed from healthy data could introduce fictitious information. Libraries such as <em>missingno</em> provide matrix and heatmap visualizations that make systematic patterns immediately visible.</p>
+
+<p><code>dropna()</code> removes rows or columns that contain missing values. Its most important parameters are <code>axis</code> (0 to drop rows, 1 to drop columns), <code>how</code> ('any' drops a row if even one value is missing; 'all' drops it only if every value is missing), and <code>thresh</code>, which keeps a row only if it has at least <em>n</em> non-null values.</p>
+
+<pre><code># Drop rows where any column is NaN
+df_clean = df.dropna(axis=0, how="any")
+
+# Drop rows that are almost entirely empty — keep rows with at least 5 valid values
+df_clean = df.dropna(thresh=5)
+
+# Drop columns that are entirely missing
+df_clean = df.dropna(axis=1, how="all")
+</code></pre>
+
+<p><code>fillna()</code> replaces missing values rather than discarding them. Common strategies include filling with a constant (such as zero or a known sensor default), forward-filling the last known value (<code>method="ffill"</code>), backward-filling from the next known value (<code>method="bfill"</code>), or filling with a column's mean or median.</p>
+
+<pre><code># Fill with column mean
+df["temperature"].fillna(df["temperature"].mean(), inplace=True)
+
+# Forward fill — carry the last valid reading forward
+df["pressure"].fillna(method="ffill", inplace=True)
+
+# Backward fill — bring the next valid reading backward
+df["flow_rate"].fillna(method="bfill", inplace=True)
+
+# Fill with a specific constant
+df["valve_state"].fillna(0, inplace=True)
+</code></pre>
+
+<p>Forward fill is a natural default for sensor data because the physical quantity typically changes continuously — the last measured value is a reasonable estimate for the next instant. However, if the gap is long, forward fill silently introduces a flat signal that may mislead downstream algorithms, so it is good practice to cap the maximum number of consecutive fills: <code>df["pressure"].fillna(method="ffill", limit=5)</code>.</p>
+
+<p><code>interpolate()</code> is the most sophisticated gap-filling option. Linear interpolation draws a straight line between the two flanking valid values and assigns each missing point a proportional position along that line. Polynomial and spline modes fit higher-order curves, which better capture smooth continuous signals such as temperature ramps or pressure waves.</p>
+
+<pre><code># Linear interpolation along the time axis
+df["temperature"].interpolate(method="linear", inplace=True)
+
+# Cubic spline interpolation — smoother for slowly varying signals
+df["vibration"].interpolate(method="cubic", inplace=True)
+
+# Time-aware interpolation (respects unequal time spacing)
+df["temperature"].interpolate(method="time", inplace=True)
+</code></pre>
+
+<p>Time-aware interpolation is particularly important when the index is a DatetimeIndex with irregular spacing — it weights intermediate values by actual elapsed time rather than row number.</p>
+
+<p><strong>Identifying and Treating Outliers</strong></p>
+
+<p>An outlier is a data point that lies far from the rest of the distribution. In engineering contexts, outliers have two fundamentally different origins: genuine extreme events (a true pressure spike during a valve closure, for example) and instrument artifacts (a stuck sensor reading zero, a corrupted ADC sample producing a maximum-range value). Treating these two types identically would be a mistake — the first category contains real information; the second is noise to be eliminated. Domain knowledge is therefore irreplaceable: no purely statistical method can reliably distinguish a real alarm event from a sensor glitch without understanding the process.</p>
+
+<p><strong>Visual inspection</strong> with box plots and scatter plots is the natural starting point. A box plot immediately reveals the median, the interquartile range, and any individual points that plot beyond the whiskers. A time-series scatter plot shows whether extreme values are isolated spikes (likely artifacts) or part of a sustained transient (likely real).</p>
+
+<pre><code>import matplotlib.pyplot as plt
+
+# Box plot of all numeric columns
+df.plot(kind="box", subplots=True, layout=(2, 3), figsize=(12, 8))
+plt.tight_layout()
+plt.show()
+
+# Time-series scatter for one channel
+df["pressure"].plot(style=".", markersize=2, figsize=(14, 4))
+plt.title("Pressure over time")
+plt.show()
+</code></pre>
+
+<p>The <strong>interquartile range (IQR) method</strong> is a robust statistical test for outliers. It computes the 25th percentile (Q1) and 75th percentile (Q3), forms IQR = Q3 − Q1, and flags any value below Q1 − 1.5×IQR or above Q3 + 1.5×IQR as a potential outlier. The multiplier 1.5 is the conventional choice for exploratory analysis; a multiplier of 3.0 is used to detect only extreme outliers.</p>
+
+<pre><code>Q1 = df["pressure"].quantile(0.25)
+Q3 = df["pressure"].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_fence = Q1 - 1.5 * IQR
+upper_fence = Q3 + 1.5 * IQR
+
+# Boolean mask of outliers
+outlier_mask = (df["pressure"] < lower_fence) | (df["pressure"] > upper_fence)
+print(f"Outliers detected: {outlier_mask.sum()}")
+</code></pre>
+
+<p>The <strong>Z-score method</strong> measures how many standard deviations each value is from the column mean. A common threshold is |Z| > 3, meaning values more than three standard deviations from the mean are flagged. This method is sensitive to the presence of outliers in the mean and standard deviation estimates themselves, so it works best when the bulk of the data is approximately normally distributed and the fraction of outliers is small.</p>
+
+<pre><code>from scipy import stats
+
+z_scores = np.abs(stats.zscore(df["pressure"].dropna()))
+outlier_mask_z = z_scores > 3
+</code></pre>
+
+<p>Once outliers are identified, three treatment strategies are available. <strong>Removal</strong> simply drops the offending rows — acceptable when the number of affected rows is small and the outliers are confirmed artifacts. <strong>Capping (Winsorization)</strong> replaces extreme values with the fence values rather than removing them, preserving the row count and temporal continuity of the dataset. <strong>Flagging</strong> adds a separate boolean column marking outlier rows; the original values are retained and the flag is used as a feature or filter in downstream steps.</p>
+
+<pre><code># Capping (Winsorization)
+df["pressure_capped"] = df["pressure"].clip(lower=lower_fence, upper=upper_fence)
+
+# Flagging
+df["pressure_outlier"] = outlier_mask.astype(int)
+
+# Removal
+df_no_outliers = df[~outlier_mask]
+</code></pre>
+
+<p><strong>Correcting Data Types</strong></p>
+
+<p>Data loaded from CSV files, databases, or web APIs often arrives with incorrect or suboptimal types. Numeric columns may be read as strings if even one row contains a non-numeric character. Categorical codes may be stored as integers consuming far more memory than necessary. Timestamps may be plain strings, making time arithmetic impossible. Correcting types is therefore not cosmetic — it enables correct computation and can dramatically reduce memory footprint.</p>
+
+<p><code>astype()</code> is the general-purpose casting method. It converts a Series or an entire DataFrame to a specified dtype.</p>
+
+<pre><code># Convert a column read as object (string) to float
+df["flow_rate"] = df["flow_rate"].astype(float)
+
+# Convert an integer column to a smaller integer type to save memory
+df["sensor_id"] = df["sensor_id"].astype("int16")
+
+# Convert a numeric column to boolean
+df["alarm"] = df["alarm"].astype(bool)
+</code></pre>
+
+<p><code>pd.to_numeric()</code> with <code>errors='coerce'</code> is safer than <code>astype(float)</code> when the column may contain stray non-numeric strings. Instead of raising a <code>ValueError</code>, it silently converts unparseable values to <code>NaN</code>, which can then be handled with the missing-value strategies described above.</p>
+
+<pre><code># "pressure" column has some entries like "ERR" or "---"
+df["pressure"] = pd.to_numeric(df["pressure"], errors="coerce")
+# Non-numeric entries are now NaN, ready for imputation
+</code></pre>
+
+<p>String columns that represent a fixed set of categories — equipment identifiers, operating modes, sensor locations — are best stored as the <strong>Categorical dtype</strong>. Pandas stores a Categorical column as an integer code array plus a small lookup table of unique strings, which can reduce memory by an order of magnitude for columns with many repeated values.</p>
+
+<pre><code># Convert operating mode (few unique values) to Categorical
+df["operating_mode"] = df["operating_mode"].astype("category")
+
+print(df["operating_mode"].cat.categories)   # ['idle', 'run', 'shutdown']
+print(df.memory_usage(deep=True))            # compare before and after
+</code></pre>
+
+<p>Datetime parsing should be performed as early as possible — ideally at load time using <code>parse_dates</code> and <code>infer_datetime_format</code> arguments of <code>pd.read_csv()</code>, or immediately thereafter with <code>pd.to_datetime()</code>. A proper DatetimeIndex unlocks resampling, rolling windows, and time-zone handling.</p>
+
+<pre><code># Parse at load time
+df = pd.read_csv("log.csv", parse_dates=["timestamp"], index_col="timestamp")
+
+# Or after loading, with explicit format for speed
+df["timestamp"] = pd.to_datetime(df["timestamp"], format="%Y-%m-%d %H:%M:%S")
+df = df.set_index("timestamp")
+</code></pre>
+
+<p><strong>Handling Duplicate Records</strong></p>
+
+<p>Duplicate rows arise from many sources: database replication errors, overlapping log files that are concatenated, or message-broker retransmissions that result in the same measurement being stored twice. Unchecked duplicates inflate sample counts, distort statistical summaries, and can cause overfitting in machine learning models by leaking near-identical examples into both training and validation sets.</p>
+
+<p><code>duplicated()</code> returns a boolean Series that is <code>True</code> for every row that is an exact repeat of an earlier row (by default, all columns are compared). The <code>subset</code> parameter restricts the comparison to specified columns — useful when only the timestamp and sensor ID need to be unique, regardless of the measured value.</p>
+
+<pre><code># Find fully duplicate rows
+dup_mask = df.duplicated()
+print(f"Duplicate rows: {dup_mask.sum()}")
+
+# Find rows with the same timestamp and sensor ID (regardless of value)
+dup_ts_id = df.duplicated(subset=["sensor_id"], keep=False)
+print(df[dup_ts_id])
+</code></pre>
+
+<p><code>drop_duplicates()</code> removes duplicate rows. The <code>keep</code> parameter controls which occurrence survives: <code>'first'</code> retains the earliest row, <code>'last'</code> retains the latest, and <code>False</code> drops all copies of a duplicated row.</p>
+
+<pre><code># Keep first occurrence, drop subsequent duplicates
+df = df.drop_duplicates(keep="first")
+
+# After deduplication, reset the integer index (if used)
+df = df.reset_index(drop=True)
+</code></pre>
+
+<p>For time-series data, simple row removal is sometimes insufficient. If a sensor writes at nominally 1-second intervals but occasionally emits two readings within the same second, the correct fix is <strong>time-based deduplication by resampling</strong>: resample to a regular 1-second grid and aggregate duplicate entries within each bin (e.g., by averaging), then re-index onto the regular grid. This simultaneously removes duplicates and repairs any small timing jitter.</p>
+
+<pre><code># Resample to 1-second bins, average duplicates, and fill the regular grid
+df_regular = df.resample("1S").mean()
+# Verify the resulting index is truly uniform
+assert df_regular.index.is_monotonic_increasing
+print(df_regular.shape)
+</code></pre>
+
+<p>After any deduplication operation, verifying the row count and index integrity is good practice: confirm the count decreased by approximately the expected number, that no timestamps are repeated, and that the index is monotonically increasing.</p>
+
+<p><strong>Normalizing and Scaling Data</strong></p>
+
+<p>Many machine learning algorithms and numerical optimization methods are sensitive to the magnitude and spread of input features. A neural network receiving temperature in Kelvin (≈ 300) alongside normalized efficiency (0 to 1) will have gradients dominated by the larger-magnitude feature. Normalizing all features to comparable ranges ensures that no single variable overwhelms the others simply because of its units.</p>
+
+<p><strong>Unit conversion</strong> should be applied before any normalization step. If pressure data from two sensors arrives in bar and kPa respectively, converting both to a common unit (for example, Pa) is a prerequisite for physically meaningful comparison and scaling.</p>
+
+<p><strong>Min-max normalization</strong> maps every value in a column to the interval [0, 1] using the formula <em>x′ = (x − x_min) / (x_max − x_min)</em>. It preserves the shape of the original distribution and the relative distances between values. Its weakness is sensitivity to outliers: a single extreme value compresses all other values into a tiny portion of the [0, 1] range.</p>
+
+<pre><code># Manual min-max normalization
+x_min = df["temperature"].min()
+x_max = df["temperature"].max()
+df["temperature_norm"] = (df["temperature"] - x_min) / (x_max - x_min)
+
+# Using scikit-learn for pipeline compatibility
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+df["temperature_norm"] = scaler.fit_transform(df[["temperature"]])
+
+# Save the scaler for later use on new data
+import joblib
+joblib.dump(scaler, "temperature_scaler.pkl")
+</code></pre>
+
+<p><strong>Z-score standardization</strong> (also called standard scaling) subtracts the mean and divides by the standard deviation, producing a distribution with zero mean and unit variance. It is preferred when the downstream algorithm assumes Gaussian-distributed inputs (e.g., linear regression, PCA, Gaussian naive Bayes) and is more robust to outliers than min-max normalization in the sense that it does not compress the bulk of the data around a single extreme point.</p>
+
+<pre><code">from sklearn.preprocessing import StandardScaler
+
+scaler_z = StandardScaler()
+df["pressure_std"] = scaler_z.fit_transform(df[["pressure"]])
+
+# Parameters are stored in the scaler object
+print(f"Mean: {scaler_z.mean_[0]:.3f}, Std: {scaler_z.scale_[0]:.3f}")
+</code></pre>
+
+<p>A critical production-safety rule: <strong>scaling parameters must be derived from training data only</strong> and then applied identically to validation and test sets. Fitting a scaler on the full dataset before splitting introduces data leakage — the model indirectly sees test-set statistics during training, leading to overly optimistic performance estimates.</p>
+
+<pre><code">from sklearn.model_selection import train_test_split
+
+X_train, X_test = train_test_split(df[["pressure", "temperature"]], test_size=0.2)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)   # fit AND transform on train
+X_test_scaled  = scaler.transform(X_test)         # transform ONLY on test
+</code></pre>
+
+<p><strong>Resampling and Aggregating Time-Series Data</strong></p>
+
+<p>Engineering time-series data seldom arrives at a single convenient frequency. High-speed vibration sensors may sample at 10 kHz while temperature loggers record at 1 Hz. Merging these signals for joint analysis, or preparing data for a model that expects a uniform time step, requires resampling — either downsampling (reducing frequency) or upsampling (increasing frequency).</p>
+
+<p>The pandas <code>resample()</code> method groups a DatetimeIndex-based Series or DataFrame into fixed-duration bins, analogous to a <code>groupby()</code> along the time axis. The rule string specifies the bin width: <code>'1T'</code> for one minute, <code>'1H'</code> for one hour, <code>'30S'</code> for 30 seconds, and so on.</p>
+
+<pre><code># Downsample 1-second data to 1-minute averages
+df_1min = df.resample("1T").mean()
+
+# Multiple aggregations in a single pass
+df_summary = df.resample("1H").agg({
+    "temperature": "mean",
+    "pressure":    ["min", "max", "mean"],
+    "vibration":   "max"
+})
+
+# Sum of energy consumption per day
+df_daily_energy = df["power_kw"].resample("1D").sum()
+</code></pre>
+
+<p>When downsampling, the aggregation function should reflect the physical meaning of the signal: mean is appropriate for slowly varying quantities such as temperature; max is appropriate for peak-value quantities such as vibration amplitude or fault indicator flags; sum is appropriate for cumulative quantities such as energy or flow volume.</p>
+
+<p><strong>Upsampling</strong> increases the time resolution — for example, converting hourly averages to per-minute values. The new time points contain no measured data, so they must be filled using an interpolation method.</p>
+
+<pre><code"># Upsample hourly data to per-minute, then interpolate
+df_minute = df_1h.resample("1T").interpolate(method="time")
+
+# Or: first resample (creating NaNs), then interpolate separately
+df_minute = df_1h.resample("1T").asfreq()         # insert NaN rows
+df_minute = df_minute.interpolate(method="linear")
+</code></pre>
+
+<p><strong>Rolling windows</strong>, applied with <code>rolling()</code>, compute statistics over a sliding window of a specified number of periods. They are the primary tool for trend smoothing (reducing high-frequency noise), computing moving averages, and calculating local variance or standard deviation as a measure of signal volatility.</p>
+
+<pre><code># 5-minute centered moving average
+df["temp_smooth"] = df["temperature"].rolling(window=5, center=True).mean()
+
+# 10-sample rolling standard deviation (local volatility)
+df["vib_volatility"] = df["vibration"].rolling(window=10).std()
+
+# Exponentially weighted moving average — gives more weight to recent samples
+df["temp_ewma"] = df["temperature"].ewm(span=10, adjust=False).mean()
+</code></pre>
+
+<p>A centered rolling window (<code>center=True</code>) uses future as well as past values to compute each output point, which produces a smoother result but introduces look-ahead bias if the smoothed signal is used as a real-time feature. A trailing window (<code>center=False</code>, the default) uses only past values and is safe for real-time or causal applications.</p>
+
+<p>Taken together, these six families of operations — missing-value handling, outlier treatment, type correction, deduplication, scaling, and temporal resampling — form the complete preprocessing pipeline for engineering data. Executing them in a principled, reproducible order, with careful inspection at each step, is what transforms a noisy raw dataset into a reliable foundation for analysis, visualization, and machine learning.</p>
+        <div class="notes"><strong>Notes</strong>All code examples use pandas and scikit-learn idioms consistent with current stable APIs. The note about data-leakage-safe scaling (fit on train only) is an important production consideration worth emphasizing in instruction.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

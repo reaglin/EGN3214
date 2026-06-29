@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulating Electrical Systems</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Simulating Electrical Systems</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Simulating Electrical Systems</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Electrical circuits are among the most natural applications of ordinary differential equation (ODE) simulation. The voltages and currents in resistor-capacitor (RC) and resistor-inductor-capacitor (RLC) networks evolve continuously in time according to well-understood physical laws — Kirchhoff's voltage and current laws, combined with the constitutive relationships of each component. Because these governing equations are ODEs with known analytical solutions in simple cases, electrical circuits provide an ideal testbed: you can build a numerical simulator, run it, and then compare its output directly against an exact formula to verify correctness. This topic develops that workflow from first principles, covering the physics of RC and RLC circuits, the translation of those physics into state-space form suitable for a numerical integrator, frequency-domain analysis of circuit responses, and rigorous validation against analytical solutions.</p>
+
+<p><strong>The RC Circuit</strong></p>
+
+<p>The simplest dynamic electrical circuit consists of a resistor R (in ohms, Ω) in series with a capacitor C (in farads, F), driven by a voltage source Vs. Applying Kirchhoff's voltage law (KVL) around the single loop — the source voltage must equal the sum of the voltage drops across the resistor and the capacitor — gives:</p>
+
+<pre><code>Vs = V_R + Vc
+Vs = R·I + Vc
+</code></pre>
+
+<p>The current through the capacitor is related to the rate of change of the capacitor voltage by <em>I = C · dVc/dt</em>. Substituting this into the KVL equation and rearranging produces the governing first-order ODE:</p>
+
+<pre><code>R·C·dVc/dt + Vc = Vs
+</code></pre>
+
+<p>This single equation completely describes the evolution of Vc over time once an initial condition is specified. The product R·C has units of seconds and is called the <strong>time constant</strong>, denoted τ (tau):</p>
+
+<pre><code>τ = R · C
+</code></pre>
+
+<p>The time constant is the most important single parameter of an RC circuit because it sets the characteristic timescale of every transient. A large τ means the circuit responds slowly; a small τ means it responds quickly. Physically, τ is the time it takes the capacitor voltage to reach approximately 63.2% of its final value when charging from zero — a direct consequence of the exponential form of the solution.</p>
+
+<p>For the specific case of a step input (Vs suddenly jumps from 0 to a constant value Vs at time t = 0) with the capacitor initially uncharged (Vc(0) = 0), the ODE has an exact analytical solution:</p>
+
+<pre><code>Vc(t) = Vs · (1 - e^(-t/τ))
+</code></pre>
+
+<p>This exponential charging curve is fundamental. At t = τ the voltage has reached Vs·(1 - e⁻¹) ≈ 0.632·Vs. At t = 2τ it has reached about 86.5% of Vs. After five time constants (t = 5τ) the capacitor voltage equals Vs·(1 - e⁻⁵) ≈ 0.9933·Vs, which is within 1% of the source voltage. This is why engineers use <em>five time constants</em> as the practical definition of "fully charged": the remaining error is less than 1%.</p>
+
+<p>For a discharging scenario — Vs = 0 and initial condition Vc(0) = V₀ — the solution is instead:</p>
+
+<pre><code>Vc(t) = V₀ · e^(-t/τ)
+</code></pre>
+
+<p>The capacitor exponentially decays toward zero. Again, after five time constants the stored charge is less than 1% of its original value.</p>
+
+<p>As a concrete numerical example, consider R = 1000 Ω (1 kΩ) and C = 100 × 10⁻⁶ F (100 µF). Then τ = 1000 × 100 × 10⁻⁶ = 0.1 s. With a step voltage of Vs = 5 V, the capacitor reaches about 3.16 V at t = 0.1 s and is considered fully charged by t = 0.5 s. These numbers are easy to verify with a voltmeter and stopwatch, making the RC circuit a perfect calibration case for any numerical simulator.</p>
+
+<p><strong>The RLC Circuit</strong></p>
+
+<p>Adding an inductor L (in henries, H) in series with the resistor and capacitor creates an RLC circuit. Inductors resist changes in current according to V_L = L · dI/dt. Applying KVL to the series RLC loop:</p>
+
+<pre><code>Vs = V_R + V_L + Vc
+Vs = R·I + L·dI/dt + Vc
+</code></pre>
+
+<p>Because Vc relates to I through <em>I = C · dVc/dt</em>, differentiating the KVL equation with respect to time and substituting gives a second-order ODE in the loop current I:</p>
+
+<pre><code>L·d²I/dt² + R·dI/dt + I/C = dVs/dt
+</code></pre>
+
+<p>This equation has two roots that determine the character of the transient response. Defining two key parameters — the <strong>resonant frequency</strong> ω₀ and the <strong>damping factor</strong> α:</p>
+
+<pre><code>ω₀ = 1 / √(L·C)       [rad/s]
+α  = R / (2·L)         [rad/s or s⁻¹]
+</code></pre>
+
+<p>The ratio of these quantities determines the circuit's damping regime. The characteristic equation of the homogeneous ODE is s² + 2α·s + ω₀² = 0, with roots s = −α ± √(α² − ω₀²). Three regimes arise:</p>
+
+<ul>
+<li><strong>Overdamped (α &gt; ω₀):</strong> Two distinct real negative roots. The current decays exponentially without oscillation — the circuit is sluggish.</li>
+<li><strong>Critically damped (α = ω₀):</strong> A repeated real root. The current returns to steady state as fast as possible without overshooting — the fastest non-oscillatory response.</li>
+<li><strong>Underdamped (α &lt; ω₀):</strong> Two complex conjugate roots with negative real parts. The current oscillates at the damped natural frequency ω_d = √(ω₀² − α²) while its envelope decays exponentially. This is the oscillating transient behavior often seen in real circuits when R is small.</li>
+</ul>
+
+<p>The underdamped case produces the characteristic ringing waveform. For example, with L = 10 mH, C = 1 µF, and R = 10 Ω: ω₀ = 1/√(0.01 × 10⁻⁶) = 10,000 rad/s (about 1592 Hz), and α = 10/(2 × 0.01) = 500 s⁻¹. Since α &lt; ω₀, the circuit is underdamped and will ring at ω_d = √(10000² − 500²) ≈ 9987 rad/s.</p>
+
+<p>The <strong>quality factor Q</strong> is a dimensionless number that quantifies how sharply the circuit resonates in the frequency domain:</p>
+
+<pre><code>Q = ω₀·L / R
+</code></pre>
+
+<p>A high Q (much greater than 1) means the circuit is very selective — it strongly amplifies signals near ω₀ and heavily attenuates all others. A low Q (less than 0.5) indicates an overdamped circuit with no resonance peak. At the borderline Q = 0.5 the circuit is critically damped. For the example above, Q = 10000 × 0.01 / 10 = 10, indicating a sharp resonance — exactly what you'd expect for a low-loss LC tank circuit.</p>
+
+<p><strong>Implementing the Electrical Simulation</strong></p>
+
+<p>To simulate either circuit numerically, the governing ODE(s) must be rewritten in <em>state-space form</em>: a vector of state variables whose time derivatives are expressed as explicit functions of the current state and time. A standard integrator such as <code>scipy.integrate.solve_ivp</code> (or a hand-coded RK4) then advances this state vector forward in time.</p>
+
+<p>For the <strong>RC circuit</strong>, the state vector has a single element — the capacitor voltage Vc. The derivative function is obtained by rearranging the governing ODE:</p>
+
+<pre><code>state = [Vc]
+dVc/dt = (Vs(t) - Vc) / (R * C)
+</code></pre>
+
+<p>In Python this becomes a function that accepts time t and state vector y, and returns the derivative:</p>
+
+<pre><code>def rc_deriv(t, y, R, C, Vs_func):
+    Vc = y[0]
+    Vs = Vs_func(t)
+    dVc_dt = (Vs - Vc) / (R * C)
+    return [dVc_dt]
+</code></pre>
+
+<p>For the <strong>RLC circuit</strong>, the second-order ODE must be split into two coupled first-order ODEs by introducing a second state variable — the derivative of current. Define the state as [I, dI/dt]:</p>
+
+<pre><code>state = [I, dI_dt]
+
+d(I)/dt     = dI_dt
+d(dI_dt)/dt = (dVs_dt - R*dI_dt - I/C) / L
+</code></pre>
+
+<p>The source term requires the time derivative of Vs. For a step input this is zero (after the initial jump); for a sinusoidal input Vs(t) = A·sin(ωt), the derivative is A·ω·cos(ωt). In code:</p>
+
+<pre><code>def rlc_deriv(t, y, R, L, C, dVs_func):
+    I, dI_dt = y
+    dVs = dVs_func(t)
+    d2I_dt2 = (dVs - R * dI_dt - I / C) / L
+    return [dI_dt, d2I_dt2]
+</code></pre>
+
+<p>Good simulation practice requires defining all physical component values as named constants at the top of the script, never embedding them as magic numbers inside functions. This makes the code readable, easy to modify, and less prone to errors from using inconsistent values in different places:</p>
+
+<pre><code>import numpy as np
+from scipy.integrate import solve_ivp
+
+# --- Component values ---
+R = 1000.0       # Ohms
+C = 100e-6       # Farads
+L = 10e-3        # Henries (RLC only)
+Vs_step = 5.0    # Volts (step amplitude)
+tau = R * C      # Time constant
+
+# --- Time array ---
+t_start = 0.0
+t_end   = 5 * tau
+N       = 1000
+t_eval  = np.linspace(t_start, t_end, N)
+</code></pre>
+
+<p>To fully characterize a circuit's behavior, two types of source inputs should be simulated. A <strong>step input</strong> (Vs suddenly switches from 0 to a constant value) reveals the <em>transient response</em>: how the circuit transitions from its initial state to a new steady state. A <strong>sinusoidal input</strong> Vs(t) = A·sin(2π·f·t) reveals the <em>steady-state frequency response</em>: how the circuit amplifies or attenuates signals of a given frequency after all transients have died away. By sweeping the frequency f across a range of values and recording the steady-state output amplitude, you can empirically construct the circuit's frequency response from the time-domain simulation.</p>
+
+<p><strong>Frequency Domain Analysis</strong></p>
+
+<p>Beyond time-domain transient plots, engineers analyze circuits in the <em>frequency domain</em> — decomposing the time-domain signal into its sinusoidal components and examining how the circuit modifies each one. Python's NumPy library provides the discrete Fourier transform (DFT) for this purpose.</p>
+
+<p><code>np.fft.fft(signal)</code> computes the DFT of an array <code>signal</code>, returning a complex array whose elements represent the amplitude and phase of each frequency component. The magnitude of each element gives the strength of that frequency in the signal:</p>
+
+<pre><code>import numpy as np
+
+dt = t_eval[1] - t_eval[0]         # Sampling interval
+Vc_fft = np.fft.fft(Vc_numerical)  # Complex spectrum
+magnitude = np.abs(Vc_fft)         # Magnitude spectrum
+</code></pre>
+
+<p><code>np.fft.fftfreq(N, d=dt)</code> returns the corresponding frequency axis in hertz, matching element-by-element with the FFT output array. Because the DFT of a real signal is symmetric, you typically keep only the first half of the spectrum (positive frequencies):</p>
+
+<pre><code>freqs = np.fft.fftfreq(N, d=dt)
+# Keep only positive frequencies
+pos_mask = freqs >= 0
+freqs_pos = freqs[pos_mask]
+magnitude_pos = magnitude[pos_mask]
+</code></pre>
+
+<p>The resulting <strong>magnitude spectrum</strong> reveals which frequency components are amplified or attenuated by the circuit. For an RC low-pass filter driven by a sinusoid near its cutoff frequency f_c = 1/(2πτ), the spectrum will show strong output below f_c and rapidly diminishing output above f_c. For an underdamped RLC circuit driven by a broadband signal (such as a short pulse), the spectrum will show a pronounced peak near the resonant frequency f₀ = ω₀/(2π).</p>
+
+<p>The standard engineering representation of frequency response is the <strong>Bode plot</strong>, which displays two quantities as functions of frequency (on a logarithmic frequency axis):</p>
+
+<ul>
+<li><strong>Magnitude (dB):</strong> 20 · log₁₀(|H(f)|), where H(f) is the ratio of output to input amplitude at frequency f. A value of 0 dB means no amplification or attenuation; −3 dB corresponds to the half-power (cutoff) point; −20 dB per decade is the slope of a first-order roll-off.</li>
+<li><strong>Phase (degrees or radians):</strong> The phase shift between input and output sinusoids at each frequency.</li>
+</ul>
+
+<p>You can construct an empirical Bode plot by running sinusoidal simulations at many frequencies, measuring the steady-state amplitude ratio and phase shift at each, and plotting the results. Alternatively, for linear circuits the theoretical transfer function can be evaluated analytically. For the RC low-pass filter, H(f) = 1 / (1 + j·2π·f·τ), giving |H| = 1/√(1 + (2πfτ)²) and phase = −arctan(2πfτ). At f = f_c = 1/(2πτ), |H| = 1/√2 ≈ 0.707, which is −3 dB, confirming the half-power cutoff.</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+f_range = np.logspace(0, 5, 500)     # 1 Hz to 100 kHz
+H_mag = 1.0 / np.sqrt(1 + (2*np.pi*f_range*tau)**2)
+H_phase = -np.arctan(2*np.pi*f_range*tau) * 180/np.pi
+H_dB = 20 * np.log10(H_mag)
+
+fig, (ax1, ax2) = plt.subplots(2, 1)
+ax1.semilogx(f_range, H_dB)
+ax1.set_ylabel('Magnitude (dB)')
+ax2.semilogx(f_range, H_phase)
+ax2.set_ylabel('Phase (deg)')
+ax2.set_xlabel('Frequency (Hz)')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><strong>Validation Against Analytical Solutions</strong></p>
+
+<p>One of the greatest advantages of simulating circuits with known analytical solutions is the ability to rigorously validate the numerical method. Validation should always be quantitative, not merely visual — a plot where two curves appear to overlap is not sufficient evidence that the error is small enough for your purpose.</p>
+
+<p>The first step is to compute the analytical solution over exactly the same time array used for the numerical simulation. Using NumPy array operations, this is efficient and vectorized:</p>
+
+<pre><code># RC circuit analytical solution (step input, zero initial condition)
+Vc_analytical = Vs_step * (1 - np.exp(-t_eval / tau))
+
+# Numerical solution from solve_ivp
+sol = solve_ivp(rc_deriv, [t_start, t_end], [0.0],
+                t_eval=t_eval, args=(R, C, lambda t: Vs_step),
+                method='RK45', rtol=1e-8, atol=1e-10)
+Vc_numerical = sol.y[0]
+</code></pre>
+
+<p>Plot both solutions on the same axes using distinct line styles so they are distinguishable even in black-and-white print. A common convention is to plot the analytical solution as a solid line and the numerical solution as a dashed line or with markers:</p>
+
+<pre><code>plt.figure()
+plt.plot(t_eval, Vc_analytical, 'k-',  linewidth=2, label='Analytical')
+plt.plot(t_eval, Vc_numerical,  'r--', linewidth=1.5, label='Numerical (RK45)')
+plt.xlabel('Time (s)')
+plt.ylabel('Capacitor Voltage (V)')
+plt.legend()
+plt.title('RC Circuit: Analytical vs Numerical')
+plt.show()
+</code></pre>
+
+<p>Next, compute the absolute pointwise error at every time step:</p>
+
+<pre><code>error = np.abs(Vc_numerical - Vc_analytical)
+
+plt.figure()
+plt.semilogy(t_eval, error)
+plt.xlabel('Time (s)')
+plt.ylabel('Absolute Error (V)')
+plt.title('Numerical Error vs Time')
+plt.show()
+</code></pre>
+
+<p>Plotting the error on a logarithmic y-axis is often more informative than a linear scale because the error typically spans many orders of magnitude. Examining this plot tells you <em>where</em> in time the integrator struggles most. For the RC circuit with a step input, the error is usually largest near t = 0 where the solution has its steepest gradient, and decays toward machine precision as the solution flattens out.</p>
+
+<p>Finally, report scalar validation metrics that give a single-number characterization of overall accuracy:</p>
+
+<ul>
+<li><strong>Maximum absolute error (MAE):</strong> <code>np.max(error)</code> — the worst-case pointwise deviation. This is the relevant metric when you need a guaranteed bound on the error at any instant.</li>
+<li><strong>Root-mean-square error (RMSE):</strong> <code>np.sqrt(np.mean(error**2))</code> — the average error across the entire simulation. This is more representative of typical accuracy than the maximum, which may be due to a single outlier near a discontinuity.</li>
+</ul>
+
+<pre><code>max_error  = np.max(error)
+rmse_error = np.sqrt(np.mean(error**2))
+print(f"Maximum absolute error: {max_error:.6e} V")
+print(f"Root-mean-square error: {rmse_error:.6e} V")
+</code></pre>
+
+<p>For a well-implemented RK45 integrator with tight tolerances (rtol=1e-8, atol=1e-10) applied to a smooth RC circuit problem, you should expect a maximum error on the order of 10⁻⁸ V or smaller — comparable to the specified tolerance. If the error is much larger, it indicates either a coding error in the derivative function, inconsistent component values between the numerical and analytical setups, or tolerances that are too loose. This kind of systematic validation, performed before trusting any simulation result, is standard engineering practice and ensures that the numerical tool is working correctly before it is applied to problems where no analytical solution exists.</p>
+        <div class="notes"><strong>Notes</strong>The implementation examples assume Python with NumPy, SciPy, and Matplotlib. Students should be encouraged to experiment with different R, L, C values to observe transitions between damping regimes, and to compare RK45 against simpler methods (Euler, RK4) to see how tolerance and step size affect accuracy.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

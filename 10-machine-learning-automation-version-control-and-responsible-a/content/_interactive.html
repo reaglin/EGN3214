@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsible AI Integration in Engineering Practice</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 10 - Machine Learning, Automation, Version Control, and Responsible AI</a></div>
+  <header>
+    <h1>Responsible AI Integration in Engineering Practice</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Responsible AI Integration in Engineering Practice</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Artificial intelligence tools have entered engineering practice with remarkable speed, and with that speed has come a set of professional obligations that every practicing engineer must understand and internalize. The availability of large language models, code-generation assistants, and automated algorithm suggestion systems does not reduce the engineer's responsibility — it intensifies it. Understanding precisely what these tools do well, where they fail, and what professional standards demand in response is no longer optional. It is a core competency for modern engineering practice.</p>
+
+<p><strong>The Role of AI Tools in Engineering Workflows</strong></p>
+
+<p>AI-powered coding assistants and language models can accelerate many routine engineering tasks. They are particularly useful for generating boilerplate code — the repetitive structural scaffolding that consumes time without requiring deep domain judgment. They can suggest algorithmic approaches to a problem, surface relevant library functions, and provide plain-language explanations of unfamiliar APIs or mathematical methods. For an engineer working under deadline pressure or exploring an unfamiliar library, these capabilities offer genuine productivity gains.</p>
+
+<p>However, it is essential to understand <em>what AI tools actually do</em> when they generate code. They do not reason from first principles. They produce statistically probable continuations of the text you have given them, based on patterns learned from enormous corpora of existing code and documentation. This has a critical implication: the output reflects the distribution of that training data. If common practices in the training data were outdated, insecure, or deprecated at the time of training — or if the library ecosystem has moved on since the model's knowledge cutoff — the generated code will reflect those outdated practices without any warning to the user.</p>
+
+<p>Consider a concrete example. Suppose you ask an AI assistant to write a data ingestion routine using a Python library for handling sensor telemetry. The assistant may generate syntactically correct code that calls a method signature from a version of the library that is two major releases old. The current version may have renamed that method, changed its argument order, or removed it entirely. The generated code will look entirely reasonable and may even include comments describing what it does correctly, yet it will raise an <code>AttributeError</code> or silently produce incorrect behavior at runtime.</p>
+
+<p>Equally important is the limitation that AI tools have no inherent understanding of the physical world, engineering constraints, or safety requirements of your specific application. A language model asked to write a PID controller tuning routine does not know that your system is a reactor with a 200-millisecond thermal lag and a catastrophic failure mode above a certain temperature. It will produce a generically structured controller without encoding any of that context unless you supply it explicitly and in precise detail — and even then, you cannot assume it has correctly incorporated those constraints without verifying the output yourself.</p>
+
+<p><strong>Verification of AI-Generated Code</strong></p>
+
+<p>The single most important habit an engineer can develop when working with AI-generated code is methodical, line-by-line reading before execution. This may feel tedious when the generated block is long and superficially plausible, but the professional consequences of skipping it can be severe. Treat AI-generated code exactly as you would treat code written by a junior colleague whose background in your specific domain is unknown: read it carefully, question every assumption, and do not assume that because it compiles it is correct.</p>
+
+<p>After reading and understanding a generated function, test it rigorously against known inputs and manually verified outputs. This means more than running one happy-path example. It means constructing a test suite that covers:</p>
+<ul>
+  <li><strong>Normal operating range inputs</strong> — values you expect to see in typical use, with outputs you can verify against a hand calculation or a trusted reference implementation.</li>
+  <li><strong>Boundary conditions</strong> — the edges of the valid input domain where numerical methods are most likely to fail or where conditional logic is most likely to be wrong (e.g., zero, negative numbers, empty arrays, single-element arrays).</li>
+  <li><strong>Out-of-range or degenerate inputs</strong> — inputs that should trigger an error or a clearly defined fallback, to verify that the function handles them gracefully rather than silently producing garbage output.</li>
+</ul>
+
+<p>Pay special attention to numerical methods, empirical formulas, and physical constants embedded in generated code. An AI assistant may embed a formula for, say, the Darcy-Weisbach friction factor using a particular approximation to the Colebrook equation, and it may have that approximation slightly wrong, or it may apply it outside the Reynolds number range where it is valid. Before using any such formula in an engineering calculation, look it up in an authoritative reference — a textbook, a standards document, or a peer-reviewed publication — and verify coefficient values, exponents, and applicable ranges independently.</p>
+
+<p>Never deploy AI-generated code in a safety-critical application — control systems, structural analysis, medical devices, power grid management — without independent review by at least one qualified engineer who did not write or prompt the original code, followed by formal validation testing that demonstrates correct behavior across the application's operational envelope.</p>
+
+<p><strong>Recognizing Hallucinations and Errors</strong></p>
+
+<p>The term <em>hallucination</em>, as applied to AI language models, refers to the generation of confident, plausible-sounding output that is factually incorrect. In engineering contexts, hallucinations are particularly dangerous because they are not flagged with uncertainty markers. The model does not say "I am not sure about this function signature." It simply writes the function call, and it looks like every other function call in the generated code.</p>
+
+<p>Common forms of hallucination in AI-generated engineering code include:</p>
+<ul>
+  <li><strong>Nonexistent functions or methods</strong> — the model generates a call to a library function that does not exist in any version of the library, or that exists in a different library under a similar name.</li>
+  <li><strong>Incorrect argument signatures</strong> — the model calls a real function but with the wrong number, order, or type of arguments.</li>
+  <li><strong>Invented constants</strong> — the model supplies a numerical constant (e.g., a material property, a unit conversion factor, a physical constant) that is subtly wrong or entirely fabricated.</li>
+  <li><strong>Misapplied formulas</strong> — the model applies a valid formula outside its domain of applicability, for example using an ideal gas approximation at conditions where real-gas corrections are essential.</li>
+</ul>
+
+<p>One of the most reliable signals that something has gone wrong in a generated computation is a physically unreasonable output. If your thermodynamic simulation returns a negative absolute temperature, that is not a subtle numerical error — it is a sign that something fundamental is broken in the generated logic. Similarly, if a thermal efficiency calculation returns a value above 1.0, if a concentration exceeds the total available mass, or if a structural deflection has the wrong sign, these are not results to shrug at. They indicate an error in the underlying logic that must be found and corrected before the code is used for anything.</p>
+
+<p>Cultivating skepticism toward AI output is not a sign of distrust toward technology. It is a professional competency, in the same way that skepticism toward a vendor's datasheet or a supplier's test report is a professional competency. Engineers are trained to ask "How do I know this is right?" and that question applies with equal force to AI-generated artifacts.</p>
+
+<p>Whenever a generated function contains a domain-specific formula — heat transfer correlations, stress-strain relationships, fluid dynamics approximations, electromagnetic field equations — treat it as an unverified claim until you have located the source in an authoritative engineering reference and confirmed that the implementation matches. Do not accept the model's citation of a source at face value; look up the source yourself, because AI models frequently cite real publications with incorrect equation numbers, page numbers, or content.</p>
+
+<p><strong>Professional Engineering Accountability</strong></p>
+
+<p>Engineering codes of ethics, whether issued by the National Society of Professional Engineers, the Institute of Electrical and Electronics Engineers, the American Society of Mechanical Engineers, or equivalent bodies in other countries, share a common foundational principle: engineers shall hold public health, safety, and welfare paramount. This obligation does not have an exception for tools used in the design process. An engineer who stamps a drawing, signs off on a calculation package, or commits code to a production system is asserting professional accountability for its correctness and safety, regardless of whether that output was produced manually, with traditional software tools, or with AI assistance.</p>
+
+<p>Using AI to generate a calculation or a piece of code and submitting it without verification does not constitute due diligence. Due diligence requires that the responsible engineer understands what the submitted work does and has taken reasonable steps to confirm it is correct for the intended application. "The AI generated it" is not a defense that protects the engineer professionally, legally, or ethically if the work contains an error that causes harm.</p>
+
+<p>Documentation of verification steps is therefore not merely good practice — it is professional protection. When you verify AI-generated code, record what you checked, how you checked it, and what the results were. This documentation serves multiple purposes: it demonstrates to employers, clients, and regulators that you exercised independent judgment; it supports quality assurance audits by providing a traceable record of the engineering process; and it protects you personally if a question ever arises about the basis for a design decision.</p>
+
+<p>Employers and clients expect engineers to exercise independent judgment even when AI tools are integrated into the workflow. The existence of an AI-assisted development environment does not shift responsibility to the tool vendor, the model developer, or the team that configured the toolchain. It remains with the engineer who reviewed and approved the output.</p>
+
+<p><strong>Bias, Fairness, and Equity in Engineering ML Systems</strong></p>
+
+<p>When engineers are not just using AI tools to assist their own work but are building machine learning systems that will make or inform decisions affecting people, the ethical obligations expand substantially. ML models learn from data, and data is never a neutral or complete representation of the world. It is collected by specific actors, in specific contexts, with specific instrumentation, under specific conditions, and it reflects all the historical inequities and sampling biases of those contexts.</p>
+
+<p>A model trained on data that underrepresents certain populations — defined by geography, demographics, operating conditions, or use cases — will perform worse for those underrepresented cases. This is not a theoretical concern. Medical imaging models trained predominantly on data from well-equipped hospitals in high-income regions have been shown to perform less accurately on images from lower-income settings. Predictive maintenance models trained on data from equipment in temperate climates may fail to predict failures reliably in equipment operating in extreme heat or humidity. Traffic prediction models trained on urban cores may perform poorly in rural areas. In each case, the people or systems that are underrepresented in the training data bear a disproportionate cost of the model's errors.</p>
+
+<p>Engineers building and deploying ML systems have a professional obligation to audit model performance across relevant subgroups before deployment. This means:</p>
+<ul>
+  <li>Identifying which subgroups or conditions are relevant to equity and safety in your application domain.</li>
+  <li>Ensuring your evaluation dataset adequately represents those subgroups — not just the overall population.</li>
+  <li>Computing performance metrics (accuracy, precision, recall, false positive rate, false negative rate) separately for each subgroup and examining whether performance is substantially different across groups.</li>
+  <li>Using formal fairness metrics where appropriate. <strong>Demographic parity</strong> requires that positive prediction rates be equal across groups. <strong>Equalized odds</strong> requires that both true positive rates and false positive rates be equal across groups. Different fairness criteria are appropriate for different application contexts, and no single metric captures all relevant fairness considerations.</li>
+</ul>
+
+<p>Bias mitigation is not a checkbox completed before launch. It is an ongoing engineering discipline. Deployed models encounter distribution shift — the real-world input distribution diverges over time from the training distribution as conditions change, new populations are served, or the system's own outputs influence future data. Continuous monitoring of model performance across subgroups after deployment, with defined thresholds for triggering retraining or model review, is a necessary component of responsible deployment.</p>
+
+<p><strong>Transparent Documentation and Reproducibility</strong></p>
+
+<p>Reproducibility is a foundational requirement of engineering practice. A structural analysis must be reproducible from its documented inputs and methods. A manufacturing process must be reproducible from its documented parameters. ML systems are no different, but the complexity of their inputs — large datasets, stochastic training procedures, hyperparameter choices, software environment dependencies — creates additional documentation burden that engineers must take seriously.</p>
+
+<p>Every dataset used to train or evaluate a model should be documented with: its source and provenance; the method by which it was collected; all preprocessing steps applied (filtering, normalization, imputation of missing values, resampling); the date range of the data; and known limitations such as gaps in coverage, known labeling errors, or populations that are underrepresented. This documentation allows a reviewer — whether a colleague, an auditor, or a regulator — to assess whether the data is appropriate for the intended application and to reproduce the preprocessing pipeline.</p>
+
+<p>Model documentation, often formalized as a <em>model card</em>, should record the model architecture; all hyperparameters; the training environment (software versions, hardware, random seeds where applicable); the training procedure including any data augmentation or regularization; and performance metrics evaluated on held-out test data, broken down by relevant subgroups. The model card should also state clearly what the model is intended to do, what it is not intended to do, and what known failure modes or limitations exist.</p>
+
+<p>Version control — using tools such as Git for code and configuration files, and dedicated artifact stores or data versioning tools for datasets and model weights — ensures that any past result can be traced back to the exact combination of code, data, and configuration that produced it. This is not just a convenience for debugging; it is a professional requirement for traceability in safety-relevant applications.</p>
+
+<p>Sharing documentation with stakeholders is itself an ethical act. Stakeholders — operators, decision-makers, affected communities — cannot make informed decisions about whether and how to rely on a model if they do not know its limitations, its performance characteristics, or the conditions under which it was trained. Transparency about what the model can and cannot do is a prerequisite for appropriate use.</p>
+
+<p><strong>Integrating Responsible AI Habits into Daily Practice</strong></p>
+
+<p>The principles described above are not one-time considerations. They need to be embedded into the rhythms of daily engineering work so that they happen consistently and reliably, not only when someone has time to think carefully or when a high-profile failure has focused attention on risks.</p>
+
+<p>One of the most effective structural interventions is making AI-assisted code a standard subject of pull request review. When a team normalizes the expectation that AI-generated code will receive the same critical review as hand-written code — that reviewers will ask "have you verified this formula?" and "have you tested this against boundary conditions?" — individual engineers are supported in doing the right thing and the team builds collective competency in evaluating AI outputs.</p>
+
+<p>Time allocation matters as well. If an engineering team's process does not include explicit time for testing and validating AI-assisted computations before they influence a design decision, that validation will tend not to happen consistently under deadline pressure. Schedule it. Treat it as part of the cost of using AI tools, not as an optional extra. The productivity gains from AI assistance are real, but they are only net gains if they do not come at the cost of correctness.</p>
+
+<p>Engineers should feel professionally empowered — and professionally obligated — to raise concerns about AI-generated outputs that appear physically inconsistent, numerically suspicious, or ethically problematic, even when time pressure is high and the team is inclined to move forward quickly. A culture that treats such concerns as obstacles rather than valuable signals is a culture that is accumulating risk. Raising a concern is not a sign of being obstructionist; it is an act of engineering responsibility.</p>
+
+<p>Finally, the capabilities and limitations of AI tools are evolving rapidly. A model that could not reliably generate correct numerical code two years ago may be substantially more capable today. A practice that was considered sufficient verification a year ago may be inadequate for a more capable tool that is more convincing in its errors. Continuous learning about what current AI systems can and cannot do — through professional reading, peer discussion, and direct experimentation — is a professional obligation for any engineer integrating these tools into consequential work. The engineer who understands the tool's limitations is far better positioned to use it responsibly than one who simply trusts its output because it looks correct.</p>
+        <div class="notes"><strong>Notes</strong>This topic consolidates ethical, professional, and technical obligations into a unified treatment. Instructors may wish to pair this with case studies of real-world AI-assisted engineering failures (e.g., instances where unverified AI-generated code caused incorrect results in a deployed system) to make the accountability and verification principles concrete. The bias and fairness section may benefit from supplementary reading on specific fairness metrics if students are simultaneously taking coursework in ML fundamentals.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

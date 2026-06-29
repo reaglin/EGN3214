@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulating Mechanical Systems</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 9 - Engineering Data Analysis and Simulation</a></div>
+  <header>
+    <h1>Simulating Mechanical Systems</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Simulating Mechanical Systems</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Mechanical systems form the backbone of countless engineering applications — from the suspension of an automobile absorbing road bumps to a precision machine tool vibrating under cutting forces. Simulating these systems numerically allows engineers to predict behavior, tune parameters, and avoid destructive resonance conditions long before physical prototypes are built. The <strong>spring-mass-damper system</strong> is the canonical model for studying oscillatory mechanical behavior. Its elegance lies in the fact that a single second-order ordinary differential equation (ODE) captures the interaction of three fundamental physical phenomena: inertia, energy dissipation, and elastic restoring force. Mastering the numerical simulation of this system — and understanding how its analytical solution compares to numerical integration — builds the intuition needed to tackle far more complex mechanical models.</p>
+
+<p>The governing <strong>equation of motion</strong> for a spring-mass-damper system is:</p>
+
+<pre><code>m·ẍ + c·ẋ + k·x = F(t)</code></pre>
+
+<p>Here, <strong>m</strong> is the mass (kg), <strong>c</strong> is the viscous damping coefficient (N·s/m), <strong>k</strong> is the spring stiffness (N/m), <strong>x</strong> is the displacement from equilibrium (m), <strong>ẋ</strong> is velocity (m/s), <strong>ẍ</strong> is acceleration (m/s²), and <strong>F(t)</strong> is an externally applied force that may vary with time. Each term has clear physical meaning: <em>m·ẍ</em> is the inertial force resisting acceleration, <em>c·ẋ</em> is the damping force opposing velocity (think of a shock absorber), and <em>k·x</em> is the spring force pulling the mass back toward equilibrium. When these three forces balance the applied force, the motion is fully described.</p>
+
+<p>Two dimensionless and dimensional quantities derived from m, c, and k characterize the system's behavior completely. The <strong>natural frequency</strong> is defined as:</p>
+
+<pre><code>ωₙ = √(k / m)    [radians per second]</code></pre>
+
+<p>This is the rate at which the undamped system would oscillate if displaced from rest and released. A stiffer spring or lighter mass increases ωₙ, meaning faster oscillations. A heavier mass or softer spring lowers it. The <strong>damping ratio</strong> is defined as:</p>
+
+<pre><code>ζ = c / (2·√(m·k))    [dimensionless]</code></pre>
+
+<p>The denominator <em>2·√(m·k)</em> is called the <em>critical damping coefficient</em>, the smallest value of c that prevents oscillation. The damping ratio ζ compares the actual damping to this critical value. Together ωₙ and ζ collapse the three separate parameters m, c, k into a form that immediately reveals the qualitative character of the system's response.</p>
+
+<p>Because numerical integration methods (Euler, Runge-Kutta, etc.) are designed to advance <em>first-order</em> systems, the single second-order ODE must be <strong>converted into two coupled first-order ODEs</strong>. The standard approach introduces a state vector:</p>
+
+<pre><code>y = [x, v]    where v = ẋ</code></pre>
+
+<p>Differentiating each component:</p>
+
+<pre><code>dy₁/dt = v
+dy₂/dt = [F(t) - c·v - k·x] / m</code></pre>
+
+<p>The second equation comes directly from solving the equation of motion for acceleration ẍ. This pair of first-order equations is the form handed to any numerical integrator. A Python implementation of the derivative function for free vibration (F(t) = 0) looks like this:</p>
+
+<pre><code>def spring_mass_damper(t, y, m, c, k):
+    x, v = y
+    dxdt = v
+    dvdt = (-c * v - k * x) / m
+    return [dxdt, dvdt]</code></pre>
+
+<p>This function receives the current time <em>t</em>, the current state <em>y = [x, v]</em>, and the system parameters, then returns the time derivatives of each state variable. The numerical integrator calls this function repeatedly to march the solution forward in time.</p>
+
+<p>The three qualitatively distinct response types — <strong>underdamped, critically damped, and overdamped</strong> — arise depending on the value of ζ.</p>
+
+<p>An <strong>underdamped system</strong> (ζ &lt; 1) oscillates. The mass overshoots equilibrium, reverses direction, overshoots again on the other side, and gradually the amplitude decays toward zero. The oscillation does not occur at the natural frequency ωₙ but at the slightly lower <strong>damped natural frequency</strong>:</p>
+
+<pre><code>ωd = ωₙ · √(1 - ζ²)</code></pre>
+
+<p>For lightly damped systems (ζ ≪ 1), ωd ≈ ωₙ, and the difference is negligible. For moderate damping — say ζ = 0.5 — the damped frequency is noticeably reduced: ωd = ωₙ·√(0.75) ≈ 0.866·ωₙ. Engineers designing <em>vibration isolators, vehicle suspensions, or seismic dampers</em> almost always operate in the underdamped regime, accepting some oscillation in exchange for better isolation performance.</p>
+
+<p>A <strong>critically damped system</strong> (ζ = 1) returns to equilibrium as quickly as possible without oscillating at all. This is the fastest non-oscillatory response achievable. Instrument pointer mechanisms (galvanometers, analog meters) and door closing mechanisms are often designed near critical damping to avoid the needle or door panel bouncing back and forth.</p>
+
+<p>An <strong>overdamped system</strong> (ζ &gt; 1) also returns to equilibrium without oscillation, but does so more slowly than a critically damped system. The excess damping fights the restoring force as well as velocity, creating a sluggish return. Very thick viscous fluids, or deliberately over-stiffened shock absorbers, produce overdamped behavior. In practice, overdamping is rarely desirable because performance is sacrificed without any benefit over critical damping.</p>
+
+<p>To appreciate these distinctions quantitatively, consider a system with <em>m = 1 kg</em> and <em>k = 100 N/m</em>, giving ωₙ = 10 rad/s. Choosing ζ = 0.1, 1.0, and 2.0 requires c values of 2, 20, and 40 N·s/m respectively. Simulating all three from the same initial condition x(0) = 1 m, v(0) = 0 reveals the three response shapes starkly on a single plot.</p>
+
+<p>The <strong>analytical solution for free vibration</strong> in the underdamped case provides the exact trajectory for comparison against numerical results. Starting from the equation of motion with F(t) = 0, the solution is:</p>
+
+<pre><code>x(t) = A · e^(-ζ·ωₙ·t) · cos(ωd·t + φ)</code></pre>
+
+<p>The constants A (amplitude) and φ (phase angle) are determined by initial conditions. For initial displacement x₀ and initial velocity v₀:</p>
+
+<pre><code>A = √( x₀² + ((v₀ + ζ·ωₙ·x₀) / ωd)² )
+φ = arctan( -(v₀ + ζ·ωₙ·x₀) / (ωd·x₀) )</code></pre>
+
+<p>In NumPy this analytical solution is computed element-wise over a time array with no looping required:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+m, c, k = 1.0, 2.0, 100.0
+x0, v0  = 1.0, 0.0
+
+wn  = np.sqrt(k / m)
+zeta = c / (2 * np.sqrt(m * k))
+wd  = wn * np.sqrt(1 - zeta**2)
+
+A   = np.sqrt(x0**2 + ((v0 + zeta*wn*x0)/wd)**2)
+phi = np.arctan2(-(v0 + zeta*wn*x0), wd*x0)
+
+t   = np.linspace(0, 5, 1000)
+x_analytical = A * np.exp(-zeta * wn * t) * np.cos(wd * t + phi)
+
+plt.plot(t, x_analytical, label='Analytical')
+plt.xlabel('Time (s)')
+plt.ylabel('Displacement (m)')
+plt.legend()
+plt.show()</code></pre>
+
+<p>Overlaying the numerical solution on the same axes immediately reveals any discrepancies. A coarse time step in the numerical integrator will cause the two curves to drift apart, providing a concrete visual demonstration of truncation error. The <strong>maximum absolute error</strong> between the two solutions is computed as:</p>
+
+<pre><code>max_error = np.max(np.abs(x_numerical - x_analytical))</code></pre>
+
+<p>This scalar metric quantifies how accurately the chosen time-stepping scheme reproduces the true physics. Halving the time step and observing how the maximum error decreases verifies the convergence order of the method — first order for Euler, fourth order for RK4.</p>
+
+<p><strong>Forced vibration</strong> extends the model by adding a harmonic driving force to the right-hand side:</p>
+
+<pre><code>m·ẍ + c·ẋ + k·x = F₀·sin(Ω·t)</code></pre>
+
+<p>Here F₀ is the force amplitude (N) and Ω is the forcing frequency (rad/s), which is an independently tunable parameter distinct from ωₙ. The system now has two frequencies competing: the natural frequency ωₙ at which it <em>wants</em> to oscillate, and the forcing frequency Ω at which energy is being pumped in.</p>
+
+<p><strong>Resonance</strong> is the condition Ω ≈ ωₙ. At resonance, energy is added to the system in perfect synchrony with its natural oscillation, and the response amplitude grows dramatically. In a lightly damped system the amplitude at resonance can be many times the static deflection F₀/k. The <strong>dynamic amplification factor</strong> (or frequency response function magnitude) at steady state is:</p>
+
+<pre><code>|H(Ω)| = 1 / √((1 - r²)² + (2·ζ·r)²)
+where r = Ω / ωₙ</code></pre>
+
+<p>At r = 1 (resonance), |H| = 1/(2ζ). For ζ = 0.05 (lightly damped), |H| = 10 — the response amplitude is ten times the static deflection. For ζ = 0.5, |H| = 1.0 at resonance. This makes quantitative the intuition that light damping produces sharp, dangerous resonance peaks.</p>
+
+<p>A <strong>frequency response curve</strong> is produced by sweeping Ω from near zero to well above ωₙ, running the simulation to steady state at each forcing frequency, measuring the peak amplitude, and plotting amplitude versus Ω. The resulting curve shows a peak near ωₙ whose height is controlled by ζ. The derivative function for forced vibration is a simple extension:</p>
+
+<pre><code>def forced_smd(t, y, m, c, k, F0, Omega):
+    x, v = y
+    force = F0 * np.sin(Omega * t)
+    dxdt  = v
+    dvdt  = (force - c * v - k * x) / m
+    return [dxdt, dvdt]</code></pre>
+
+<p>The <strong>complete numerical implementation</strong> ties all these concepts together. The state vector <em>[x, v]</em> is initialized from initial conditions, and a time-stepping loop advances the solution using the chosen integrator. Using SciPy's <code>solve_ivp</code> with the RK45 method (adaptive 4th/5th-order Runge-Kutta) is the recommended approach for accuracy and convenience:</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+import numpy as np
+import matplotlib.pyplot as plt
+
+# System parameters
+m, c, k = 1.0, 2.0, 100.0
+F0, Omega = 5.0, 10.0        # forced vibration
+x0, v0   = 0.0, 0.0          # initial conditions at rest
+
+wn   = np.sqrt(k / m)
+zeta = c / (2 * np.sqrt(m * k))
+wd   = wn * np.sqrt(1 - zeta**2)
+
+def eom(t, y):
+    x, v = y
+    dxdt = v
+    dvdt = (F0 * np.sin(Omega * t) - c * v - k * x) / m
+    return [dxdt, dvdt]
+
+t_span = (0, 10)
+t_eval = np.linspace(*t_span, 2000)
+sol    = solve_ivp(eom, t_span, [x0, v0], t_eval=t_eval, method='RK45')
+
+x_num = sol.y[0]   # displacement history
+v_num = sol.y[1]   # velocity history
+
+plt.figure(figsize=(10, 4))
+plt.plot(sol.t, x_num, label='Numerical (RK45)')
+plt.axhline(0, color='gray', linewidth=0.5)
+plt.xlabel('Time (s)')
+plt.ylabel('Displacement (m)')
+plt.title('Forced Spring-Mass-Damper Response')
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+
+<p>When Omega is set equal to wn in the code above, the resonance condition is triggered. Starting from rest with light damping, the displacement envelope grows steadily — demonstrating visually why engineers must identify and detune resonant frequencies. Adding the analytical free-vibration solution as an overlay (when F0 = 0) immediately validates whether the numerical scheme is accurately tracking the true trajectory, and computing <code>np.max(np.abs(sol.y[0] - x_analytical))</code> provides the numerical accuracy metric.</p>
+
+<p>Together, these components — the equation of motion, the state-space reformulation, the damping ratio classification, the analytical solution, and the forced vibration model — form a complete framework for simulating and understanding fundamental mechanical dynamics. Every more complex system, whether a multi-degree-of-freedom structure, a rotating shaft, or a nonlinear pendulum, is built on exactly these foundations.</p>
+        <div class="notes"><strong>Notes</strong>Instructors may wish to have students run the frequency sweep loop interactively, plotting the frequency response curve and observing how changing ζ reshapes the resonance peak. Comparing RK45 results to a hand-coded Euler integrator on the same free-vibration problem is an effective way to motivate higher-order methods through visible error growth.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>
