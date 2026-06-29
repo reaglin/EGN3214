@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modeling Engineering Objects with Classes</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>Modeling Engineering Objects with Classes</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Modeling Engineering Objects with Classes</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Object-oriented programming becomes especially powerful when its abstractions map directly onto the physical world. In engineering, you routinely deal with concrete objects — beams, sensors, pumps, circuits, materials — each of which has measurable properties and well-defined behaviors. Python classes give you a natural way to encode that structure: attributes capture the state of a physical object, and methods encode the formulas, checks, and actions that operate on that state. The result is code that mirrors engineering thinking so closely that reading the class definition feels like reading a specification sheet or a design document.</p>
+
+<p>This topic walks through the full process of designing, implementing, and combining engineering classes, using a structural beam and an environmental sensor as running examples. Along the way you will see how good class design eliminates repetitive formula code, how objects can reference other objects to model system-level relationships, and how Python's special string-representation methods make debugging sessions faster and less frustrating.</p>
+
+<p><strong>Designing an Engineering Class</strong></p>
+
+<p>Before writing a single line of Python, the most valuable step is to think carefully about what the class is supposed to represent. Good class design in an engineering context starts with two questions: <em>what does this object know?</em> and <em>what can this object do?</em> The answers translate directly into attributes and methods respectively.</p>
+
+<p>Start by listing the physical properties the object must store. For a rectangular cross-section beam you might list: length, width, height, and the material's Young's modulus. These become instance attributes because every individual beam can have different values. Avoid the temptation to add properties that belong to a different concept — the load applied to the beam, for example, is probably an input to a calculation rather than a permanent property of the beam itself.</p>
+
+<p>Next, identify the calculations or actions the object should be able to perform. For a beam: compute cross-sectional area, compute second moment of area, compute maximum bending stress given an applied moment, compute deflection under a point load. These become methods. Notice that each formula naturally uses the beam's own stored dimensions — that is precisely what makes methods superior to standalone functions scattered across a project.</p>
+
+<p>Keep each class focused on a single engineering concept. A class called <code>BeamAndLoadAndMaterial</code> that tries to do everything will be hard to test, hard to read, and hard to reuse. Splitting responsibilities into focused classes — even if those classes later reference each other — produces a much more maintainable codebase.</p>
+
+<p>Document the class and its attributes using docstrings. Python's convention is to place a triple-quoted string immediately after the <code>class</code> line and immediately after the <code>def</code> line of each method. A good class docstring names the concept being modeled and states the expected units and types of each attribute. This documentation is not optional in engineering work; it is the difference between a class that can be safely handed to a colleague and one that requires a conversation before it can be used.</p>
+
+<pre><code>class RectangularBeam:
+    """
+    Represents a rectangular cross-section structural beam.
+
+    Attributes
+    ----------
+    length : float
+        Span of the beam in metres.
+    width : float
+        Width of the cross-section in metres.
+    height : float
+        Height (depth) of the cross-section in metres.
+    elastic_modulus : float
+        Young's modulus of the beam material in Pascals (Pa).
+    """
+
+    def __init__(self, length, width, height, elastic_modulus):
+        self.length = length
+        self.width = width
+        self.height = height
+        self.elastic_modulus = elastic_modulus
+</code></pre>
+
+<p>Even this skeleton communicates a great deal: the units are stated, the attribute names are descriptive, and the relationship between the constructor parameters and the stored state is obvious.</p>
+
+<p><strong>Implementing a Beam Class</strong></p>
+
+<p>With the design sketched out, the implementation follows naturally. Geometric properties such as length, width, and height are stored as instance attributes in <code>__init__</code>, exactly as shown above. Engineering formulas then become methods that operate on the beam's own stored data via <code>self</code>.</p>
+
+<p>Consider the second moment of area (also called the area moment of inertia) for a rectangular section, which governs how resistant the beam is to bending. The formula is <em>I = (b × h³) / 12</em> where <em>b</em> is width and <em>h</em> is height. Encoding this as a method means the formula is defined once, tested once, and available on every beam instance without any risk of copying the wrong variable name into a standalone function:</p>
+
+<pre><code>    def cross_sectional_area(self):
+        """Return the cross-sectional area in square metres."""
+        return self.width * self.height
+
+    def second_moment_of_area(self):
+        """Return the second moment of area about the neutral axis (m^4)."""
+        return (self.width * self.height ** 3) / 12
+
+    def max_bending_stress(self, moment):
+        """
+        Return the maximum bending stress in Pascals.
+
+        Parameters
+        ----------
+        moment : float
+            Applied bending moment in Newton-metres (N·m).
+        """
+        I = self.second_moment_of_area()
+        y = self.height / 2          # distance from neutral axis to outer fibre
+        return (moment * y) / I
+
+    def midspan_deflection_point_load(self, load):
+        """
+        Return the midspan deflection (m) for a simply supported beam
+        with a central point load.
+
+        Parameters
+        ----------
+        load : float
+            Applied point load in Newtons (N).
+        """
+        E = self.elastic_modulus
+        I = self.second_moment_of_area()
+        L = self.length
+        return (load * L ** 3) / (48 * E * I)
+</code></pre>
+
+<p>Notice how <code>max_bending_stress</code> calls <code>self.second_moment_of_area()</code> rather than repeating the formula inline. This is an important habit: methods can call other methods on the same object. If you later discover that the second moment of area formula needs a correction factor (for composite sections, say), you change it in exactly one place and every other method that depends on it immediately benefits.</p>
+
+<p>Returning computed values from methods rather than printing them inside the method is equally important. A method that returns its result can be used in further calculations, stored in a variable, passed to another function, or accumulated into a list. A method that only prints is a dead end.</p>
+
+<pre><code># Create a steel I-like beam (approximated as rectangular for illustration)
+# E for steel ≈ 200 GPa = 200e9 Pa
+beam = RectangularBeam(length=5.0, width=0.1, height=0.3, elastic_modulus=200e9)
+
+I = beam.second_moment_of_area()
+print(f"Second moment of area: {I:.6e} m^4")   # 2.250000e-04 m^4
+
+stress = beam.max_bending_stress(moment=15000)  # 15 kN·m
+print(f"Max bending stress: {stress/1e6:.2f} MPa")  # 100.00 MPa
+
+deflection = beam.midspan_deflection_point_load(load=10000)  # 10 kN
+print(f"Midspan deflection: {deflection*1000:.3f} mm")
+</code></pre>
+
+<p>The class has transformed a set of formulas that would otherwise be copy-pasted across a project into a coherent, reusable object. Each new beam — different size, different material — is simply a new instance with different constructor arguments.</p>
+
+<p><strong>Implementing a Sensor Class</strong></p>
+
+<p>Sensors are another engineering object that maps naturally onto a class. A sensor has identity (a name or serial number), configuration data (the physical range it can measure, its units, possibly a calibration offset), and a primary action (returning a reading). It may also need to validate whether a reading is within its specified operating range — readings outside that range might indicate a faulty sensor or a dangerous process condition.</p>
+
+<pre><code>import random
+
+class TemperatureSensor:
+    """
+    Represents a temperature sensor with a defined measurement range.
+
+    Attributes
+    ----------
+    sensor_id : str
+        Unique identifier for the sensor.
+    location : str
+        Physical location description (e.g. 'Reactor inlet').
+    min_range : float
+        Minimum measurable temperature in degrees Celsius.
+    max_range : float
+        Maximum measurable temperature in degrees Celsius.
+    calibration_offset : float
+        Offset added to raw readings to correct for sensor bias (°C).
+    """
+
+    def __init__(self, sensor_id, location, min_range, max_range,
+                 calibration_offset=0.0):
+        self.sensor_id = sensor_id
+        self.location = location
+        self.min_range = min_range
+        self.max_range = max_range
+        self.calibration_offset = calibration_offset
+
+    def read_value(self):
+        """
+        Simulate reading the sensor and return a calibrated temperature (°C).
+
+        In a real system this method would query hardware or a data bus.
+        Here it returns a random value within the sensor range for illustration.
+        """
+        raw = random.uniform(self.min_range, self.max_range)
+        return raw + self.calibration_offset
+
+    def is_in_range(self, value):
+        """
+        Return True if value falls within the sensor's specified range.
+
+        Parameters
+        ----------
+        value : float
+            Temperature reading in degrees Celsius.
+        """
+        return self.min_range <= value <= self.max_range
+
+    def validated_reading(self):
+        """
+        Return a tuple (reading, valid) where valid is a boolean.
+        Allows calling code to decide how to handle out-of-range readings.
+        """
+        reading = self.read_value()
+        return reading, self.is_in_range(reading)
+</code></pre>
+
+<p>The <code>read_value</code> method uses <code>random.uniform</code> to simulate hardware — in a real deployment you would replace those two lines with whatever library call reads from the physical device, leaving the rest of the class completely unchanged. This is the practical value of encapsulation: the calling code never needs to know <em>how</em> the reading is obtained, only that it can call <code>read_value()</code> and get a number back.</p>
+
+<p>Managing multiple sensors as a list of instances is straightforward and extremely readable:</p>
+
+<pre><code>sensors = [
+    TemperatureSensor("T-001", "Reactor inlet",  -10, 150,  calibration_offset=0.5),
+    TemperatureSensor("T-002", "Reactor outlet", -10, 200,  calibration_offset=-0.2),
+    TemperatureSensor("T-003", "Cooling jacket",  0,  80,   calibration_offset=0.0),
+]
+
+for sensor in sensors:
+    reading, valid = sensor.validated_reading()
+    status = "OK" if valid else "OUT OF RANGE"
+    print(f"[{sensor.sensor_id}] {sensor.location}: {reading:.2f} °C — {status}")
+</code></pre>
+
+<p>A single loop iterates over every sensor in the system, calls the same method on each, and processes the result identically regardless of the specific sensor's range or calibration. Adding a fourth sensor requires one extra list entry — no changes to the loop logic whatsoever.</p>
+
+<p><strong>Using Objects Together in Engineering Systems</strong></p>
+
+<p>Real engineering systems are composed of interacting components. A pump assembly contains a motor, an impeller, and a pressure sensor. A structural frame contains multiple beams and connections. Python classes model these relationships through <em>composition</em>: one object holds a reference to another object as an attribute.</p>
+
+<p>Suppose you want to model a simply supported beam with a sensor attached to it that monitors deflection. You can create a <code>MonitoredBeam</code> class that contains both a <code>RectangularBeam</code> and a <code>TemperatureSensor</code> (here repurposed conceptually as a generic sensor), and whose methods coordinate between them:</p>
+
+<pre><code>class DeflectionSensor:
+    """Simulates a deflection sensor with a maximum deflection threshold."""
+
+    def __init__(self, sensor_id, max_deflection_mm):
+        self.sensor_id = sensor_id
+        self.max_deflection_mm = max_deflection_mm
+
+    def check(self, deflection_m):
+        """Return True if deflection is within the acceptable limit."""
+        deflection_mm = deflection_m * 1000
+        return deflection_mm <= self.max_deflection_mm
+
+
+class MonitoredBeam:
+    """
+    A structural beam paired with a deflection monitoring sensor.
+
+    Attributes
+    ----------
+    beam : RectangularBeam
+        The structural beam being monitored.
+    sensor : DeflectionSensor
+        The sensor attached to the beam.
+    """
+
+    def __init__(self, beam, sensor):
+        self.beam = beam          # composition: beam is an attribute
+        self.sensor = sensor      # composition: sensor is an attribute
+
+    def apply_load(self, load):
+        """
+        Compute deflection under a central point load and check sensor status.
+
+        Parameters
+        ----------
+        load : float
+            Applied central load in Newtons.
+
+        Returns
+        -------
+        dict with keys 'deflection_mm' and 'sensor_ok'.
+        """
+        deflection = self.beam.midspan_deflection_point_load(load)
+        sensor_ok = self.sensor.check(deflection)
+        return {
+            "deflection_mm": deflection * 1000,
+            "sensor_ok": sensor_ok
+        }
+</code></pre>
+
+<p>Now the calling code reads almost like an engineering workflow:</p>
+
+<pre><code>steel_beam = RectangularBeam(length=6.0, width=0.15, height=0.4, elastic_modulus=200e9)
+deflection_monitor = DeflectionSensor(sensor_id="D-001", max_deflection_mm=15.0)
+
+monitored = MonitoredBeam(beam=steel_beam, sensor=deflection_monitor)
+
+result = monitored.apply_load(load=25000)  # 25 kN
+print(f"Deflection: {result['deflection_mm']:.3f} mm")
+print(f"Within limit: {result['sensor_ok']}")
+</code></pre>
+
+<p>The <code>apply_load</code> method on <code>MonitoredBeam</code> calls <code>self.beam.midspan_deflection_point_load(load)</code> — a method on the <em>associated</em> beam object — and then calls <code>self.sensor.check(deflection)</code> on the associated sensor. Neither <code>RectangularBeam</code> nor <code>DeflectionSensor</code> needed to be modified; they remain focused on their own responsibilities. <code>MonitoredBeam</code> coordinates them. This mirrors systems engineering practice: components expose defined interfaces, and a system-level entity wires them together.</p>
+
+<p>Composition scales naturally. A bridge model might contain a list of <code>MonitoredBeam</code> objects, a list of connection nodes, and a load-case manager. Each layer remains manageable because each class has a single, clear responsibility.</p>
+
+<p><strong>String Representation with __str__ and __repr__</strong></p>
+
+<p>Python provides two special methods for controlling how an object appears as text. Understanding the distinction between them — and implementing both — is a small investment that pays off throughout a project.</p>
+
+<p><code>__str__</code> is called when you pass an object to <code>print()</code> or to <code>str()</code>. It is intended to produce a <em>human-readable</em> description of the object — something you would be comfortable showing to a colleague or writing to a log file. It should be concise and informative.</p>
+
+<p><code>__repr__</code> is called in the interactive interpreter when you type an object's name and press Enter, or when an object appears inside a container that is being printed. It is also the fallback if <code>__str__</code> is not defined. Its purpose is to produce an <em>unambiguous</em> representation — ideally one that could be pasted back into Python to recreate the object, though in engineering classes with complex state this is sometimes relaxed to mean "a string that clearly identifies the object's type and key state."</p>
+
+<pre><code>class RectangularBeam:
+    """Rectangular cross-section structural beam."""
+
+    def __init__(self, length, width, height, elastic_modulus):
+        self.length = length
+        self.width = width
+        self.height = height
+        self.elastic_modulus = elastic_modulus
+
+    # ... (methods as defined earlier) ...
+
+    def __str__(self):
+        return (f"RectangularBeam | L={self.length} m, "
+                f"b={self.width} m, h={self.height} m, "
+                f"E={self.elastic_modulus/1e9:.0f} GPa")
+
+    def __repr__(self):
+        return (f"RectangularBeam(length={self.length!r}, "
+                f"width={self.width!r}, height={self.height!r}, "
+                f"elastic_modulus={self.elastic_modulus!r})")
+</code></pre>
+
+<pre><code>beam = RectangularBeam(5.0, 0.1, 0.3, 200e9)
+
+print(beam)
+# RectangularBeam | L=5.0 m, b=0.1 m, h=0.3 m, E=200 GPa
+
+print(repr(beam))
+# RectangularBeam(length=5.0, width=0.1, height=0.3, elastic_modulus=200000000000.0)
+
+beams = [
+    RectangularBeam(3.0, 0.08, 0.2, 200e9),
+    RectangularBeam(6.0, 0.15, 0.4, 70e9),   # aluminium
+]
+print(beams)
+# [RectangularBeam(length=3.0, ...), RectangularBeam(length=6.0, ...)]
+</code></pre>
+
+<p>Without these methods, <code>print(beam)</code> would output something like <code>&lt;__main__.RectangularBeam object at 0x7f3a2c10d6a0&gt;</code> — the memory address of the object, which tells you nothing useful. With them, a quick <code>print</code> call immediately confirms which beam you are looking at and what its key properties are. When a calculation produces an unexpected result, being able to inspect objects directly in the console without writing extra diagnostic code is a significant time-saver.</p>
+
+<p>For the sensor class, a similarly informative pair of methods might look like this:</p>
+
+<pre><code>    def __str__(self):
+        return (f"TemperatureSensor [{self.sensor_id}] at '{self.location}' "
+                f"| Range: {self.min_range}–{self.max_range} °C "
+                f"| Offset: {self.calibration_offset:+.2f} °C")
+
+    def __repr__(self):
+        return (f"TemperatureSensor(sensor_id={self.sensor_id!r}, "
+                f"location={self.location!r}, "
+                f"min_range={self.min_range!r}, max_range={self.max_range!r}, "
+                f"calibration_offset={self.calibration_offset!r})")
+</code></pre>
+
+<p>Including key attribute values — the sensor ID, location, and range — means that log output produced by writing <code>print(sensor)</code> inside a monitoring loop is immediately actionable: you can tell at a glance which sensor logged which reading without cross-referencing a lookup table.</p>
+
+<p>Taken together, these practices — thoughtful attribute selection, formula encapsulation in methods, composition for system-level modeling, and expressive string representations — form a coherent approach to engineering software design. The code you write describes not just a computation but the physical system behind it, making it easier to verify, extend, and hand over to others.</p>
+        <div class="notes"><strong>Notes</strong>The beam formulas used (second moment of area, bending stress via My/I, midspan deflection PL&#179;/48EI) are standard Euler-Bernoulli beam theory results applicable to simply supported beams with central point loads. The sensor simulation uses random.uniform; instructors may wish to note that in production code this would be replaced with hardware API calls (e.g. via PySerial, OPC-UA, or a DAQ library) without changing the class interface. The MonitoredBeam composition example can be extended to discuss aggregation vs. composition if the course covers those distinctions. The !r conversion flag in f-strings calls repr() on the embedded value, which is why it is used inside __repr__ methods — worth pointing out explicitly if students ask about the syntax.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

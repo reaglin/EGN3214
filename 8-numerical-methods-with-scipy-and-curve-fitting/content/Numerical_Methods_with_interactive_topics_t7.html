@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applying Numerical Methods to Engineering Datasets</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Applying Numerical Methods to Engineering Datasets</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Applying Numerical Methods to Engineering Datasets</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Engineering work rarely unfolds as a series of isolated mathematical operations. A structural analyst does not simply solve one equation and stop; a chemical engineer does not curve-fit a single dataset in a vacuum. Real workflows are end-to-end pipelines: raw sensor data arrives, it must be cleaned and understood, appropriate numerical methods are chosen and combined, and the results must be communicated in a way that is reproducible and scientifically defensible. This topic brings together root finding, numerical integration, ODE solving, and curve fitting into cohesive, realistic workflows—the kind you encounter when working with actual instrument output, experimental records, or simulation results in professional engineering practice.</p>
+
+<p>The unifying theme is <strong>composition</strong>: each numerical technique you have studied becomes a building block. The power comes from connecting those blocks thoughtfully. Understanding how to do that—and how to avoid the pitfalls that arise when you do—is the subject of everything that follows.</p>
+
+<p><strong>Structuring an End-to-End Numerical Workflow</strong></p>
+
+<p>Before writing a single line of numerical code, the most valuable thing you can do is <em>look at your data</em>. Plotting raw data against its natural independent variable immediately reveals information that no algorithm can substitute for: whether a signal is monotone or oscillatory, whether there are obvious sensor dropouts or outliers, whether the range of values spans many orders of magnitude, and whether the trend is roughly linear, exponential, or something more complex. A quick scatter plot with <code>matplotlib</code> before any computation is not optional bookkeeping—it is the first analytical step.</p>
+
+<p>Consider a dataset of measured coolant temperatures from a heat exchanger test rig sampled every two seconds over an hour. Before fitting any model, plotting temperature versus time will show you whether the system reached steady state, whether there was a sensor dropout that produced a spike of unrealistic values, and whether the transient has the smooth exponential character expected from first-order thermal dynamics or whether it oscillates, suggesting a more complex system or measurement noise. That visual inspection directly controls which numerical method is appropriate.</p>
+
+<p>With a visual understanding established, the next step is <strong>selecting numerical methods based on problem type and data characteristics</strong>. This selection is not arbitrary. Each method carries assumptions:</p>
+
+<ul>
+  <li><strong>Root finding</strong> (e.g., <code>brentq</code>, <code>fsolve</code>) is appropriate when you need to find a parameter value at which a computed quantity equals a target—for example, finding the pipe diameter at which pressure drop equals a specification limit.</li>
+  <li><strong>Numerical integration</strong> (e.g., <code>quad</code>, <code>simpson</code>) is appropriate when you have a function or tabulated data whose definite integral represents a physically meaningful quantity—total heat transferred, total impulse, cumulative probability.</li>
+  <li><strong>ODE solvers</strong> (e.g., <code>solve_ivp</code>) are appropriate when the system's evolution is governed by differential equations derived from physical laws—Newton's second law, energy balances, reaction kinetics.</li>
+  <li><strong>Curve fitting</strong> (e.g., <code>curve_fit</code>) is appropriate when you have measured data and a parametric model, and you need to estimate the model parameters that best explain the data.</li>
+</ul>
+
+<p>The characteristics of the data also constrain the choice. If data are sparse and noisy, polynomial interpolation of high degree will oscillate wildly (Runge's phenomenon); a least-squares fit to a physically motivated model is far more appropriate. If data are dense and smooth, numerical integration via the trapezoidal rule or Simpson's rule is accurate; if data are sparse, <code>quad</code> on a fitted model may give better results than direct quadrature on the raw points.</p>
+
+<p>Once computations are complete, <strong>validating results against physical expectations</strong> is non-negotiable. Numerical methods can converge to wrong answers—to the wrong root, to a local minimum rather than a global one, or to an ODE solution that has drifted due to stiffness. Physical reasoning provides independent checks. If you are fitting a first-order decay model to concentration data and the fitted rate constant is negative, the algorithm has gone wrong somewhere—negative rate constants are physically inadmissible for a simple decay process. If a computed heat transfer coefficient is ten times larger than any value in the literature for the fluid and geometry in question, the result should be questioned before it is reported. These sanity checks are not optional; they are part of the method.</p>
+
+<p>Finally, <strong>documentation of assumptions, parameter choices, and convergence diagnostics</strong> makes work reproducible and trustworthy. What tolerance was passed to the ODE solver? What were the initial guesses for curve fitting, and why? Did the optimizer converge, or did it exit on maximum iterations? Answers to these questions belong in code comments, notebooks, or technical reports—wherever the analysis lives. A result without its provenance is not an engineering result; it is an unverifiable number.</p>
+
+<p><strong>Loading and Preprocessing Engineering Data</strong></p>
+
+<p>Most engineering datasets arrive as CSV files exported from data acquisition systems, spreadsheets, or database queries. The <code>pandas</code> library's <code>read_csv</code> function is the standard entry point. It returns a <code>DataFrame</code>—a tabular structure with labeled columns that supports vectorized operations, missing-value handling, and easy conversion to NumPy arrays.</p>
+
+<pre><code>import pandas as pd
+import numpy as np
+
+df = pd.read_csv('heat_exchanger_test.csv')
+print(df.head())
+print(df.dtypes)
+print(df.isnull().sum())
+</code></pre>
+
+<p>The <code>isnull().sum()</code> call immediately quantifies missing values per column. This matters because <code>scipy</code> functions expect complete, finite arrays. Passing an array containing <code>NaN</code> to <code>curve_fit</code> or <code>solve_ivp</code> will either raise an error or, worse, silently produce garbage results. Missing values must be handled deliberately before any numerical computation:</p>
+
+<ul>
+  <li><strong>Dropping rows</strong> is appropriate when missing values are sparse and random, and losing those time points will not bias the analysis.</li>
+  <li><strong>Forward-filling or interpolating</strong> is appropriate for time-series data with brief sensor dropouts, where the signal is continuous and the gap is short relative to the system's time constant.</li>
+  <li><strong>Flagging and excluding</strong> is appropriate when missing values cluster around known events (sensor calibration intervals, maintenance shutdowns) that should be excluded from the model.</li>
+</ul>
+
+<pre><code># Drop rows where either time or temperature is missing
+df = df.dropna(subset=['time_s', 'temperature_C'])
+
+# Or interpolate small gaps in a time series
+df['temperature_C'] = df['temperature_C'].interpolate(method='linear')
+</code></pre>
+
+<p><strong>Unit consistency</strong> is a subtler but equally important preprocessing concern. Engineering datasets frequently mix units: time in seconds in one column, time in minutes in another imported later, temperature in Celsius from one sensor and Kelvin from another, pressure in bar and flow rate in cubic meters per second when the correlation expects SI units throughout. Unit errors do not raise exceptions; they produce numerically plausible but physically wrong results that may not be caught until a design fails or an experiment cannot be reproduced. A disciplined workflow labels every column with its unit (either in the column name itself or in accompanying metadata), converts all quantities to a consistent unit system before computation, and does not mix unit systems within a single calculation.</p>
+
+<pre><code># Convert Celsius to Kelvin and minutes to seconds
+df['temperature_K'] = df['temperature_C'] + 273.15
+df['time_s'] = df['time_min'] * 60.0
+</code></pre>
+
+<p><strong>Normalization and scaling</strong> become important when numerical methods involve optimization or least-squares fitting across variables with very different magnitudes. If one parameter in a curve fit ranges from 0.001 to 0.01 and another ranges from 10,000 to 100,000, the optimizer's step sizes, convergence tolerances, and the curvature of the cost function surface are all affected. Many optimizers perform better when all parameters are of order unity. A common approach is to work in dimensionless or scaled variables internally and then transform results back to physical units for reporting:</p>
+
+<pre><code># Normalize time to [0, 1] range for fitting
+t_raw = df['time_s'].values
+t_norm = (t_raw - t_raw.min()) / (t_raw.max() - t_raw.min())
+
+# After fitting, convert fitted time-scale parameter back to seconds
+tau_fitted_seconds = tau_fitted_normalized * (t_raw.max() - t_raw.min())
+</code></pre>
+
+<p>Beyond normalization, it is good practice to inspect column statistics (<code>df.describe()</code>) and plot histograms of each variable before fitting. Outliers—values far outside the physically plausible range—can dominate least-squares objective functions and distort parameter estimates. Identifying and handling them (through domain knowledge, not automated deletion) is part of preprocessing.</p>
+
+<p><strong>Combining Root Finding and Integration</strong></p>
+
+<p>Some engineering problems require finding the value of a parameter at which a computed integral equals a target value. This naturally combines two fundamental numerical operations: integration and root finding. The pattern is straightforward—write a function that computes the integral for a given parameter value, subtract the target, and pass that function to a root finder.</p>
+
+<p>A concrete example arises in heat transfer. Suppose you need to find the outlet temperature <em>T_out</em> of a fluid flowing through a heat exchanger with a temperature-dependent specific heat capacity <em>c_p(T)</em>. The energy balance is:</p>
+
+<p><em>Q = ṁ · ∫(T_in to T_out) c_p(T) dT</em></p>
+
+<p>where <em>Q</em> is a known heat duty and <em>ṁ</em> is the mass flow rate. Given <em>Q</em>, <em>ṁ</em>, and <em>T_in</em>, finding <em>T_out</em> requires solving for the upper integration limit at which the integral equals <em>Q/ṁ</em>. No closed form exists if <em>c_p(T)</em> is an empirical polynomial fit.</p>
+
+<pre><code>from scipy.integrate import quad
+from scipy.optimize import brentq
+import numpy as np
+
+# cp(T) in J/(kg·K), T in Kelvin — polynomial fit from NIST data
+def cp_water(T):
+    # Simplified fit valid ~300–500 K
+    return 4200 - 0.5 * (T - 350) + 0.003 * (T - 350)**2
+
+mdot = 2.5      # kg/s
+Q_target = 1.2e6  # J (heat added to fluid)
+T_in = 300.0    # K
+
+def energy_residual(T_out):
+    integral, _ = quad(cp_water, T_in, T_out)
+    return mdot * integral - Q_target
+
+# T_out must be above T_in and physically bounded (say, below 500 K)
+T_out_solution = brentq(energy_residual, T_in + 0.01, 500.0)
+print(f"Outlet temperature: {T_out_solution:.2f} K")
+</code></pre>
+
+<p>This pattern—<code>quad</code> nested inside a function passed to <code>brentq</code>—is extremely common across engineering disciplines. In fluid mechanics, finding the flow rate at which pressure drop across a fitting equals a pump curve value involves integrating a velocity profile and root-finding on the result. In chemical engineering, finding the reactor temperature at which conversion reaches a target requires integrating reaction rate over residence time and setting the result equal to the target. In structural analysis, finding the load at which deflection reaches a limit may require integrating a bending moment distribution.</p>
+
+<p>The <strong>performance consideration</strong> is real: if the root finder calls the objective function dozens of times, and each call invokes <code>quad</code> internally, the total number of function evaluations can become large. Several strategies mitigate this:</p>
+
+<ul>
+  <li><strong>Caching with <code>functools.lru_cache</code></strong> is effective when the objective function is called with repeated identical arguments (less common in root finding, but useful in parameter sweeps).</li>
+  <li><strong>Precomputing a table</strong> of integral values over a grid of parameter values and interpolating is effective when the integral is expensive and many root-finding problems share the same integrand structure.</li>
+  <li><strong>Providing tight brackets to <code>brentq</code></strong> reduces the number of iterations needed. Physical reasoning about the system often allows you to bound the solution tightly before calling the solver.</li>
+  <li><strong>Vectorized integration</strong> using <code>scipy.integrate.cumulative_trapezoid</code> on a precomputed grid can replace repeated <code>quad</code> calls in some formulations, especially when the integrand is expensive to evaluate analytically but cheap to evaluate on a fixed grid.</li>
+</ul>
+
+<p><strong>Fitting ODE Model Parameters to Experimental Data</strong></p>
+
+<p>One of the most powerful workflows in computational engineering is fitting an ODE-based physical model to experimental time-series data. This allows you to extract physically meaningful parameters—damping ratios, rate constants, heat transfer coefficients, diffusion coefficients—directly from measurements, grounding them in the actual system behavior rather than relying solely on handbook values or theoretical estimates.</p>
+
+<p>The workflow connects <code>scipy.integrate.solve_ivp</code> with <code>scipy.optimize.curve_fit</code>. The key insight is that <code>curve_fit</code> expects a function of the form <code>f(t, *params)</code> that returns predicted values at the time points <code>t</code>. If the prediction comes from solving an ODE, you simply wrap the ODE solver inside that function.</p>
+
+<p>Consider a damped mechanical oscillator. The equation of motion is:</p>
+
+<p><em>m·ẍ + c·ẋ + k·x = 0</em></p>
+
+<p>which can be rewritten as two first-order ODEs in state-space form. Given measurements of displacement <em>x(t)</em> at discrete times, we want to estimate the damping coefficient <em>c</em> and spring constant <em>k</em> (assuming mass <em>m</em> is known from the physical system).</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+from scipy.optimize import curve_fit
+import numpy as np
+
+# Known system parameter
+m = 1.0  # kg
+
+# ODE right-hand side: state = [x, x_dot]
+def oscillator_rhs(t, y, c, k):
+    x, x_dot = y
+    x_ddot = -(c / m) * x_dot - (k / m) * x
+    return [x_dot, x_ddot]
+
+# Wrapper: given time points and parameters, return ODE solution at those times
+def model(t_eval, c, k):
+    y0 = [1.0, 0.0]  # initial displacement 1 m, initial velocity 0
+    sol = solve_ivp(
+        oscillator_rhs,
+        t_span=(t_eval[0], t_eval[-1]),
+        y0=y0,
+        args=(c, k),
+        t_eval=t_eval,
+        method='RK45',
+        rtol=1e-8,
+        atol=1e-10
+    )
+    return sol.y[0]  # return displacement time series
+
+# Synthetic experimental data with noise (in practice, load from CSV)
+np.random.seed(42)
+t_exp = np.linspace(0, 10, 100)
+c_true, k_true = 0.5, 4.0
+x_clean = model(t_exp, c_true, k_true)
+x_exp = x_clean + 0.02 * np.random.randn(len(t_exp))
+
+# Fit: initial guesses informed by physical reasoning
+# Underdamped system: expect c < 2*sqrt(k*m), k likely order of magnitude near 1–10
+p0 = [0.3, 3.0]
+popt, pcov = curve_fit(model, t_exp, x_exp, p0=p0, bounds=([0, 0], [10, 50]))
+
+c_fit, k_fit = popt
+c_unc, k_unc = np.sqrt(np.diag(pcov))
+print(f"c = {c_fit:.4f} ± {c_unc:.4f} N·s/m")
+print(f"k = {k_fit:.4f} ± {k_unc:.4f} N/m")
+</code></pre>
+
+<p>Several implementation details deserve careful attention:</p>
+
+<ul>
+  <li><strong>The ODE solver must return values at the experimental time points.</strong> The <code>t_eval</code> argument to <code>solve_ivp</code> controls this. If <code>t_eval</code> is not set, the solver returns values at its own internally chosen steps, which will not align with the experimental times. Attempting to compare those to measurements requires interpolation, which adds complexity and potential error.</li>
+  <li><strong>The solver tolerance should be tighter than the data noise level.</strong> If ODE integration error is comparable to measurement noise, the fitting algorithm cannot distinguish between model error and integration error. Setting <code>rtol</code> and <code>atol</code> to values well below the noise standard deviation ensures that integration error does not corrupt the parameter estimates.</li>
+  <li><strong>Initial parameter guesses must be physically informed.</strong> Optimizers are sensitive to starting points. For a mechanical system, dimensional analysis and knowledge of the system immediately constrain the search space: a spring constant for a small steel component is not 0.001 N/m or 10<sup>9</sup> N/m; a damping ratio for a lightly damped structure is between 0.01 and 0.1. These physical constraints should inform both the initial guess <code>p0</code> and the <code>bounds</code> argument, which prevents the optimizer from wandering into physically inadmissible regions.</li>
+  <li><strong>The model function must be robust to the parameter values the optimizer may try during iteration.</strong> If the optimizer proposes a negative damping coefficient, the ODE solution will grow unboundedly, potentially causing the solver to fail with a step-size-too-small error. Using <code>bounds</code> in <code>curve_fit</code> prevents this for simple bound constraints.</li>
+</ul>
+
+<p>This same pattern generalizes widely. In chemical engineering, fitting a first- or second-order reaction rate constant from batch reactor concentration-time data uses exactly this structure: the ODE is the species mass balance, the state variable is concentration, and the fitted parameter is the rate constant. In pharmacokinetics, fitting a two-compartment drug distribution model to plasma concentration data uses the same approach with a two-dimensional state vector. In heat transfer, fitting a lumped-capacitance cooling model to temperature-time data recovers the effective heat transfer coefficient for a component.</p>
+
+<p><strong>Communicating Numerical Results in Engineering Reports</strong></p>
+
+<p>Obtaining a numerical result is only half the work. Engineering is a collaborative, consequential discipline: results inform designs that affect safety, cost, and performance. Communicating results correctly is therefore as technically important as computing them correctly.</p>
+
+<p>When reporting fitted parameters, always include <strong>units and uncertainties</strong>. The covariance matrix returned by <code>curve_fit</code> as <code>pcov</code> has diagonal elements whose square roots are the one-sigma (one standard deviation) uncertainties on each fitted parameter, assuming the residuals are approximately Gaussian. These should always accompany the parameter estimates:</p>
+
+<pre><code># After curve_fit:
+perr = np.sqrt(np.diag(pcov))
+# Report as: "The fitted damping coefficient is c = 0.502 ± 0.018 N·s/m (1σ)"
+</code></pre>
+
+<p>A parameter estimate without an uncertainty is incomplete: it does not convey whether the data constrain the parameter tightly or loosely, and it does not allow others to assess whether the value is consistent with prior knowledge or independent measurements. If <code>pcov</code> contains <code>inf</code> values, the fit is poorly conditioned—parameters are not uniquely determined by the data—and this must be reported and investigated, not silently ignored.</p>
+
+<p><strong>Figures should show both raw data and the fitted model.</strong> A plot of the fitted curve alone omits the evidence. A plot of raw data alone omits the model. The standard practice is to overlay both: plot experimental data as a scatter plot (markers, no connecting line) and the model prediction as a smooth curve evaluated on a fine time or spatial grid. Error bars on data points, where measurement uncertainty is quantified, add further value. Axis labels must include units. A figure without units on its axes is not an engineering figure.</p>
+
+<pre><code>import matplotlib.pyplot as plt
+
+t_fine = np.linspace(t_exp[0], t_exp[-1], 500)
+x_model_fine = model(t_fine, *popt)
+
+plt.figure(figsize=(8, 5))
+plt.scatter(t_exp, x_exp, s=15, color='steelblue', label='Measured data', zorder=3)
+plt.plot(t_fine, x_model_fine, color='firebrick', linewidth=2, label=f'Fitted model (c={c_fit:.3f}, k={k_fit:.3f})')
+plt.xlabel('Time (s)')
+plt.ylabel('Displacement (m)')
+plt.legend()
+plt.tight_layout()
+plt.savefig('oscillator_fit.png', dpi=150)
+</code></pre>
+
+<p><strong>Goodness-of-fit metrics</strong> should be reported in figure captions or accompanying tables. The two most common are:</p>
+
+<ul>
+  <li><strong>RMSE (Root Mean Square Error)</strong>: <em>RMSE = √( (1/n) Σ(y_i − ŷ_i)² )</em>. This has the same units as the measured quantity and directly expresses the typical magnitude of model prediction error. A small RMSE relative to the signal range indicates a good fit; an RMSE comparable to the signal range indicates a poor one.</li>
+  <li><strong>R² (Coefficient of Determination)</strong>: <em>R² = 1 − SS_res / SS_tot</em>, where <em>SS_res</em> is the sum of squared residuals and <em>SS_tot</em> is the total sum of squares about the mean. R² = 1 indicates a perfect fit; R² = 0 means the model explains none of the variance; negative R² (possible with nonlinear models) means the model performs worse than a horizontal line at the mean.</li>
+</ul>
+
+<pre><code>residuals = x_exp - model(t_exp, *popt)
+rmse = np.sqrt(np.mean(residuals**2))
+ss_res = np.sum(residuals**2)
+ss_tot = np.sum((x_exp - np.mean(x_exp))**2)
+r_squared = 1 - ss_res / ss_tot
+print(f"RMSE = {rmse:.5f} m")
+print(f"R² = {r_squared:.6f}")
+</code></pre>
+
+<p>However, <strong>residual analysis</strong> goes further than a single summary statistic and is often more informative. A good fit produces residuals that are small, random, and structurally featureless—they should look like noise when plotted against time or against the model prediction. If the residuals show a systematic pattern—a sinusoidal oscillation, a drift, a curvature—it means the model is missing physics. For example, if a first-order decay model is fit to data from a system that actually has two time constants, the residuals will show a characteristic oscillating pattern. That pattern is not noise; it is a signal that the model is inadequate, and it should be discussed explicitly in any engineering report. Reporting R² = 0.97 while ignoring structured residuals would misrepresent the quality of the model.</p>
+
+<p>A complete engineering result, then, includes: the fitted parameter values with units and uncertainties; a figure showing data and model overlaid; RMSE and R² values; a residual plot; a discussion of whether the residuals are structurally random or show systematic patterns; and a statement of what assumptions underlie the model (e.g., linearity, constant coefficients, lumped capacitance) and the conditions under which those assumptions are expected to hold. This level of documentation transforms a numerical result into an engineering result—one that others can scrutinize, build upon, and trust.</p>
+        <div class="notes"><strong>Notes</strong>This topic integrates all prior module content (root finding, integration, ODE solving, curve fitting) into realistic end-to-end workflows. Code examples use scipy and numpy idioms consistent with the module. Instructors may wish to supplement with a complete worked dataset (e.g., a CSV of damped oscillator measurements) for hands-on lab use.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

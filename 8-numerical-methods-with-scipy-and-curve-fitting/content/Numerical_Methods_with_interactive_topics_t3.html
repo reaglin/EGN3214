@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numerical Integration with scipy.integrate</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Numerical Integration with scipy.integrate</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Numerical Integration with scipy.integrate</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Numerical integration is one of the most practically important areas of scientific computing. In many real-world problems, integrals cannot be evaluated in closed form, or the underlying function is known only through measured data rather than a formula. <strong>scipy.integrate</strong> provides a comprehensive suite of tools that address both situations: high-accuracy adaptive quadrature for callable functions, rule-based integration for tabular data, and powerful solvers for ordinary differential equations. Understanding how and when to use each tool — and how to interpret their outputs — is essential for anyone doing quantitative work in science, engineering, or data analysis.</p>
+
+<p><strong>Numerical Quadrature with <code>quad</code> and <code>dblquad</code></strong></p>
+
+<p>The workhorse of one-dimensional numerical integration in SciPy is <code>scipy.integrate.quad</code>. It implements an adaptive Gaussian quadrature algorithm (specifically QUADPACK under the hood), meaning it automatically refines its sampling of the integrand in regions where the function varies rapidly. This makes it far more reliable than fixed-step rules for general analytic functions.</p>
+
+<p>To use <code>quad</code>, you pass it three required arguments: the integrand as a Python callable, the lower limit, and the upper limit. It always returns a <strong>tuple of two values</strong>: the estimated integral and an estimate of the absolute error in that result. This built-in accuracy information is a key advantage — you are never left guessing how trustworthy the answer is.</p>
+
+<pre><code>import numpy as np
+from scipy.integrate import quad
+
+# Integrate the Gaussian function from 0 to 1
+def gaussian(x):
+    return np.exp(-x**2)
+
+result, error = quad(gaussian, 0, 1)
+print(f"Integral: {result:.10f}")
+print(f"Estimated absolute error: {error:.2e}")
+# Integral: 0.7468241328
+# Estimated absolute error: 8.29e-15
+</code></pre>
+
+<p>The error estimate of roughly 10⁻¹⁵ confirms the result is accurate to essentially machine precision. In practice you should always inspect this second element; if it is unexpectedly large, the integration may be struggling with a singularity, a highly oscillatory integrand, or a very wide domain.</p>
+
+<p>One extremely useful feature is support for <strong>infinite limits</strong>. By passing <code>np.inf</code> or <code>-np.inf</code> as a limit, <code>quad</code> internally applies a change of variables to map the infinite domain to a finite one, then integrates on that transformed domain. This means you can compute integrals like the total probability under a normal distribution without any manual tricks.</p>
+
+<pre><code># Integrate exp(-x^2) from -inf to +inf (should equal sqrt(pi))
+result, error = quad(gaussian, -np.inf, np.inf)
+print(f"Result:    {result:.10f}")
+print(f"sqrt(pi):  {np.sqrt(np.pi):.10f}")
+# Result:    1.7724538509
+# sqrt(pi):  1.7724538509
+</code></pre>
+
+<p>When your integrand depends on extra parameters beyond <code>x</code>, pass them through the <code>args</code> keyword argument as a tuple rather than using global variables, which keeps code clean and reusable.</p>
+
+<pre><code>def power_law(x, n):
+    return x**n
+
+result, error = quad(power_law, 0, 1, args=(3,))
+print(result)  # 0.25, i.e., integral of x^3 from 0 to 1
+</code></pre>
+
+<p><strong>Double integrals</strong> over two-dimensional domains are handled by <code>scipy.integrate.dblquad</code>. Its signature is slightly more involved because the limits of the inner integral can themselves be functions of the outer variable, enabling non-rectangular domains. For a rectangular domain the inner limits are simply constants, which you can pass as lambda functions returning those constants.</p>
+
+<pre><code>from scipy.integrate import dblquad
+
+# Integrate f(x, y) = x * y^2 over [0,1] x [0,2]
+def f(y, x):          # NOTE: inner variable y comes first
+    return x * y**2
+
+result, error = dblquad(f, 0, 1,          # x limits
+                           0, 2)           # y limits (constants)
+print(result)   # 2/3 * 1 = 0.6667...
+# Exact: integral_0^1 x dx * integral_0^2 y^2 dy = 0.5 * 8/3 = 4/3
+print(result)   # 1.3333...
+</code></pre>
+
+<p>A common source of confusion: in <code>dblquad</code> the integrand is written as <code>f(y, x)</code> — the <em>inner</em> variable of integration comes first. The outer limits (for <code>x</code> here) are scalars; the inner limits for <code>y</code> can be callables of <code>x</code>. For example, integrating over the triangle where <code>0 ≤ y ≤ x</code> within <code>[0,1]</code> looks like:</p>
+
+<pre><code>result, error = dblquad(f, 0, 1,
+                           0, lambda x: x)   # inner y goes from 0 to x
+</code></pre>
+
+<p><strong>Integrating Tabular Data with <code>simpson</code> and <code>trapezoid</code></strong></p>
+
+<p>Adaptive quadrature requires a callable function. But in many real situations — sensor readings, experimental measurements, simulation outputs sampled at fixed time steps — you have only a table of <code>(x, y)</code> pairs and no analytical formula. SciPy provides two classical rules for this case: the trapezoidal rule and Simpson's rule.</p>
+
+<p><code>scipy.integrate.trapezoid</code> approximates the integral by drawing straight lines between consecutive data points and summing the resulting trapezoid areas. For each interval <code>[x_i, x_{i+1}]</code> the contribution is <code>(y_i + y_{i+1}) / 2 * (x_{i+1} - x_i)</code>. It is simple, robust, and works correctly for both equally and unequally spaced <code>x</code> values.</p>
+
+<pre><code>import numpy as np
+from scipy.integrate import trapezoid
+
+# Approximate integral of sin(x) from 0 to pi using 10 points
+x = np.linspace(0, np.pi, 10)
+y = np.sin(x)
+
+result = trapezoid(y, x)
+print(f"Trapezoidal result: {result:.6f}")  # ~1.979 (exact is 2.0)
+</code></pre>
+
+<p>The trapezoid rule introduces an error proportional to <code>h²</code> (where <code>h</code> is the step size), so doubling the number of points reduces the error by a factor of four. For smooth functions, however, you can do significantly better with the same number of points by using <code>scipy.integrate.simpson</code>.</p>
+
+<p>Simpson's rule fits a <strong>quadratic polynomial</strong> through each trio of consecutive points, then integrates that parabola exactly. This reduces the error to order <code>h⁴</code>, a dramatic improvement for smooth data. The classical form of Simpson's rule requires an <em>odd</em> number of data points (an even number of intervals); SciPy handles even-numbered arrays gracefully by applying a corrected formula for the last interval.</p>
+
+<pre><code>from scipy.integrate import simpson
+
+result_simp = simpson(y, x=x)
+print(f"Simpson result:     {result_simp:.6f}")  # ~2.0001, much closer to 2.0
+</code></pre>
+
+<p>Both functions accept <code>x</code> as an optional keyword argument. If you omit it, SciPy assumes unit spacing (i.e., <code>x = [0, 1, 2, ...]</code>), which is occasionally useful but usually you should supply the actual <code>x</code> array to get physically meaningful results. Both methods also accept unequally spaced <code>x</code> values, which is important when working with real sensor data that may not arrive at perfectly regular intervals.</p>
+
+<p>Consider a practical example: you have acceleration data from an accelerometer and want to find velocity by integration.</p>
+
+<pre><code># Simulated accelerometer data at irregular time stamps
+t = np.array([0.0, 0.1, 0.25, 0.4, 0.5, 0.7, 1.0])
+a = np.array([0.0, 1.2, 2.3, 2.1, 1.8, 0.9, 0.0])  # m/s^2
+
+velocity_change = trapezoid(a, t)
+print(f"Velocity change (trap): {velocity_change:.4f} m/s")
+
+velocity_change_s = simpson(a, x=t)
+print(f"Velocity change (simp): {velocity_change_s:.4f} m/s")
+</code></pre>
+
+<p>These methods are <em>indispensable</em> in experimental science. You often cannot re-run an experiment to get more data points, so choosing the more accurate rule (Simpson's) costs nothing extra computationally and can meaningfully improve your result.</p>
+
+<p><strong>Introduction to Ordinary Differential Equations (ODEs)</strong></p>
+
+<p>An <strong>ordinary differential equation</strong> describes how one or more quantities change with respect to a single independent variable (typically time). The simplest and most fundamental form is the <em>first-order ODE</em>:</p>
+
+<p><em>dy/dt = f(t, y)</em></p>
+
+<p>This says: the rate of change of <code>y</code> at time <code>t</code> is determined by some function <code>f</code> that may depend on both the current time and the current value of <code>y</code>. To pin down a unique solution you also need an <strong>initial condition</strong> — the value of <code>y</code> at some starting time <code>t₀</code>. Together, the ODE and its initial condition form an <strong>initial value problem (IVP)</strong>.</p>
+
+<p>A classic example is exponential decay: <em>dy/dt = -k·y</em>, with <em>y(0) = y₀</em>. The analytical solution is <em>y(t) = y₀·exp(-k·t)</em>, but for more complex ODEs such closed-form solutions do not exist, and we must rely on numerical methods.</p>
+
+<p><strong>Higher-order ODEs</strong> (those involving second or higher derivatives) must be rewritten as systems of first-order equations before they can be handed to a numerical solver. The key insight is that a second derivative can always be treated as a new variable. For example, Newton's second law for a damped harmonic oscillator is:</p>
+
+<p><em>m·x'' + c·x' + k·x = 0</em></p>
+
+<p>Dividing through by <code>m</code> and introducing the state variables <code>y₀ = x</code> (position) and <code>y₁ = x'</code> (velocity), we get the equivalent first-order system:</p>
+
+<ul>
+<li><em>dy₀/dt = y₁</em></li>
+<li><em>dy₁/dt = -(c/m)·y₁ - (k/m)·y₀</em></li>
+</ul>
+
+<p>The initial condition is now a <em>vector</em>: <code>[x(0), x'(0)]</code>. This vectorization is the universal pattern for translating any physical problem into a form SciPy can solve.</p>
+
+<p><strong>Solving ODEs with <code>solve_ivp</code></strong></p>
+
+<p><code>scipy.integrate.solve_ivp</code> is the modern, recommended interface for solving IVPs in SciPy. Its core signature is:</p>
+
+<pre><code>from scipy.integrate import solve_ivp
+
+result = solve_ivp(fun, t_span, y0, method='RK45', t_eval=None, ...)
+</code></pre>
+
+<ul>
+<li><strong><code>fun</code></strong>: the derivative function with signature <code>f(t, y)</code></li>
+<li><strong><code>t_span</code></strong>: a two-element tuple <code>(t_start, t_end)</code></li>
+<li><strong><code>y0</code></strong>: a list or array of initial values, one per state variable</li>
+<li><strong><code>t_eval</code></strong>: optional array of times at which to record the solution</li>
+</ul>
+
+<p>The returned object is a <code>Bunch</code> (a dict-like object). The solution is stored in:</p>
+
+<ul>
+<li><strong><code>result.t</code></strong>: a 1-D array of time points</li>
+<li><strong><code>result.y</code></strong>: a 2-D array of shape <code>(n_variables, n_time_points)</code>, where each <em>row</em> is one state variable's trajectory</li>
+</ul>
+
+<p>Here is a complete example solving the damped oscillator system defined above:</p>
+
+<pre><code>import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+
+# System parameters
+m, c, k = 1.0, 0.5, 4.0   # mass, damping, spring constant
+
+def oscillator(t, y):
+    dydt = [y[1],                              # dy0/dt = y1 (velocity)
+            -(c/m)*y[1] - (k/m)*y[0]]         # dy1/dt = acceleration
+    return dydt
+
+y0 = [1.0, 0.0]            # start at x=1, v=0
+t_span = (0, 20)
+t_eval = np.linspace(0, 20, 500)
+
+result = solve_ivp(oscillator, t_span, y0, t_eval=t_eval)
+
+print(result.success)      # True if integration succeeded
+plt.plot(result.t, result.y[0], label='Position')
+plt.plot(result.t, result.y[1], label='Velocity')
+plt.legend(); plt.xlabel('Time'); plt.show()
+</code></pre>
+
+<p>The <strong><code>method</code></strong> argument controls which algorithm is used. The default <code>'RK45'</code> is an explicit Runge-Kutta method of order 4/5 with adaptive step size control — an excellent general-purpose choice. However, some ODEs are <strong>stiff</strong>: they contain dynamics on vastly different time scales simultaneously, forcing explicit methods to take extremely small steps to remain stable. For stiff problems, implicit methods are necessary:</p>
+
+<ul>
+<li><strong><code>'Radau'</code></strong>: implicit Runge-Kutta of order 5, very robust for stiff problems</li>
+<li><strong><code>'BDF'</code></strong>: Backward Differentiation Formula, a variable-order method well-suited to very stiff systems</li>
+<li><strong><code>'LSODA'</code></strong>: automatically switches between non-stiff (Adams) and stiff (BDF) methods</li>
+</ul>
+
+<pre><code># Stiff example: Robertson chemical kinetics
+def robertson(t, y):
+    return [-0.04*y[0] + 1e4*y[1]*y[2],
+             0.04*y[0] - 1e4*y[1]*y[2] - 3e7*y[1]**2,
+             3e7*y[1]**2]
+
+result = solve_ivp(robertson, (0, 1e11), [1, 0, 0],
+                   method='Radau', rtol=1e-6, atol=1e-9)
+print(result.success)
+</code></pre>
+
+<p>Attempting to solve the Robertson problem with <code>'RK45'</code> would be either extremely slow (requiring millions of tiny steps) or outright unstable. Recognizing stiffness and selecting an appropriate method is one of the most important practical skills in numerical ODE solving.</p>
+
+<p>The <strong><code>dense_output=True</code></strong> option instructs the solver to build a continuous interpolant of the solution as it goes, not just sample at discrete steps. After the solve, you can call <code>result.sol(t)</code> with any array of time values — even ones not used during integration — to get smooth, interpolated state values. This is useful for finding events, making high-resolution plots, or evaluating the solution at arbitrary points without re-running the solver.</p>
+
+<pre><code>result = solve_ivp(oscillator, t_span, y0, dense_output=True)
+t_fine = np.linspace(0, 20, 5000)
+y_fine = result.sol(t_fine)       # shape: (2, 5000)
+plt.plot(t_fine, y_fine[0])
+plt.show()
+</code></pre>
+
+<p><strong>Defining the Derivative Function for <code>solve_ivp</code></strong></p>
+
+<p>Getting the derivative function right is the most critical step in solving any ODE numerically. The function <strong>must</strong> have the signature <code>f(t, y)</code> where <code>t</code> is a scalar (the current time) and <code>y</code> is a NumPy array whose length equals the number of state variables. The function must return an array-like of the same length, where each element is the time derivative of the corresponding state variable.</p>
+
+<pre><code># Example: three coupled first-order ODEs
+def lorenz(t, y, sigma=10, rho=28, beta=8/3):
+    dydt = [sigma * (y[1] - y[0]),
+            y[0] * (rho - y[2]) - y[1],
+            y[0] * y[1] - beta * y[2]]
+    return dydt
+</code></pre>
+
+<p>Notice that the Lorenz system above has <strong>parameters</strong> (<code>sigma</code>, <code>rho</code>, <code>beta</code>) in addition to the state. Because <code>solve_ivp</code> only calls your function with <code>(t, y)</code>, there are two clean ways to pass extra parameters:</p>
+
+<ul>
+<li><strong>Default arguments</strong> (as above): simple and readable when parameters are fixed.</li>
+<li><strong>Closure</strong>: define an outer function that captures parameters as local variables and returns the derivative function. This is especially useful when parameters may vary or are computed at runtime.</li>
+</ul>
+
+<pre><code>def make_oscillator(m, c, k):
+    def oscillator(t, y):
+        return [y[1], -(c/m)*y[1] - (k/m)*y[0]]
+    return oscillator
+
+osc = make_oscillator(m=2.0, c=0.3, k=5.0)
+result = solve_ivp(osc, (0, 30), [1.0, 0.0], t_eval=np.linspace(0, 30, 600))
+</code></pre>
+
+<p>You can also use a <code>lambda</code> for concise one-liners, though this becomes hard to read for anything more than trivial equations:</p>
+
+<pre><code># Exponential decay: dy/dt = -0.3*y
+result = solve_ivp(lambda t, y: [-0.3*y[0]], (0, 10), [1.0])
+</code></pre>
+
+<p>A crucial practical point: <strong>units must be consistent</strong> throughout the derivative function. If <code>t</code> is in seconds but you accidentally use a decay constant in units of per-minute, your results will be off by a factor of 60. Always write down the physical units of each state variable and each parameter before coding the derivative function, and verify them by dimensional analysis.</p>
+
+<p>When computing derivatives, use <code>y[0]</code>, <code>y[1]</code>, etc. to index into the state vector. For large systems it is often clearer to unpack at the top of the function:</p>
+
+<pre><code>def pendulum(t, y, g=9.81, L=1.0):
+    theta, omega = y           # unpack for clarity
+    dtheta_dt = omega
+    domega_dt = -(g/L) * np.sin(theta)
+    return [dtheta_dt, domega_dt]
+</code></pre>
+
+<p>This style makes the mapping between code variables and physical quantities transparent and reduces the risk of index errors in systems with many state variables.</p>
+
+<p><strong>Interpreting and Visualizing ODE Solutions</strong></p>
+
+<p>Once <code>solve_ivp</code> returns, your first action should always be to check <code>result.success</code>. This boolean is <code>True</code> if the integrator reached <code>t_end</code> successfully, and <code>False</code> if it terminated early — for example because the step size became too small to make progress (often a sign of a singularity) or the maximum number of steps was exceeded. If <code>result.success</code> is <code>False</code>, <code>result.message</code> provides a human-readable explanation.</p>
+
+<pre><code>result = solve_ivp(oscillator, (0, 100), [1.0, 0.0])
+if not result.success:
+    print("Integration failed:", result.message)
+else:
+    print("Integration succeeded.")
+</code></pre>
+
+<p>The solution arrays <code>result.t</code> and <code>result.y</code> are straightforward to work with. Remember that <code>result.y</code> is indexed <em>by row</em>, so <code>result.y[0]</code> is the entire time series of the first state variable, <code>result.y[1]</code> is the second, and so on.</p>
+
+<pre><code># Time series plot
+plt.figure(figsize=(10, 4))
+plt.plot(result.t, result.y[0], label='Position x(t)')
+plt.plot(result.t, result.y[1], label='Velocity v(t)')
+plt.xlabel('Time (s)')
+plt.ylabel('State')
+plt.legend()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>Beyond time-series plots, <strong>phase portraits</strong> are one of the most powerful visualization tools for dynamical systems. A phase portrait plots one state variable against another (without showing time explicitly), revealing the qualitative structure of the system's behavior — whether trajectories spiral inward to a stable equilibrium, orbit a limit cycle, or diverge chaotically.</p>
+
+<pre><code># Phase portrait: position vs velocity
+plt.figure(figsize=(5, 5))
+plt.plot(result.y[0], result.y[1])
+plt.xlabel('Position x')
+plt.ylabel('Velocity v')
+plt.title('Phase Portrait of Damped Oscillator')
+plt.grid(True)
+plt.show()
+</code></pre>
+
+<p>For a damped oscillator, the phase portrait is an inward spiral converging to the origin, visually confirming that the system loses energy over time. For an undamped oscillator (conservative system) it would be a closed ellipse. For the Lorenz system, the famous butterfly attractor emerges when you plot three state variables against each other.</p>
+
+<p>Controlling numerical <strong>accuracy</strong> is done through two tolerances:</p>
+
+<ul>
+<li><strong><code>rtol</code></strong> (relative tolerance): controls the error relative to the current magnitude of each state variable. Default is <code>1e-3</code>.</li>
+<li><strong><code>atol</code></strong> (absolute tolerance): controls the error floor for state variables near zero. Default is <code>1e-6</code>.</li>
+</ul>
+
+<p>Reducing either tolerance forces the solver to take smaller steps and perform more function evaluations, increasing accuracy at the cost of computation time. A common practical guideline is to tighten tolerances until your result stops changing meaningfully, then use one step tighter to add safety margin.</p>
+
+<pre><code># High-accuracy integration
+result_fine = solve_ivp(oscillator, (0, 20), [1.0, 0.0],
+                        t_eval=t_eval,
+                        rtol=1e-8, atol=1e-10)
+
+result_coarse = solve_ivp(oscillator, (0, 20), [1.0, 0.0],
+                          t_eval=t_eval,
+                          rtol=1e-3, atol=1e-6)
+
+# Compare the two solutions to assess accuracy impact
+max_diff = np.max(np.abs(result_fine.y[0] - result_coarse.y[0]))
+print(f"Max difference between fine and coarse: {max_diff:.2e}")
+</code></pre>
+
+<p>A practical workflow for any ODE problem: start with the default tolerances and <code>RK45</code>; check <code>result.success</code>; plot time series and inspect for non-physical behavior (e.g., energy growing without bound in a conservative system); if accuracy seems insufficient or the problem is stiff, switch method or tighten tolerances; finally, verify results against known special cases or analytical solutions where available. Following this process systematically makes numerical ODE solving both reliable and efficient.</p>
+        <div class="notes"><strong>Notes</strong>Covers numerical quadrature for definite integrals and the integration of systems of ordinary differential equations using scipy.integrate.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

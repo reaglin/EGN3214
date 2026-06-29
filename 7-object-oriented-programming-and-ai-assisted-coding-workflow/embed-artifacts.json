@@ -13,5 +13,45 @@
     "title": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow \u2014 Module Topics",
     "href": "content/module_topics.html",
     "type": "Content"
+  },
+  {
+    "title": "Foundations of Object-Oriented Programming",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t1.html",
+    "type": "Content"
+  },
+  {
+    "title": "Modeling Engineering Objects with Classes",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Inheritance and Class Hierarchies",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t3.html",
+    "type": "Content"
+  },
+  {
+    "title": "Introduction to AI-Assisted Coding Tools",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t4.html",
+    "type": "Content"
+  },
+  {
+    "title": "AI-Assisted Code Generation Workflow",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t5.html",
+    "type": "Content"
+  },
+  {
+    "title": "AI-Assisted Debugging",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t6.html",
+    "type": "Content"
+  },
+  {
+    "title": "Responsible Use and Verification of AI-Generated Code",
+    "href": "content/Object_Oriented_Programming_interactive_topics_t7.html",
+    "type": "Content"
+  },
+  {
+    "title": "Responsible Use and Verification of AI-Generated Code",
+    "href": "content/_interactive.html",
+    "type": "Content"
   }
 ]

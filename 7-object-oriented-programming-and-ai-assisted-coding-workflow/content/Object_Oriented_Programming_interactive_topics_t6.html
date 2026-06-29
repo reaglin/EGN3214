@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Assisted Debugging</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>AI-Assisted Debugging</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>AI-Assisted Debugging</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Debugging is one of the most important skills an engineer-programmer can develop. Even the most carefully written code will occasionally fail, and the ability to diagnose, understand, and correct those failures systematically separates effective developers from frustrated ones. Modern AI tools — such as large language model assistants — have become powerful allies in this process, capable of explaining cryptic error messages, suggesting probable causes, and proposing fixes. But to use them well, you must first develop the habit of reading and understanding errors yourself. This module covers how to read Python error output, how to write prompts that get genuinely useful AI assistance, which errors appear most often in object-oriented engineering code, and how to follow a disciplined debugging strategy that keeps you in control of the process.</p>
+
+<p><strong>Reading and Interpreting Error Messages</strong></p>
+
+<p>When Python encounters a problem it cannot recover from, it raises an exception and prints a <em>traceback</em> — a structured report that tells you exactly what the program was doing at the moment of failure. New programmers often skim tracebacks or skip straight to the last line, but reading the whole thing carefully provides far more information than any single line alone.</p>
+
+<p>The <strong>last line</strong> of a traceback is the most immediately actionable: it states the <em>error type</em> followed by a colon and a short human-readable description of the problem. For example:</p>
+
+<pre><code>AttributeError: 'Beam' object has no attribute 'length'</code></pre>
+
+<p>This one line tells you the category of problem (<code>AttributeError</code>) and the specific detail Python noticed (<code>'Beam' object has no attribute 'length'</code>). Knowing the error type alone lets you narrow the space of likely causes dramatically before you look at a single line of your own code. An <code>AttributeError</code> almost always means an attribute was never created or its name was typed incorrectly. A <code>TypeError</code> almost always means the wrong number or type of arguments was supplied to a function or method.</p>
+
+<p>Above that final line, Python prints the <strong>traceback chain</strong> — a sequence of "frames" listed from the outermost call down to the innermost. Each frame shows the file name, line number, and the source line that was executing at that moment. Consider this example:</p>
+
+<pre><code>Traceback (most recent call last):
+  File "bridge_analysis.py", line 42, in &lt;module&gt;
+    results = analyze(bridge)
+  File "bridge_analysis.py", line 18, in analyze
+    span = bridge.get_span()
+  File "bridge_analysis.py", line 9, in get_span
+    return self.length * self.factor
+AttributeError: 'Beam' object has no attribute 'length'</code></pre>
+
+<p>Reading from top to bottom: the main script called <code>analyze()</code> at line 42, which called <code>get_span()</code> at line 18, which tried to access <code>self.length</code> at line 9 — and that is where the failure occurred. The <strong>file name and line number in each frame</strong> pinpoint exactly where to begin your investigation. The innermost frame (the one closest to the error message) is typically the right place to start looking, but the frames above it reveal the context: who called this code, with what object, and under what conditions.</p>
+
+<p>Crucially, you should make a genuine effort to <strong>understand the error independently before reaching for an AI tool</strong>. Ask yourself: What does this error type mean? What line did it occur on? What was the code on that line trying to do? What object or value was involved? Spending even two minutes answering these questions before you prompt an AI will make your prompt far more specific and the AI's response far more useful. It also builds the diagnostic intuition that makes you faster over time.</p>
+
+<p><strong>Prompting AI Tools to Explain Errors</strong></p>
+
+<p>AI assistants are remarkably capable at interpreting error messages and suggesting fixes, but the quality of the output depends almost entirely on the quality of the input. A vague prompt produces a vague answer. A well-constructed prompt produces a precise, actionable explanation.</p>
+
+<p>The single most important habit is to <strong>include both the relevant code and the full traceback</strong> in your prompt. Do not paraphrase the error — paste it verbatim. Do not paste only the last line — paste the entire traceback. And do not paste your entire 500-line program — identify the class or function that appears in the traceback and include that section. A prompt shaped like this works extremely well:</p>
+
+<pre><code>Here is the relevant code:
+
+class Beam:
+    def __init__(self, material, factor):
+        self.material = material
+        self.factor = factor
+
+    def get_span(self):
+        return self.length * self.factor
+
+Here is the full traceback I receive when I run it:
+
+Traceback (most recent call last):
+  File "bridge_analysis.py", line 42, in &lt;module&gt;
+    results = analyze(bridge)
+  File "bridge_analysis.py", line 18, in analyze
+    span = bridge.get_span()
+  File "bridge_analysis.py", line 9, in get_span
+    return self.length * self.factor
+AttributeError: 'Beam' object has no attribute 'length'
+
+Can you explain what is causing this error?</code></pre>
+
+<p>Notice the final question: <em>"Can you explain what is causing this error?"</em> — not <em>"Fix this for me."</em> This is a deliberate and important distinction. <strong>Ask the AI to explain the cause before asking for a fix.</strong> An explanation forces you to engage with the logic of the problem. When you understand <em>why</em> the error occurs, you can evaluate whether the proposed fix actually addresses the root cause or merely silences the symptom. A fix that suppresses an error without correcting the underlying design flaw will often create more subtle bugs later.</p>
+
+<p>For the example above, a good AI explanation would note that <code>self.length</code> is referenced in <code>get_span()</code> but was never assigned anywhere in <code>__init__</code> — the constructor only sets <code>self.material</code> and <code>self.factor</code>. The root cause is a missing attribute assignment. Once you understand that, the fix is obvious: add <code>self.length = length</code> to <code>__init__</code> and add <code>length</code> as a parameter. You could also evaluate whether <code>length</code> should be computed from other data rather than passed in directly.</p>
+
+<p>After applying any fix, <strong>always test and verify</strong>. Run the program again and confirm the original error is gone. Then check adjacent behavior — did the fix break any other part of the program? Did it introduce a new error? Did the output change in unexpected ways? This verification step is not optional; it is the moment when you confirm that your mental model of the problem was actually correct.</p>
+
+<p><strong>Common OOP Errors in Engineering Code</strong></p>
+
+<p>Object-oriented programming introduces a specific set of recurring errors that appear again and again across engineering codebases. Recognizing these patterns by name and cause dramatically speeds up debugging.</p>
+
+<p><strong><code>AttributeError</code></strong> is the most common OOP error. It means the object does not have the attribute the code tried to access. This almost always happens for one of two reasons: either the attribute was <em>never defined</em> (it was supposed to be set in <code>__init__</code> but wasn't), or its name was <em>misspelled</em> somewhere (perhaps defined as <code>self.lenght</code> but accessed as <code>self.length</code>). Consider:</p>
+
+<pre><code>class Pipe:
+    def __init__(self, diameter):
+        self.diamater = diameter   # typo: 'diamater' instead of 'diameter'
+
+    def area(self):
+        import math
+        return math.pi * (self.diameter / 2) ** 2   # AttributeError here</code></pre>
+
+<p>The definition spelled it <code>diamater</code>; the usage spelled it <code>diameter</code>. Python sees two different names: one that exists and one that does not. The fix is to ensure consistent spelling throughout the class.</p>
+
+<p><strong><code>TypeError</code></strong> in a method context usually signals one of two issues. First, <strong><code>self</code> was omitted</strong> from the method definition. If you write <code>def area(diameter):</code> instead of <code>def area(self, diameter):</code>, Python treats <code>diameter</code> as the implicit instance argument, and the actual diameter you pass becomes an unexpected extra argument — resulting in a confusing <code>TypeError: area() takes 1 positional argument but 2 were given</code>. Second, the <strong>call arguments do not match the definition</strong>: you defined the method to take three parameters but called it with two, or vice versa.</p>
+
+<pre><code>class Truss:
+    def __init__(self, height, width):
+        self.height = height
+        self.width = width
+
+    def volume(length):          # missing 'self'
+        return self.height * self.width * length
+
+t = Truss(3, 4)
+t.volume(10)   # TypeError: volume() takes 1 positional argument but 2 were given</code></pre>
+
+<p>The fix is simply to add <code>self</code> as the first parameter: <code>def volume(self, length):</code>.</p>
+
+<p><strong>Forgetting <code>super().__init__()</code></strong> is a subtler and particularly dangerous error in inheritance hierarchies. When a child class overrides <code>__init__</code> without calling the parent's <code>__init__</code>, all the attributes the parent was supposed to create are never set up. The error does not necessarily occur at the point of object creation — it occurs later, when code tries to use one of those missing parent attributes:</p>
+
+<pre><code>class Component:
+    def __init__(self, material, safety_factor):
+        self.material = material
+        self.safety_factor = safety_factor
+
+class Column(Component):
+    def __init__(self, material, safety_factor, height):
+        # forgot: super().__init__(material, safety_factor)
+        self.height = height
+
+    def safe_load(self, load):
+        return load / self.safety_factor   # AttributeError: 'Column' has no attribute 'safety_factor'</code></pre>
+
+<p>The <code>Column</code> object is created without error, but the moment <code>safe_load</code> tries to use <code>self.safety_factor</code>, Python raises an <code>AttributeError</code> because that attribute was never initialized. The fix is to call <code>super().__init__(material, safety_factor)</code> as the first line of <code>Column.__init__</code>.</p>
+
+<p><strong><code>IndentationError</code></strong> within a class body means that code was not correctly nested. Python uses indentation to define scope, and within a class, every method must be indented consistently beneath the class header. If a method accidentally has incorrect indentation, Python may treat it as outside the class, leading to an <code>IndentationError</code> or, more insidiously, to a function that exists at module scope rather than as a method. Always ensure that all method definitions inside a class share the same indentation level (typically four spaces or one tab), and that the body of each method is indented one level further.</p>
+
+<pre><code>class Wall:
+    def __init__(self, thickness):
+        self.thickness = thickness
+
+  def resistance(self):       # IndentationError: unexpected indent (or wrong scope)
+        return self.thickness * 2.5</code></pre>
+
+<p><strong>Systematic Debugging Strategy</strong></p>
+
+<p>Individual techniques for reading errors and prompting AI tools are most powerful when embedded in a consistent, disciplined strategy. Ad hoc debugging — changing things at random until something works — is slow, unreliable, and dangerous because it can introduce new bugs while appearing to fix old ones. The following process provides a reliable framework.</p>
+
+<p><strong>Reproduce the error consistently</strong> before attempting any fix. A bug you cannot reliably trigger is a bug you cannot reliably fix. Run the code in a clean environment, with the exact inputs that caused the failure, and confirm the error appears every time. If the error is intermittent, that itself is a diagnostic clue — intermittent errors often arise from uninitialized variables, ordering dependencies, or state that carries over between runs.</p>
+
+<p><strong>Isolate the smallest code section that still produces the error.</strong> This step — sometimes called creating a <em>minimal reproducible example</em> — is transformative. Start by commenting out or temporarily removing parts of the program that are not involved in the traceback chain. If the error still occurs with half the code removed, remove half of what remains. Continue until you have the shortest possible snippet that still fails. This process often reveals the cause before you even ask anyone for help, and when you do ask an AI, it gives the AI a focused, clean problem rather than a tangled web of unrelated code.</p>
+
+<p><strong>Form a specific hypothesis about the cause before applying any change.</strong> Based on the error type, the traceback, and your understanding of the code, write down (or at least think through) a precise statement like: <em>"I believe this AttributeError occurs because the <code>__init__</code> method never assigns <code>self.length</code>, even though <code>get_span</code> tries to read it."</em> A hypothesis is testable. A vague feeling that "something is wrong with the class" is not. When you use AI assistance, you can ask it to confirm or challenge your hypothesis, which produces more targeted and trustworthy responses than simply asking it to fix your code.</p>
+
+<p><strong>Verify that the fix resolves the error and does not break other parts of the program.</strong> After applying a change, run the full program (not just the isolated snippet) and check that the original error is gone. Run any tests you have. Check the output against expected values. Look at every place in the codebase that uses the function or class you modified — your change may have ripple effects. A fix that silently changes the behavior of other features is often worse than the original bug, because it may go unnoticed until it causes a failure in production or produces incorrect engineering results.</p>
+
+<p><strong>Use AI to generate hypotheses when stuck, but evaluate each one critically before applying.</strong> AI tools are not infallible. They can misread context, make incorrect assumptions about what your code is supposed to do, or suggest fixes that work mechanically but are wrong for your specific engineering problem. Treat AI suggestions as informed proposals from a knowledgeable colleague — worth considering seriously, but not worth implementing blindly. Ask the AI to explain its reasoning. If the explanation makes sense given your understanding of the code and the domain, proceed. If it doesn't, ask a follow-up question or investigate further before making any change. The goal is always to understand the code better, not merely to make the error message go away.</p>
+
+<p>When this strategy is followed consistently, debugging becomes a methodical engineering process rather than a frustrating guessing game. AI assistance amplifies your ability to diagnose and fix problems quickly, but the engineer's judgment — applied at every step — is what ensures that the fixes are correct, the code is sound, and the software behaves as intended.</p>
+        <div class="notes"><strong>Notes</strong>Covers how to use AI tools to interpret error messages, identify bugs, and reason through incorrect program behavior. Establishes a systematic debugging approach that combines AI assistance with engineer-led analysis.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

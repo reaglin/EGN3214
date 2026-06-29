@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to SciPy for Numerical Computing</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Introduction to SciPy for Numerical Computing</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Introduction to SciPy for Numerical Computing</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Scientific computing in Python revolves around a small set of foundational libraries, and SciPy sits at the very heart of that ecosystem. Whether you are solving an engineering stress-analysis problem, fitting a statistical model to experimental data, or numerically integrating a differential equation that has no closed-form solution, SciPy almost certainly provides a battle-tested, well-documented function that handles the heavy lifting. Understanding what SciPy is, how it relates to NumPy, how to import it correctly, and what categories of numerical problems it addresses will give you the conceptual map you need before diving into any of its individual submodules.</p>
+
+<p><strong>What is SciPy?</strong></p>
+
+<p>SciPy (pronounced "Sigh Pie") is an open-source Python library that collects <em>reliable, well-tested implementations of standard numerical algorithms</em> into a single, coherent package. Its algorithms are drawn from decades of numerical computing research and are often thin, high-quality Python wrappers around proven Fortran and C libraries such as LAPACK, BLAS, ODEPACK, FITPACK, and FFTPACK. This means that when you call a SciPy function, you are not getting a naive Python implementation — you are invoking code that has been refined by numerical analysts over many years and validated across thousands of scientific publications.</p>
+
+<p>Because the field of scientific computing is genuinely broad, SciPy is <em>organized into domain-specific submodules</em>. Each submodule encapsulates a coherent area of numerical mathematics:</p>
+
+<ul>
+  <li><strong>scipy.optimize</strong> — root finding, minimization, curve fitting, linear programming</li>
+  <li><strong>scipy.integrate</strong> — numerical quadrature, ordinary differential equation solvers</li>
+  <li><strong>scipy.interpolate</strong> — splines, radial basis functions, interpolation on grids</li>
+  <li><strong>scipy.linalg</strong> — matrix decompositions, solvers, eigenvalue problems</li>
+  <li><strong>scipy.signal</strong> — filtering, convolution, spectral analysis</li>
+  <li><strong>scipy.stats</strong> — probability distributions, hypothesis tests, descriptive statistics</li>
+  <li><strong>scipy.fft</strong> — discrete Fourier transforms</li>
+  <li><strong>scipy.sparse</strong> — sparse matrix storage and associated linear algebra</li>
+  <li><strong>scipy.ndimage</strong> — multi-dimensional image processing</li>
+  <li><strong>scipy.spatial</strong> — Delaunay triangulations, KD-trees, convex hulls, distance computations</li>
+</ul>
+
+<p>This modular organization is intentional. Keeping imports focused means that loading only <code>scipy.optimize</code> does not force the Python interpreter to load signal-processing or image-processing code. In large production workflows — for example, a data pipeline that runs thousands of times a day — that selectivity matters for startup time and memory footprint.</p>
+
+<p>Underlying every SciPy computation is the <em>NumPy array</em>. SciPy uses NumPy's <code>ndarray</code> as its primary data structure. Functions accept arrays as input, return arrays as output, and rely on NumPy's broadcasting rules and ufuncs for element-wise operations. This is not merely a convention; it is a deliberate design choice that ensures SciPy integrates seamlessly with the rest of the scientific Python ecosystem, where NumPy arrays are the universal currency for numerical data.</p>
+
+<p>In terms of adoption, SciPy is ubiquitous across engineering, physics, and data science. Mechanical engineers use it for structural optimization, electrical engineers for digital filter design, physicists for Monte Carlo integration and ODE-based simulations, and data scientists for statistical modeling and signal decomposition. Its API has been stable enough that code written a decade ago typically still runs unchanged today, which is a significant advantage in research contexts where reproducibility matters.</p>
+
+<p><strong>SciPy vs NumPy: Complementary Roles</strong></p>
+
+<p>A very common point of confusion for newcomers is understanding where NumPy ends and SciPy begins. The two libraries are not competing alternatives — they are <em>complementary layers</em> in the same stack.</p>
+
+<p><strong>NumPy</strong> provides the foundational layer: the <code>ndarray</code> data structure itself, element-wise mathematical operations (ufuncs), array slicing and reshaping, broadcasting semantics, and a collection of <em>linear algebra primitives</em> in <code>numpy.linalg</code>. Think of NumPy as the language in which numerical data is expressed and the tools for manipulating that data at the element or matrix level.</p>
+
+<p><strong>SciPy</strong> builds on top of NumPy arrays to provide <em>higher-level numerical routines</em> — algorithms that take arrays as input and return meaningful scientific results. Where NumPy gives you matrix multiplication, SciPy gives you a general sparse linear system solver. Where NumPy gives you the building blocks for computing a sum, SciPy gives you adaptive quadrature that automatically manages step sizes to meet a user-specified error tolerance. SciPy's <code>scipy.linalg</code>, for example, largely supersedes <code>numpy.linalg</code> because it exposes more complete interfaces to the underlying LAPACK routines (for instance, it can return additional diagnostic information and handles certain edge cases more gracefully).</p>
+
+<p>The analogy that many practitioners use is that NumPy is like a well-equipped machine shop (lathes, drills, precision measurement tools), while SciPy is the collection of specialized factory machines built from those tools for specific production tasks (an automatic gear-cutting machine, a precision boring mill). You could theoretically build everything SciPy does using only NumPy primitives, but doing so correctly — with proper error control, numerical stability, and edge-case handling — would require extraordinary expertise and effort.</p>
+
+<p>Together with <strong>Matplotlib</strong> for visualization, NumPy and SciPy form the <em>foundational scientific Python stack</em>. Higher-level libraries like pandas, scikit-learn, statsmodels, and SymPy are all built atop this stack, so understanding SciPy fluently pays dividends across the entire Python scientific computing world.</p>
+
+<p><strong>Installing and Importing SciPy Submodules</strong></p>
+
+<p>Installing SciPy is straightforward using either pip or conda:</p>
+
+<pre><code># Using pip
+pip install scipy
+
+# Using conda (recommended for scientific environments)
+conda install scipy
+</code></pre>
+
+<p>However, the more important habit to cultivate is <em>how</em> you import SciPy. Because the library is large and modular, the recommended practice is always to import specific submodules or specific names from submodules, rather than importing the top-level <code>scipy</code> namespace and drilling down from there. The preferred patterns look like this:</p>
+
+<pre><code># Preferred: import the submodule
+from scipy import optimize
+from scipy import integrate
+
+# Also common: import specific names
+from scipy.optimize import brentq, minimize
+from scipy.integrate import quad, solve_ivp
+from scipy.stats import norm, ttest_ind
+</code></pre>
+
+<p>Contrast this with what you should <em>avoid</em>:</p>
+
+<pre><code># Avoid: the top-level scipy namespace does not auto-import submodules
+import scipy
+scipy.optimize.brentq(...)  # This will raise AttributeError in many SciPy versions
+</code></pre>
+
+<p>The reason for this behavior is that SciPy's submodules are <em>not automatically imported</em> when you do <code>import scipy</code>. Each submodule must be explicitly imported. This is by design — it keeps the import fast and the namespace clean. This pattern is consistent across the official SciPy documentation, which is organized submodule by submodule in the <em>SciPy Reference Guide</em> at <code>docs.scipy.org</code>. Each submodule page lists every public function with full parameter documentation, mathematical background, and runnable examples.</p>
+
+<p>One practical concern in production environments is <em>version compatibility</em> between NumPy and SciPy. Because SciPy relies on NumPy's internal array representation and certain C-level APIs, mismatched versions can cause subtle bugs or outright import failures. The SciPy release notes always document the minimum required NumPy version. In environments managed with conda, the solver will automatically select compatible versions. In pip-based environments, it is wise to pin both libraries to specific versions in a <code>requirements.txt</code> or <code>pyproject.toml</code> file and to test upgrades in a staging environment before deploying to production:</p>
+
+<pre><code># Example requirements.txt with pinned versions
+numpy==1.26.4
+scipy==1.13.0
+</code></pre>
+
+<p><strong>Overview of Numerical Problem Categories</strong></p>
+
+<p>SciPy's value becomes concrete when you understand the categories of numerical problems it addresses. Each category represents a class of mathematical questions that appear repeatedly across science and engineering, and each has multiple algorithm choices that trade off speed, accuracy, memory usage, and robustness depending on the characteristics of the specific problem at hand.</p>
+
+<p><em>Root finding</em> asks the question: for a given function <em>f</em>, what input value <em>x</em> satisfies <em>f(x) = 0</em>? This is one of the most fundamental problems in numerical computing. Practical examples include finding the break-even point of a revenue model, computing the zero-crossings of a waveform, or solving implicit equations of state in thermodynamics. SciPy's <code>optimize</code> submodule provides several root-finding algorithms. <code>brentq</code> is a bracketing method that combines bisection, secant, and inverse quadratic interpolation for guaranteed convergence when you know the root lies between two values. <code>fsolve</code> and <code>root</code> handle systems of nonlinear equations. The right choice depends on whether you can bracket the root, whether you can compute a derivative, and how many dimensions the problem has.</p>
+
+<pre><code>from scipy.optimize import brentq
+import numpy as np
+
+# Find where cos(x) = x, i.e., cos(x) - x = 0
+f = lambda x: np.cos(x) - x
+root = brentq(f, 0, 1)
+print(f"Root: {root:.10f}")   # 0.7390851332
+</code></pre>
+
+<p><em>Numerical integration</em> (also called numerical quadrature) approximates the value of a definite integral when an analytic antiderivative is unavailable or impractical to compute. Beyond simple one-dimensional integrals, SciPy's <code>integrate</code> submodule also includes solvers for <em>ordinary differential equations</em> (ODEs), which can be thought of as a related class of problem — integrating a derivative function forward in time. The <code>quad</code> function performs adaptive Gaussian quadrature for 1-D integrals, automatically subdividing the integration domain where the integrand varies rapidly. <code>solve_ivp</code> provides a modern, flexible interface to several ODE solvers (RK45, DOP853, Radau, BDF, LSODA) for initial-value problems.</p>
+
+<pre><code>from scipy.integrate import quad
+import numpy as np
+
+# Integrate exp(-x^2) from 0 to infinity (result should be sqrt(pi)/2)
+result, error = quad(lambda x: np.exp(-x**2), 0, np.inf)
+print(f"Integral: {result:.10f}, Error estimate: {error:.2e}")
+</code></pre>
+
+<p><em>Curve fitting</em> addresses the problem of finding the parameters of a mathematical model that best describe a set of observed data points, typically by minimizing the sum of squared residuals between the model predictions and the observations. This appears constantly in experimental science — fitting a decay curve to radioactivity measurements, fitting a logistic growth curve to population data, fitting a Gaussian to a spectral peak. SciPy's <code>optimize.curve_fit</code> uses nonlinear least-squares (Levenberg-Marquardt by default) to estimate parameters and also returns the covariance matrix of the estimates, giving uncertainty information for free.</p>
+
+<pre><code>from scipy.optimize import curve_fit
+import numpy as np
+
+# Simulate noisy exponential decay data
+t = np.linspace(0, 5, 50)
+true_A, true_k = 3.0, 0.7
+y_data = true_A * np.exp(-true_k * t) + np.random.normal(0, 0.1, t.size)
+
+# Define the model
+def model(t, A, k):
+    return A * np.exp(-k * t)
+
+params, covariance = curve_fit(model, t, y_data, p0=[1.0, 1.0])
+print(f"Fitted A={params[0]:.4f}, k={params[1]:.4f}")
+</code></pre>
+
+<p>What makes these categories intellectually rich is that each contains not just one algorithm but a <em>family of algorithms</em>, and choosing appropriately requires understanding the mathematical structure of the problem. A smooth, unimodal function on a bounded interval calls for a different optimization strategy than a noisy, high-dimensional function with many local minima. A stiff ODE — one where different solution components evolve on vastly different timescales — requires an implicit solver like Radau or BDF rather than the explicit Runge-Kutta methods that work well for non-stiff systems. SciPy is designed so that you can start with sensible defaults and then tune algorithm selection and parameters as your understanding of the problem deepens.</p>
+
+<p>Taken together, these capabilities make SciPy not merely a convenience library but a <em>complete numerical computing environment</em> that can carry a project from exploratory prototyping through to production-quality scientific software. The combination of NumPy's array infrastructure, SciPy's algorithmic depth, and Python's readability has made this stack the dominant choice for computational science across academia and industry alike.</p>
+        <div class="notes"><strong>Notes</strong>Consider pairing this topic with a short interactive exercise where learners verify the SciPy version installed in their environment and successfully call one function from each of three different submodules. This reinforces the import pattern and makes the submodule structure tangible before deeper dives into specific numerical methods.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

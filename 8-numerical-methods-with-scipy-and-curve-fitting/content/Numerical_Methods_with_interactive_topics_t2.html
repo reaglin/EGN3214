@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Root Finding with scipy.optimize</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Root Finding with scipy.optimize</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Root Finding with scipy.optimize</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Root finding is one of the most fundamental tasks in scientific computing. At its core, the problem is deceptively simple: given a function <em>f(x)</em>, find a value of <em>x</em> such that <em>f(x) = 0</em>. That value of <em>x</em> is called a <strong>root</strong> or <strong>zero</strong> of the function. Despite the simplicity of the definition, finding roots analytically is often impossible for real-world problems, making numerical methods indispensable. Python's <code>scipy.optimize</code> module provides a rich collection of such methods, ranging from safe bracket-based approaches to fast derivative-driven algorithms. Understanding when and how to apply each method — and how to interpret the results — is an essential skill for any scientific programmer.</p>
+
+<p><strong>The Concept of Root Finding</strong></p>
+
+<p>To ground the idea concretely, consider a straightforward example: finding where a polynomial crosses the x-axis. If you have <em>f(x) = x² - 4</em>, you can solve algebraically to get <em>x = ±2</em>. But now imagine you need to find the break-even point of a financial model, or the equilibrium temperature of a chemical reaction, or the angle at which a projectile hits the ground. In all of these cases, the equation you need to solve may involve transcendental functions, implicit relationships, or numerically defined data — and there is no algebraic shortcut available.</p>
+
+<p>This is precisely where root finding earns its place. The idea is to reformulate the problem so that the quantity you are searching for is a root of some function. For example, if you want to find <em>x</em> such that <em>g(x) = 5</em>, you define <em>f(x) = g(x) - 5</em> and then find the root of <em>f</em>. Nearly any equation can be cast into this <em>f(x) = 0</em> form.</p>
+
+<p>Before invoking any numerical solver, a <strong>graphical inspection</strong> of the function is extremely valuable. By plotting <em>f(x)</em> over a plausible domain, you can:</p>
+<ul>
+  <li>Identify roughly where the roots lie (i.e., where the curve crosses zero).</li>
+  <li>Detect multiple roots, so you know how many solutions to look for.</li>
+  <li>Spot potential pathological behavior such as near-zero slopes or discontinuities, which can mislead solvers.</li>
+</ul>
+
+<p>For instance, the function <em>f(x) = cos(x) - x</em> has exactly one root near <em>x ≈ 0.739</em>, which is easy to spot visually. On the other hand, <em>f(x) = sin(10x)</em> has many roots in any reasonable interval, and a solver given a careless initial guess might converge to the wrong one. Plotting first is never wasted time.</p>
+
+<p><strong>Bracket-Based Methods: <code>brentq</code> and <code>bisect</code></strong></p>
+
+<p>Bracket-based methods work by exploiting the <strong>Intermediate Value Theorem</strong>: if a continuous function <em>f</em> satisfies <em>f(a) &lt; 0</em> and <em>f(b) &gt; 0</em> (or vice versa), then there must be at least one root somewhere in the interval <em>[a, b]</em>. The key precondition is that <em>f(a)</em> and <em>f(b)</em> have <strong>opposite signs</strong>. These methods are called "bracket" methods because the root is guaranteed to lie within the bracket, and the bracket shrinks with each iteration.</p>
+
+<p><code>scipy.optimize.bisect</code> implements the classic <strong>bisection algorithm</strong>. It works by repeatedly evaluating the midpoint <em>m = (a + b) / 2</em> and then replacing either <em>a</em> or <em>b</em> with <em>m</em> depending on the sign of <em>f(m)</em>, thereby halving the interval at each step. This process continues until the interval is smaller than the specified tolerance or the maximum number of iterations is reached. Bisection is extremely robust: as long as the initial bracket is valid, it <em>will</em> converge. However, it converges slowly (linearly), requiring roughly 3.32 iterations per decimal digit of precision.</p>
+
+<pre><code>from scipy.optimize import bisect
+import numpy as np
+
+def f(x):
+    return np.cos(x) - x
+
+root = bisect(f, 0, 2)
+print(root)  # Output: approximately 0.7390851332
+</code></pre>
+
+<p><code>scipy.optimize.brentq</code> implements <strong>Brent's method</strong>, which is a hybrid algorithm that combines bisection, the secant method, and inverse quadratic interpolation. It uses faster interpolation steps when possible, but falls back to the safe bisection step when the faster steps would produce an unreliable result. In practice, <code>brentq</code> is <strong>significantly faster than bisect</strong> while retaining the same guarantee of convergence when a valid bracket is provided. For this reason, <code>brentq</code> is the recommended default for scalar bracketed root finding in <code>scipy.optimize</code>.</p>
+
+<pre><code>from scipy.optimize import brentq
+import numpy as np
+
+def f(x):
+    return np.cos(x) - x
+
+root = brentq(f, 0, 2)
+print(root)  # Output: approximately 0.7390851332
+</code></pre>
+
+<p>Both <code>bisect</code> and <code>brentq</code> accept keyword arguments to control precision and computational effort:</p>
+<ul>
+  <li><strong><code>xtol</code></strong>: The absolute tolerance in the x-value. The solver stops when the bracket width is smaller than this. Default is around 2e-12.</li>
+  <li><strong><code>rtol</code></strong>: A relative tolerance, combined with <code>xtol</code> to define the stopping criterion.</li>
+  <li><strong><code>maxiter</code></strong>: The maximum number of iterations allowed. If reached without convergence, a warning or exception is raised depending on the <code>full_output</code> setting.</li>
+  <li><strong><code>full_output</code></strong>: If set to <code>True</code>, returns additional diagnostic information alongside the root.</li>
+</ul>
+
+<pre><code>root, result = brentq(f, 0, 2, xtol=1e-10, maxiter=100, full_output=True)
+print(result.converged)    # True
+print(result.iterations)   # Number of iterations taken
+</code></pre>
+
+<p>A common mistake is to supply a bracket <em>[a, b]</em> where <em>f(a)</em> and <em>f(b)</em> have the <em>same</em> sign. Both functions will raise a <code>ValueError</code> in this case. This is why plotting the function beforehand is so helpful — it makes bracket selection straightforward.</p>
+
+<p><strong>Derivative-Based Methods: <code>fsolve</code> and <code>newton</code></strong></p>
+
+<p>When a valid bracket is unavailable, or when faster convergence is needed, derivative-based methods come into play. These methods use information about the slope of the function to make more informed steps toward the root.</p>
+
+<p><code>scipy.optimize.newton</code> is a flexible function that can implement several related algorithms depending on what information you supply. In its most powerful form, you provide both the function and its first derivative (and optionally the second derivative), enabling the classic <strong>Newton-Raphson method</strong>. Newton-Raphson works by linearizing the function at the current guess <em>x_n</em> and solving for the x-intercept of that tangent line:</p>
+
+<p><em>x_{n+1} = x_n - f(x_n) / f'(x_n)</em></p>
+
+<p>This method converges <strong>quadratically</strong> near the root, meaning that the number of correct decimal digits roughly doubles with each iteration. This is dramatically faster than bisection's linear convergence. However, the method can fail or diverge if the initial guess is far from the root, or if the derivative is zero or near-zero near the root.</p>
+
+<pre><code>from scipy.optimize import newton
+import numpy as np
+
+def f(x):
+    return np.cos(x) - x
+
+def df(x):
+    return -np.sin(x) - 1
+
+root = newton(f, x0=0.5, fprime=df)
+print(root)  # approximately 0.7390851332
+</code></pre>
+
+<p>If you omit <code>fprime</code>, <code>newton</code> falls back to the <strong>secant method</strong>, which approximates the derivative using two nearby function evaluations. This is slower than true Newton-Raphson but avoids the need to compute the derivative analytically. If you additionally supply <code>fprime2</code> (the second derivative), Newton's method uses <strong>Halley's method</strong>, which has cubic convergence.</p>
+
+<p><code>scipy.optimize.fsolve</code> is designed for finding roots of <strong>systems of nonlinear equations</strong> — that is, finding a vector <em>x</em> such that <em>F(x) = 0</em> where both <em>x</em> and <em>F(x)</em> are vectors. Internally, it uses a modified Powell hybrid method (from the MINPACK library) and accepts an initial guess vector. The return value is an array of root values.</p>
+
+<pre><code>from scipy.optimize import fsolve
+import numpy as np
+
+# System: x^2 + y^2 = 1 and y = x^2 - 0.5
+# Reformulated as F(x, y) = 0:
+def system(vars):
+    x, y = vars
+    eq1 = x**2 + y**2 - 1
+    eq2 = y - x**2 + 0.5
+    return [eq1, eq2]
+
+solution = fsolve(system, x0=[0.5, 0.5])
+print(solution)  # One of the intersection points
+</code></pre>
+
+<p>Key points about derivative-based methods:</p>
+<ul>
+  <li><strong>Initial guess sensitivity</strong>: These methods are only locally convergent. A poor initial guess can lead to divergence, oscillation, or convergence to an unintended root. Plotting helps identify a good starting point.</li>
+  <li><strong>Smooth functions required</strong>: Newton-Raphson requires the function to be differentiable. Discontinuous or rough functions should use bracket methods instead.</li>
+  <li><strong>No bracket guarantee</strong>: Unlike <code>brentq</code>, there is no guarantee that <code>fsolve</code> or <code>newton</code> will find a root at all. Always verify the result.</li>
+</ul>
+
+<p><strong>General Scalar Root Finding with <code>root_scalar</code></strong></p>
+
+<p><code>scipy.optimize.root_scalar</code> is a unified interface that consolidates many root-finding algorithms under a single, flexible function call. Rather than memorizing the specific function name for each algorithm, you simply specify the <code>method</code> keyword argument. This makes it easy to experiment with different algorithms on the same problem. Supported methods include <code>'brentq'</code>, <code>'bisect'</code>, <code>'newton'</code>, <code>'secant'</code>, <code>'halley'</code>, and several others.</p>
+
+<pre><code>from scipy.optimize import root_scalar
+import numpy as np
+
+def f(x):
+    return np.cos(x) - x
+
+def df(x):
+    return -np.sin(x) - 1
+
+# Using Brent's method with a bracket
+result = root_scalar(f, bracket=[0, 2], method='brentq')
+print(result.root)       # approximately 0.7390851332
+print(result.converged)  # True
+print(result.iterations) # Number of iterations
+
+# Using Newton's method with an initial guess and derivative
+result2 = root_scalar(f, x0=0.5, fprime=df, method='newton')
+print(result2.root)
+</code></pre>
+
+<p>The return value of <code>root_scalar</code> is a <code>RootResults</code> object with several useful attributes:</p>
+<ul>
+  <li><strong><code>root</code></strong>: The estimated root value.</li>
+  <li><strong><code>converged</code></strong>: A boolean indicating whether the solver successfully converged.</li>
+  <li><strong><code>iterations</code></strong>: The number of iterations the solver took.</li>
+  <li><strong><code>function_calls</code></strong>: The number of function evaluations performed.</li>
+  <li><strong><code>flag</code></strong>: A string message describing the exit condition (e.g., convergence or failure reason).</li>
+</ul>
+
+<p>This object-oriented return style is particularly helpful when you are doing exploratory work or comparing methods, because all relevant diagnostic information is packaged together rather than scattered across multiple return values.</p>
+
+<p><strong>Practical Considerations for Root Finding</strong></p>
+
+<p>Knowing which tool to use — and how to use it responsibly — is just as important as knowing the algorithms themselves. Here are the key practical guidelines:</p>
+
+<ul>
+  <li><strong>Prefer bracket methods when possible.</strong> If you can identify an interval <em>[a, b]</em> where the function changes sign, use <code>brentq</code> or <code>bisect</code>. The convergence guarantee is invaluable in production code where unexpected failures are costly. Use <code>brentq</code> over <code>bisect</code> because it is faster while offering the same safety.</li>
+  <li><strong>Use Newton-based methods for speed when the function is smooth.</strong> If your function is differentiable, you can compute the derivative analytically or via automatic differentiation, and you have a reasonable initial guess, Newton-Raphson (via <code>newton</code> or <code>root_scalar</code> with <code>method='newton'</code>) will converge very quickly.</li>
+  <li><strong>Always check convergence status.</strong> Never blindly trust the output of a root finder. Both <code>fsolve</code> and <code>root_scalar</code> provide convergence information. For <code>fsolve</code>, you can pass <code>full_output=True</code> to receive a dictionary with an <code>ier</code> field (1 means success). For <code>root_scalar</code>, check <code>result.converged</code>. A returned value that looks numerically plausible can still be wrong if the solver stalled far from the true root.</li>
+  <li><strong>Plot the function before solving.</strong> This cannot be overstated. A quick plot reveals how many roots exist, where they are approximately located, whether the function is well-behaved, and whether there are any tricky features like near-tangencies (where the function touches but does not cross zero, meaning there is no sign change and bracket methods will fail).</li>
+  <li><strong>Verify the solution by substituting back.</strong> After finding a root <em>x*</em>, compute <em>f(x*)</em> and confirm it is close to zero. This is a simple and effective sanity check.</li>
+</ul>
+
+<pre><code>from scipy.optimize import brentq
+import numpy as np
+
+def f(x):
+    return x**3 - x - 2
+
+# Graphical inspection suggests a root near x = 1.5
+root = brentq(f, 1, 2)
+print(f"Root: {root}")
+print(f"Verification f(root) = {f(root):.2e}")  # Should be ~0
+</code></pre>
+
+<p>For problems with multiple roots, you need to run the solver once per root, each time providing a bracket or initial guess near the specific root you want. Combining a coarse scan (evaluating <em>f</em> on a grid to find sign changes) with <code>brentq</code> for each interval is a reliable and common strategy:</p>
+
+<pre><code>import numpy as np
+from scipy.optimize import brentq
+
+def f(x):
+    return np.sin(3 * x) - 0.5
+
+x_vals = np.linspace(0, np.pi, 300)
+y_vals = f(x_vals)
+
+roots = []
+for i in range(len(y_vals) - 1):
+    if y_vals[i] * y_vals[i+1] < 0:  # Sign change detected
+        r = brentq(f, x_vals[i], x_vals[i+1])
+        roots.append(r)
+
+print("All roots found:", roots)
+for r in roots:
+    print(f"  f({r:.6f}) = {f(r):.2e}")
+</code></pre>
+
+<p>This pattern — grid scan to find brackets, then <code>brentq</code> within each bracket — is robust, generalizable, and easy to understand. It gracefully handles functions with many roots and requires almost no manual tuning once you have chosen a fine enough grid.</p>
+
+<p>In summary, <code>scipy.optimize</code> offers a well-designed toolkit for root finding that scales from simple single-variable problems to systems of nonlinear equations. Mastering the distinction between bracket-based and derivative-based approaches, understanding their respective strengths and limitations, and adopting disciplined verification habits will make your numerical computing more reliable and efficient.</p>
+        <div class="notes"><strong>Notes</strong>Covers scalar and multivariate root-finding methods available in scipy.optimize, including bracket-based and derivative-based approaches. The grid-scan pattern at the end is a particularly useful practical technique not always covered in introductory treatments but widely used in applied scientific computing.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

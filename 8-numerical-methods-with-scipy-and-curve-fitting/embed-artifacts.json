@@ -1,0 +1,57 @@
+﻿[
+  {
+    "title": "8. Numerical Methods with SciPy and Curve Fitting \u2014 Topics \u0026 Learning Outcomes",
+    "href": "topics-outcomes.html",
+    "type": "Page"
+  },
+  {
+    "title": "8. Numerical Methods with SciPy and Curve Fitting \u2014 Module Topics",
+    "href": "topics.html",
+    "type": "Page"
+  },
+  {
+    "title": "8. Numerical Methods with SciPy and Curve Fitting \u2014 Module Topics",
+    "href": "content/module_topics.html",
+    "type": "Content"
+  },
+  {
+    "title": "Introduction to SciPy for Numerical Computing",
+    "href": "content/Numerical_Methods_with_interactive_topics_t1.html",
+    "type": "Content"
+  },
+  {
+    "title": "Root Finding with scipy.optimize",
+    "href": "content/Numerical_Methods_with_interactive_topics_t2.html",
+    "type": "Content"
+  },
+  {
+    "title": "Numerical Integration with scipy.integrate",
+    "href": "content/Numerical_Methods_with_interactive_topics_t3.html",
+    "type": "Content"
+  },
+  {
+    "title": "Linear Curve Fitting with numpy.polyfit",
+    "href": "content/Numerical_Methods_with_interactive_topics_t4.html",
+    "type": "Content"
+  },
+  {
+    "title": "Nonlinear Curve Fitting with scipy.optimize.curve fit",
+    "href": "content/Numerical_Methods_with_interactive_topics_t5.html",
+    "type": "Content"
+  },
+  {
+    "title": "Residuals Analysis",
+    "href": "content/Numerical_Methods_with_interactive_topics_t6.html",
+    "type": "Content"
+  },
+  {
+    "title": "Applying Numerical Methods to Engineering Datasets",
+    "href": "content/Numerical_Methods_with_interactive_topics_t7.html",
+    "type": "Content"
+  },
+  {
+    "title": "Applying Numerical Methods to Engineering Datasets",
+    "href": "content/_interactive.html",
+    "type": "Content"
+  }
+]

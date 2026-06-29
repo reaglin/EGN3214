@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Assisted Code Generation Workflow</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>AI-Assisted Code Generation Workflow</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>AI-Assisted Code Generation Workflow</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>AI-assisted code generation has fundamentally changed how engineers and developers approach programming tasks. Tools like GitHub Copilot, ChatGPT, and similar large-language-model-based assistants can produce syntactically correct, contextually relevant code in seconds — but only when the human operator knows how to communicate effectively with them. The quality of AI-generated code is almost entirely determined by the quality of the input it receives. This means that learning to work with AI tools is itself a technical skill, one that combines clear technical writing, structured thinking, and iterative problem-solving. This topic establishes a complete workflow for using AI tools to generate, refine, and validate code for engineering programming tasks, from writing the first prompt all the way through running unit tests.</p>
+
+<p><strong>Writing Effective Prompts for Code Generation</strong></p>
+
+<p>The most common mistake engineers make when first using AI code generation is being too vague. A prompt like "write a function to calculate pressure" will produce something syntactically plausible but almost certainly useless for a real engineering context. Effective prompts are specific, constrained, and self-contained. Think of the AI as a highly capable but completely context-free collaborator who knows nothing about your project, your units, your conventions, or your constraints unless you state them explicitly.</p>
+
+<p>The first rule is to always specify the programming language. Even though tools like Copilot infer the language from the file you are editing, ChatGPT does not have that context. A prompt that begins "Write a Python function..." immediately constrains the output. Similarly, naming the class or function explicitly in the prompt ensures the generated code matches your intended API. For example:</p>
+
+<pre><code>Write a Python method called `calculate_reynolds_number` that belongs to a class
+called `FluidProperties`. The method should take `velocity` (float, m/s),
+`diameter` (float, m), and `kinematic_viscosity` (float, m^2/s) as parameters
+and return the dimensionless Reynolds number as a float.
+</code></pre>
+
+<p>This prompt contains the language, the method name, the class it belongs to, every parameter with its type and physical unit, and the expected return type and description. An AI receiving this prompt has almost no room to guess — and guessing is where errors originate.</p>
+
+<p>Including the formula or algorithm in the prompt is one of the highest-leverage things an engineer can do. AI tools have broad knowledge of common formulas, but they may recall variants or approximations that are not appropriate for your application. If you are implementing the Darcy-Weisbach equation, paste it into the prompt. If you need a specific numerical method like the bisection method or the Euler integration step, describe it explicitly. Consider:</p>
+
+<pre><code>Implement the Darcy-Weisbach equation: delta_P = f * (L / D) * (rho * v^2 / 2)
+where f is the Darcy friction factor (dimensionless), L is pipe length (m),
+D is pipe diameter (m), rho is fluid density (kg/m^3), and v is flow velocity (m/s).
+Return delta_P in Pascals.
+</code></pre>
+
+<p>Stating constraints is equally important. If a method must have a specific name because it overrides a parent class method, say so. If the output must be formatted as a dictionary, a NumPy array, or a specific number of decimal places, include that requirement. Constraints prevent the AI from making reasonable but incompatible design choices. For example, if your project uses a base class with an abstract method called <code>compute</code>, tell the AI: "This class inherits from <code>BaseComponent</code> and must implement the abstract method <code>compute(self)</code>."</p>
+
+<p><strong>Using Comments and Docstrings to Guide Copilot</strong></p>
+
+<p>GitHub Copilot operates differently from conversational AI like ChatGPT. It reads the code you have already written — including comments and docstrings — and predicts what comes next. This means you can steer Copilot's suggestions entirely through the structure of your source file without ever leaving your editor.</p>
+
+<p>The most effective technique is to write a complete, descriptive docstring before you write a single line of the method body. Copilot reads the docstring as a specification and then attempts to implement it. A well-written docstring includes the purpose of the method, all parameters with types and units, the return value, and any important notes about the algorithm. For example:</p>
+
+<pre><code>def calculate_heat_transfer_rate(self, U, A, delta_T):
+    """
+    Calculate the rate of heat transfer using Newton's Law of Cooling.
+
+    Parameters
+    ----------
+    U : float
+        Overall heat transfer coefficient (W/m^2·K).
+    A : float
+        Heat transfer surface area (m^2).
+    delta_T : float
+        Temperature difference between the hot and cold fluid (K).
+
+    Returns
+    -------
+    float
+        Heat transfer rate Q in Watts (W).
+
+    Notes
+    -----
+    Uses Q = U * A * delta_T.
+    """
+</code></pre>
+
+<p>When you press Enter after the closing triple-quote and pause for a moment, Copilot will typically suggest <code>return U * A * delta_T</code> — which is exactly correct. The docstring served as a complete specification. This workflow also produces well-documented code as a natural byproduct, since you are writing the documentation first and the implementation follows automatically.</p>
+
+<p>Inline comments within a method body serve a similar guiding role. If you are writing a multi-step computation, you can write comments that describe each step before the code for that step exists. Copilot reads ahead and attempts to implement the commented step. Consider a method that involves several intermediate calculations:</p>
+
+<pre><code>def calculate_pipe_flow(self, diameter, length, roughness, flow_rate):
+    # Calculate cross-sectional area of the pipe
+    area = ...  # Copilot suggests: math.pi * (diameter / 2) ** 2
+
+    # Calculate flow velocity from flow rate and area
+    velocity = ...  # Copilot suggests: flow_rate / area
+
+    # Calculate Reynolds number using kinematic viscosity from self
+    Re = ...  # Copilot suggests: velocity * diameter / self.kinematic_viscosity
+</code></pre>
+
+<p>Each comment tells Copilot what to compute on the next line, and Copilot fills in the expression. Including units and expected value ranges in comments further tightens the suggestions. A comment like <code># velocity should be in m/s, typically between 0.5 and 5.0 for water systems</code> gives Copilot enough context to make a better guess about variable names and formulas in the surrounding code.</p>
+
+<p><strong>Iterative Refinement of AI-Generated Code</strong></p>
+
+<p>AI-generated code is rarely perfect on the first attempt. Treating it as a finished product is a mistake; treating it as a first draft to be refined iteratively is the correct mindset. The iterative refinement workflow is simple: generate, run, evaluate, re-prompt, repeat.</p>
+
+<p>The first step after receiving generated code is to run it immediately. Do not spend time reading every line trying to predict what will happen. Execute it against a simple test case where you know the correct answer, and observe the actual output. Errors fall into a few categories: syntax errors (the code does not run at all), runtime errors (the code crashes during execution), and logical errors (the code runs but produces wrong answers).</p>
+
+<p>For syntax and runtime errors, copy the full error traceback into your next prompt. AI tools are excellent at diagnosing their own errors when given the stack trace. A follow-up prompt like the following is highly effective:</p>
+
+<pre><code>Running the code you provided gives this error:
+
+TypeError: unsupported operand type(s) for /: 'str' and 'float'
+Traceback (most recent call last):
+  File "test.py", line 12, in calculate_reynolds_number
+    return velocity * diameter / self.kinematic_viscosity
+
+The `kinematic_viscosity` attribute is being read as a string. Please fix
+the __init__ method to ensure it stores this value as a float.
+</code></pre>
+
+<p>For logical errors, you must describe what the code produced versus what it should have produced. Saying "the output is wrong" is not useful. Saying "for an input velocity of 2.0 m/s, diameter of 0.05 m, and kinematic viscosity of 1e-6 m²/s, your function returns 1.0 but the correct Reynolds number is 100,000" gives the AI exactly what it needs to diagnose and fix the problem.</p>
+
+<p>When using ChatGPT, every follow-up message in the same conversation is sent along with the full conversation history. This means the AI remembers the code it generated, the error you reported, and any corrections it already made. This context preservation is powerful — you can make incremental corrections across many messages without re-explaining the entire problem. A typical session might look like: initial generation → fix a unit conversion error → add a missing edge case check → refactor a method name to match the base class → add a docstring. Each message builds on the last, and the final result is a coherent piece of code that emerged through guided collaboration.</p>
+
+<p>Iterative refinement almost always converges on a correct solution faster than abandoning the generated code and starting from scratch. Even a flawed first draft provides scaffolding — variable names, structure, and partial logic — that reduces the total work required.</p>
+
+<p><strong>Generating Boilerplate and Class Scaffolding</strong></p>
+
+<p>One of the highest-value uses of AI code generation for engineering programming is generating class scaffolding. A well-designed Python class for an engineering component requires a substantial amount of structural code — the <code>__init__</code> method with attribute initialization, a <code>__str__</code> or <code>__repr__</code> method for readable output, placeholder method signatures, inheritance declarations, and imports. Writing all of this by hand is tedious and error-prone. AI tools can produce a complete skeleton in seconds from a clear prompt.</p>
+
+<p>A prompt for class scaffolding should describe the class's purpose, its attributes (names, types, and units), any parent class it inherits from, and the names and brief descriptions of the methods it should contain. For example:</p>
+
+<pre><code>Generate a Python class called `CentrifugalPump` that inherits from `FluidComponent`.
+The class should have these attributes initialized in __init__:
+  - flow_rate: float (m^3/s)
+  - head: float (m)
+  - efficiency: float (dimensionless, 0 to 1)
+  - fluid_density: float (kg/m^3)
+
+Include a __str__ method that displays all attributes with their units.
+
+Include placeholder methods (with `pass` and a one-line docstring) for:
+  - calculate_power_input(self): returns shaft power in Watts
+  - calculate_hydraulic_power(self): returns hydraulic power in Watts
+  - operating_point(self, system_curve): returns (flow_rate, head) tuple
+</code></pre>
+
+<p>The AI will produce a complete class structure with proper Python syntax, inheritance, and docstrings on the placeholders. What it will not produce reliably — and should not be trusted to produce without verification — is the domain-specific engineering content inside those placeholder methods. The formula for hydraulic power (<code>P_hydraulic = rho * g * Q * H</code>) is straightforward, but a more complex formula for operating point determination requires the engineer's judgment and verification against authoritative references.</p>
+
+<p>This division of labor is the key design principle: use AI for structure and boilerplate, apply engineering knowledge for domain-specific content. After receiving the scaffold, review every attribute name and type to ensure they match the requirements of the broader system. A name mismatch — for example, <code>flow_rate</code> in the AI-generated class versus <code>volumetric_flow</code> in the rest of your codebase — will cause attribute errors at runtime that are easy to miss in code review.</p>
+
+<p><strong>Using AI for Test Case Generation</strong></p>
+
+<p>Testing is often the most neglected part of engineering code development, yet it is where AI assistance can be particularly valuable. AI tools can generate a comprehensive set of unit tests quickly, covering not just the obvious "happy path" but also boundary conditions and edge cases that a fatigued developer might overlook.</p>
+
+<p>When prompting for test generation, provide the AI with the class definition or method signature and ask explicitly for tests covering three categories: typical inputs, boundary values, and edge cases. A prompt structured this way produces far more useful tests than simply asking for "some tests." For example:</p>
+
+<pre><code>Generate Python unit tests using the `unittest` framework for the following method:
+
+    def calculate_reynolds_number(self, velocity, diameter, kinematic_viscosity):
+        return velocity * diameter / kinematic_viscosity
+
+Write tests for:
+1. A typical turbulent flow case (Re >> 4000)
+2. A typical laminar flow case (Re < 2300)
+3. The transition region boundary (Re ≈ 2300 and Re ≈ 4000)
+4. Zero velocity (should return 0.0)
+5. Very small kinematic viscosity (near-zero denominator)
+6. All parameters equal to 1.0 (unit test for formula structure)
+</code></pre>
+
+<p>The AI will generate test methods with concrete numeric inputs and <code>assertAlmostEqual</code> or <code>assertEqual</code> assertions. However — and this is critical — every expected value in those assertions must be verified by the engineer before the tests are trusted. AI tools sometimes compute expected values incorrectly, particularly for complex formulas or when units are involved. A test that asserts the wrong expected value is worse than no test at all, because it gives false confidence.</p>
+
+<p>The correct workflow is to verify each expected value against a hand calculation or a trusted reference source. For the Reynolds number example, given <code>velocity=2.0</code>, <code>diameter=0.05</code>, <code>kinematic_viscosity=1e-6</code>, the hand calculation is straightforward: <code>Re = 2.0 * 0.05 / 1e-6 = 100,000</code>. Confirm this matches the AI's assertion before committing the test to your codebase.</p>
+
+<p>AI-generated tests should be treated as a starting framework, not a finished test suite. They establish structure, naming conventions, and coverage breadth. The engineer's job is to validate expected values, add any missing domain-specific cases (such as physically impossible inputs that should raise exceptions), and integrate the tests into the broader testing strategy. Used this way, AI test generation dramatically reduces the time needed to achieve meaningful test coverage while keeping the engineer in full control of correctness.</p>
+
+<p>Taken together, these five elements — effective prompting, docstring-driven Copilot steering, iterative refinement, boilerplate scaffolding, and AI-assisted test generation — form a coherent workflow. Each element reinforces the others. Clear prompts produce better scaffolding. Good docstrings produce accurate Copilot suggestions. Running tests immediately reveals errors that can be fed back into the refinement loop. The result is a development process that is simultaneously faster than writing all code manually and more thoroughly documented and tested than most manual workflows achieve in practice.</p>
+        <div class="notes"><strong>Notes</strong>Establishes a structured workflow for using AI tools to generate, refine, and integrate code for engineering programming tasks. Focuses on effective prompting strategies and iterative development practices. All code examples use Python. Key mental model: AI handles structure and boilerplate; engineers own domain correctness and verification.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

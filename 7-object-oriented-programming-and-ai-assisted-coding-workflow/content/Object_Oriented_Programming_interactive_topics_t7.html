@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsible Use and Verification of AI-Generated Code</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>Responsible Use and Verification of AI-Generated Code</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Responsible Use and Verification of AI-Generated Code</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Artificial intelligence coding assistants have become genuinely useful tools in engineering practice. They can draft functions, suggest algorithms, and produce syntactically correct code in seconds. But speed and syntactic correctness are not the same as physical correctness, dimensional consistency, or engineering safety. This gap between <em>looking right</em> and <em>being right</em> is the central challenge engineers face when incorporating AI-generated code into professional or academic work. Understanding why verification is non-negotiable, and knowing exactly how to perform it, is one of the most important practical skills an engineer can develop in this era of AI-assisted programming.</p>
+
+<p><strong>Why Verification Is Non-Negotiable in Engineering</strong></p>
+
+<p>AI coding tools are trained on enormous corpora of text and code. Their fundamental objective during training is to predict the next plausible token — a word, a symbol, a variable name — given everything that came before. This means they are extraordinarily good at producing output that <em>looks</em> like correct code. They have absorbed patterns from thousands of textbooks, Stack Overflow answers, GitHub repositories, and worked examples. The result is code that reads fluently and follows recognizable conventions.</p>
+
+<p>The problem is that plausibility is not the same as correctness. An AI tool has no internal model of the physical world. It does not reason about whether a pressure value makes sense for a hydraulic system, whether a stress result exceeds a material's yield strength, or whether a numerical method converges for the problem at hand. It pattern-matches. When a pattern from a slightly different engineering domain is the closest match in its training data, the tool will produce that pattern — and it will do so with exactly the same confident formatting as it uses when it is correct.</p>
+
+<p>A concrete example illustrates the danger. Suppose you ask an AI assistant to write a Python function to compute the Reynolds number for flow in a pipe. The tool might produce something like:</p>
+
+<pre><code>def reynolds_number(velocity, diameter, density, viscosity):
+    return (density * velocity * diameter) / viscosity
+</code></pre>
+
+<p>This is correct. But if you ask for a slightly different context — say, the Nusselt number correlation for turbulent pipe flow — the tool might confidently return the Dittus-Boelter equation with an exponent that applies to cooling rather than heating, or a correlation valid only for Prandtl numbers in a range not applicable to your fluid, with no warning whatsoever. The code will run without error. The numbers will look reasonable. Only a reviewer who knows the domain will catch it.</p>
+
+<p>Beyond the technical dimension, there is a professional accountability dimension. Engineers are licensed and ethically obligated to ensure that the work they produce is correct and safe. Professional engineering codes of ethics do not contain exceptions for errors introduced by software tools. If a structural calculation contains a wrong formula because the engineer copied AI-generated code without verifying it, the professional liability belongs to the engineer, not to the AI company. This is not a hypothetical concern — it is the same principle that has always applied to engineers using any computation tool, from slide rules to spreadsheets to finite element packages. The tool does not bear responsibility; the practitioner does.</p>
+
+<p>For students in engineering programs, the same logic applies at the academic level. Submitting a calculation or program that contains an error you never detected because you did not verify the AI's output is not a minor slip — it signals that you have not yet developed the engineering judgment the course is trying to build. Verification is therefore not an optional quality enhancement layered on top of the "real" work. It <em>is</em> the real work.</p>
+
+<p><strong>Hand Calculation Verification</strong></p>
+
+<p>The most direct and reliable way to verify AI-generated engineering code is to solve a representative problem by hand first, before running the code. This practice forces you to engage with the underlying physics or mathematics independently of the tool, which is exactly the kind of engagement that builds genuine understanding.</p>
+
+<p>The process is straightforward in principle. Choose a set of inputs for which you can calculate the correct output using a textbook formula, a worked example, or basic dimensional analysis. Work through the calculation carefully, keeping track of units at every step. Write down your expected result. Then run the AI-generated code on those same inputs and compare.</p>
+
+<p>Consider a function that computes the deflection at the midpoint of a simply supported beam with a central point load. The formula from structural mechanics is:</p>
+
+<pre><code>delta = (P * L**3) / (48 * E * I)
+</code></pre>
+
+<p>where <em>P</em> is the applied load, <em>L</em> is the span, <em>E</em> is the modulus of elasticity, and <em>I</em> is the second moment of area. Before running any code, you should select specific numerical values — say, P = 10 000 N, L = 4 m, E = 200 × 10⁹ Pa, I = 8.33 × 10⁻⁶ m⁴ — and compute the deflection by hand:</p>
+
+<pre><code>delta = (10000 * 4**3) / (48 * 200e9 * 8.33e-6)
+      = (10000 * 64) / (48 * 1666000)
+      = 640000 / 79968000
+      ≈ 8.00e-3 m  (approximately 8 mm)
+</code></pre>
+
+<p>If the AI-generated function returns a value of 0.008 m for these inputs, you have strong evidence that the formula is correct. If it returns 0.8 m or 8 × 10⁻⁵ m, something is wrong — possibly a units mismatch, a misplaced constant, or a wrong formula entirely — and you must investigate before proceeding.</p>
+
+<p>It is important to verify more than one test case. A formula with a transposed factor might give the right answer for one specific combination of inputs by coincidence. Testing at least two or three cases with different magnitudes and ratios significantly reduces this risk. You should also test cases where you can reason about the direction of the result even if you cannot compute it exactly — for instance, doubling the load should double the deflection in a linear elastic problem.</p>
+
+<p>The hand-calculation verification should be documented and included in your project files. A brief note in a comment block, a separate verification document, or a dedicated section in a lab report all serve this purpose. This documentation creates an audit trail: if a result is ever questioned, you can demonstrate that you did not simply trust the code blindly.</p>
+
+<p><strong>Code Review Practices for AI-Generated Code</strong></p>
+
+<p>Hand calculation checks the numerical output. Code review checks the implementation itself. Both are necessary because a bug can produce correct results for the test cases you chose while failing for others.</p>
+
+<p>The first rule of reviewing AI-generated code is simple but frequently ignored: read every single line before integrating the code into your project. This sounds obvious, but the fluent, confident style of AI output makes it psychologically easy to skim. Resist that temptation. Read as if you wrote the code yourself and are proofreading it for submission.</p>
+
+<p>As you read, check the following systematically:</p>
+
+<ul>
+  <li><strong>Variable names and their physical meaning.</strong> Does a variable named <code>v</code> represent velocity in m/s, or volume in m³? AI tools sometimes reuse common single-letter names in ways that clash with the conventions of your specific problem. Make sure every variable name is unambiguous in context, or rename it.</li>
+  <li><strong>Units consistency.</strong> This is one of the most common sources of subtle errors. A formula that mixes SI and imperial units, or that uses diameter where radius is expected, will produce plausible-looking but wrong numbers. Check the units of every input and every intermediate calculation.</li>
+  <li><strong>Formula fidelity.</strong> Compare each formula in the code to the source — a textbook, a standard, a course handout. Do not rely on the AI to have copied it correctly. Pay special attention to exponents, sign conventions, and constant factors.</li>
+  <li><strong>Edge case handling.</strong> What happens if a user passes zero for a value that appears in a denominator? What if a negative value is passed to a function that computes a square root? AI-generated code often omits guards for these cases. Add them explicitly, or at minimum document the assumed valid input ranges.</li>
+</ul>
+
+<p>An example of a subtle edge case failure: suppose an AI generates a function to compute the natural frequency of an undamped single-degree-of-freedom system:</p>
+
+<pre><code>import math
+
+def natural_frequency(k, m):
+    return math.sqrt(k / m)
+</code></pre>
+
+<p>This is correct for positive <code>k</code> and positive <code>m</code>. But if <code>m</code> is accidentally passed as zero — perhaps because a user is building up a system incrementally and hasn't assigned the mass yet — the function raises a <code>ZeroDivisionError</code> with no informative message. A reviewed version would include a guard:</p>
+
+<pre><code>def natural_frequency(k, m):
+    if m <= 0:
+        raise ValueError(f"Mass must be positive, got m={m}")
+    if k < 0:
+        raise ValueError(f"Stiffness must be non-negative, got k={k}")
+    return math.sqrt(k / m)
+</code></pre>
+
+<p>Peer review — having a classmate or colleague read the code independently — is a powerful supplement to self-review. We are all prone to reading what we intended to write rather than what we actually wrote. A fresh pair of eyes catches assumptions that have become invisible to the original reviewer, notices missing units in comments, and questions design choices that seemed obvious to the author. In professional engineering, code review is a standard practice precisely because the cost of an undetected error in production is far higher than the cost of a review session.</p>
+
+<p><strong>Testing Strategies for Engineering Classes</strong></p>
+
+<p>Code review examines the code statically — by reading it. Testing examines the code dynamically — by running it against known inputs and verifying the outputs. Both are necessary. A formula can look correct on inspection and still be wrong due to a subtle operator precedence issue or an off-by-one error in an array index.</p>
+
+<p>Effective testing for engineering code follows a structured approach:</p>
+
+<ul>
+  <li><strong>Typical inputs.</strong> Choose values that represent normal operating conditions for the engineering problem. These are the cases you care most about getting right, and they also serve as basic sanity checks.</li>
+  <li><strong>Boundary values.</strong> Test at the edges of the valid input domain. For a function that accepts a pipe diameter, test with very small and very large diameters. For a function that accepts a Mach number, test near zero (incompressible limit) and near one (sonic conditions).</li>
+  <li><strong>Known edge cases.</strong> These are inputs you already know might cause problems: zero values, negative values, very large or very small numbers that might cause floating-point overflow or underflow, inputs that make a conditional branch execute in a particular way.</li>
+  <li><strong>Reference values from independent sources.</strong> The strongest test cases are those whose correct answers come from a source completely independent of the code being tested — a textbook appendix, a published table, a solved example from course materials, or a result you computed by hand. If your code agrees with an independent reference on several test cases, your confidence in its correctness increases substantially.</li>
+</ul>
+
+<p>When testing engineering code, you will almost always be working with floating-point numbers, which means exact equality comparisons are unreliable. The correct approach is to assert that the computed value is within an acceptable tolerance of the expected value. In Python, this is most cleanly done with <code>pytest</code> and its <code>approx</code> utility, or with <code>math.isclose</code>:</p>
+
+<pre><code>import math
+
+def test_beam_deflection():
+    P = 10000    # N
+    L = 4.0      # m
+    E = 200e9    # Pa
+    I = 8.33e-6  # m^4
+    expected = (P * L**3) / (48 * E * I)
+    result = beam_midpoint_deflection(P, L, E, I)
+    assert math.isclose(result, expected, rel_tol=1e-5), (
+        f"Expected {expected:.6e}, got {result:.6e}"
+    )
+</code></pre>
+
+<p>The choice of tolerance matters. In most engineering calculations, a relative tolerance of 1 × 10⁻⁵ (0.001%) is appropriate for verifying formula implementation, since this is tighter than any realistic measurement uncertainty. Looser tolerances might mask errors; tighter ones might cause false failures due to floating-point arithmetic differences across platforms.</p>
+
+<p>After any modification to the code — fixing a bug, adding a feature, refactoring for clarity — you should run the complete test suite again. This practice, called regression testing, ensures that a fix in one part of the code hasn't inadvertently broken another part. AI tools are particularly prone to introducing regressions when asked to modify existing code, because they regenerate the function from scratch based on your description and may silently omit a previously correct behavior.</p>
+
+<p><strong>Academic and Professional Integrity in AI-Assisted Coding</strong></p>
+
+<p>The availability of AI coding tools has created genuine ambiguity about what constitutes original work in academic and professional settings. It is important to understand both the ethical principles at stake and the practical policies that govern specific contexts.</p>
+
+<p>Most universities and professional engineering organizations have either adopted explicit policies on AI use or are operating under existing academic integrity policies that apply by extension. The core question these policies address is: did the person submitting the work engage in the learning and reasoning the assignment was designed to develop? Submitting AI-generated code as your own original work, without disclosure and without genuine critical engagement, undermines this purpose — even if the code happens to be correct.</p>
+
+<p>The more subtle and important point is that uncritical reliance on AI tools actively harms your own development as an engineer. Programming in engineering contexts is not primarily about producing syntactically valid code quickly. It is about translating physical understanding into computational logic, catching your own errors through disciplined testing, and building intuition about what correct results look like. These skills develop through struggle and correction. An engineer who has never independently debugged a units mismatch or tracked down a sign error in a numerical method is less capable, not more, than one who has worked through those problems — regardless of how many AI-generated functions they have used.</p>
+
+<p>Disclosing AI tool use in academic and professional work is not an admission of weakness or of having taken a shortcut. It is a transparency practice with direct parallels in professional engineering. When an engineer uses commercial finite element software, they document which package and version was used, what assumptions were made, and how results were verified. The software is a tool; the engineer's judgment is what makes it legitimate. AI coding assistance fits this same model. A brief note such as <em>"Initial code structure generated with AI assistance; all formulas verified against [reference] and tested against hand calculations for three representative cases"</em> is an accurate and professional description of a responsible workflow.</p>
+
+<p>Institutions and workplaces have varying policies, and it is your responsibility to know and follow the specific policy that applies to you. When in doubt, disclose. Transparency is always defensible; undisclosed use that later comes to light is not.</p>
+
+<p><strong>Building a Responsible AI-Assisted Workflow</strong></p>
+
+<p>The principles discussed above can be assembled into a coherent workflow that makes AI tools genuinely useful while maintaining engineering accountability. This workflow has five stages, and each stage is as important as the others.</p>
+
+<ul>
+  <li><strong>Plan before prompting.</strong> Before engaging an AI tool, define the engineering problem precisely. What are the inputs and their units? What are the expected outputs and their units? What formulas or methods should the solution use? What are the valid ranges of the inputs? A vague prompt produces vague code. A prompt that specifies "write a Python function that takes pipe diameter in meters, fluid velocity in m/s, fluid density in kg/m³, and dynamic viscosity in Pa·s, and returns the Darcy-Weisbach friction factor using the Moody chart approximation valid for turbulent flow with 4000 ≤ Re ≤ 10⁸" produces far more reviewable output than "write a function to calculate friction factor."</li>
+  <li><strong>Treat output as a draft.</strong> AI-generated code is a starting point, not a finished product. Read every line. Check variable names, units, formulas, and edge case handling as described in the code review section above. Make corrections and improvements directly — do not simply prompt the AI to fix problems, because that generates another draft requiring the same scrutiny.</li>
+  <li><strong>Verify numerically.</strong> Work at least two or three representative problems by hand, independent of the code. Run the code on those same inputs. Investigate any discrepancy — do not rationalize it away. A discrepancy that you cannot explain is a failure mode you have not yet found.</li>
+  <li><strong>Test systematically.</strong> Write test cases covering typical inputs, boundary values, and known edge cases. Assert results against independently verified reference values using appropriate floating-point tolerances. Run the test suite after every modification.</li>
+  <li><strong>Document everything.</strong> Record the verification steps taken: which inputs were used for hand calculations, where the reference values came from, what tests were written, and what the results were. Note that AI assistance was used and describe the nature of that assistance. This documentation serves you in three ways: it creates an audit trail if results are questioned, it forces you to be explicit about your reasoning (which surfaces gaps in understanding), and it models the professional transparency expected in engineering practice.</li>
+</ul>
+
+<p>Throughout all of these stages, the fundamental principle is that engineering accountability cannot be delegated. An AI tool can help you write code faster, explore approaches you hadn't considered, and catch some classes of syntax errors. It cannot exercise engineering judgment on your behalf, and it cannot take responsibility for the results. Every number that flows from your code into an engineering decision — a structural analysis, a thermal calculation, a control system parameter — is ultimately your responsibility. The verification practices described here are how you honor that responsibility in an era when powerful but fallible AI tools are part of the engineering toolkit.</p>
+        <div class="notes"><strong>Notes</strong>Covers all six subtopic clusters: the non-negotiability of verification, hand calculation methods, code review practices, testing strategies, academic/professional integrity, and the integrated responsible workflow. Includes concrete Python code examples throughout to ground abstract principles in practice. Emphasizes both the technical and ethical dimensions as directed by the module notes.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

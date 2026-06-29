@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundations of Object-Oriented Programming</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>Foundations of Object-Oriented Programming</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Foundations of Object-Oriented Programming</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Object-oriented programming, almost universally abbreviated as OOP, is a way of organizing and writing software that has become one of the dominant paradigms in professional engineering and scientific computing. To understand why it exists and why it matters, it helps to first appreciate the problem it solves. In procedural or script-based programming, code is arranged as a sequence of instructions operating on loose variables and data structures. As programs grow, this approach produces sprawling, tangled code where the relationship between a piece of data and the functions that work on it exists only in the programmer's mind. OOP addresses this by bundling data and the operations that act on that data together into a single, coherent unit called an <strong>object</strong>. This shift in perspective — from "what do I do next?" to "what kind of thing am I working with, and what can it do?" — is the intellectual core of object-oriented thinking.</p>
+
+<p>In an engineering context, the benefits of this are immediately tangible. Consider a structural analysis program that must track dozens of beam elements, each with its own cross-sectional area, material properties, length, and loading conditions. Without OOP, you might maintain separate lists or dictionaries for each property, and every function that processes beams must carefully coordinate all of these. With OOP, each beam becomes a single object that carries all of its own data and knows how to perform its own calculations. Adding a new beam is a single, clean operation. Modifying how beams compute their deflection is a change in one well-defined place. The program becomes <strong>modular</strong> — built from discrete, self-contained components that can be understood, tested, and modified independently of one another.</p>
+
+<p>OOP also promotes <strong>code reuse</strong> in a structured way. Once a class is written and tested, it can be used anywhere that kind of object is needed, both within the same project and in future projects. Shared structure and well-defined interfaces mean that one engineer can write a class and another can use it confidently, knowing exactly what data and operations it provides. Python is particularly well suited to this style of programming. It supports OOP natively, meaning classes and objects are first-class features of the language, not add-ons. At the same time, Python does not force you into OOP when simpler approaches suffice, making it practical for everything from quick engineering scripts to large, multi-module simulation packages. Libraries that engineers use every day — NumPy, SciPy, Pandas, Matplotlib — are all built extensively on OOP principles.</p>
+
+<p>The fundamental building block of OOP is the <strong>class</strong>. A class is best understood as a blueprint or a template. It defines what data a certain kind of object will hold and what operations that object will be able to perform. The class itself is not a specific object; it is the description from which specific objects are created. A single class definition can be the source of many individual objects, just as a single engineering drawing can be the blueprint for many physical components.</p>
+
+<p>An individual object created from a class is called an <strong>instance</strong>. Each instance is a unique, independent entity in memory that follows the structure defined by its class but holds its own specific data values. For example, you might have a class called <code>Resistor</code> that defines what data a resistor holds (resistance value, tolerance, power rating) and what it can do (calculate maximum current, check if it is within tolerance). You can then create many distinct <code>Resistor</code> instances, each representing a different physical component with its own values, but all sharing the same structure and behavior defined by the class.</p>
+
+<p><strong>Instantiation</strong> — the act of creating an instance from a class — is performed in Python by calling the class name as though it were a function. Python handles all of the underlying memory allocation and setup automatically. Here is a minimal illustration:</p>
+
+<pre><code>class Resistor:
+    pass   # empty class for now
+
+r1 = Resistor()   # create one instance
+r2 = Resistor()   # create a second, independent instance
+
+print(r1)   # &lt;__main__.Resistor object at 0x...&gt;
+print(r2)   # &lt;__main__.Resistor object at 0x...&gt; (different address)
+</code></pre>
+
+<p>Even with an empty class body, Python creates two fully separate objects in memory. The class acts as the factory; calling it produces a fresh instance each time. In real engineering code the class would of course contain useful content, which brings us to the two central concepts that give classes their substance: <strong>attributes</strong> and <strong>methods</strong>.</p>
+
+<p><strong>Attributes</strong> are the data that an object carries. There are two varieties, and understanding the difference between them is important. <strong>Instance attributes</strong> are defined on each individual object and hold values specific to that object. If you have two beam instances, each one has its own <code>length</code>, its own <code>area</code>, its own <code>material</code>. Changing the length of one beam does not affect the other. Instance attributes are created by assigning to <code>self.attribute_name</code> inside the class, typically inside the constructor method. <strong>Class attributes</strong>, by contrast, are defined directly in the class body, outside of any method. They are shared by every instance of the class. A class attribute is useful for data that is genuinely common to all instances — for example, the gravitational acceleration constant used by every object in a structural analysis class, or a default material density used when none is specified.</p>
+
+<pre><code>class BeamElement:
+    # Class attribute — shared by all instances
+    default_material = "steel"
+
+    def __init__(self, length, area):
+        # Instance attributes — unique to each object
+        self.length = length    # metres
+        self.area = area        # square metres
+
+b1 = BeamElement(3.0, 0.005)
+b2 = BeamElement(5.5, 0.008)
+
+print(b1.length)           # 3.0
+print(b2.length)           # 5.5
+print(b1.default_material) # steel  (from class)
+print(b2.default_material) # steel  (same class attribute)
+</code></pre>
+
+<p>Attributes are accessed using <strong>dot notation</strong>: you write the object's name, a dot, and the attribute name. This same notation works whether you are reading an attribute value, setting it, or even adding a new attribute to a specific instance after creation (though it is generally good practice to declare all attributes in the constructor so that an object's structure is predictable and clearly documented in one place). In engineering applications, giving attributes meaningful, descriptive names — <code>cross_sectional_area</code> rather than <code>a</code>, <code>yield_strength</code> rather than <code>ys</code> — pays dividends in readability and reduces errors when code is revisited weeks or months later.</p>
+
+<p><strong>Methods</strong> are the behaviors of an object — functions that are defined inside the class body and that operate on the object's data. In Python, methods are defined using the standard <code>def</code> keyword, but they receive a special first parameter by convention named <code>self</code>. This parameter is not passed explicitly by the caller; Python passes it automatically and it refers to the specific instance on which the method is being called. Through <code>self</code>, a method can read and modify the instance's own attributes, effectively giving each object private access to its own data.</p>
+
+<pre><code>class BeamElement:
+    default_material = "steel"
+    elastic_modulus = 200e9    # Pa, for steel
+
+    def __init__(self, length, area):
+        self.length = length
+        self.area = area
+        self.axial_load = 0.0  # initialised to zero
+
+    def apply_load(self, force):
+        """Store an axial force on the beam."""
+        self.axial_load = force
+
+    def axial_stress(self):
+        """Return the axial stress in Pascals."""
+        if self.area == 0:
+            raise ValueError("Cross-sectional area cannot be zero.")
+        return self.axial_load / self.area
+
+    def axial_strain(self):
+        """Return the dimensionless axial strain."""
+        return self.axial_stress() / BeamElement.elastic_modulus
+
+b = BeamElement(length=2.0, area=0.004)
+b.apply_load(80000)   # 80 kN
+print(b.axial_stress())  # 20000000.0 Pa  (20 MPa)
+print(b.axial_strain())  # 0.0001
+</code></pre>
+
+<p>Notice several things about this example. The method <code>apply_load</code> modifies the object's own <code>axial_load</code> attribute. The method <code>axial_stress</code> reads attributes and computes a result. The method <code>axial_strain</code> calls another method of the same object using <code>self.axial_stress()</code>, demonstrating how methods can build on one another. All of the calculation logic that belongs to a beam element lives inside the <code>BeamElement</code> class — it is <strong>encapsulated</strong> there. Anyone using this class does not need to remember the formula for axial stress; they simply call the method. This is one of the most practical advantages of OOP: the complexity is hidden behind a clean, understandable interface, and the names of the methods make the code nearly self-documenting.</p>
+
+<p>The most important method in any class is the <strong>constructor</strong>, which in Python is the specially named method <code>__init__</code>. The double underscores on either side signal that this is a <em>dunder method</em> (short for "double underscore"), also called a magic method — a method that Python calls automatically at specific moments rather than one you call explicitly in your own code. The <code>__init__</code> method is called automatically the instant a new instance is created. Any parameters you pass when you call the class name to create an instance are passed directly into <code>__init__</code> (after <code>self</code>, which is always provided automatically).</p>
+
+<p>The primary purpose of <code>__init__</code> is to set up the instance in a valid, fully initialized state. By convention, every instance attribute the object will ever use should be declared inside <code>__init__</code>. This means that anyone reading the constructor can immediately see the complete structure of the object — all of its data fields, their names, and their initial values. Declaring attributes outside of <code>__init__</code> (scattered through other methods) is legal in Python but strongly discouraged because it makes the object's structure opaque and unpredictable.</p>
+
+<pre><code>class FluidPipe:
+    def __init__(self, diameter, length, roughness=0.000046):
+        """
+        diameter : float — internal diameter in metres
+        length   : float — pipe length in metres
+        roughness: float — absolute roughness in metres
+                           (default is for commercial steel)
+        """
+        self.diameter = diameter
+        self.length = length
+        self.roughness = roughness
+        self.flow_rate = 0.0    # m^3/s, starts at zero
+        self.fluid = "water"    # default working fluid
+
+pipe1 = FluidPipe(0.05, 10.0)           # uses default roughness
+pipe2 = FluidPipe(0.10, 25.0, 0.0015)  # PVC pipe, smoother
+
+print(pipe1.roughness)  # 4.6e-05
+print(pipe2.roughness)  # 0.0015
+print(pipe1.fluid)      # water
+</code></pre>
+
+<p>The <code>FluidPipe</code> example demonstrates two important features. First, all instance attributes — including ones that are not passed in as parameters, such as <code>flow_rate</code> and <code>fluid</code> — are declared inside <code>__init__</code>. A newly created <code>FluidPipe</code> object is always in a complete, usable state. Second, the <code>roughness</code> parameter has a <strong>default value</strong>. Default parameter values in <code>__init__</code> are a powerful tool for making a class flexible: callers can supply the value when they know it, or omit it to get a sensible default. This is particularly useful in engineering code where a class might model a physical component that commonly has a standard specification but occasionally needs a custom one. Default values reduce the burden on the caller without sacrificing the ability to customize when needed.</p>
+
+<p>Putting all of these ideas together, here is a more complete engineering example that shows a class with class attributes, instance attributes, a well-structured constructor with defaults, and several methods that encapsulate real calculations:</p>
+
+<pre><code>class CylindricalPressureVessel:
+    """Models a thin-walled cylindrical pressure vessel."""
+
+    # Class attribute: material property (MPa), aluminium alloy
+    yield_strength = 270.0   # MPa
+
+    def __init__(self, radius, wall_thickness, length, material="Al-6061"):
+        self.radius = radius               # metres
+        self.wall_thickness = wall_thickness  # metres
+        self.length = length              # metres
+        self.material = material
+        self.internal_pressure = 0.0     # MPa
+
+    def pressurise(self, pressure_mpa):
+        """Set the internal pressure in MPa."""
+        if pressure_mpa < 0:
+            raise ValueError("Pressure cannot be negative.")
+        self.internal_pressure = pressure_mpa
+
+    def hoop_stress(self):
+        """
+        Calculate hoop (circumferential) stress using thin-wall formula:
+        sigma_h = p * r / t
+        Returns stress in MPa.
+        """
+        return (self.internal_pressure * self.radius) / self.wall_thickness
+
+    def axial_stress(self):
+        """
+        Calculate axial (longitudinal) stress:
+        sigma_a = p * r / (2 * t)
+        Returns stress in MPa.
+        """
+        return (self.internal_pressure * self.radius) / (2 * self.wall_thickness)
+
+    def safety_factor(self):
+        """
+        Return the safety factor based on hoop stress vs yield strength.
+        """
+        hs = self.hoop_stress()
+        if hs == 0:
+            return float('inf')
+        return CylindricalPressureVessel.yield_strength / hs
+
+    def is_safe(self, required_factor=2.0):
+        """Return True if safety factor meets or exceeds the requirement."""
+        return self.safety_factor() >= required_factor
+
+
+# Create two vessels with different dimensions
+vessel_a = CylindricalPressureVessel(radius=0.25, wall_thickness=0.005, length=1.0)
+vessel_b = CylindricalPressureVessel(radius=0.25, wall_thickness=0.010, length=1.0)
+
+vessel_a.pressurise(2.0)   # 2 MPa internal pressure
+vessel_b.pressurise(2.0)
+
+print(f"Vessel A hoop stress : {vessel_a.hoop_stress():.1f} MPa")  # 100.0 MPa
+print(f"Vessel A safety factor: {vessel_a.safety_factor():.2f}")   # 2.70
+print(f"Vessel A is safe (SF≥2): {vessel_a.is_safe()}")           # True
+
+print(f"Vessel B hoop stress : {vessel_b.hoop_stress():.1f} MPa")  # 50.0 MPa
+print(f"Vessel B safety factor: {vessel_b.safety_factor():.2f}")   # 5.40
+print(f"Vessel B is safe (SF≥2): {vessel_b.is_safe()}")           # True
+</code></pre>
+
+<p>This example illustrates everything covered in this topic working together in a realistic scenario. The class attribute <code>yield_strength</code> is shared, reflecting a material property that belongs to the type of vessel rather than any individual one. Each instance has its own geometry and pressure state through instance attributes declared in <code>__init__</code>, which also provides a default for the material name. The methods encapsulate the standard thin-wall pressure vessel equations, and the meaningful names — <code>hoop_stress</code>, <code>safety_factor</code>, <code>is_safe</code> — make the code read almost like an engineering specification. Creating a second vessel with different wall thickness requires one line of code, and all its calculations automatically use its own dimensions. This is OOP delivering on its promise: organized, reusable, readable code that maps naturally onto the engineering concepts it models.</p>
+
+<p>To summarize the core ideas: OOP structures programs around objects that combine data and behavior into coherent units, promoting modularity and reuse. A <strong>class</strong> is the blueprint defining structure and behavior; an <strong>instance</strong> is a specific object created from that blueprint, holding its own data. <strong>Instance attributes</strong> store object-specific data; <strong>class attributes</strong> hold data shared across all instances. <strong>Methods</strong> are functions defined inside the class that operate on the object's own data via <code>self</code>. The <strong><code>__init__</code> constructor</strong> is called automatically at instantiation and is the proper place to initialize all instance attributes, optionally with default parameter values for flexibility. Together, these building blocks provide the foundation for writing engineering software that is robust, maintainable, and straightforward to extend.</p>
+        <div class="notes"><strong>Notes</strong>The pressure vessel example uses the thin-wall (membrane) stress approximation, valid when radius-to-thickness ratio is greater than approximately 10. This assumption should be made explicit if this material is used in a course where vessel design depth is expected. The default roughness value used for FluidPipe (4.6 &#215; 10⁻⁵ m) corresponds to commercial steel pipe, which is a standard reference value from Moody chart tables.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

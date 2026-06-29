@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inheritance and Class Hierarchies</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>Inheritance and Class Hierarchies</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Inheritance and Class Hierarchies</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Inheritance is one of the foundational pillars of object-oriented programming. At its core, it allows you to define a new class that automatically receives all of the attributes and behavior of an existing class, without copying a single line of code. The new class — called the <strong>child class</strong>, <strong>subclass</strong>, or <strong>derived class</strong> — builds on top of the <strong>parent class</strong>, <strong>superclass</strong>, or <strong>base class</strong>. This relationship is not just a programming convenience; it is meant to model something real and meaningful about the entities in your problem domain.</p>
+
+<p>In engineering contexts this is especially natural. A rectangular beam <em>is a</em> beam. A temperature sensor <em>is a</em> sensor. A simply supported bridge <em>is a</em> structure. These "is-a" relationships are precisely what inheritance is designed to capture. When you recognise an is-a relationship between two concepts, inheritance lets you write the shared logic once in the parent class and have every child class benefit from it automatically. Adding a new beam type tomorrow does not require you to re-implement load calculations that are common to all beams — those live in the parent, and the new subclass inherits them for free.</p>
+
+<p>Python signals the inheritance relationship using parentheses in the class definition line. The parent class name is placed inside those parentheses, immediately after the subclass name:</p>
+
+<pre><code>class Beam:
+    """Base class representing a generic structural beam."""
+
+    def __init__(self, material, length):
+        self.material = material   # e.g. 'steel', 'concrete'
+        self.length = length       # in metres
+
+    def describe(self):
+        return (f"A {self.length}-m {self.material} beam.")
+
+    def self_weight(self, density, area):
+        """Returns the beam's own weight in Newtons."""
+        return density * area * self.length * 9.81
+
+
+class RectangularBeam(Beam):   # RectangularBeam inherits from Beam
+    pass
+</code></pre>
+
+<p>Even with the bare <code>pass</code> body, <code>RectangularBeam</code> already possesses <code>describe()</code> and <code>self_weight()</code> because it inherits everything from <code>Beam</code>. This is the key promise of inheritance: <strong>shared logic defined once in the parent class does not need to be repeated in child classes.</strong></p>
+
+<p><strong>Defining Subclasses</strong></p>
+
+<p>A real subclass is rarely empty. It exists because it has something extra — either additional attributes that only make sense for that specific type, or additional methods that extend what the parent can do, or both. The subclass declares its own <code>__init__</code> method to introduce those new attributes, and it adds new methods to expand functionality beyond what the parent provides.</p>
+
+<p>Consider a rectangular beam, which has a width and a height in addition to the material and length that all beams share:</p>
+
+<pre><code>class RectangularBeam(Beam):
+    """A beam with a rectangular cross-section."""
+
+    def __init__(self, material, length, width, height):
+        super().__init__(material, length)   # initialise parent attributes
+        self.width = width     # cross-section width, metres
+        self.height = height   # cross-section height, metres
+
+    def cross_sectional_area(self):
+        return self.width * self.height
+
+    def second_moment_of_area(self):
+        """I for bending about the horizontal centroidal axis."""
+        return (self.width * self.height ** 3) / 12
+</code></pre>
+
+<p><code>RectangularBeam</code> now has four attributes (<code>material</code>, <code>length</code>, <code>width</code>, <code>height</code>) and four methods (<code>describe</code>, <code>self_weight</code>, <code>cross_sectional_area</code>, <code>second_moment_of_area</code>). The first two attributes and first two methods came entirely from <code>Beam</code> — not a single extra line was needed for them in the subclass.</p>
+
+<p>A critically important consequence of inheritance is <strong>substitutability</strong>: a subclass instance can be used anywhere the parent class is expected. Any function that accepts a <code>Beam</code> object will work correctly when handed a <code>RectangularBeam</code> instead, because a <code>RectangularBeam</code> is guaranteed to have everything a <code>Beam</code> has. This property is known in computer science as the <em>Liskov Substitution Principle</em>, and it is what makes inheritance genuinely useful in large systems.</p>
+
+<p><strong>Calling the Parent Constructor with super()</strong></p>
+
+<p>When you define <code>__init__</code> in a subclass, Python does <em>not</em> automatically call the parent's <code>__init__</code>. If you skip it, the attributes defined in the parent are never created, and you will get <code>AttributeError</code> the first time any code tries to access them. The solution is to call <code>super().__init__()</code> explicitly at the start of the subclass constructor, passing along all arguments that the parent requires.</p>
+
+<pre><code>class CircularBeam(Beam):
+    """A beam with a solid circular cross-section."""
+
+    def __init__(self, material, length, diameter):
+        super().__init__(material, length)   # MUST call this
+        self.diameter = diameter
+
+    def cross_sectional_area(self):
+        import math
+        return math.pi * (self.diameter / 2) ** 2
+
+    def second_moment_of_area(self):
+        import math
+        return (math.pi * self.diameter ** 4) / 64
+</code></pre>
+
+<p>Why use <code>super()</code> rather than calling <code>Beam.__init__(self, material, length)</code> directly? Two reasons. First, <code>super()</code> respects Python's <strong>Method Resolution Order (MRO)</strong> — if the inheritance hierarchy ever becomes more complex (multiple levels, or even multiple inheritance), <code>super()</code> ensures the correct parent is always called, whereas the hard-coded class name would break. Second, it makes your intent explicit and readable: you are delegating to "whatever the parent is", not to a specific class whose name might change.</p>
+
+<p><code>super()</code> is not limited to <code>__init__</code>. You can call any overridden parent method through it whenever you want the parent's behaviour <em>plus</em> something extra in the subclass:</p>
+
+<pre><code>class RectangularBeam(Beam):
+
+    def describe(self):
+        base_description = super().describe()   # reuse parent logic
+        return (f"{base_description} "
+                f"Cross-section: {self.width*1000:.0f} mm × "
+                f"{self.height*1000:.0f} mm.")
+</code></pre>
+
+<p>This is a powerful pattern: extend the parent's method rather than replace it entirely.</p>
+
+<p><strong>Method Overriding</strong></p>
+
+<p>Overriding means the subclass defines a method whose name is <em>identical</em> to a method in the parent class. When Python looks up a method on an instance, it searches the subclass first. If it finds a match there, it uses it and stops looking — the parent's version is bypassed entirely for that instance. This is controlled by Python's <strong>Method Resolution Order</strong>, which guarantees that the most specific (closest to the actual object's class) implementation is always called first.</p>
+
+<pre><code>class Beam:
+    def failure_mode(self):
+        return "Generic beam failure (shear, bending, or buckling)."
+
+class RectangularBeam(Beam):
+    def failure_mode(self):
+        return "Rectangular beam may fail in lateral-torsional buckling."
+
+class CircularBeam(Beam):
+    def failure_mode(self):
+        return "Circular beam is torsionally stiff; failure often by bending."
+
+b  = Beam("steel", 5)
+rb = RectangularBeam("steel", 5, 0.1, 0.2)
+cb = CircularBeam("steel", 5, 0.15)
+
+print(b.failure_mode())    # Generic beam failure ...
+print(rb.failure_mode())   # Rectangular beam may fail ...
+print(cb.failure_mode())   # Circular beam is torsionally stiff ...
+</code></pre>
+
+<p>Even though all three objects respond to the same <code>failure_mode()</code> call, each produces a result appropriate to its type. This is the essence of <strong>polymorphism</strong> — the same interface, different behaviours. Overriding enables specialised behaviour while preserving a consistent interface across all subclasses. Code that iterates over a list of beams and calls <code>failure_mode()</code> on each one does not need to know or check which specific beam type it is dealing with; Python handles the dispatch automatically.</p>
+
+<p><strong>When to Use Inheritance Versus Composition</strong></p>
+
+<p>Inheritance is a powerful tool, but it can be misused. A common mistake is reaching for inheritance whenever two classes share <em>some</em> behaviour, even when the is-a relationship does not hold. The correct test is simple: ask yourself whether the subclass genuinely <em>is a</em> more specific version of the parent, or whether it merely <em>has a</em> or <em>uses a</em> thing of that type.</p>
+
+<ul>
+  <li><strong>Use inheritance</strong> when the relationship is truly is-a. A <code>RectangularBeam</code> is a <code>Beam</code>. A <code>TemperatureSensor</code> is a <code>Sensor</code>. A <code>SteelMaterial</code> is a <code>Material</code>. The subclass should be substitutable for the parent in every context.</li>
+  <li><strong>Use composition</strong> when one object <em>has</em> or <em>uses</em> another. A <code>Bridge</code> has beams — it is not itself a beam. A <code>DataLogger</code> uses a sensor — it is not itself a sensor. In these cases, the <code>Bridge</code> class should hold a list of <code>Beam</code> objects as an attribute, not inherit from <code>Beam</code>.</li>
+</ul>
+
+<pre><code># Composition example: a Bridge HAS beams, it IS NOT a beam
+class Bridge:
+    def __init__(self, name, beams):
+        self.name = name
+        self.beams = beams   # a list of Beam (or subclass) instances
+
+    def total_self_weight(self, density):
+        total = 0
+        for beam in self.beams:
+            area = beam.cross_sectional_area()
+            total += beam.self_weight(density, area)
+        return total
+</code></pre>
+
+<p>Overusing inheritance creates <strong>rigid hierarchies</strong> that are difficult to modify. If you later realise a subclass needs attributes from two unrelated parent classes, or that the taxonomy was wrong from the start, restructuring a deep inheritance tree is painful. Composition is almost always more flexible: you can swap out one component for another, or mix different combinations of components, without touching the surrounding class at all. A widely cited principle in software design is to <em>favour composition over inheritance</em> — not because inheritance is bad, but because composition tends to produce more adaptable designs. Inheritance shines specifically when the is-a relationship is stable and genuine.</p>
+
+<p><strong>Practical Inheritance Example: Sensor Hierarchy</strong></p>
+
+<p>To see all of these ideas working together, consider a sensor hierarchy relevant to environmental or structural monitoring. Every sensor, regardless of what it measures, shares certain properties: it has an identifier, a physical location, and an operating range. Every sensor must also be able to report a reading. These shared characteristics belong in a base <code>Sensor</code> class.</p>
+
+<pre><code>class Sensor:
+    """Base class for all sensor types."""
+
+    def __init__(self, sensor_id, location, min_range, max_range):
+        self.sensor_id = sensor_id
+        self.location = location       # e.g. (x, y, z) tuple in metres
+        self.min_range = min_range     # minimum measurable value
+        self.max_range = max_range     # maximum measurable value
+
+    def read_value(self):
+        """Return the current sensor reading. Must be overridden."""
+        raise NotImplementedError(
+            f"{type(self).__name__} must implement read_value()."
+        )
+
+    def is_in_range(self, value):
+        """Check whether a value falls within the sensor's operating range."""
+        return self.min_range <= value <= self.max_range
+
+    def status_report(self):
+        reading = self.read_value()
+        in_range = self.is_in_range(reading)
+        status = "OK" if in_range else "OUT OF RANGE"
+        return (f"Sensor {self.sensor_id} @ {self.location}: "
+                f"reading={reading:.2f}, status={status}")
+</code></pre>
+
+<p>Notice that <code>read_value()</code> raises <code>NotImplementedError</code>. This is a deliberate design choice: the base class declares that every sensor <em>must</em> have this method, but it cannot provide a meaningful default implementation because measurement logic is entirely specific to each sensor type. Subclasses are required to override it.</p>
+
+<pre><code>import random
+
+class TemperatureSensor(Sensor):
+    """Measures ambient temperature in degrees Celsius."""
+
+    def __init__(self, sensor_id, location, calibration_offset=0.0):
+        super().__init__(sensor_id, location, min_range=-40, max_range=85)
+        self.calibration_offset = calibration_offset
+
+    def read_value(self):
+        # Simulate a hardware read; in reality this would query ADC hardware
+        raw = random.uniform(15, 30)
+        return raw + self.calibration_offset
+
+
+class StrainGauge(Sensor):
+    """Measures strain in microstrain (με)."""
+
+    def __init__(self, sensor_id, location, gauge_factor=2.0):
+        super().__init__(sensor_id, location, min_range=-5000, max_range=5000)
+        self.gauge_factor = gauge_factor
+
+    def read_value(self):
+        # Simulate a resistance-based strain measurement
+        raw_resistance_change = random.uniform(-0.005, 0.005)
+        strain_microstrain = (raw_resistance_change / self.gauge_factor) * 1e6
+        return strain_microstrain
+
+
+class AccelerationSensor(Sensor):
+    """Measures acceleration in m/s²."""
+
+    def __init__(self, sensor_id, location, axis='z'):
+        super().__init__(sensor_id, location, min_range=-50, max_range=50)
+        self.axis = axis
+
+    def read_value(self):
+        return random.uniform(-2, 2)
+
+    def status_report(self):
+        # Override to include axis information
+        base = super().status_report()
+        return f"{base} [axis={self.axis}]"
+</code></pre>
+
+<p>Now consider the payoff. A monitoring system that manages many sensors can treat them all identically, calling <code>status_report()</code> on each one without caring which specific subclass it holds:</p>
+
+<pre><code>sensors = [
+    TemperatureSensor("T-001", (0, 0, 10), calibration_offset=0.5),
+    TemperatureSensor("T-002", (5, 0, 10)),
+    StrainGauge("SG-001", (2.5, 0, 0), gauge_factor=2.1),
+    AccelerationSensor("ACC-001", (2.5, 0, 5), axis='z'),
+]
+
+for sensor in sensors:
+    print(sensor.status_report())
+</code></pre>
+
+<p>This loop works correctly for every sensor type, including types that did not exist when the loop was written. If a team later develops a <code>Humiditysensor</code> subclass, they add it to the list and the loop handles it without modification. This is the open/closed principle in practice: the monitoring code is <em>open for extension</em> (new sensor types can be added) and <em>closed for modification</em> (existing monitoring code does not change).</p>
+
+<p>The <code>AccelerationSensor</code> class also illustrates how <code>super()</code> can extend rather than replace a parent method. Its overridden <code>status_report()</code> calls <code>super().status_report()</code> to get the standard output, then appends axis information. This avoids duplicating the formatting logic that already lives in <code>Sensor</code>, and ensures that if that formatting changes in the future, the change automatically propagates to <code>AccelerationSensor</code> as well.</p>
+
+<p>Inheritance, used thoughtfully, produces code that mirrors the natural structure of the problem — hierarchies of things that genuinely are related — and yields systems that are compact, readable, easy to test at each level of the hierarchy, and straightforward to extend over time. The discipline of asking "is this truly an is-a relationship?" before reaching for inheritance, combined with a clear understanding of <code>super()</code>, method overriding, and the MRO, gives you the tools to design class hierarchies that remain clean and maintainable as a codebase grows.</p>
+        <div class="notes"><strong>Notes</strong>The sensor hierarchy example ties together all subtopics in a single coherent engineering scenario: the base class establishes shared attributes and a required interface, subclasses use super() to initialise inherited attributes, read_value() is overridden in every subclass with type-specific logic, status_report() demonstrates partial overriding via super(), and the polymorphic loop at the end illustrates substitutability and the open/closed principle. The composition example using Bridge reinforces the inheritance-vs-composition distinction with a concrete counterexample from the same domain.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

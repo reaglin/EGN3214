@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to AI-Assisted Coding Tools</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 7 - Object-Oriented Programming and AI-Assisted Coding Workflow</a></div>
+  <header>
+    <h1>Introduction to AI-Assisted Coding Tools</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Introduction to AI-Assisted Coding Tools</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Artificial intelligence has fundamentally changed how engineers and developers write code. Rather than searching through documentation, copying from Stack Overflow, or writing every line from scratch, programmers can now describe what they want in plain language — or simply start typing — and receive intelligent, context-aware suggestions almost instantly. Two tools that have become central to this shift are <strong>GitHub Copilot</strong> and <strong>ChatGPT</strong>. Understanding what each tool does, how it works, where it excels, and where it falls short is essential before relying on either in any serious engineering context.</p>
+
+<p><strong>GitHub Copilot</strong> is an AI-powered coding assistant developed by GitHub in collaboration with OpenAI. It is built directly into your code editor and operates inline — meaning it watches what you type in real time and offers suggestions that appear directly in your file, right where your cursor is. This is fundamentally different from looking something up in a browser tab or reading documentation separately. Copilot makes suggestions feel like a natural continuation of your own typing.</p>
+
+<p>The engine behind Copilot was trained on enormous amounts of publicly available source code from repositories across the internet, along with documentation, comments, and other technical text. This training allows it to recognize common programming patterns, standard library usage, and typical ways of solving recurring problems. When you open a file in your editor, Copilot continuously reads the surrounding code — the functions you have already written, the imports at the top of the file, the variable names you have chosen — and uses all of that as <em>context</em> to generate its suggestions. The more context that exists, the more relevant the suggestion tends to be.</p>
+
+<p>One of the most powerful ways to guide Copilot is through comments and docstrings. If you write a comment like <code># Read a CSV file and return a list of dictionaries, one per row</code> and then press Enter, Copilot will often generate a complete function body implementing exactly that behavior. Similarly, if you write a Python docstring explaining the parameters and return value of a function before writing the function body, Copilot uses that description to infer what the implementation should look like. This means that <strong>clearly expressing intent in comments is not just good documentation practice — it is also a direct input to the AI</strong>.</p>
+
+<p>Copilot suggestions appear as grayed-out ghost text in the editor. At that point you have several choices: you can press <code>Tab</code> to accept the suggestion in full, press <code>Escape</code> to dismiss it, or use keyboard shortcuts (typically <code>Alt + ]</code> and <code>Alt + [</code> on Windows/Linux, or <code>Option + ]</code> and <code>Option + [</code> on macOS) to cycle through alternative suggestions. This cycling is important — Copilot often generates multiple candidate completions for the same prompt, and the first one displayed is not always the best. Reviewing alternatives before accepting trains you to treat Copilot as a collaborator offering options rather than an authority issuing answers.</p>
+
+<p>Consider a simple example. Suppose you are writing a Python script for a mechanical engineering application and you type the following comment:</p>
+
+<pre><code># Calculate the Reynolds number given fluid velocity (m/s),
+# characteristic length (m), and kinematic viscosity (m^2/s)
+def reynolds_number(velocity, length, viscosity):
+</code></pre>
+
+<p>Copilot will very likely suggest something like:</p>
+
+<pre><code>    return (velocity * length) / viscosity
+</code></pre>
+
+<p>This is the correct formula for Reynolds number. Copilot recognized the domain terminology, inferred the mathematical relationship, and produced a correct one-line implementation. However — and this is critical — you should still verify it. Not because Copilot got it wrong here, but because forming the habit of verification protects you in cases where it does not.</p>
+
+<p><strong>ChatGPT</strong> is a large language model developed by OpenAI that you interact with through a conversational interface — either via a web browser at chat.openai.com or programmatically through the OpenAI API. Unlike Copilot, which quietly suggests completions as you type, ChatGPT is explicitly conversational. You type a message — a <em>prompt</em> — and ChatGPT replies with text that might include explanations, code blocks, step-by-step instructions, or a combination of all three.</p>
+
+<p>This conversational format makes ChatGPT especially well-suited for situations where you need to <em>understand</em> something rather than just get a code snippet. For example, if you encounter an error message you have never seen before, you can paste it directly into ChatGPT and ask what it means and how to fix it. ChatGPT will typically explain the underlying cause, show you the corrected code, and walk through why the original code was wrong. This kind of explanatory response is something Copilot, operating silently inside your editor, cannot provide.</p>
+
+<p>ChatGPT can also generate complete implementations from a plain English description. You might prompt it with something like:</p>
+
+<pre><code>Write a Python class that represents a simply supported beam.
+It should store the beam length, the applied point load, and
+the load position. Include a method that calculates the
+maximum bending moment.
+</code></pre>
+
+<p>ChatGPT will return a fully structured class with an <code>__init__</code> method and a <code>max_bending_moment</code> method, along with comments and possibly an example of how to instantiate and use the class. This is extremely useful as a starting scaffold when you know what you want to build but want to avoid writing boilerplate from scratch.</p>
+
+<p>Another powerful feature of ChatGPT is <strong>iterative refinement</strong>. Because the interface is conversational, you can follow up on any response. If the first reply gives you a class but forgets to handle the case where the load is outside the beam span, you can simply reply: <em>"Add input validation to raise a ValueError if the load position is outside the beam length."</em> ChatGPT will revise the code accordingly. You can continue this back-and-forth as many times as needed, progressively narrowing in on exactly the solution you want. This iterative dialogue is one of ChatGPT's most significant advantages over a one-shot code generator.</p>
+
+<p>Despite these impressive capabilities, both Copilot and ChatGPT come with <strong>important and non-trivial limitations</strong> that engineers must understand before trusting any generated output.</p>
+
+<p>The most dangerous failure mode of AI coding tools is generating code that is <em>syntactically correct but logically or numerically wrong</em>. The code will run without errors. Python will not throw an exception. Your editor will show no red underlines. But the results it computes may be completely incorrect. This happens because the AI learned patterns of code structure rather than deep mathematical or physical reasoning. For example, a Copilot suggestion might implement a stress calculation using the wrong cross-sectional property, use degrees where radians are expected, or apply a formula outside the range of its valid assumptions — and none of these errors will be caught automatically.</p>
+
+<p>AI tools also frequently suggest code that uses <strong>deprecated APIs or outdated library versions</strong>. Because the training data has a knowledge cutoff date, and because older code is often more prevalent in training data than newer code, suggestions may use functions or class names that no longer exist in current library releases. For instance, a suggestion using an old version of the <code>matplotlib</code> or <code>pandas</code> API may work perfectly on the AI's internal mental model but fail immediately when you run it in your environment with a newer library version. Always check the official documentation when an AI-suggested function call produces an <code>AttributeError</code> or <code>DeprecationWarning</code>.</p>
+
+<p>Perhaps most importantly for engineering applications: <strong>AI tools have absolutely no awareness of engineering safety standards, physical tolerances, domain-specific constraints, or regulatory requirements</strong>. An AI might generate a perfectly structured function to calculate beam deflection, but it has no knowledge of your factor of safety requirements, the applicable design code (such as AISC or Eurocode), the material properties of your specific alloy, or the environmental conditions that affect fatigue life. The AI is producing code that fits a pattern; you are responsible for ensuring that code reflects engineering reality. Treating any AI-generated engineering calculation as a draft that requires expert review is not just good practice — in many contexts it is an ethical and professional obligation.</p>
+
+<p>Prompt quality matters enormously. <strong>Ambiguous or vague prompts produce less reliable and less targeted output.</strong> A prompt like <em>"write a function to analyze stress"</em> will produce something generic and probably not useful. A prompt like <em>"write a Python function that computes the von Mises stress from the principal stresses sigma_1, sigma_2, and sigma_3, and returns True if the result exceeds a given yield strength threshold"</em> will produce something specific and actionable. The effort you put into writing a clear, detailed prompt is directly reflected in the quality of what comes back. This is a learnable skill, often called <em>prompt engineering</em>, and it improves with practice.</p>
+
+<p>Setting up these tools in your development environment is straightforward. <strong>GitHub Copilot</strong> is installed as an extension inside Visual Studio Code. You open the Extensions panel (the puzzle-piece icon in the sidebar), search for <em>GitHub Copilot</em>, and click Install. After installation, VS Code will prompt you to sign in with your GitHub account. Copilot requires either a paid individual or business subscription, or a <strong>free student license</strong> available through the GitHub Student Developer Pack, which you can apply for with a verified educational email address. Once activated, Copilot begins working immediately with no further configuration required — ghost-text suggestions will appear as you type in any supported language.</p>
+
+<p><strong>ChatGPT</strong> requires no installation. You access it through any modern web browser by navigating to <code>chat.openai.com</code> and creating a free OpenAI account. A free tier is available with access to GPT-3.5; a ChatGPT Plus subscription provides access to GPT-4, which produces noticeably more accurate and detailed responses, especially for complex technical tasks. Developers who want to integrate ChatGPT programmatically into their own tools or scripts can do so through the <strong>OpenAI API</strong>, which requires an API key and may incur usage-based costs.</p>
+
+<p>One important and non-negotiable precaution applies to both tools: <strong>never paste sensitive, proprietary, confidential, or commercially restricted code into an external AI chat interface.</strong> When you send a prompt to ChatGPT through the web interface, that data is transmitted to OpenAI's servers. Depending on your account settings and terms of service, it may be used to improve future models. If your code contains trade secrets, unpublished algorithms, client data, or any information subject to a non-disclosure agreement, pasting it into ChatGPT is a potential security and legal violation. GitHub Copilot, operating locally in your editor and communicating with GitHub's servers, carries similar considerations — enterprise versions offer additional privacy controls, but individual users should be aware that context sent to generate suggestions may leave their machine. Always consult your organization's data handling policy before using any AI tool with professional or client code.</p>
+
+<p>To summarize the practical relationship between these two tools: <strong>GitHub Copilot</strong> is best thought of as a smart autocomplete that stays out of your way and helps you write code faster without breaking your flow. <strong>ChatGPT</strong> is best thought of as a knowledgeable conversation partner you consult when you need explanation, want to explore an approach, or need to generate a larger block of code from a description. The two tools complement each other. You might use ChatGPT to understand how a numerical integration algorithm works and to generate an initial implementation, then paste that implementation into your editor where Copilot helps you extend and adapt it. Used together, with critical human oversight at every step, they significantly accelerate the engineering coding workflow without replacing the engineering judgment that ensures the results are correct and safe.</p>
+        <div class="notes"><strong>Notes</strong>Emphasize to students that verifying AI-generated code is especially important in engineering contexts where incorrect numerical results can have real-world physical consequences. Encourage students to apply for the GitHub Student Developer Pack early if they do not already have it, as verification can take a few days. Consider a live demo showing Copilot ghost-text suggestions and ChatGPT iterative refinement side by side to make the distinction between the two tools concrete.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

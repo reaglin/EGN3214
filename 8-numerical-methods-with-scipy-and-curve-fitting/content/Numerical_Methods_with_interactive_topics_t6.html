@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residuals Analysis</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Residuals Analysis</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Residuals Analysis</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>When you fit a curve to data — whether using a simple linear model, a polynomial, or a nonlinear function — you are making a claim about the relationship between two or more variables. But how do you know whether that claim is a good one? The answer lies in <strong>residuals analysis</strong>: a systematic examination of the differences between what your model predicts and what was actually observed. Residuals are not just leftovers or noise to be ignored; they carry structured information about where your model succeeds, where it fails, and what physics or mathematics might be missing from your description of the data. Understanding residuals deeply is one of the most important skills in applied data analysis and engineering modeling.</p>
+
+<p><strong>What are Residuals?</strong></p>
+
+<p>A residual is defined for every single data point in your dataset. If you have a dataset of <em>n</em> observations, each consisting of an independent variable value <em>x<sub>i</sub></em> and a measured dependent variable value <em>y<sub>i</sub></em>, and your model produces a predicted value <em>ŷ<sub>i</sub></em> at the same <em>x<sub>i</sub></em>, then the residual for that point is simply:</p>
+
+<pre><code>e_i = y_i - ŷ_i</code></pre>
+
+<p>That is, the observed value minus the predicted value. A positive residual means the model underestimated the observation at that point. A negative residual means the model overestimated it. The magnitude tells you how far off the prediction was. This sign convention — observed minus predicted — is universal and important to respect consistently, because it determines how you interpret the direction of patterns in residual plots.</p>
+
+<p>One of the most important theoretical properties of residuals comes from how least-squares fitting works. When you fit a polynomial (or any linear-in-parameters model) that includes an intercept term, the ordinary least-squares solution guarantees that the residuals sum to exactly zero:</p>
+
+<pre><code>sum(e_i for all i) = 0</code></pre>
+
+<p>This is not a coincidence or an approximation — it is a mathematical consequence of the normal equations that define the least-squares solution. The intercept term acts as a free parameter that absorbs any overall offset between predictions and observations, forcing the residuals to balance out around zero on average. If you fit a model without an intercept (forcing the curve through the origin), this property no longer holds, and the sum of residuals can be nonzero. This distinction matters in practice: if you constrain your model in an unusual way, you cannot assume the residuals will be balanced.</p>
+
+<p>The deeper conceptual point is that residuals encode all of the information about how the model deviates from the data. Once you have your fitted model and your residuals, you can reconstruct the original dataset exactly by adding the residuals back to the predictions. This means the residuals contain everything the model failed to explain — including both genuine random measurement noise and any systematic patterns the model missed. Separating these two contributions is the central goal of residuals analysis.</p>
+
+<p><strong>Computing Residuals in Python</strong></p>
+
+<p>Computing residuals in Python is straightforward regardless of which fitting tool you used, because at its core the computation is just element-wise subtraction between two arrays of the same length. The key step is making sure you evaluate your fitted model at exactly the same <em>x</em> values as your original data.</p>
+
+<p>When you use <code>numpy.polyfit</code> to fit a polynomial, it returns an array of coefficients. To get predicted values at your data points, you pass those coefficients to <code>numpy.polyval</code> along with your original <em>x</em> array. Then the residuals follow immediately:</p>
+
+<pre><code>import numpy as np
+
+# Example: fit a degree-2 polynomial to some data
+x = np.array([0.0, 1.0, 2.0, 3.0, 4.0, 5.0])
+y = np.array([2.1, 3.9, 8.2, 13.8, 21.5, 31.0])
+
+coeffs = np.polyfit(x, y, deg=2)        # fit polynomial of degree 2
+y_pred = np.polyval(coeffs, x)          # evaluate polynomial at original x
+residuals = y - y_pred                  # observed minus predicted
+
+print("Coefficients:", coeffs)
+print("Predicted values:", y_pred)
+print("Residuals:", residuals)
+print("Sum of residuals:", residuals.sum())  # should be ~0</code></pre>
+
+<p>Notice that <code>numpy.polyval</code> takes coefficients in descending order (highest power first), which is exactly what <code>numpy.polyfit</code> returns, so you can pipe the output directly. The resulting <code>residuals</code> array has exactly the same length as <code>x</code> and <code>y</code> — one residual per data point, always.</p>
+
+<p>When you use <code>scipy.optimize.curve_fit</code> for nonlinear models, the process is very similar, but you need to evaluate your own model function using the optimized parameters. The <code>curve_fit</code> function returns <code>popt</code> (the optimal parameter array) and <code>pcov</code> (the covariance matrix). To evaluate the model, you unpack <code>popt</code> using the asterisk operator when calling your model function, which passes each element of the array as a separate positional argument:</p>
+
+<pre><code>from scipy.optimize import curve_fit
+import numpy as np
+
+# Example: fit an exponential growth model
+def model(x, a, b, c):
+    return a * np.exp(b * x) + c
+
+x = np.array([0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
+y = np.array([1.2, 1.8, 2.9, 4.5, 7.1, 11.0, 17.3])
+
+popt, pcov = curve_fit(model, x, y, p0=[1.0, 0.8, 0.0])
+
+y_pred = model(x, *popt)     # unpack popt: passes a, b, c individually
+residuals = y - y_pred
+
+print("Optimal parameters:", popt)
+print("Residuals:", residuals)</code></pre>
+
+<p>The <code>*popt</code> syntax is essential here. Because <code>model</code> expects three separate arguments after <code>x</code>, and <code>popt</code> is a single array of three values, the asterisk unpacks the array so that <code>popt[0]</code>, <code>popt[1]</code>, and <code>popt[2]</code> are passed as <code>a</code>, <code>b</code>, and <code>c</code> respectively. Forgetting the asterisk will produce a <code>TypeError</code>. This pattern applies to any model with any number of parameters.</p>
+
+<p>In both cases — polynomial or nonlinear — the residual computation itself is the same simple element-wise subtraction. The result is always an array of the same length as your data, and those values are the foundation for everything else in residuals analysis.</p>
+
+<p><strong>Residual Plots and What They Reveal</strong></p>
+
+<p>Computing residuals numerically is only the first step. The real power of residuals analysis comes from visualizing the residuals and learning to read what their spatial patterns tell you about model adequacy. A <strong>residual plot</strong> displays residuals on the vertical axis against the independent variable (or sometimes against the predicted values) on the horizontal axis. Every residual plot should include a horizontal reference line at zero, because zero is the target — a perfect model would produce all zeros.</p>
+
+<p>The most important residual pattern to recognize is <strong>random scatter around zero</strong>. If your residuals look like this:</p>
+
+<pre><code>import matplotlib.pyplot as plt
+
+plt.figure()
+plt.scatter(x, residuals, color='steelblue', zorder=3)
+plt.axhline(0, color='red', linestyle='--', linewidth=1.5, label='Zero line')
+plt.xlabel('x')
+plt.ylabel('Residuals (observed - predicted)')
+plt.title('Residual Plot')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()</code></pre>
+
+<p>— with points scattered both above and below zero without any obvious trend, approximately evenly spread across the range of <em>x</em> — this is the ideal outcome. It means your model has successfully captured the systematic structure in the data, and what remains in the residuals is essentially random measurement noise. The model is adequate for the data.</p>
+
+<p>A <strong>curved or U-shaped residual pattern</strong> is one of the most common and important warning signs. Suppose you fitted a straight line to data that actually follows a quadratic relationship. The residuals would not be randomly scattered; they would show a clear curve — perhaps positive at the extremes and negative in the middle, or vice versa. This tells you the model form is wrong or insufficient. The systematic curvature in the residuals is the information the linear model could not absorb, and it is pointing directly at the missing quadratic term. The remedy is to increase the polynomial degree or switch to a more appropriate model form.</p>
+
+<p>A <strong>funnel-shaped pattern</strong>, sometimes called heteroscedasticity, appears when the spread of residuals is not constant across the range of <em>x</em>. If the residuals are tightly clustered near one end of the <em>x</em> range but fan out widely at the other end, the variance of the measurement errors is not constant. This can happen in many engineering contexts — for example, sensor noise that grows with signal magnitude, or percentage-based measurement uncertainty that becomes more visible at larger values. Heteroscedasticity does not necessarily mean the model form is wrong, but it does mean the ordinary least-squares fit may not be giving you the most efficient parameter estimates. Weighted least-squares regression, which down-weights high-variance points, is the standard remedy.</p>
+
+<p>A <strong>systematic oscillation</strong> in the residuals — where they alternate between positive and negative regions in a regular, wave-like pattern — suggests that a periodic or oscillatory component is present in the data but absent from the model. This arises frequently in time-series engineering data: vibration measurements, thermal cycling data, electrical signals. If you fit a polynomial to such data, the polynomial will track the overall trend but the residuals will clearly show the unmodeled periodicity. The appropriate response is to add sinusoidal terms to the model or to use a Fourier-based fitting approach.</p>
+
+<p>There is also a subtler pattern worth watching for: <strong>isolated large residuals</strong> with no systematic trend elsewhere. These are outliers — individual data points where the measurement went seriously wrong, perhaps due to a sensor glitch, a data entry error, or a genuine physical anomaly. Outliers appear as isolated spikes in the residual plot, standing well apart from the bulk of the residuals. They warrant investigation before you decide how to handle them.</p>
+
+<p><strong>Quantitative Fit Metrics</strong></p>
+
+<p>Visual inspection of residual plots is essential but subjective. Quantitative metrics provide complementary, objective summaries of fit quality that can be reported alongside plots and compared across models.</p>
+
+<p>The <strong>Root Mean Squared Error (RMSE)</strong> is one of the most widely used fit metrics. It is computed as:</p>
+
+<pre><code>rmse = np.sqrt(np.mean(residuals**2))</code></pre>
+
+<p>RMSE is the square root of the average squared residual. Taking the square root returns the metric to the same units as the dependent variable <em>y</em>, which makes it directly interpretable: an RMSE of 0.3 degrees Celsius means your model's predictions are off by about 0.3°C on average (in a root-mean-square sense). Squaring the residuals before averaging gives extra weight to large errors, which is usually desirable in engineering contexts where large deviations are disproportionately costly. RMSE is always non-negative and equal to zero only for a perfect fit.</p>
+
+<p>The <strong>coefficient of determination, R²</strong>, measures how much of the variance in the observed data is explained by the model:</p>
+
+<pre><code>ss_res = np.sum(residuals**2)                        # sum of squared residuals
+ss_tot = np.sum((y - np.mean(y))**2)                 # total sum of squares
+r_squared = 1 - (ss_res / ss_tot)</code></pre>
+
+<p>R² ranges from 0 to 1 for well-fitted models. An R² of 0.95 means the model explains 95% of the variance in the data; the remaining 5% is left in the residuals. An R² close to 1.0 indicates high explanatory power. However, R² has an important limitation: it cannot tell you whether the model form is correct. A high R² simply means the model accounts for most of the variability in <em>this particular dataset</em>. If your residual plot shows a clear curved pattern but R² is 0.97, the model still has a systematic flaw — it is just that the fitted curve happens to track the data closely despite using the wrong functional form. This is why R² must always be reported alongside a residual plot, never in isolation.</p>
+
+<p>Another important limitation of R² is that it can only increase (or stay the same) as you add more parameters to a model. Adding a useless parameter can never make R² go down, because the optimizer can always set that parameter's coefficient to zero if it contributes nothing. This makes R² a poor tool for comparing models of different complexity. The <strong>adjusted R²</strong> addresses this by penalizing for the number of parameters:</p>
+
+<pre><code>n = len(y)           # number of data points
+p = len(popt)        # number of fitted parameters
+
+r_squared_adj = 1 - (1 - r_squared) * (n - 1) / (n - p - 1)</code></pre>
+
+<p>Adjusted R² increases only if the new parameter improves the fit by more than would be expected by chance. It can decrease when you add a parameter that does not genuinely help. This makes it a much more reliable guide for model selection when comparing models of different complexity fitted to the same dataset.</p>
+
+<p><strong>Applying Residuals Analysis to Engineering Datasets</strong></p>
+
+<p>Engineering data is rarely clean. Real sensor measurements contain noise from electronic sources, vibration, electromagnetic interference, and quantization. Data pipelines may introduce artifacts from unit conversions, timestamp rounding, or dropped packets. Physical systems may behave differently under different operating conditions that were not controlled during data collection. All of these realities leave their fingerprints in the residuals.</p>
+
+<p>One of the most practical uses of residual analysis in engineering is <strong>outlier detection</strong>. After fitting an initial model, you compute the residuals and look for data points whose residuals are unusually large — typically defined as more than 2 or 3 standard deviations away from zero. These are candidates for outliers. An outlier might be a sensor dropout (the sensor briefly read zero or saturated), a corrupted record in the data file, or a transient event like an electrical surge. Before removing an outlier, you should always investigate its source. If the large residual corresponds to a documented sensor fault, removal is justified and should be noted in your analysis. If you cannot explain it, be cautious — it might be pointing at real physics.</p>
+
+<p>Residuals can also guide <strong>model refinement</strong>. Suppose you are modeling the drag force on a vehicle as a function of velocity, and you start with a simple linear model. Your residual plot shows a clear upward curve — the model consistently underpredicts at high velocities. This is not just a fitting artifact; it is the data telling you that drag grows faster than linearly with velocity, which is consistent with the physics of aerodynamic drag (proportional to velocity squared). The residual pattern points directly at the missing quadratic term. This kind of physically guided model refinement — using residuals to identify missing effects, adding them to the model, refitting, and then re-examining residuals — is a standard and highly effective engineering practice.</p>
+
+<p>The iterative workflow looks like this in practice:</p>
+
+<pre><code># Step 1: Fit initial model
+coeffs_v1 = np.polyfit(velocity, drag_force, deg=1)
+drag_pred_v1 = np.polyval(coeffs_v1, velocity)
+residuals_v1 = drag_force - drag_pred_v1
+
+# Step 2: Inspect residuals — curved pattern detected → upgrade to degree 2
+coeffs_v2 = np.polyfit(velocity, drag_force, deg=2)
+drag_pred_v2 = np.polyval(coeffs_v2, velocity)
+residuals_v2 = drag_force - drag_pred_v2
+
+# Step 3: Compare RMSE
+rmse_v1 = np.sqrt(np.mean(residuals_v1**2))
+rmse_v2 = np.sqrt(np.mean(residuals_v2**2))
+print(f"RMSE linear: {rmse_v1:.4f}, RMSE quadratic: {rmse_v2:.4f}")
+
+# Step 4: Inspect residuals_v2 — if now randomly scattered, model is adequate</code></pre>
+
+<p>This iterative loop between fitting, residual inspection, and model refinement is not a sign that you are doing something wrong — it is the standard engineering approach to empirical modeling.</p>
+
+<p><strong>Overfitting and Model Complexity</strong></p>
+
+<p>Once you understand that adding parameters always reduces the sum of squared residuals, a tempting but dangerous strategy emerges: just keep adding parameters until the residuals are tiny. This leads directly to <strong>overfitting</strong> — a model that fits the training data extraordinarily well but performs poorly on any new data.</p>
+
+<p>The mathematical reason is simple. Given <em>n</em> data points, a polynomial of degree <em>n</em>−1 can pass through every single point exactly, producing zero residuals. But a polynomial that wiggles through every data point is almost certainly not capturing the true underlying relationship — it is fitting the noise. If you were to collect a new set of data from the same physical system and apply your overfit model, the predictions would likely be terrible at any point that was not in the original dataset.</p>
+
+<p>Consider this illustration:</p>
+
+<pre><code># Overfitting demonstration
+x_train = np.linspace(0, 5, 8)
+y_train = 2 * x_train + 1 + np.random.normal(0, 1.0, size=8)  # noisy linear data
+
+# Underfit: degree 1 (appropriate)
+c1 = np.polyfit(x_train, y_train, deg=1)
+res1 = y_train - np.polyval(c1, x_train)
+print(f"Degree 1 RMSE: {np.sqrt(np.mean(res1**2)):.4f}")
+
+# Overfit: degree 7 (too complex for 8 points)
+c7 = np.polyfit(x_train, y_train, deg=7)
+res7 = y_train - np.polyval(c7, x_train)
+print(f"Degree 7 RMSE: {np.sqrt(np.mean(res7**2)):.4f}")  # near zero
+
+# But on new test data:
+x_test = np.linspace(0, 5, 50)
+y_test_true = 2 * x_test + 1  # true underlying signal
+y_pred_c7 = np.polyval(c7, x_test)
+print(f"Degree 7 test error (vs true signal): {np.sqrt(np.mean((y_pred_c7 - y_test_true)**2)):.4f}")</code></pre>
+
+<p>The degree-7 polynomial will have an RMSE near zero on the training data but a much larger error on the test data. The degree-1 polynomial, fitting the correct linear relationship, generalizes far better.</p>
+
+<p>Several tools help you guard against overfitting. The <strong>adjusted R²</strong>, as described earlier, penalizes extra parameters and will not improve unless a new parameter genuinely earns its place. Information criteria like AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion) provide similar penalties in a more statistically rigorous framework. <strong>Cross-validation</strong> — fitting the model on a subset of the data and evaluating residuals on the held-out portion — provides the most direct empirical test of generalization but requires enough data to split.</p>
+
+<p>Perhaps the most powerful argument against overfitting in engineering is <strong>physical interpretability</strong>. A model whose parameters correspond to physically meaningful quantities — drag coefficients, time constants, activation energies — is much more likely to generalize correctly than a high-degree polynomial whose coefficients are numerically optimized with no physical meaning. When a simpler model is physically motivated and the residuals are satisfactorily random, there is little justification for adding complexity. The engineering principle of parsimony — prefer the simplest model that adequately explains the data — is not just aesthetic; it reflects deep statistical wisdom about the tradeoff between bias and variance in model fitting.</p>
+        <div class="notes"><strong>Notes</strong>Consider supplementing with side-by-side residual plot examples (random scatter vs. curved pattern vs. funnel) as visual aids when deploying this content in a course platform. The Python code blocks are self-contained and executable with numpy, scipy, and matplotlib installed.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

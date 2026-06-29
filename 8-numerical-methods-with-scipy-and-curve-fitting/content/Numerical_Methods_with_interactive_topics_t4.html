@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Curve Fitting with numpy.polyfit</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Linear Curve Fitting with numpy.polyfit</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Linear Curve Fitting with numpy.polyfit</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>When engineers and scientists collect data from experiments or sensors, the measurements are almost never perfectly clean. There is always some degree of noise, instrument error, or natural variability. <strong>Curve fitting</strong> is the process of finding a mathematical model — a smooth, continuous function — that best represents the underlying trend in a set of noisy, discrete data points. Rather than connecting the dots (which would simply reproduce the noise), a fitted curve generalizes from the data, capturing the dominant behavior while ignoring random fluctuations.</p>
+
+<p>The standard mathematical strategy for finding the "best" curve is to minimize the <strong>sum of squared residuals</strong> (SSR). A residual is the vertical distance between an observed data point and the value predicted by the model at the same x-coordinate. Squaring each residual before summing ensures that positive and negative errors do not cancel each other out, and it penalizes large deviations more heavily than small ones. The set of model parameters that produces the smallest possible SSR is called the <strong>least-squares solution</strong>. This approach, known as ordinary least squares (OLS), has a closed-form analytical solution for polynomial models, which is exactly what NumPy exploits internally.</p>
+
+<p>A critical concept in curve fitting is the <strong>bias-variance trade-off</strong>. A model that is too simple (high bias) will systematically miss the trend in the data — this is called <em>underfitting</em>. A model that is too complex (high variance) will chase every noise spike and fail to generalize to new measurements — this is called <em>overfitting</em>. A good fit sits in the middle: complex enough to capture the real signal, but simple enough to ignore noise. Choosing the right model complexity is often the most important decision in curve fitting, and it requires judgment, visualization, and sometimes statistical tests.</p>
+
+<p>NumPy provides <strong><code>numpy.polyfit</code></strong> as a straightforward, powerful tool for polynomial regression. Its call signature is:</p>
+
+<pre><code>coefficients = numpy.polyfit(x, y, deg)
+</code></pre>
+
+<p>Here, <code>x</code> is a 1-D array of independent variable values, <code>y</code> is a 1-D array of corresponding dependent variable measurements, and <code>deg</code> is a non-negative integer specifying the degree of the polynomial to fit. The function returns a 1-D array of <code>deg + 1</code> coefficients in <strong>descending power order</strong>. For example, a degree-2 fit returns <code>[a, b, c]</code> representing the polynomial <em>a·x² + b·x + c</em>.</p>
+
+<p>For a <strong>degree-1 (linear) fit</strong>, <code>polyfit</code> returns two coefficients <code>[m, b]</code> representing the slope and intercept of the best-fit line <em>y = m·x + b</em>. This is the most common use case in engineering when a linear relationship is expected between two variables. For example, suppose you measure the extension of a spring at different applied forces and want to verify Hooke's Law:</p>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+force   = np.array([0.5, 1.0, 1.5, 2.0, 2.5, 3.0])   # Newtons
+stretch = np.array([0.12, 0.25, 0.35, 0.51, 0.60, 0.75])  # meters (with noise)
+
+coeffs = np.polyfit(force, stretch, 1)
+print(coeffs)   # e.g., [0.2504, 0.0017]
+# Interpretation: slope ≈ 0.25 m/N  (spring constant k = 1/0.25 = 4 N/m)
+#                 intercept ≈ 0.002 m (small offset, nearly zero as expected)
+</code></pre>
+
+<p>Once you have the coefficients, you need to <strong>evaluate the polynomial</strong> at new x values to draw the fitted curve or make predictions. NumPy provides two convenient tools for this:</p>
+
+<ul>
+  <li><strong><code>numpy.polyval(coeffs, x_new)</code></strong> — evaluates the polynomial defined by <code>coeffs</code> at each point in <code>x_new</code>. It is a simple function call, ideal for a quick evaluation.</li>
+  <li><strong><code>numpy.poly1d(coeffs)</code></strong> — creates a <em>callable polynomial object</em>. Once created, you call it like a regular Python function. It also has useful attributes like <code>.roots</code> and supports arithmetic between polynomials. This is often more convenient in larger programs.</li>
+</ul>
+
+<pre><code># Using poly1d
+p = np.poly1d(coeffs)        # create callable object
+x_smooth = np.linspace(0.5, 3.0, 200)
+y_fitted = p(x_smooth)       # evaluate at 200 evenly spaced points
+
+# Equivalently with polyval
+y_fitted = np.polyval(coeffs, x_smooth)
+</code></pre>
+
+<p>It is important to understand that <strong>increasing the polynomial degree always reduces training error</strong>. A polynomial of degree <em>n-1</em> can pass exactly through <em>n</em> data points, giving zero residuals but also perfectly encoding all the noise. This is why a higher-degree fit should not be automatically preferred.</p>
+
+<p>Consider the problem of <strong>selecting the right polynomial degree</strong>. If your data follows a clearly linear trend, using <code>deg=1</code> is appropriate. If there is a known curvature — for example, the trajectory of a projectile under gravity is quadratic — then <code>deg=2</code> may be correct. In general, you should choose the lowest degree that captures the meaningful trend.</p>
+
+<p><strong>Underfitting</strong> is visible when the fitted curve is systematically above the data in some regions and below it in others, even though the data clearly curves. For example, fitting a straight line to data that follows a distinct parabolic arc will leave large, structured residuals. <strong>Overfitting</strong> is visible when a high-degree polynomial wiggles wildly between the data points, especially near the edges of the x-range (a phenomenon called Runge's phenomenon).</p>
+
+<pre><code># Example illustrating underfitting vs. overfitting
+np.random.seed(42)
+x_data = np.linspace(0, 2*np.pi, 15)
+y_data = np.sin(x_data) + np.random.normal(0, 0.15, size=15)
+
+x_plot = np.linspace(0, 2*np.pi, 300)
+
+for deg in [1, 3, 12]:
+    coeffs = np.polyfit(x_data, y_data, deg)
+    y_fit  = np.polyval(coeffs, x_plot)
+    plt.plot(x_plot, y_fit, label=f'deg={deg}')
+
+plt.scatter(x_data, y_data, color='black', zorder=5, label='Data')
+plt.legend()
+plt.show()
+# deg=1  → clearly underfits (straight line through sinusoidal data)
+# deg=3  → captures the general wave shape, reasonable fit
+# deg=12 → fits training points almost exactly but oscillates wildly
+</code></pre>
+
+<p>A <strong>visual check</strong> — plotting the fitted curve over the data — is a fast first diagnostic. However, a more rigorous tool is the <strong>residual plot</strong>: a scatter plot of the residuals (<em>y_data − y_fitted</em> at each data point) against the corresponding x values. For a good fit, residuals should look like random noise scattered uniformly around zero with no discernible pattern. If residuals show a systematic curve (a "U" shape or "S" shape), this indicates that the model degree is too low and the fit is underfitting. If residuals for a high-degree polynomial have large magnitudes and wild swings, overfitting is likely.</p>
+
+<pre><code># Residual plot example
+coeffs = np.polyfit(x_data, y_data, 3)
+y_pred = np.polyval(coeffs, x_data)
+residuals = y_data - y_pred
+
+plt.scatter(x_data, residuals, color='red')
+plt.axhline(0, color='black', linestyle='--')
+plt.xlabel('x')
+plt.ylabel('Residuals')
+plt.title('Residual Plot — Degree 3 Fit')
+plt.show()
+</code></pre>
+
+<p>Not all real-world relationships are polynomial. Many engineering systems follow <strong>exponential</strong> or <strong>power-law</strong> behavior. Rather than fitting these directly with a nonlinear solver, you can often <strong>linearize</strong> the model and then apply <code>polyfit</code> with <code>deg=1</code>.</p>
+
+<p>For an <strong>exponential model</strong> of the form <em>y = a · e^(bx)</em>, taking the natural logarithm of both sides gives:</p>
+
+<p><em>ln(y) = ln(a) + b·x</em></p>
+
+<p>This is linear in <em>x</em>. You fit <code>ln(y)</code> vs. <code>x</code> with <code>polyfit(..., 1)</code>. The returned coefficients are <code>[b, ln(a)]</code>. To recover the original parameters, note that <em>a = e^(intercept)</em>.</p>
+
+<pre><code># Exponential fit via linearization
+# Suppose y = 2.5 * exp(0.4 * x) + noise
+np.random.seed(0)
+x_exp = np.linspace(0, 5, 20)
+y_exp = 2.5 * np.exp(0.4 * x_exp) + np.random.normal(0, 0.5, 20)
+
+# Linearize: take natural log of y
+log_y = np.log(y_exp)          # requires y > 0 for all points
+
+coeffs_lin = np.polyfit(x_exp, log_y, 1)
+b_fit  = coeffs_lin[0]         # slope → b
+a_fit  = np.exp(coeffs_lin[1]) # intercept → ln(a), so a = exp(intercept)
+
+print(f"a ≈ {a_fit:.3f},  b ≈ {b_fit:.3f}")
+# Should recover values close to a=2.5, b=0.4
+</code></pre>
+
+<p>For a <strong>power-law model</strong> of the form <em>y = a · x^b</em>, taking the log of both sides gives:</p>
+
+<p><em>log(y) = log(a) + b · log(x)</em></p>
+
+<p>This is linear in <em>log(x)</em>. You fit <code>log(y)</code> vs. <code>log(x)</code> with <code>polyfit(..., 1)</code>. The slope is <em>b</em> and the intercept is <em>log(a)</em>, so <em>a = 10^(intercept)</em> if base-10 logarithms are used, or <em>a = e^(intercept)</em> for natural logs.</p>
+
+<pre><code># Power-law fit via linearization
+# Suppose y = 3.0 * x^1.5 + noise
+np.random.seed(1)
+x_pow = np.linspace(1, 10, 20)
+y_pow = 3.0 * x_pow**1.5 + np.random.normal(0, 1.5, 20)
+
+log_x = np.log(x_pow)
+log_y_pow = np.log(y_pow)
+
+coeffs_pow = np.polyfit(log_x, log_y_pow, 1)
+b_pow = coeffs_pow[0]
+a_pow = np.exp(coeffs_pow[1])
+
+print(f"a ≈ {a_pow:.3f},  b ≈ {b_pow:.3f}")
+# Should recover values close to a=3.0, b=1.5
+</code></pre>
+
+<p>An important caveat about linearization: the least-squares criterion is minimized in the <strong>transformed (log) space</strong>, not in the original space. This implicitly assumes that the measurement noise is <em>multiplicative</em> (proportional to the magnitude of y) rather than <em>additive</em> (constant absolute noise). If the noise is truly additive and the signal spans a large range of magnitudes, the linearized fit can give somewhat different results than a direct nonlinear fit. In practice, for moderate noise levels and well-behaved data, linearization works well and is far simpler to implement.</p>
+
+<p>To produce a professional, engineering-quality plot of the fitted curve alongside the raw data, you should always follow these steps:</p>
+
+<ul>
+  <li>Use <strong><code>numpy.linspace</code></strong> to generate a dense array of x values spanning the data range. This ensures the fitted curve appears smooth, not as a connected polygon between data points. For example, <code>np.linspace(x_data.min(), x_data.max(), 300)</code> creates 300 evenly spaced evaluation points.</li>
+  <li>Create a <strong><code>poly1d</code></strong> object from the coefficients and call it on the linspace array to generate y values for the smooth curve.</li>
+  <li>Plot the <strong>raw data as a scatter plot</strong> (using <code>plt.scatter</code> or <code>plt.plot</code> with marker-only format) and the <strong>fitted curve as a line</strong> with a distinct color or style, so the two are visually distinguishable.</li>
+  <li>Always include a <strong>title</strong>, <strong>axis labels with units</strong>, and a <strong>legend</strong> identifying the data series and the model. Without these elements, a figure is incomplete for any engineering report or publication.</li>
+</ul>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+# --- Data ---
+force   = np.array([0.5, 1.0, 1.5, 2.0, 2.5, 3.0])
+stretch = np.array([0.12, 0.25, 0.35, 0.51, 0.60, 0.75])
+
+# --- Fit ---
+coeffs = np.polyfit(force, stretch, 1)
+p      = np.poly1d(coeffs)
+
+# --- Smooth evaluation points ---
+x_smooth = np.linspace(force.min(), force.max(), 300)
+y_smooth = p(x_smooth)
+
+# --- Plot ---
+plt.figure(figsize=(7, 4))
+plt.scatter(force, stretch, color='steelblue', zorder=5,
+            label='Measured data')
+plt.plot(x_smooth, y_smooth, color='tomato', linewidth=2,
+         label=f'Linear fit: y = {coeffs[0]:.3f}x + {coeffs[1]:.4f}')
+plt.xlabel('Applied Force (N)')
+plt.ylabel('Spring Extension (m)')
+plt.title('Spring Extension vs. Applied Force — Linear Curve Fit')
+plt.legend()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>This example brings together every element of the workflow: collecting data into NumPy arrays, calling <code>polyfit</code> with the appropriate degree, creating a callable <code>poly1d</code> object, generating a smooth evaluation grid with <code>linspace</code>, and producing a clearly labeled figure. The coefficient values printed in the legend legend give the reader quantitative information about the model without requiring them to look at a separate table. By following this complete process — fitting, evaluating, and visualizing with proper labels — you produce results that are both technically rigorous and clearly communicated.</p>
+        <div class="notes"><strong>Notes</strong>Students should be reminded that polyfit coefficients are in descending power order, which is a common source of confusion. The linearization section is particularly important for practical engineering applications involving exponential decay (e.g., RC circuits, radioactive decay) and power-law scaling (e.g., fluid dynamics drag, material stress-strain). Residual plot interpretation deserves extra classroom time as it is a transferable diagnostic skill across all regression contexts.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>

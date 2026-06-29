@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nonlinear Curve Fitting with scipy.optimize.curve fit</title>
+  <style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+  </style>
+  <style>
+    summary.slide-header { list-style: none; }
+    summary.slide-header::-webkit-details-marker { display: none; }
+    details.slide-card[open] > .slide-body { display: block; }
+    details.slide-card[open] .chevron { transform: rotate(90deg); }
+    @media print { details.slide-card > .slide-body { display: block !important; } .chevron { display: none; } }
+  </style>
+</head><body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8. Numerical Methods with SciPy and Curve Fitting</a></div>
+  <header>
+    <h1>Nonlinear Curve Fitting with scipy.optimize.curve fit</h1>
+  </header><main>
+    <details class="slide-card" open>
+      <summary class="slide-header"><span class="slide-num">1</span><h2>Nonlinear Curve Fitting with scipy.optimize.curve_fit</h2><span class="chevron">▶</span></summary>
+      <div class="slide-body">
+        <p>Nonlinear curve fitting is one of the most practically important tools in scientific computing and data analysis. While linear regression and polynomial fitting (via <code>numpy.polyfit</code>) handle a broad class of problems, many real-world relationships between variables are fundamentally nonlinear — exponential decay, logistic growth, sinusoidal oscillations, Gaussian peaks, power laws, and countless others cannot be adequately described by a polynomial or a linear combination of predictors. The function <code>scipy.optimize.curve_fit</code> is the standard Python tool for fitting arbitrary nonlinear model functions to observed data, and understanding it deeply means understanding not just the API, but the optimization strategy it uses, how to set it up properly, and how to diagnose and recover from failure.</p>
+
+<p><strong>When to Use Nonlinear Fitting</strong></p>
+
+<p>The essential criterion for reaching for nonlinear fitting is that your model contains parameters that cannot be extracted by linear algebra alone. A linear model, in the statistical sense, is one where the predicted value is a <em>linear combination</em> of known basis functions — for example, <code>y = a + b*x + c*x**2</code> is linear in the parameters <code>a</code>, <code>b</code>, and <code>c</code> even though it curves as a parabola. You can write such a system as a matrix equation and solve it directly. By contrast, a model like <code>y = A * exp(-k * x)</code> is nonlinear in the parameter <code>k</code> — you cannot isolate <code>k</code> by simple matrix inversion. The same applies to <code>y = A * sin(omega * x + phi)</code>, where <code>omega</code> and <code>phi</code> appear inside the transcendental function.</p>
+
+<p>Internally, <code>scipy.optimize.curve_fit</code> solves the nonlinear least-squares problem by an iterative numerical algorithm — by default, the Levenberg-Marquardt method (with fallback to Trust Region Reflective when bounds are specified). The optimizer repeatedly evaluates your model function with trial parameter values, computes the residuals (differences between model predictions and observed data), and adjusts the parameters in a direction that reduces the sum of squared residuals. Because the problem is not convex in general, the algorithm must start somewhere in parameter space, and that starting point is supplied by the user through the <code>p0</code> argument. This is a crucial difference from linear fitting: the result you get depends on where you start, and poor starting points can lead to a locally optimal but globally wrong solution, or outright failure to converge.</p>
+
+<p>Nonlinear fitting is more flexible than polynomial fitting but demands more from the user. You must encode your physical or mathematical intuition about the relationship into a specific functional form, supply reasonable initial guesses, optionally provide parameter bounds, and interpret the uncertainty estimates produced by the fit. Done carefully, it produces highly interpretable results with direct physical meaning attached to each parameter.</p>
+
+<p><strong>Defining a Model Function for curve_fit</strong></p>
+
+<p>The model function is the heart of the fitting procedure. Its signature must follow a strict convention: the first argument is the independent variable (often written <code>x</code>, but it can be named anything and can even be a 2D array for fitting functions of multiple variables), followed by the parameters one by one as separate positional arguments. The function must return a NumPy array of predicted values with the same shape as the input <code>x</code>.</p>
+
+<pre><code>import numpy as np
+from scipy.optimize import curve_fit
+
+# Exponential decay model: y = A * exp(-k * x) + C
+def exp_decay(x, A, k, C):
+    return A * np.exp(-k * x) + C
+</code></pre>
+
+<p>Notice the use of <code>np.exp</code> rather than Python's <code>math.exp</code>. NumPy universal functions (ufuncs) operate element-wise on entire arrays, so when <code>x</code> is a NumPy array of 100 data points, <code>np.exp(-k * x)</code> returns an array of 100 values in a single vectorized call. If you used <code>math.exp</code>, it would raise a <code>TypeError</code> when handed an array. Any NumPy ufunc — <code>np.sin</code>, <code>np.cos</code>, <code>np.log</code>, <code>np.sqrt</code>, and so on — is appropriate here.</p>
+
+<p>The parameter names <code>A</code>, <code>k</code>, and <code>C</code> are purely for human readability and code clarity. <code>curve_fit</code> does not parse argument names; it identifies parameters entirely by their positional order. The first extra argument after <code>x</code> is parameter 0 in <code>popt</code>, the second is parameter 1, and so forth. This means the order you write the parameters in the function definition determines the order they appear in the output and in your initial guess list.</p>
+
+<p>A slightly more complex example illustrates a Gaussian peak, common in spectroscopy and signal analysis:</p>
+
+<pre><code># Gaussian model: y = A * exp(-(x - mu)^2 / (2 * sigma^2))
+def gaussian(x, A, mu, sigma):
+    return A * np.exp(-(x - mu)**2 / (2 * sigma**2))
+</code></pre>
+
+<p>Here <code>A</code> is the peak amplitude, <code>mu</code> is the center position, and <code>sigma</code> is the standard deviation (width). All three are meaningful physical quantities that the fit will estimate from data. Writing such model functions is an exercise in translating equations directly into code, ensuring every operation is array-compatible.</p>
+
+<p><strong>Calling curve_fit and Interpreting Output</strong></p>
+
+<p><code>curve_fit</code> returns a tuple of exactly two objects: <code>popt</code> and <code>pcov</code>.</p>
+
+<pre><code>import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
+
+# Simulate noisy exponential decay data
+np.random.seed(42)
+x_data = np.linspace(0, 4, 50)
+y_true = 3.0 * np.exp(-1.5 * x_data) + 0.5
+y_data = y_true + np.random.normal(0, 0.2, size=x_data.size)
+
+def exp_decay(x, A, k, C):
+    return A * np.exp(-k * x) + C
+
+p0 = [2.5, 1.0, 0.3]  # initial guesses for A, k, C
+popt, pcov = curve_fit(exp_decay, x_data, y_data, p0=p0)
+
+print("Optimal parameters:", popt)
+print("Covariance matrix:\n", pcov)
+</code></pre>
+
+<p><code>popt</code> is a 1D NumPy array containing the parameter values at the least-squares optimum — one value per parameter in the order they appear in your model function. In this example, <code>popt[0]</code> is the fitted <code>A</code>, <code>popt[1]</code> is the fitted <code>k</code>, and <code>popt[2]</code> is the fitted <code>C</code>. To generate the fitted curve and overlay it on the data, simply call your model function with <code>popt</code> unpacked:</p>
+
+<pre><code>x_fit = np.linspace(0, 4, 300)
+y_fit = exp_decay(x_fit, *popt)  # unpacks popt as A, k, C
+
+plt.scatter(x_data, y_data, label='Data', color='steelblue', s=20)
+plt.plot(x_fit, y_fit, label='Fitted curve', color='tomato')
+plt.legend()
+plt.show()
+</code></pre>
+
+<p><code>pcov</code> is a 2D NumPy array — the estimated covariance matrix of the parameters. Its shape is <code>(n_params, n_params)</code>. The diagonal entries <code>pcov[i, i]</code> give the estimated variance of parameter <code>i</code>. Taking the square root of the diagonal gives the one-sigma (one standard deviation) uncertainty on each parameter:</p>
+
+<pre><code>perr = np.sqrt(np.diag(pcov))
+print("Parameter uncertainties (1-sigma):")
+for name, val, err in zip(['A', 'k', 'C'], popt, perr):
+    print(f"  {name} = {val:.4f} ± {err:.4f}")
+</code></pre>
+
+<p>These uncertainties reflect how precisely the data constrain each parameter under the assumption that the model is correct and that the residuals are approximately normally distributed. The off-diagonal elements of <code>pcov</code> encode correlations between parameters — a large off-diagonal value means that the data cannot independently pin down both parameters; if one shifts, the other shifts to compensate. High parameter correlation is often a sign that the model is overparameterized or that the data do not span a sufficient range to disentangle the effects of different parameters.</p>
+
+<p>It is worth emphasizing that if <code>curve_fit</code> cannot estimate the covariance (for example, because the Jacobian is singular near the solution), entries of <code>pcov</code> will be <code>inf</code>. This is a warning that the fit result may be unreliable even if <code>popt</code> looks plausible.</p>
+
+<p><strong>Setting Initial Guesses and Bounds</strong></p>
+
+<p>The <code>p0</code> argument is a list or array of initial guesses for each parameter, in the same order as the function signature. If <code>p0</code> is not provided, <code>curve_fit</code> defaults to all ones, which is often a poor choice. Because nonlinear optimization is sensitive to starting conditions, choosing good initial guesses is genuinely important — it is not a technicality to be glossed over.</p>
+
+<p>The recommended approach is to use domain knowledge and visual inspection together. Plot the raw data first and ask: what is the rough amplitude of the signal? Where does it peak or level off? What timescale or frequency seems to govern the behavior? Translate those visual impressions directly into numerical guesses.</p>
+
+<pre><code># Suppose the data looks like it starts near 3, decays fast, and flattens near 0.5
+# A rough guess: A ~ 3, k ~ 1.5, C ~ 0.5
+p0 = [3.0, 1.5, 0.5]
+popt, pcov = curve_fit(exp_decay, x_data, y_data, p0=p0)
+</code></pre>
+
+<p>A powerful diagnostic before calling <code>curve_fit</code> is to overlay your model evaluated at your guessed parameters on the raw data. If the guessed curve is qualitatively in the right neighborhood — roughly the right shape, magnitude, and location — the optimizer has a good chance of converging to the correct minimum. If the guessed curve looks completely wrong, refine your guesses until it looks reasonable.</p>
+
+<pre><code># Check initial guess visually before fitting
+y_guess = exp_decay(x_data, *p0)
+plt.scatter(x_data, y_data, label='Data')
+plt.plot(x_data, y_guess, '--', label='Initial guess')
+plt.legend()
+plt.show()
+</code></pre>
+
+<p>The <code>bounds</code> argument allows you to constrain parameters to physically meaningful ranges. It is specified as a tuple of two sequences: <code>(lower_bounds, upper_bounds)</code>, each of length equal to the number of parameters. Use <code>-np.inf</code> and <code>np.inf</code> to leave a parameter unconstrained on one side.</p>
+
+<pre><code># Constrain A > 0, k > 0, C can be anything
+lower = [0, 0, -np.inf]
+upper = [np.inf, np.inf, np.inf]
+popt, pcov = curve_fit(exp_decay, x_data, y_data, p0=p0, bounds=(lower, upper))
+</code></pre>
+
+<p>Bounds serve two purposes: they prevent the optimizer from wandering into regions where the model is undefined or physically nonsensical (e.g., a negative decay rate or a negative amplitude when the data are always positive), and they can help guide convergence when the loss landscape has multiple minima. When bounds are active, <code>curve_fit</code> automatically switches from the Levenberg-Marquardt algorithm to the Trust Region Reflective algorithm, which natively handles box constraints. This is done transparently — you do not need to specify the method yourself unless you want to.</p>
+
+<p><strong>Handling Convergence Failures</strong></p>
+
+<p>The most common failure mode of <code>curve_fit</code> is a <code>RuntimeError</code> with a message such as <em>"Optimal parameters not found: Number of calls to function has reached maxfev"</em>. This means the iterative optimizer exhausted its budget of function evaluations without satisfying the convergence criterion. It does not necessarily mean a solution does not exist; it usually means the algorithm got lost on its way to the solution.</p>
+
+<p>The first thing to do when this happens is <em>not</em> to immediately increase <code>maxfev</code>. That is a last resort. The first response should be to diagnose the starting point:</p>
+
+<pre><code># Step 1: plot your data
+plt.scatter(x_data, y_data)
+plt.show()
+
+# Step 2: manually evaluate the model at your initial guess and plot it
+y_guess = exp_decay(x_data, *p0)
+plt.scatter(x_data, y_data, label='Data')
+plt.plot(x_data, y_guess, '--', label='Guess')
+plt.legend()
+plt.show()
+</code></pre>
+
+<p>If the guessed curve looks wildly different from the data, refine your <code>p0</code> until it qualitatively matches. Even rough agreement — within an order of magnitude on each parameter — is usually enough for the algorithm to find its way. Also consider whether the scale of parameters is very different from one to another (e.g., one parameter is around 1000 and another is around 0.001), because large scale disparities can make the optimizer's gradient estimates unreliable. In such cases, rescaling your data or your model parameters can help.</p>
+
+<p>If you have genuinely tried good initial guesses and the optimizer still struggles, you can increase the maximum number of allowed function evaluations:</p>
+
+<pre><code>popt, pcov = curve_fit(exp_decay, x_data, y_data, p0=p0, maxfev=10000)
+</code></pre>
+
+<p>The default value of <code>maxfev</code> is <code>200 * (number_of_parameters + 1)</code>, which is sometimes insufficient for poorly conditioned problems or models with many parameters. Raising it gives the optimizer more attempts to converge, but if it still fails after a very large <code>maxfev</code>, the problem almost certainly lies elsewhere.</p>
+
+<p>A repeated or persistent convergence failure should prompt a deeper reconsideration of the model itself. Ask whether the chosen functional form is truly appropriate for the data. A model that is structurally wrong will never fit, no matter how sophisticated the optimizer or how good the initial guess. It is also worth checking whether the data contain outliers that are pulling the fit toward implausible parameter values — robust fitting methods or outlier removal may be necessary in such cases. Finally, parameter identifiability should be considered: some model forms have redundant parameters that cannot be uniquely determined from the data (for example, if two parameters always appear together as a product, only their product is identifiable, not the individual values). In such cases, the model should be reparameterized to remove the redundancy before fitting.</p>
+
+<p>In summary, effective use of <code>scipy.optimize.curve_fit</code> is a workflow that combines mathematical modeling (writing an appropriate model function), physical intuition (choosing good initial guesses and meaningful bounds), numerical execution (calling the function and unpacking <code>popt</code> and <code>pcov</code>), and statistical interpretation (reading off parameter uncertainties and assessing the quality of the fit through residual analysis). Each step informs the others, and skill in nonlinear curve fitting grows with practice across a variety of real data sets and model types.</p>
+        <div class="notes"><strong>Notes</strong>Covers fitting arbitrary nonlinear models to data using scipy.optimize.curve_fit, including defining model functions, interpreting fit parameters, and assessing uncertainty.</div>
+      </div>
+    </details>
+  </main>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body></html>
