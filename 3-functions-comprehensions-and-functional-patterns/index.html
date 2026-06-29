@@ -3,201 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 3 – Functions, Comprehensions, and Functional Patterns | EGN3214</title>
+  <title>EGN3214 – Module 3: Functions, Comprehensions, and Functional Patterns</title>
   <style>
-    /* ── Reset & base ───────────────────────────────────────────────── */
+    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: #f4f6f9;
-      color: #2c3e50;
+      color: #1e2530;
       line-height: 1.6;
       min-height: 100vh;
     }
 
-    /* ── Header ─────────────────────────────────────────────────────── */
+    /* ── Header banner ── */
     header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2e6da4 100%);
+      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
       color: #fff;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
+      padding: 2.5rem 2rem 2rem;
     }
 
-    header .course-label {
-      font-size: 0.85rem;
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .course-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      opacity: 0.78;
-      margin-bottom: 0.45rem;
+      background: rgba(255,255,255,0.18);
+      border-radius: 4px;
+      padding: 0.2rem 0.65rem;
+      margin-bottom: 0.75rem;
     }
 
     header h1 {
       font-size: clamp(1.4rem, 3vw, 2rem);
       font-weight: 700;
       line-height: 1.25;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.85rem;
     }
 
     header p {
-      max-width: 700px;
-      margin: 0 auto;
       font-size: 0.97rem;
-      opacity: 0.9;
+      opacity: 0.88;
+      max-width: 72ch;
     }
 
-    /* ── Main content ────────────────────────────────────────────────── */
+    /* ── Main content ── */
     main {
       max-width: 1100px;
-      margin: 2.2rem auto;
-      padding: 0 1.2rem 3rem;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1.25rem;
     }
 
     .section-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #1a3a5c;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      color: #5a6a80;
       margin-bottom: 1.1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 2px solid #2e6da4;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #dde3ec;
     }
 
-    /* ── Card grid ───────────────────────────────────────────────────── */
+    /* ── Card grid ── */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.2rem;
+      gap: 1.15rem;
     }
 
     .card {
       background: #fff;
-      border-radius: 8px;
-      border: 1px solid #dce3ec;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border: 1px solid #dde3ec;
+      border-radius: 10px;
+      padding: 1.25rem 1.35rem 1.15rem;
       display: flex;
       flex-direction: column;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      gap: 0.55rem;
+      transition: box-shadow 0.18s ease, transform 0.18s ease;
     }
 
     .card:hover {
-      box-shadow: 0 6px 18px rgba(0,0,0,0.11);
+      box-shadow: 0 6px 22px rgba(37, 99, 168, 0.12);
       transform: translateY(-2px);
     }
 
-    .card-header {
-      background: #eaf1f9;
-      border-radius: 8px 8px 0 0;
-      padding: 0.75rem 1rem 0.65rem;
+    /* ── Card top row ── */
+    .card-meta {
       display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .badge {
       display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
-      padding: 0.22em 0.6em;
       border-radius: 4px;
+      padding: 0.18rem 0.55rem;
       white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
     }
 
-    /* Badge colour by type */
-    .badge-module-topics   { background: #1a3a5c; color: #fff; }
-    .badge-text-content    { background: #2e6da4; color: #fff; }
-    .badge-interactive     { background: #217a4e; color: #fff; }
-    .badge-external        { background: #7a4e21; color: #fff; }
+    .badge-type {
+      background: #e8f0fb;
+      color: #1a4d9a;
+    }
 
-    .card-name {
-      font-size: 0.95rem;
+    .badge-filetype {
+      background: #f0f4f8;
+      color: #4a5c72;
       font-weight: 600;
-      color: #1a3a5c;
-      flex: 1;
-      word-break: break-word;
     }
 
-    .card-name a {
-      color: #1a3a5c;
-      text-decoration: none;
-      border-bottom: 1px solid #2e6da4;
-    }
-
-    .card-name a:hover {
-      color: #2e6da4;
-    }
-
-    .source-link {
-      display: inline-block;
-      margin-left: 0.55rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: #2e6da4;
-      text-decoration: none;
-      background: #dce9f7;
-      border-radius: 3px;
-      padding: 0.1em 0.45em;
-      vertical-align: middle;
-      white-space: nowrap;
-      border: 1px solid #b5cee8;
-      transition: background 0.15s;
-    }
-
-    .source-link:hover {
-      background: #b5cee8;
-      color: #1a3a5c;
-    }
-
-    .card-body {
-      padding: 0.85rem 1rem 1rem;
-      flex: 1;
+    /* ── Card name / heading ── */
+    .card-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #1e2530;
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .card-meta {
-      font-size: 0.75rem;
-      color: #6b7c93;
-      display: flex;
-      gap: 1rem;
+      align-items: baseline;
+      gap: 0.55rem;
       flex-wrap: wrap;
     }
 
-    .card-meta span {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
+    .card-name a.primary-link {
+      color: #1a4d9a;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
     }
 
-    .card-meta .meta-icon {
-      font-style: normal;
+    .card-name a.primary-link:hover {
+      border-color: #1a4d9a;
     }
 
-    .card-description {
-      font-size: 0.875rem;
-      color: #4a5568;
+    .card-name a.source-link {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #5a7fa8;
+      text-decoration: none;
+      border: 1px solid #b5cde8;
+      border-radius: 4px;
+      padding: 0.12rem 0.45rem;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .card-name a.source-link:hover {
+      background: #e8f0fb;
+      color: #1a4d9a;
+    }
+
+    /* ── Card description ── */
+    .card-desc {
+      font-size: 0.86rem;
+      color: #48576b;
+      line-height: 1.58;
       flex: 1;
     }
 
-    /* ── Footer ──────────────────────────────────────────────────────── */
+    /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 1.2rem;
-      font-size: 0.8rem;
-      color: #8a99ab;
-      border-top: 1px solid #dce3ec;
-      background: #fff;
+      font-size: 0.78rem;
+      color: #8a99ad;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #dde3ec;
     }
 
-    /* ── Responsive ──────────────────────────────────────────────────── */
-    @media (max-width: 480px) {
-      header { padding: 1.8rem 1rem 1.5rem; }
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      header { padding: 2rem 1.1rem 1.6rem; }
       .card-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -207,256 +192,205 @@
 <div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
 
   <header>
-    <p class="course-label">EGN3214 &mdash; Course Module</p>
-    <h1>Module 3: Functions, Comprehensions, and Functional Patterns</h1>
-    <p>
-      This module explores Python's function system in depth — from defining and documenting functions
-      with <code>def</code> and docstrings, through variable-length arguments, scope rules (LEGB),
-      comprehensions, and functional programming patterns such as decorators. Use the resources below
-      to read, practise, and assess your understanding.
-    </p>
+    <div class="header-inner">
+      <span class="course-label">EGN3214</span>
+      <h1>Module 3 – Functions, Comprehensions, and Functional Patterns</h1>
+      <p>
+        This module explores Python's function system in depth — from defining functions with
+        <code>def</code> and <code>return</code>, through variable-length arguments, scope rules,
+        list and dictionary comprehensions, to functional programming patterns such as decorators
+        and middleware. Use the resources below to work through readings, interactive activities,
+        and applied assignments.
+      </p>
+    </div>
   </header>
 
   <main>
-    <p class="section-title">Module Artifacts</p>
+    <p class="section-title">Module Artifacts &mdash; 11 items</p>
+
     <div class="card-grid">
 
-      <!-- Card 1: Module Topics -->
+      <!-- 1 – Module Topics -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-module-topics">Module Topics</span>
-          <span class="card-name">
-            <a href="content/module_topics.html">Module Topics</a>
-            <a class="source-link" href="source/hierarchy.json">source file</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Module Topics</span>
+          <span class="badge badge-filetype">.json</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Module Topics</span>
-            <span><em class="meta-icon">📄</em> .json</span>
-          </div>
-          <p class="card-description">
-            A structured outline of all topics covered in the module, spanning function definitions,
-            parameters, *args/**kwargs, scope rules, comprehensions, and functional patterns, used by
-            learners and instructors to navigate the module's learning objectives.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/module_topics.html">Module Topics</a>
+          <a class="source-link" href="source/hierarchy.json">source file</a>
         </div>
+        <p class="card-desc">
+          A structured outline of all topics covered in the module, spanning function definitions,
+          parameters, *args/**kwargs, scope rules, comprehensions, and functional patterns, used by
+          learners and instructors to navigate the module's learning objectives.
+        </p>
       </div>
 
-      <!-- Card 2: Functions_Comprehensions_and (interactive) -->
+      <!-- 2 – Scope and Visibility -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/_interactive.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            A reading page covering Python's variable-length argument mechanisms (*args and **kwargs),
-            explaining how they collect positional and keyword arguments to build flexible, reusable
-            functions; learners read through the explanations and examples to understand how to apply
-            these patterns in their own code.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/_interactive.html">Scope and Visibility</a>
         </div>
+        <p class="card-desc">
+          A reading page covering Python's variable-length argument mechanisms (*args and **kwargs),
+          explaining how they collect positional and keyword arguments to build flexible, reusable
+          functions; learners read through the explanations and examples to understand how to apply
+          these patterns in their own code.
+        </p>
       </div>
 
-      <!-- Card 3: Future Value Assignment (ext) -->
+      <!-- 3 – Future Value: While Loop Input and Present Value Calculation Assignment -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/ext_f2aa4393.html">Future Value: While Loop Input and Present Value Calculation Assignment</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An assignment page instructing students to write a Python program using a while loop to
-            calculate the Present Value of equipment resale amounts and annual revenues across multiple
-            cost scenarios at a 5% interest rate, used by learners to practice loops and engineering
-            economics calculations.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/ext_f2aa4393.html">Future Value: While Loop Input and Present Value Calculation Assignment</a>
         </div>
+        <p class="card-desc">
+          An assignment page instructing students to write a Python program using a while loop to
+          calculate the Present Value of equipment resale amounts and annual revenues across multiple
+          cost scenarios at a 5% interest rate, used by learners to practice loops and engineering
+          economics calculations.
+        </p>
       </div>
 
-      <!-- Card 4: Functions_Comprehensions_and (t1-2) -->
+      <!-- 4 – Functions and Parameters -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t1-2.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An interactive reading page introducing Python function definitions using the
-            <code>def</code> and <code>return</code> statements along with docstrings, used by
-            learners to understand how to write, call, and document reusable functions.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Functions_Comprehensions_and_interactive_topics_t1-2.html">Functions and Parameters</a>
         </div>
+        <p class="card-desc">
+          An interactive reading page introducing Python function definitions using the
+          <code>def</code> and <code>return</code> statements along with docstrings, used by
+          learners to understand how to write, call, and document reusable functions.
+        </p>
       </div>
 
-      <!-- Card 5: Functions_Comprehensions_and (t3_v2) -->
+      <!-- 5 – Variable length arguments -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t3_v2.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            A reading page covering Python's variable-length argument mechanisms (*args and **kwargs),
-            explaining how they collect positional and keyword arguments to build flexible, reusable
-            functions; learners read through the explanations and examples to understand how to apply
-            these patterns in their own code.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Functions_Comprehensions_and_interactive_topics_t3_v2.html">Variable length arguments</a>
         </div>
+        <p class="card-desc">
+          A reading page covering Python's variable-length argument mechanisms (*args and **kwargs),
+          explaining how they collect positional and keyword arguments to build flexible, reusable
+          functions; learners read through the explanations and examples to understand how to apply
+          these patterns in their own code.
+        </p>
       </div>
 
-      <!-- Card 6: Functions_Comprehensions_and (t3) -->
+      <!-- 6 – Functions_Comprehensions_and (t3) -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t3.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            A reference text covering advanced Python function concepts — including variable-length
-            arguments (*args and **kwargs), list/dict/set comprehensions, and functional programming
-            patterns like decorators and middleware — which learners read to understand how to write
-            flexible, reusable functions and instructors can assign as a study resource or lecture
-            supplement.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Functions_Comprehensions_and_interactive_topics_t3.html">Functions_Comprehensions_and</a>
         </div>
+        <p class="card-desc">
+          A reference text covering advanced Python function concepts — including variable-length
+          arguments (*args and **kwargs), list/dict/set comprehensions, and functional programming
+          patterns like decorators and middleware — which learners read to understand how to write
+          flexible, reusable functions and instructors can assign as a study resource or lecture
+          supplement.
+        </p>
       </div>
 
-      <!-- Card 7: Functions_Comprehensions_and (t4_v2) -->
+      <!-- 7 – Scope with Examples -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t4_v2.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An interactive reading page covering Python's LEGB scope rule and the
-            <code>global</code> and <code>nonlocal</code> keywords, used by learners to understand
-            how variable names are resolved across local, enclosing, global, and built-in scopes.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Functions_Comprehensions_and_interactive_topics_t4_v2.html">Scope with Examples</a>
         </div>
+        <p class="card-desc">
+          An interactive reading page covering Python's LEGB scope rule and the
+          <code>global</code> and <code>nonlocal</code> keywords, used by learners to understand
+          how variable names are resolved across local, enclosing, global, and built-in scopes.
+        </p>
       </div>
 
-      <!-- Card 8: Functions_Comprehensions_and (t4) -->
+      <!-- 8 – Functions_Comprehensions_and (t4) -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t4.html">Functions_Comprehensions_and</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An interactive reading page covering Python's LEGB scope rule and the
-            <code>global</code> and <code>nonlocal</code> keywords, used by learners to understand
-            how variable names are resolved across local, enclosing, global, and built-in scopes.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Functions_Comprehensions_and_interactive_topics_t4.html">Functions_Comprehensions_and</a>
         </div>
+        <p class="card-desc">
+          An interactive reading page covering Python's LEGB scope rule and the
+          <code>global</code> and <code>nonlocal</code> keywords, used by learners to understand
+          how variable names are resolved across local, enclosing, global, and built-in scopes.
+        </p>
       </div>
 
-      <!-- Card 9: Using a While Loop (Future_Value) -->
+      <!-- 9 – FV-PV Problem -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-text-content">Text Content</span>
-          <span class="card-name">
-            <a href="content/Future_Value.html">Using a While Loop for Input and Calculating Present Value</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Text Content</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An assignment page directing students to write a Python while-loop program that evaluates
-            multiple equipment purchase scenarios by calculating Present Value of resale and revenue
-            streams over a 10-year lifespan at 5% interest, used by learners to apply engineering
-            economics concepts in code.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="content/Future_Value.html">FV-PV Problem</a>
         </div>
+        <p class="card-desc">
+          An assignment page directing students to write a Python while-loop program that evaluates
+          multiple equipment purchase scenarios by calculating Present Value of resale and revenue
+          streams over a 10-year lifespan at 5% interest, used by learners to apply engineering
+          economics concepts in code.
+        </p>
       </div>
 
-      <!-- Card 10: Base Case or Recursive Case? -->
+      <!-- 10 – Base Case or Recursive Case? -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-interactive">Interactive Activity</span>
-          <span class="card-name">
-            <a href="interactive/base-case-or-recursive-case.html">Base Case or Recursive Case?</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">Interactive Activity</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> Interactive Activity</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            A ten-round interactive quiz presenting hidden blocks from Python recursive functions and
-            asking learners to classify each block as either a base case or a recursive case, used to
-            reinforce understanding of recursion structure.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="interactive/base-case-or-recursive-case.html">Base Case or Recursive Case?</a>
         </div>
+        <p class="card-desc">
+          A ten-round interactive quiz presenting hidden blocks from Python recursive functions and
+          asking learners to classify each block as either a base case or a recursive case, used to
+          reinforce understanding of recursion structure.
+        </p>
       </div>
 
-      <!-- Card 11: External Materials Index -->
+      <!-- 11 – External Materials Index -->
       <div class="card">
-        <div class="card-header">
-          <span class="badge badge-external">External Materials</span>
-          <span class="card-name">
-            <a href="external_materials_index.html">External Materials Index</a>
-          </span>
+        <div class="card-meta">
+          <span class="badge badge-type">External Materials</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span><em class="meta-icon">🗂</em> External Materials</span>
-            <span><em class="meta-icon">📄</em> .html</span>
-          </div>
-          <p class="card-description">
-            An index page listing one external assignment resource — the Present Value while-loop
-            engineering economics assignment — used by instructors and learners to access supplementary
-            materials linked to the module.
-          </p>
+        <div class="card-name">
+          <a class="primary-link" href="external_materials_index.html">External Materials Index</a>
         </div>
+        <p class="card-desc">
+          An index page listing one external assignment resource — the Present Value while-loop
+          engineering economics assignment — used by instructors and learners to access supplementary
+          materials linked to the module.
+        </p>
       </div>
 
     </div><!-- /.card-grid -->
