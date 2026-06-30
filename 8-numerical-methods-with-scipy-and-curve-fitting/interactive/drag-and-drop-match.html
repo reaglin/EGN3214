@@ -1,0 +1,736 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SciPy Functions: Drag-and-Drop Match</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #e0e0e0;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 18px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    color: #7ec8e3;
+    text-shadow: 0 0 10px rgba(126,200,227,0.4);
+    margin-bottom: 6px;
+  }
+
+  header p.subtitle {
+    font-size: 0.95rem;
+    color: #a0b4c8;
+    margin-bottom: 10px;
+  }
+
+  .score-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 10px 24px;
+    margin: 0 auto 6px auto;
+    max-width: 500px;
+    font-size: 1rem;
+  }
+
+  .score-bar span {
+    color: #cde8f5;
+  }
+
+  .score-bar .score-value {
+    font-weight: bold;
+    font-size: 1.15rem;
+    color: #7ec8e3;
+  }
+
+  .instructions {
+    background: rgba(126,200,227,0.1);
+    border-left: 4px solid #7ec8e3;
+    border-radius: 8px;
+    padding: 10px 16px;
+    max-width: 860px;
+    width: 100%;
+    font-size: 0.93rem;
+    color: #cde8f5;
+    margin-bottom: 16px;
+  }
+
+  .game-area {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    max-width: 900px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .column {
+    flex: 1;
+    min-width: 280px;
+    max-width: 420px;
+  }
+
+  .column-header {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #7ec8e3;
+    background: rgba(126,200,227,0.12);
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    border-bottom: 2px solid rgba(126,200,227,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  .column-body {
+    background: rgba(255,255,255,0.04);
+    border-radius: 0 0 8px 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 400px;
+  }
+
+  /* Draggable source items */
+  .drag-item {
+    background: linear-gradient(135deg, #264a72, #1e3a5f);
+    border: 2px solid rgba(126,200,227,0.35);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: grab;
+    font-size: 0.88rem;
+    color: #dceeff;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  .drag-item:active {
+    cursor: grabbing;
+  }
+
+  .drag-item:hover:not(.locked):not(.placeholder-empty) {
+    transform: scale(1.03);
+    box-shadow: 0 4px 18px rgba(126,200,227,0.35);
+    border-color: #7ec8e3;
+  }
+
+  .drag-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.97);
+  }
+
+  .drag-item.locked {
+    cursor: default;
+    background: linear-gradient(135deg, #1b4332, #145a32);
+    border-color: #52b788;
+    color: #b7e4c7;
+  }
+
+  .drag-item.placeholder-empty {
+    background: transparent;
+    border: 2px dashed rgba(126,200,227,0.15);
+    color: transparent;
+    cursor: default;
+    height: 64px;
+  }
+
+  .drag-item .item-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #7ec8e3;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .drag-item.locked .item-label {
+    color: #74c69d;
+  }
+
+  /* Drop zone targets */
+  .drop-zone {
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed rgba(126,200,227,0.3);
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-height: 72px;
+    font-size: 0.88rem;
+    color: #a0b4c8;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .drop-zone .zone-label {
+    font-size: 0.78rem;
+    color: #5a7a8e;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-style: italic;
+  }
+
+  .drop-zone .zone-text {
+    flex: 1;
+  }
+
+  .drop-zone.drag-over {
+    background: rgba(126,200,227,0.15);
+    border-color: #7ec8e3;
+    border-style: solid;
+  }
+
+  .drop-zone.correct {
+    background: rgba(82,183,136,0.18);
+    border-color: #52b788;
+    border-style: solid;
+    color: #b7e4c7;
+  }
+
+  .drop-zone.incorrect-flash {
+    background: rgba(230,115,0,0.22);
+    border-color: #f4a261;
+    border-style: solid;
+    animation: shake 0.4s ease;
+  }
+
+  .drop-zone .matched-badge {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: #52b788;
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  @keyframes shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-8px); }
+    40%  { transform: translateX(8px); }
+    60%  { transform: translateX(-6px); }
+    80%  { transform: translateX(6px); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes bounceIn {
+    0%   { transform: scale(0.7); opacity: 0; }
+    70%  { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  /* Feedback message */
+  .feedback-banner {
+    min-height: 34px;
+    text-align: center;
+    font-size: 0.97rem;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 7px 14px;
+    max-width: 860px;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: opacity 0.3s;
+  }
+
+  .feedback-banner.correct {
+    background: rgba(82,183,136,0.2);
+    color: #74c69d;
+    border: 1px solid #52b788;
+  }
+
+  .feedback-banner.incorrect {
+    background: rgba(244,162,97,0.2);
+    color: #f4a261;
+    border: 1px solid #f4a261;
+  }
+
+  .feedback-banner.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Win / completion overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay.show {
+    display: flex;
+  }
+
+  .overlay-box {
+    background: linear-gradient(135deg, #16213e, #0f3460);
+    border: 2px solid #7ec8e3;
+    border-radius: 18px;
+    padding: 36px 40px;
+    text-align: center;
+    max-width: 440px;
+    width: 90%;
+    animation: bounceIn 0.5s ease;
+    box-shadow: 0 0 40px rgba(126,200,227,0.3);
+  }
+
+  .overlay-box .result-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+  }
+
+  .overlay-box h2 {
+    font-size: 1.8rem;
+    color: #7ec8e3;
+    margin-bottom: 8px;
+  }
+
+  .overlay-box p {
+    font-size: 1rem;
+    color: #cde8f5;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .overlay-box .final-score {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #52b788;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, #264a72, #1e3a5f);
+    border: 2px solid #7ec8e3;
+    color: #7ec8e3;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.1s;
+    min-height: 44px;
+    letter-spacing: 0.04em;
+  }
+
+  .btn:hover {
+    background: linear-gradient(135deg, #7ec8e3, #52b788);
+    color: #0f3460;
+    transform: scale(1.04);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .reset-btn-area {
+    margin-top: 18px;
+    text-align: center;
+  }
+
+  /* Drag ghost override */
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.88;
+    transform: rotate(3deg) scale(1.06);
+    max-width: 300px;
+  }
+
+  @media (max-width: 620px) {
+    .game-area {
+      flex-direction: column;
+      align-items: center;
+    }
+    .column {
+      min-width: 90vw;
+    }
+    header h1 {
+      font-size: 1.35rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 8 - Numerical Methods with SciPy and Curve Fitting</a></div>
+<div class="pm-injected-nav"><a href="../index.html">← Back to Module</a><span class="sep">|</span><span style="color:#555">Drag-and-Drop Match</span></div>
+<div class="pm-injected-spacer"></div>
+
+<header>
+  <h1>🔬 SciPy Functions: Inputs &amp; Outputs</h1>
+  <p class="subtitle">Module 8 — Numerical Methods with SciPy and Curve Fitting</p>
+  <div class="score-bar">
+    <span>Correct: <span class="score-value" id="scoreCorrect">0</span></span>
+    <span>Incorrect: <span class="score-value" id="scoreIncorrect">0</span></span>
+    <span>Remaining: <span class="score-value" id="scoreRemaining">8</span></span>
+  </div>
+</header>
+
+<div class="instructions">
+  <strong>How to play:</strong> Drag each <em>SciPy / NumPy function</em> from the left column and drop it onto the correct <em>description of its inputs and outputs</em> on the right. Correct matches lock in place (green). Incorrect drops will bounce back — try again!
+</div>
+
+<div class="feedback-banner hidden" id="feedbackBanner"></div>
+
+<div class="game-area" id="gameArea">
+  <div class="column">
+    <div class="column-header">⚙️ Function</div>
+    <div class="column-body" id="sourceColumn"></div>
+  </div>
+  <div class="column">
+    <div class="column-header">📋 Inputs &amp; Outputs Description</div>
+    <div class="column-body" id="targetColumn"></div>
+  </div>
+</div>
+
+<div class="reset-btn-area">
+  <button class="btn" id="resetButton" onclick="initGame()">🔄 Reset Game</button>
+</div>
+
+<!-- Completion overlay -->
+<div class="overlay" id="completionOverlay">
+  <div class="overlay-box">
+    <div class="result-emoji" id="overlayEmoji">🎉</div>
+    <h2 id="overlayTitle">All Matched!</h2>
+    <p id="overlayMessage"></p>
+    <div class="final-score" id="overlayScore"></div>
+    <button class="btn" onclick="initGame()">🔄 Play Again</button>
+  </div>
+</div>
+
+<script>
+  // ─── Data ─────────────────────────────────────────────────────────────────
+  const MATCH_PAIRS = [
+    {
+      id: 'brentq',
+      functionLabel: 'scipy.optimize.brentq',
+      functionDetail: 'Bracket-based root finder',
+      descriptionText: 'Inputs: a callable f(x), bracket endpoints a and b (where f(a)·f(b) < 0), tolerance. Output: scalar x where f(x) ≈ 0.'
+    },
+    {
+      id: 'fsolve',
+      functionLabel: 'scipy.optimize.fsolve',
+      functionDetail: 'Derivative-based root finder',
+      descriptionText: 'Inputs: a callable f(x) returning equations, initial guess x0 (scalar or array). Output: array of root values where f(x) ≈ 0.'
+    },
+    {
+      id: 'quad',
+      functionLabel: 'scipy.integrate.quad',
+      functionDetail: 'Numerical quadrature',
+      descriptionText: 'Inputs: a callable f(x), lower limit a, upper limit b. Outputs: scalar integral estimate and absolute error estimate.'
+    },
+    {
+      id: 'solve_ivp',
+      functionLabel: 'scipy.integrate.solve_ivp',
+      functionDetail: 'ODE solver',
+      descriptionText: 'Inputs: callable dydt(t,y), time span [t0, tf], initial condition y0 array, optional evaluation times. Output: solution object with .t (times) and .y (state arrays).'
+    },
+    {
+      id: 'simpson',
+      functionLabel: 'scipy.integrate.simpson',
+      functionDetail: 'Tabular integration',
+      descriptionText: 'Inputs: array of y values at equally-spaced (or specified) x points, optional x array. Output: scalar definite integral approximation using Simpson\'s rule.'
+    },
+    {
+      id: 'polyfit',
+      functionLabel: 'numpy.polyfit',
+      functionDetail: 'Polynomial regression',
+      descriptionText: 'Inputs: arrays x and y of data points, integer degree of polynomial. Output: 1-D array of polynomial coefficients (highest degree first).'
+    },
+    {
+      id: 'curve_fit',
+      functionLabel: 'scipy.optimize.curve_fit',
+      functionDetail: 'Nonlinear curve fitting',
+      descriptionText: 'Inputs: callable model f(x, *params), x data array, y data array, optional initial parameter guesses. Outputs: optimal parameter array popt and covariance matrix pcov.'
+    },
+    {
+      id: 'polyval',
+      functionLabel: 'numpy.polyval',
+      functionDetail: 'Evaluate polynomial',
+      descriptionText: 'Inputs: coefficient array p (from polyfit), array of x values at which to evaluate. Output: array of polynomial values y = p[0]·x^n + … + p[n].'
+    }
+  ];
+
+  // ─── State ────────────────────────────────────────────────────────────────
+  let correctCount = 0;
+  let incorrectCount = 0;
+  let totalPairs = MATCH_PAIRS.length;
+  let draggedItemId = null;
+  let feedbackTimer = null;
+
+  // Custom drag state for touch-friendliness via HTML5 drag API
+  const sourceColumn = document.getElementById('sourceColumn');
+  const targetColumn = document.getElementById('targetColumn');
+  const feedbackBanner = document.getElementById('feedbackBanner');
+  const completionOverlay = document.getElementById('completionOverlay');
+
+  // ─── Shuffle helper ───────────────────────────────────────────────────────
+  function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  function initGame() {
+    correctCount = 0;
+    incorrectCount = 0;
+    draggedItemId = null;
+    updateScoreDisplay();
+    hideFeedback();
+    completionOverlay.classList.remove('show');
+
+    sourceColumn.innerHTML = '';
+    targetColumn.innerHTML = '';
+
+    const shuffledSources = shuffleArray(MATCH_PAIRS);
+    const shuffledTargets = shuffleArray(MATCH_PAIRS);
+
+    // Build source draggable items
+    shuffledSources.forEach(pair => {
+      const item = buildDragItem(pair);
+      sourceColumn.appendChild(item);
+    });
+
+    // Build drop zone targets
+    shuffledTargets.forEach(pair => {
+      const zone = buildDropZone(pair);
+      targetColumn.appendChild(zone);
+    });
+  }
+
+  // ─── Build source item ────────────────────────────────────────────────────
+  function buildDragItem(pair) {
+    const div = document.createElement('div');
+    div.className = 'drag-item';
+    div.setAttribute('draggable', 'true');
+    div.dataset.pairId = pair.id;
+    div.id = 'drag-' + pair.id;
+    div.innerHTML = `<span class="item-label">${escapeHtml(pair.functionLabel)}</span>${escapeHtml(pair.functionDetail)}`;
+
+    div.addEventListener('dragstart', onDragStart);
+    div.addEventListener('dragend', onDragEnd);
+    return div;
+  }
+
+  // ─── Build drop zone ──────────────────────────────────────────────────────
+  function buildDropZone(pair) {
+    const div = document.createElement('div');
+    div.className = 'drop-zone';
+    div.dataset.pairId = pair.id;
+    div.id = 'zone-' + pair.id;
+    div.innerHTML = `<span class="zone-text">${escapeHtml(pair.descriptionText)}</span><span class="zone-label">drop here</span>`;
+
+    div.addEventListener('dragover', onDragOver);
+    div.addEventListener('dragleave', onDragLeave);
+    div.addEventListener('drop', onDrop);
+    return div;
+  }
+
+  // ─── Drag events ──────────────────────────────────────────────────────────
+  function onDragStart(e) {
+    const item = e.currentTarget;
+    if (item.classList.contains('locked')) {
+      e.preventDefault();
+      return;
+    }
+    draggedItemId = item.dataset.pairId;
+    item.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', draggedItemId);
+  }
+
+  function onDragEnd(e) {
+    const item = e.currentTarget;
+    item.classList.remove('dragging');
+  }
+
+  function onDragOver(e) {
+    const zone = e.currentTarget;
+    if (zone.classList.contains('correct')) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    zone.classList.add('drag-over');
+  }
+
+  function onDragLeave(e) {
+    const zone = e.currentTarget;
+    zone.classList.remove('drag-over');
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    const zone = e.currentTarget;
+    zone.classList.remove('drag-over');
+
+    if (zone.classList.contains('correct')) return;
+
+    const droppedId = e.dataTransfer.getData('text/plain') || draggedItemId;
+    if (!droppedId) return;
+
+    const sourceItem = document.getElementById('drag-' + droppedId);
+    if (!sourceItem) return;
+
+    sourceItem.classList.remove('dragging');
+
+    const zoneId = zone.dataset.pairId;
+
+    if (droppedId === zoneId) {
+      handleCorrectMatch(sourceItem, zone, droppedId);
+    } else {
+      handleIncorrectMatch(sourceItem, zone, droppedId);
+    }
+  }
+
+  // ─── Match handlers ───────────────────────────────────────────────────────
+  function handleCorrectMatch(sourceItem, zone, pairId) {
+    correctCount++;
+    updateScoreDisplay();
+
+    // Lock source
+    sourceItem.classList.add('locked');
+    sourceItem.setAttribute('draggable', 'false');
+
+    // Mark zone as correct
+    zone.classList.add('correct');
+    zone.innerHTML = `
+      <span class="zone-text">${escapeHtml(getPairById(pairId).descriptionText)}</span>
+      <span class="matched-badge">✓</span>
+    `;
+
+    // Replace source item with empty placeholder to maintain layout
+    const placeholder = document.createElement('div');
+    placeholder.className = 'drag-item placeholder-empty';
+    placeholder.id = 'placeholder-' + pairId;
+    sourceItem.replaceWith(placeholder);
+
+    showFeedback('correct', `✅ Correct! "${getPairById(pairId).functionLabel}" matches that description.`);
+
+    if (correctCount === totalPairs) {
+      setTimeout(showCompletion, 700);
+    }
+  }
+
+  function handleIncorrectMatch(sourceItem, zone, pairId) {
+    incorrectCount++;
+    updateScoreDisplay();
+
+    zone.classList.add('incorrect-flash');
+    setTimeout(() => {
+      zone.classList.remove('incorrect-flash');
+    }, 600);
+
+    showFeedback('incorrect', `❌ Not quite! Try a different description for "${getPairById(pairId).functionLabel}".`);
+  }
+
+  // ─── Score display ────────────────────────────────────────────────────────
+  function updateScoreDisplay() {
+    document.getElementById('scoreCorrect').textContent = correctCount;
+    document.getElementById('scoreIncorrect').textContent = incorrectCount;
+    document.getElementById('scoreRemaining').textContent = totalPairs - correctCount;
+  }
+
+  // ─── Feedback banner ──────────────────────────────────────────────────────
+  function showFeedback(type, message) {
+    if (feedbackTimer) clearTimeout(feedbackTimer);
+    feedbackBanner.textContent = message;
+    feedbackBanner.className = 'feedback-banner ' + type;
+    feedbackTimer = setTimeout(hideFeedback, 3200);
+  }
+
+  function hideFeedback() {
+    feedbackBanner.className = 'feedback-banner hidden';
+    feedbackBanner.textContent = '';
+  }
+
+  // ─── Completion overlay ───────────────────────────────────────────────────
+  function showCompletion() {
+    const total = correctCount + incorrectCount;
+    const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 100;
+
+    let emoji = '🎉';
+    let title = 'All Matched!';
+    let message;
+
+    if (accuracy === 100) {
+      emoji = '🏆';
+      title = 'Perfect Score!';
+      message = 'Outstanding! You matched every SciPy function to its correct input/output description without a single mistake.';
+    } else if (accuracy >= 75) {
+      emoji = '🎉';
+      title = 'Great Work!';
+      message = 'You successfully matched all SciPy functions. A few stumbles along the way, but you got there!';
+    } else {
+      emoji = '👍';
+      title = 'Completed!';
+      message = 'You matched all the functions! Review the descriptions to strengthen your understanding of SciPy inputs and outputs.';
+    }
+
+    document.getElementById('overlayEmoji').textContent = emoji;
+    document.getElementById('overlayTitle').textContent = title;
+    document.getElementById('overlayMessage').textContent = message;
+    document.getElementById('overlayScore').textContent =
+      `Accuracy: ${accuracy}% (${correctCount} correct, ${incorrectCount} incorrect attempts)`;
+
+    completionOverlay.classList.add('show');
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
+  function getPairById(id) {
+    return MATCH_PAIRS.find(p => p.id === id);
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Start ────────────────────────────────────────────────────────────────
+  initGame();
+</script>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

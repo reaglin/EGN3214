@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4 - Modules, File I/O, and Error Handling — Reading and Writing CSV Files, Working with JSON</title>
+<style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>4 - Modules, File I/O, and Error Handling — Reading and Writing CSV Files, Working with JSON</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Python Docs – csv Module</a>
+<a href="#sec2">Python Docs – json Module</a>
+<a href="#sec3">Automate the Boring Stuff – CSV and JSON</a>
+<a href="#sec4">Real Python – Reading and Writing CSV Files</a>
+<a href="#sec5">Real Python – Working with JSON</a>
+<a href="#sec6">ECMA-404 JSON Standard</a>
+<a href="#sec7">RFC 4180 – CSV Format</a>
+<a href="#sec8">Python Cookbook – Data Structures and Algorithms</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Python Docs – csv Module</h2>
+<p><strong>Full Title:</strong> <em>csv — CSV File Reading and Writing</em></p>
+<ul>
+<li><strong>Publisher:</strong> Python Software Foundation</li>
+<li><strong>Link:</strong> <a href="https://docs.python.org/3/library/csv.html" target="_blank" rel="noopener">https://docs.python.org/3/library/csv.html</a></li>
+</ul>
+<p>The official reference for Python's <code>csv</code> module, covering <code>csv.reader</code>, <code>csv.writer</code>, <code>csv.DictReader</code>, and <code>csv.DictWriter</code> with full parameter descriptions and examples. It is the authoritative source for understanding every option and dialect available when reading and writing CSV files.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Python Docs – json Module</h2>
+<p><strong>Full Title:</strong> <em>json — JSON Encoder and Decoder</em></p>
+<ul>
+<li><strong>Publisher:</strong> Python Software Foundation</li>
+<li><strong>Link:</strong> <a href="https://docs.python.org/3/library/json.html" target="_blank" rel="noopener">https://docs.python.org/3/library/json.html</a></li>
+</ul>
+<p>The official documentation for Python's built-in <code>json</code> module, detailing <code>json.loads</code>, <code>json.load</code>, <code>json.dumps</code>, and <code>json.dump</code>, along with supported types and known limitations. It is essential for understanding serialization options, encoding parameters, and the boundaries of what the standard library's JSON support can handle.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Automate the Boring Stuff – CSV and JSON</h2>
+<p><strong>Full Title:</strong> <em>Automate the Boring Stuff with Python, 2nd Edition</em></p>
+<ul>
+<li><strong>Author:</strong> Al Sweigart</li>
+<li><strong>Link:</strong> <a href="https://automatetheboringstuff.com/2e/chapter16/" target="_blank" rel="noopener">https://automatetheboringstuff.com/2e/chapter16/</a></li>
+</ul>
+<p>Chapter 16 of this freely available, beginner-friendly book walks through practical, real-world examples of reading and writing CSV files with Python's <code>csv</code> module and working with JSON data using the <code>json</code> module. Its approachable style makes it an ideal companion resource for learners new to structured data file handling.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Real Python – Reading and Writing CSV Files</h2>
+<p><strong>Full Title:</strong> <em>Reading and Writing CSV Files in Python</em></p>
+<ul>
+<li><strong>Author:</strong> Jon Fincher (Real Python)</li>
+<li><strong>Link:</strong> <a href="https://realpython.com/python-csv/" target="_blank" rel="noopener">https://realpython.com/python-csv/</a></li>
+</ul>
+<p>This in-depth tutorial covers CSV file concepts and demonstrates the use of <code>csv.reader</code>, <code>csv.writer</code>, <code>csv.DictReader</code>, and <code>csv.DictWriter</code> with annotated code examples and explanations of common pitfalls. It complements the official documentation by providing narrative context and side-by-side comparisons of the different reading and writing approaches.</p>
+</section>
+<section class="item" id="sec5">
+<h2>Real Python – Working with JSON</h2>
+<p><strong>Full Title:</strong> <em>Working With JSON Data in Python</em></p>
+<ul>
+<li><strong>Author:</strong> Lucas Lofaro (Real Python)</li>
+<li><strong>Link:</strong> <a href="https://realpython.com/python-json/" target="_blank" rel="noopener">https://realpython.com/python-json/</a></li>
+</ul>
+<p>A thorough tutorial explaining JSON fundamentals, Python type mappings, and practical use of <code>json.loads</code>, <code>json.load</code>, <code>json.dumps</code>, and <code>json.dump</code>, including use cases such as configuration files. It also addresses limitations of the standard <code>json</code> module, making it directly aligned with all subtopics in the JSON section of this course material.</p>
+</section>
+<section class="item" id="sec6">
+<h2>ECMA-404 JSON Standard</h2>
+<p><strong>Full Title:</strong> <em>ECMA-404: The JSON Data Interchange Standard, 2nd Edition</em></p>
+<ul>
+<li><strong>Publisher:</strong> ECMA International</li>
+<li><strong>Link:</strong> <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/" target="_blank" rel="noopener">https://www.ecma-international.org/publications-and-standards/standards/ecma-404/</a></li>
+</ul>
+<p>The formal specification defining the JSON data interchange format, including its syntax rules for objects, arrays, strings, numbers, and literal values. Understanding the standard helps learners grasp why Python's <code>json</code> module has certain limitations and how JSON structure maps to Python data types.</p>
+</section>
+<section class="item" id="sec7">
+<h2>RFC 4180 – CSV Format</h2>
+<p><strong>Full Title:</strong> <em>RFC 4180: Common Format and MIME Type for Comma-Separated Values (CSV) Files</em></p>
+<ul>
+<li><strong>Publisher:</strong> Internet Engineering Task Force (IETF) / C. Shafranovich</li>
+<li><strong>Link:</strong> <a href="https://datatracker.ietf.org/doc/html/rfc4180" target="_blank" rel="noopener">https://datatracker.ietf.org/doc/html/rfc4180</a></li>
+</ul>
+<p>The de facto specification for the CSV file format, describing field delimiters, quoting rules, line endings, and MIME type registration. Consulting this document gives learners a precise understanding of what a well-formed CSV file looks like and why Python's <code>csv</code> module is designed the way it is.</p>
+</section>
+<section class="item" id="sec8">
+<h2>Python Cookbook – Data Structures and Algorithms</h2>
+<p><strong>Full Title:</strong> <em>Python Cookbook, 3rd Edition</em></p>
+<ul>
+<li><strong>Author:</strong> David Beazley and Brian K. Jones</li>
+<li><strong>Citation:</strong> Python Cookbook, 3rd Edition, O'Reilly Media, 2013. ISBN: 978-1449340377</li>
+</ul>
+<p>Chapters 6 of this highly regarded cookbook provides recipe-style solutions for reading and writing CSV and JSON data in Python, including handling edge cases, nested structures, and custom serialization. Its concise, problem-solution format makes it a valuable reference for learners who want to move beyond basic usage to more robust, production-ready patterns.</p>
+</section>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

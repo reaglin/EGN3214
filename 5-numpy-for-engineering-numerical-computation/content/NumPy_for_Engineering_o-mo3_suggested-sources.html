@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 - NumPy for Engineering Numerical Computation — Indexing, Slicing, and Fancy Indexing, Reshaping, Transposing, and Array Manipulation</title>
+<style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>5 - NumPy for Engineering Numerical Computation — Indexing, Slicing, and Fancy Indexing, Reshaping, Transposing, and Array Manipulation</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">NumPy Official Documentation</a>
+<a href="#sec2">Python for Data Analysis (McKinney)</a>
+<a href="#sec3">NumPy: Array Manipulation Routines (Official Reference)</a>
+<a href="#sec4">NumPy Illustrated (Lev Maximov, Medium/TowardsDataScience)</a>
+<a href="#sec5">From Python to NumPy (Rougier, Open Access Book)</a>
+<a href="#sec6">SciPy Lecture Notes — NumPy Section</a>
+<a href="#sec7">Hands-On Machine Learning (G&#233;ron) — NumPy Appendix</a>
+</nav>
+<section class="item" id="sec1">
+<h2>NumPy Official Documentation</h2>
+<p><strong>Full Title:</strong> NumPy Documentation — Indexing, Slicing, and Reshaping</p>
+<p><strong>Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/user/basics.indexing.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/user/basics.indexing.html</a></p>
+<p>The official NumPy documentation provides authoritative, comprehensive coverage of all indexing strategies — including basic integer indexing, slicing, Boolean masking, and fancy (integer array) indexing — directly aligned with MO3. It also includes detailed reference pages for reshaping, transposing, stacking, and splitting, making it the primary go-to reference for every topic in this module.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Python for Data Analysis (McKinney)</h2>
+<p><strong>Full Title:</strong> <em>Python for Data Analysis: Data Wrangling with pandas, NumPy, and Jupyter</em>, 3rd Edition</p>
+<p><strong>Author:</strong> Wes McKinney</p>
+<p><strong>Citation:</strong> McKinney, W. (2022). <em>Python for Data Analysis</em> (3rd ed.). O'Reilly Media. ISBN: 978-1-098-10403-0</p>
+<p>Chapter 4 of this widely adopted textbook provides an accessible, example-driven treatment of NumPy array indexing and manipulation — including slicing, Boolean masking, fancy indexing, <code>np.where</code>, reshaping, and transposing. Its applied examples involving real datasets make it especially effective for helping students reach the Apply level demanded by MO3.</p>
+</section>
+<section class="item" id="sec3">
+<h2>NumPy: Array Manipulation Routines (Official Reference)</h2>
+<p><strong>Full Title:</strong> NumPy Reference — Array Manipulation Routines</p>
+<p><strong>Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.array-manipulation.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.array-manipulation.html</a></p>
+<p>This official reference page catalogs every array manipulation function in NumPy, including <code>reshape</code>, <code>ravel</code>, <code>flatten</code>, <code>transpose</code>, <code>stack</code>, <code>hstack</code>, <code>vstack</code>, <code>split</code>, <code>expand_dims</code>, and <code>squeeze</code>. It serves as an essential quick-reference for the reshaping and manipulation topics in this module.</p>
+</section>
+<section class="item" id="sec4">
+<h2>NumPy Illustrated (Lev Maximov, Medium/TowardsDataScience)</h2>
+<p><strong>Full Title:</strong> NumPy Illustrated: The Visual Guide to NumPy</p>
+<p><strong>Author:</strong> Lev Maximov</p>
+<p><strong>Link:</strong> <a href="https://betterprogramming.pub/numpy-illustrated-the-visual-guide-to-numpy-3b1d4976de1d" target="_blank" rel="noopener">https://betterprogramming.pub/numpy-illustrated-the-visual-guide-to-numpy-3b1d4976de1d</a></p>
+<p>This highly regarded visual guide uses diagrams to illustrate how indexing, slicing, reshaping, stacking, and transposing transform array structure, making abstract operations concrete. It is particularly valuable for students who benefit from visual representations when learning to apply array selection and manipulation techniques at the Apply level of MO3.</p>
+</section>
+<section class="item" id="sec5">
+<h2>From Python to NumPy (Rougier, Open Access Book)</h2>
+<p><strong>Full Title:</strong> <em>From Python to NumPy</em></p>
+<p><strong>Author:</strong> Nicolas P. Rougier</p>
+<p><strong>Link:</strong> <a href="https://www.labri.fr/perso/nrougier/from-python-to-numpy/" target="_blank" rel="noopener">https://www.labri.fr/perso/nrougier/from-python-to-numpy/</a></p>
+<p>This freely available, open-access book offers deep explanations of NumPy's indexing mechanisms — including views vs. copies, fancy indexing, and Boolean masking — alongside array manipulation strategies. Its emphasis on understanding <em>why</em> these operations work as they do supports the applied problem-solving demanded by MO3.</p>
+</section>
+<section class="item" id="sec6">
+<h2>SciPy Lecture Notes — NumPy Section</h2>
+<p><strong>Full Title:</strong> SciPy Lecture Notes — 1.3 NumPy: Creating and Manipulating Numerical Data</p>
+<p><strong>Author:</strong> SciPy Lecture Notes Contributors (Varoquaux, Gouillart, Vahtras, et al.)</p>
+<p><strong>Link:</strong> <a href="https://scipy-lectures.org/intro/numpy/index.html" target="_blank" rel="noopener">https://scipy-lectures.org/intro/numpy/index.html</a></p>
+<p>These peer-reviewed, community-maintained lecture notes cover NumPy indexing (basic, Boolean, fancy), reshaping, transposing, and array manipulation with clear examples and exercises. They are especially well-suited for engineering students because examples are framed around numerical and scientific data workflows, directly supporting MO3.</p>
+</section>
+<section class="item" id="sec7">
+<h2>Hands-On Machine Learning (G&#233;ron) — NumPy Appendix</h2>
+<p><strong>Full Title:</strong> <em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</em>, 3rd Edition — Appendix: NumPy</p>
+<p><strong>Author:</strong> Aurélien Géron</p>
+<p><strong>Citation:</strong> Géron, A. (2022). <em>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</em> (3rd ed.). O'Reilly Media. ISBN: 978-1-098-12597-4</p>
+<p>The NumPy appendix of this widely used applied machine learning textbook provides concise, practical coverage of indexing (including <code>np.where</code>), Boolean masking, fancy indexing, and array reshaping in the context of preparing real engineering and data science datasets. This contextual framing helps students see the applied purpose of every operation targeted by MO3.</p>
+</section>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

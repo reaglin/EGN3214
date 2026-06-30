@@ -53,5 +53,15 @@
     "title": "Applying Numerical Methods to Engineering Datasets",
     "href": "content/_interactive.html",
     "type": "Content"
+  },
+  {
+    "title": "SciPy Functions: Drag-and-Drop Match",
+    "href": "interactive/drag-and-drop-match.html",
+    "type": "Interactive"
+  },
+  {
+    "title": "Interactive Activities \u2014 8 - Numerical Methods with SciPy and Curve Fitting",
+    "href": "interactive/index.html",
+    "type": "Interactive"
   }
 ]

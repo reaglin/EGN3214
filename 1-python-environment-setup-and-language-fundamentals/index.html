@@ -9,65 +9,63 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: #f4f6f9;
-      color: #1e2533;
-      line-height: 1.6;
+      color: #1e2530;
+      line-height: 1.65;
       min-height: 100vh;
     }
 
-    /* ── Header ── */
+    /* ── Top Banner ── */
     header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
-      color: #ffffff;
-      padding: 2.5rem 1.5rem 2rem;
+      background: linear-gradient(135deg, #1a3a5c 0%, #25567d 60%, #1e7da8 100%);
+      color: #fff;
+      padding: 2.8rem 1.5rem 2.4rem;
+      text-align: center;
     }
 
-    .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .course-label {
+    header .course-tag {
       display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 4px;
-      padding: 0.2rem 0.6rem;
-      margin-bottom: 0.85rem;
+      border-radius: 20px;
+      padding: 0.25rem 0.9rem;
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
       font-weight: 700;
+      letter-spacing: -0.01em;
       line-height: 1.25;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
 
     header p {
+      max-width: 660px;
+      margin: 0 auto;
       font-size: 1rem;
       color: rgba(255,255,255,0.88);
-      max-width: 680px;
     }
 
     /* ── Main Content ── */
     main {
-      max-width: 960px;
-      margin: 2.5rem auto 3rem;
-      padding: 0 1.5rem;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
     }
 
-    .section-title {
-      font-size: 0.7rem;
+    .section-label {
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
-      color: #5a6478;
-      margin-bottom: 1.1rem;
+      color: #5a7394;
+      margin-bottom: 1.2rem;
       padding-bottom: 0.45rem;
       border-bottom: 2px solid #dde3ec;
     }
@@ -75,7 +73,7 @@
     /* ── Card Grid ── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.25rem;
     }
 
@@ -83,15 +81,15 @@
       background: #ffffff;
       border: 1px solid #dde3ec;
       border-radius: 10px;
-      padding: 1.35rem 1.4rem 1.2rem;
+      padding: 1.4rem 1.5rem 1.3rem;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      gap: 0.6rem;
       transition: box-shadow 0.18s ease, transform 0.18s ease;
     }
 
     .card:hover {
-      box-shadow: 0 6px 20px rgba(37, 99, 168, 0.12);
+      box-shadow: 0 6px 22px rgba(30, 60, 100, 0.1);
       transform: translateY(-2px);
     }
 
@@ -100,30 +98,63 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
 
-    .card-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #1a3a5c;
+    .card-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
       flex: 1;
+      min-width: 0;
     }
 
-    .card-name a {
-      color: #1a5db5;
+    .artifact-name {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #1a3a5c;
+      word-break: break-word;
+    }
+
+    .artifact-name a {
+      color: #1a6fb5;
       text-decoration: none;
-      border-bottom: 1.5px solid transparent;
-      transition: border-color 0.15s, color 0.15s;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
     }
 
-    .card-name a:hover {
-      color: #0e3d80;
-      border-bottom-color: #0e3d80;
+    .artifact-name a:hover {
+      border-bottom-color: #1a6fb5;
     }
 
-    /* ── Badge Row ── */
-    .badge-row {
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.74rem;
+      color: #5a7394;
+      text-decoration: none;
+      margin-top: 0.1rem;
+      padding: 0.18rem 0.55rem;
+      border: 1px solid #c8d4e3;
+      border-radius: 4px;
+      background: #f0f4f9;
+      width: fit-content;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .source-link:hover {
+      background: #dde8f5;
+      color: #1a3a5c;
+    }
+
+    .source-link::before {
+      content: "⬇";
+      font-size: 0.7rem;
+    }
+
+    /* ── Badges ── */
+    .badge-group {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
@@ -132,71 +163,57 @@
 
     .badge {
       display: inline-block;
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.04em;
-      padding: 0.18rem 0.55rem;
-      border-radius: 20px;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 0.2rem 0.55rem;
     }
 
     .badge-type {
-      background: #eaf0fb;
-      color: #1a5db5;
-      border: 1px solid #c2d4f0;
+      background: #e8f0fb;
+      color: #1a5da8;
+      border: 1px solid #ccddf5;
     }
 
     .badge-filetype {
-      background: #f0f3f8;
-      color: #4a5568;
-      border: 1px solid #cdd4df;
-      font-family: "Consolas", "Courier New", monospace;
-    }
-
-    /* ── Source Link ── */
-    .source-link {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #6b7a99;
-      text-decoration: none;
-      padding: 0.15rem 0.45rem;
-      border: 1px solid #c8d0df;
-      border-radius: 4px;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
-
-    .source-link:hover {
-      background: #f0f3f8;
-      color: #1a3a5c;
-      border-color: #9aaac0;
+      background: #edf7f0;
+      color: #1d7a42;
+      border: 1px solid #b8e4c7;
+      font-family: 'Courier New', monospace;
+      font-size: 0.67rem;
     }
 
     /* ── Description ── */
     .card-description {
       font-size: 0.875rem;
-      color: #4a5568;
-      line-height: 1.55;
+      color: #3d4f63;
+      line-height: 1.6;
       flex: 1;
+    }
+
+    /* ── Divider ── */
+    .card-divider {
+      height: 1px;
+      background: #eaeff6;
+      margin: 0.15rem 0 0.05rem;
     }
 
     /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 1.4rem 1rem;
       font-size: 0.78rem;
-      color: #8a95a8;
+      color: #8a9bb0;
       border-top: 1px solid #dde3ec;
+      background: #fff;
     }
 
-    /* ── Responsive tweaks ── */
-    @media (max-width: 480px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-
-      header {
-        padding: 2rem 1.25rem 1.75rem;
-      }
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      .card-grid { grid-template-columns: 1fr; }
+      header { padding: 2rem 1rem 1.8rem; }
     }
   </style>
 </head>
@@ -205,109 +222,122 @@
 <div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
 
   <header>
-    <div class="header-inner">
-      <span class="course-label">EGN3214</span>
-      <h1>Module 1 &mdash; Python Environment Setup and Language Fundamentals</h1>
-      <p>
-        This module introduces the foundational tools and concepts needed to begin programming in Python.
-        Learners will explore development environments, interpreters, package management, and core language
-        features such as variables and assignment — building the practical foundation required for all
-        subsequent programming work.
-      </p>
-    </div>
+    <div class="course-tag">EGN3214</div>
+    <h1>Module 1 &mdash; Python Environment Setup and Language Fundamentals</h1>
+    <p>
+      Get started with Python by exploring development environments, package management,
+      execution modes, and the core language building blocks — including variables,
+      assignment, and data storage. Use the resources below to work through each topic
+      at your own pace.
+    </p>
   </header>
 
   <main>
-    <p class="section-title">Module Artifacts &mdash; 5 items</p>
+    <p class="section-label">Module Artifacts &mdash; 5 items</p>
 
     <div class="card-grid">
 
       <!-- Artifact 1: Module Topics -->
       <div class="card">
         <div class="card-header">
-          <span class="card-name">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json" title="View source file">source file</a>
+          <div class="card-title-block">
+            <span class="artifact-name">
+              <a href="content/module_topics.html">Module Topics</a>
+            </span>
+            <a class="source-link" href="source/hierarchy.json">source file</a>
+          </div>
         </div>
-        <div class="badge-row">
+        <div class="badge-group">
           <span class="badge badge-type">Module Topics</span>
           <span class="badge badge-filetype">.json</span>
         </div>
+        <div class="card-divider"></div>
         <p class="card-description">
-          A structured outline of the module&rsquo;s topics, covering Python environments (IDEs, Jupyter Notebooks),
+          A structured outline of the module's topics, covering Python environments (IDEs, Jupyter Notebooks),
           package management (pip, virtual environments), execution modes (interactive vs. script), and variables
-          &mdash; used by instructors to plan lessons and by learners to preview what will be covered.
+          — used by instructors to plan lessons and by learners to preview what will be covered.
         </p>
       </div>
 
       <!-- Artifact 2: Python_Environment_Setup (v2) -->
       <div class="card">
         <div class="card-header">
-          <span class="card-name">
-            <a href="content/_interactive_v2.html">Python_Environment_Setup</a>
-          </span>
+          <div class="card-title-block">
+            <span class="artifact-name">
+              <a href="content/_interactive_v2.html">Python_Environment_Setup</a>
+            </span>
+          </div>
         </div>
-        <div class="badge-row">
+        <div class="badge-group">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <div class="card-divider"></div>
         <p class="card-description">
-          Covers Python interpreters and development environments (editors, notebooks, terminals), helping learners
-          choose and set up the right tools before writing their first Python program.
+          Covers Python interpreters and development environments (editors, notebooks, terminals),
+          helping learners choose and set up the right tools before writing their first Python program.
         </p>
       </div>
 
       <!-- Artifact 3: Python Environment and Tools -->
       <div class="card">
         <div class="card-header">
-          <span class="card-name">
-            <a href="content/_interactive_v3.html">Python Environment and Tools</a>
-          </span>
+          <div class="card-title-block">
+            <span class="artifact-name">
+              <a href="content/_interactive_v3.html">Python Environment and Tools</a>
+            </span>
+          </div>
         </div>
-        <div class="badge-row">
+        <div class="badge-group">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <div class="card-divider"></div>
         <p class="card-description">
-          This interactive HTML page introduces learners to Python environments and tools, explaining what a Python
-          environment is and guiding them through selecting and setting up an appropriate interpreter and editor so
-          they can begin writing, running, and debugging Python code.
+          This interactive HTML page introduces learners to Python environments and tools, explaining what
+          a Python environment is and guiding them through selecting and setting up an appropriate interpreter
+          and editor so they can begin writing, running, and debugging Python code.
         </p>
       </div>
 
       <!-- Artifact 4: Python Variables -->
       <div class="card">
         <div class="card-header">
-          <span class="card-name">
-            <a href="content/_interactive.html">Python Variables</a>
-          </span>
+          <div class="card-title-block">
+            <span class="artifact-name">
+              <a href="content/_interactive.html">Python Variables</a>
+            </span>
+          </div>
         </div>
-        <div class="badge-row">
+        <div class="badge-group">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <div class="card-divider"></div>
         <p class="card-description">
-          An interactive HTML lesson that explains Python fundamentals &mdash; starting with variables and assignment,
-          including what variables are, naming conventions, and how values are stored and updated &mdash; used by
+          An interactive HTML lesson that explains Python fundamentals — starting with variables and assignment,
+          including what variables are, naming conventions, and how values are stored and updated — used by
           learners to read explanations and engage with examples directly in a browser.
         </p>
       </div>
 
-      <!-- Artifact 5: Python_Environment_Setup (topics) -->
+      <!-- Artifact 5: Python_Environment_Setup (interactive topics) -->
       <div class="card">
         <div class="card-header">
-          <span class="card-name">
-            <a href="content/Python_Environment_Setup_interactive_topics.html">Python_Environment_Setup</a>
-          </span>
+          <div class="card-title-block">
+            <span class="artifact-name">
+              <a href="content/Python_Environment_Setup_interactive_topics.html">Python_Environment_Setup</a>
+            </span>
+          </div>
         </div>
-        <div class="badge-row">
+        <div class="badge-group">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <div class="card-divider"></div>
         <p class="card-description">
-          Introduces Python variables, assignment syntax, and how values are stored and reused in memory, serving
-          as a reference for learners beginning to write and understand basic Python code.
+          Introduces Python variables, assignment syntax, and how values are stored and reused in memory,
+          serving as a reference for learners beginning to write and understand basic Python code.
         </p>
       </div>
 

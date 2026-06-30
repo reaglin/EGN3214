@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 - NumPy for Engineering Numerical Computation — Numpy Functions, Introduction to NumPy and the ndarray, Creating NumPy Arrays</title>
+<style>
+:root {
+    --bg:         #ffffff;
+    --surface:    #f8f9fa;
+    --border:     #dee2e6;
+    --accent:     #2563eb;
+    --accent-bg:  #eff6ff;
+    --text:       #1e293b;
+    --muted:      #64748b;
+    --bullet-bg:  #f1f5f9;
+    --notes-bg:   #fefce8;
+    --notes-border:#fbbf24;
+    --code-bg:    #f8fafc;
+    --code-border:#e2e8f0;
+    --radius:     8px;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0; }
+header { background: var(--accent); color: #fff; padding: 2.5rem 2rem 2rem; }
+header h1 { margin: 0 0 .4rem; font-size: 2rem; font-weight: 700; }
+header p  { margin: 0; opacity: .85; font-size: .95rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.slide-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; box-shadow: var(--shadow); overflow: hidden; }
+.slide-header { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.25rem; cursor: pointer; user-select: none; background: var(--accent-bg); border-bottom: 1px solid var(--border); }
+.slide-header:hover { background: #dbeafe; }
+.slide-num { background: var(--accent); color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
+.slide-header h2 { margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text); flex: 1; }
+.chevron { transition: transform .25s; font-size: .8rem; color: var(--muted); }
+.slide-body { padding: 1.25rem; display: none; }
+.slide-body.open { display: block; }
+.bullets { list-style: none; margin: 0 0 1rem; padding: 0; }
+.bullets li { background: var(--bullet-bg); border-radius: 6px; padding: .55rem .9rem; margin-bottom: .4rem; display: flex; gap: .6rem; align-items: flex-start; }
+.bullets li::before { content: "•"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+.notes { background: var(--notes-bg); border-left: 3px solid var(--notes-border); border-radius: 0 6px 6px 0; padding: .75rem 1rem; font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+.notes strong { display: block; margin-bottom: .25rem; color: #92400e; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+/* Document layout */
+.doc-section { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; }
+.doc-section h2 { color: var(--accent); font-size: 1.4rem; margin: 0 0 1rem; display: flex; gap: .75rem; align-items: center; }
+pre, code { font-family: 'Cascadia Code', 'Consolas', monospace; }
+pre { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 1rem; overflow-x: auto; white-space: pre; line-height: 1.5; font-size: .9rem; }
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>5 - NumPy for Engineering Numerical Computation — Numpy Functions, Introduction to NumPy and the ndarray, Creating NumPy Arrays</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">NumPy Official Documentation</a>
+<a href="#sec2">NumPy User Guide</a>
+<a href="#sec3">Python Data Science Handbook</a>
+<a href="#sec4">NumPy: Array Creation Routines Reference</a>
+<a href="#sec5">NumPy Mathematical Functions Reference</a>
+<a href="#sec6">NumPy Linear Algebra Reference</a>
+<a href="#sec7">Introduction to Computation and Programming Using Python</a>
+<a href="#sec8">NumPy Statistics &amp; Sorting Functions Reference</a>
+<a href="#sec9">Numerical Python (Textbook)</a>
+<a href="#sec10">NumPy I/O &amp; Array Manipulation Reference</a>
+</nav>
+<section class="item" id="sec1">
+<h2>NumPy Official Documentation</h2>
+<p><strong>Full Title:</strong> NumPy Documentation</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/" target="_blank" rel="noopener">https://numpy.org/doc/stable/</a></p>
+<p>The official NumPy documentation is the authoritative reference for all NumPy functions, the ndarray object, array creation routines, mathematical and statistical functions, linear algebra, sorting, searching, and I/O utilities. It includes detailed API references, usage examples, and conceptual guides directly aligned with every topic in this course material.</p>
+</section>
+<section class="item" id="sec2">
+<h2>NumPy User Guide</h2>
+<p><strong>Full Title:</strong> NumPy User Guide</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/user/index.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/user/index.html</a></p>
+<p>This section of the official NumPy site provides narrative, beginner-friendly explanations of core concepts including what NumPy is, the ndarray object, key array attributes, and how NumPy arrays compare to Python lists. It is especially useful for the introductory and array-creation sections of this material.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Python Data Science Handbook</h2>
+<p><strong>Full Title:</strong> <em>Python Data Science Handbook: Essential Tools for Working with Data</em></p>
+<p><strong>Author/Publisher:</strong> Jake VanderPlas — O'Reilly Media, 2016 (ISBN: 978-1491912058)</p>
+<p><strong>Link:</strong> <a href="https://jakevdp.github.io/PythonDataScienceHandbook/" target="_blank" rel="noopener">https://jakevdp.github.io/PythonDataScienceHandbook/</a></p>
+<p>Chapter 2 of this freely available textbook provides a thorough, example-driven introduction to NumPy, covering ndarray attributes, array creation (including <code>arange</code>, <code>linspace</code>, and random generation), mathematical and statistical functions, linear algebra, sorting, and data I/O. It is one of the most widely recommended resources for learners at all levels.</p>
+</section>
+<section class="item" id="sec4">
+<h2>NumPy: Array Creation Routines Reference</h2>
+<p><strong>Full Title:</strong> Array Creation Routines — NumPy Reference</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.array-creation.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.array-creation.html</a></p>
+<p>This reference page catalogues every NumPy array-creation function, including <code>np.array()</code>, <code>np.arange()</code>, <code>np.linspace()</code>, <code>np.zeros()</code>, <code>np.ones()</code>, <code>np.eye()</code>, <code>np.diag()</code>, and all random generation functions. It directly supports the <em>Creating NumPy Arrays</em> section of the course.</p>
+</section>
+<section class="item" id="sec5">
+<h2>NumPy Mathematical Functions Reference</h2>
+<p><strong>Full Title:</strong> Mathematical Functions — NumPy Reference</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.math.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.math.html</a></p>
+<p>This page provides the complete reference for NumPy's mathematical and arithmetic functions, including trigonometric, exponential, logarithmic, and rounding operations. It is an essential companion to the <em>NumPy Functions: Mathematical and Arithmetic Functions</em> topic in this course.</p>
+</section>
+<section class="item" id="sec6">
+<h2>NumPy Linear Algebra Reference</h2>
+<p><strong>Full Title:</strong> Linear Algebra (<code>numpy.linalg</code>) — NumPy Reference</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.linalg.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.linalg.html</a></p>
+<p>This reference documents all functions in the <code>numpy.linalg</code> module, covering matrix multiplication, determinants, inverses, eigenvalues, singular value decomposition, and solving linear systems. It directly supports the <em>Linear Algebra Functions</em> section of this course material.</p>
+</section>
+<section class="item" id="sec7">
+<h2>Introduction to Computation and Programming Using Python</h2>
+<p><strong>Full Title:</strong> <em>Introduction to Computation and Programming Using Python: With Application to Understanding Data</em></p>
+<p><strong>Author/Publisher:</strong> John V. Guttag — MIT Press, 3rd Edition, 2021 (ISBN: 978-0262542364)</p>
+<p><strong>Link:</strong> <a href="https://mitpress.mit.edu/9780262542364/" target="_blank" rel="noopener">https://mitpress.mit.edu/9780262542364/</a></p>
+<p>This textbook provides rigorous coverage of Python programming foundations and introduces NumPy arrays, statistical computations, and data manipulation in the context of scientific computing. It is useful for learners who want to understand the conceptual differences between Python lists and NumPy arrays alongside practical programming skills.</p>
+</section>
+<section class="item" id="sec8">
+<h2>NumPy Statistics &amp; Sorting Functions Reference</h2>
+<p><strong>Full Title:</strong> Statistics and Sorting/Searching Routines — NumPy Reference</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.statistics.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.statistics.html</a></p>
+<p>This section of the NumPy reference manual covers statistical functions such as <code>np.mean()</code>, <code>np.median()</code>, <code>np.std()</code>, <code>np.var()</code>, and percentile calculations, as well as sorting and searching functions like <code>np.sort()</code>, <code>np.argsort()</code>, and <code>np.where()</code>. It directly supports both the <em>Statistical Functions</em> and <em>Sorting and Searching Functions</em> topics.</p>
+</section>
+<section class="item" id="sec9">
+<h2>Numerical Python (Textbook)</h2>
+<p><strong>Full Title:</strong> <em>Numerical Python: Scientific Computing and Data Science Applications with NumPy, SciPy, and Matplotlib</em></p>
+<p><strong>Author/Publisher:</strong> Robert Johansson — Apress, 2nd Edition, 2019 (ISBN: 978-1484242452)</p>
+<p><strong>Link:</strong> <a href="https://www.apress.com/gp/book/9781484242452" target="_blank" rel="noopener">https://www.apress.com/gp/book/9781484242452</a></p>
+<p>This textbook offers in-depth, practical coverage of NumPy for scientific computing, including array creation, manipulation, mathematical and statistical functions, linear algebra, and data I/O. It is particularly valuable for learners who want to move beyond introductory use and apply NumPy to real computational problems.</p>
+</section>
+<section class="item" id="sec10">
+<h2>NumPy I/O &amp; Array Manipulation Reference</h2>
+<p><strong>Full Title:</strong> Input/Output and Array Manipulation Routines — NumPy Reference</p>
+<p><strong>Author/Publisher:</strong> NumPy Developers / NumPy Project</p>
+<p><strong>Link:</strong> <a href="https://numpy.org/doc/stable/reference/routines.io.html" target="_blank" rel="noopener">https://numpy.org/doc/stable/reference/routines.io.html</a></p>
+<p>This reference page covers NumPy's data loading and saving functions (<code>np.load()</code>, <code>np.save()</code>, <code>np.loadtxt()</code>, <code>np.genfromtxt()</code>) as well as array manipulation routines including reshaping, stacking, splitting, and transposing arrays. It supports both the <em>Input/Output and Data Loading</em> and <em>Array Manipulation Functions</em> sections of this course.</p>
+</section>
+
+<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+</body>
+</html>

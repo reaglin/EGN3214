@@ -40,6 +40,16 @@
     "type": "Content"
   },
   {
+    "title": "5 - NumPy for Engineering Numerical Computation \u2014 Indexing, Slicing, and Fancy Indexing, Reshaping, Transposing, and Array Manipulation",
+    "href": "content/NumPy_for_Engineering_o-mo3_suggested-sources.html",
+    "type": "Content"
+  },
+  {
+    "title": "5 - NumPy for Engineering Numerical Computation \u2014 Numpy Functions, Introduction to NumPy and the ndarray, Creating NumPy Arrays",
+    "href": "content/NumPy_for_Engineering_suggested-sources.html",
+    "type": "Content"
+  },
+  {
     "title": "NumPy_for_Engineering",
     "href": "content/_interactive.html",
     "type": "Content"

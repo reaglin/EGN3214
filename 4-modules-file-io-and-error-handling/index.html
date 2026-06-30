@@ -3,276 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 4 – Modules, File I/O, and Error Handling | EGN3214</title>
+  <title>4 - Modules, File I/O, and Error Handling | EGN3214</title>
   <style>
     /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --clr-bg:          #f4f6f9;
-      --clr-surface:     #ffffff;
-      --clr-border:      #dde2ea;
-      --clr-primary:     #1a4f8a;
-      --clr-primary-dk:  #133b68;
-      --clr-accent:      #2e7d5e;
-      --clr-accent-lt:   #e8f4ef;
-      --clr-text:        #1e2530;
-      --clr-muted:       #5a6474;
-      --clr-badge-bg:    #eaf0fb;
-      --clr-badge-text:  #1a4f8a;
-      --clr-tag-bg:      #f0f2f5;
-      --clr-tag-text:    #4a5568;
-      --radius:          8px;
-      --shadow:          0 2px 8px rgba(0,0,0,0.08);
-      --shadow-hover:    0 6px 18px rgba(0,0,0,0.13);
-      --font-sans:       'Segoe UI', system-ui, -apple-system, sans-serif;
-      --font-mono:       'Consolas', 'Courier New', monospace;
-    }
-
     body {
-      font-family: var(--font-sans);
-      background: var(--clr-bg);
-      color: var(--clr-text);
-      line-height: 1.6;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f4f6f9;
+      color: #1e2530;
       min-height: 100vh;
+      line-height: 1.6;
     }
 
     /* ── Header banner ── */
-    .site-header {
-      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-dk) 100%);
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
       color: #fff;
       padding: 2.5rem 1.5rem 2rem;
     }
 
     .header-inner {
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
     .course-label {
-      display: inline-block;
       font-size: 0.78rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.28);
-      border-radius: 4px;
-      padding: 0.25rem 0.65rem;
+      color: #a8c8f0;
+      margin-bottom: 0.45rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.25;
       margin-bottom: 0.85rem;
     }
 
-    .site-header h1 {
-      font-size: clamp(1.45rem, 3.5vw, 2.1rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.25;
-      margin-bottom: 0.75rem;
-    }
-
-    .site-header h1 span.module-num {
-      opacity: 0.75;
-      font-weight: 400;
-      font-size: 0.85em;
-    }
-
-    .site-header p.intro {
-      max-width: 680px;
+    header p {
       font-size: 0.97rem;
-      opacity: 0.9;
+      color: #cde0f5;
+      max-width: 72ch;
       line-height: 1.65;
     }
 
     /* ── Main content ── */
     main {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 3.5rem;
+      max-width: 1100px;
+      margin: 2.2rem auto 3rem;
+      padding: 0 1.25rem;
     }
 
-    .section-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .section-meta h2 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--clr-muted);
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .artifact-count {
-      font-size: 0.82rem;
-      color: var(--clr-muted);
-      background: var(--clr-tag-bg);
-      border: 1px solid var(--clr-border);
-      border-radius: 20px;
-      padding: 0.2rem 0.7rem;
+      color: #5a7a9a;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #d5e3f0;
     }
 
     /* ── Card grid ── */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.1rem;
+      gap: 1.25rem;
     }
 
     .card {
-      background: var(--clr-surface);
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.25rem 1.35rem 1.15rem;
+      background: #ffffff;
+      border: 1px solid #dce6f0;
+      border-radius: 10px;
+      padding: 1.3rem 1.35rem 1.2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
       transition: box-shadow 0.18s ease, transform 0.18s ease;
     }
 
     .card:hover {
-      box-shadow: var(--shadow-hover);
+      box-shadow: 0 6px 22px rgba(37, 99, 168, 0.13);
       transform: translateY(-2px);
     }
 
-    /* Card top row: badges */
-    .card-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .badge {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-    }
-
-    .badge-type {
-      background: var(--clr-badge-bg);
-      color: var(--clr-badge-text);
-      border: 1px solid #c5d8f5;
-    }
-
-    .badge-filetype {
-      background: var(--clr-tag-bg);
-      color: var(--clr-tag-text);
-      border: 1px solid var(--clr-border);
-      font-family: var(--font-mono);
-    }
-
-    /* Card title row */
+    /* ── Card header row ── */
     .card-title-row {
       display: flex;
-      align-items: baseline;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      align-items: baseline;
+      gap: 0.5rem 0.7rem;
     }
 
     .card-name {
-      font-size: 0.98rem;
+      font-size: 0.97rem;
       font-weight: 700;
-      color: var(--clr-text);
+      color: #1a3a5c;
       line-height: 1.35;
     }
 
     .card-name a {
-      color: var(--clr-primary);
+      color: #1a5fa8;
       text-decoration: none;
       border-bottom: 1.5px solid transparent;
-      transition: border-color 0.15s, color 0.15s;
+      transition: border-color 0.15s;
     }
 
-    .card-name a:hover,
-    .card-name a:focus {
-      color: var(--clr-primary-dk);
-      border-bottom-color: var(--clr-primary-dk);
-      outline: none;
+    .card-name a:hover {
+      border-bottom-color: #1a5fa8;
     }
 
-    .card-name a:focus-visible {
-      outline: 2px solid var(--clr-primary);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    /* Source link */
     .source-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
       font-size: 0.73rem;
       font-weight: 600;
-      color: var(--clr-accent);
-      background: var(--clr-accent-lt);
-      border: 1px solid #b2dac9;
-      border-radius: 4px;
-      padding: 0.18rem 0.5rem;
+      color: #fff;
+      background: #5a8dbf;
+      border-radius: 20px;
+      padding: 0.18em 0.65em;
       text-decoration: none;
       white-space: nowrap;
-      flex-shrink: 0;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .source-link:hover,
-    .source-link:focus {
-      background: #d0ede2;
-      color: #1b5e42;
-      outline: none;
-    }
-
-    .source-link:focus-visible {
-      outline: 2px solid var(--clr-accent);
-      outline-offset: 2px;
-    }
-
-    .source-link svg {
+      transition: background 0.15s;
       flex-shrink: 0;
     }
 
-    /* Card description */
+    .source-link:hover {
+      background: #2563a8;
+    }
+
+    /* ── Badges ── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.18em 0.6em;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-type {
+      background: #e8f0fb;
+      color: #2554a0;
+    }
+
+    .badge-filetype {
+      background: #eef6ee;
+      color: #276027;
+      font-family: 'Courier New', monospace;
+      text-transform: lowercase;
+    }
+
+    /* Type-specific badge colours */
+    .badge-type[data-type="Assignment"]        { background: #fef3e2; color: #8a4e00; }
+    .badge-type[data-type="Suggested Sources"] { background: #f2ecfb; color: #5b2d8e; }
+    .badge-type[data-type="Module Topics"]     { background: #e2f4fb; color: #0b607a; }
+
+    /* ── Description ── */
     .card-desc {
-      font-size: 0.875rem;
-      color: var(--clr-muted);
+      font-size: 0.86rem;
+      color: #3d4f63;
       line-height: 1.6;
-      flex-grow: 1;
-    }
-
-    /* ── Divider ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--clr-border);
-      margin: 2.25rem 0 1.75rem;
     }
 
     /* ── Footer ── */
-    .site-footer {
+    footer {
       text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.8rem;
-      color: var(--clr-muted);
-      border-top: 1px solid var(--clr-border);
-      background: var(--clr-surface);
+      font-size: 0.78rem;
+      color: #8fa5bc;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #dce6f0;
+      background: #f4f6f9;
     }
 
     /* ── Responsive tweaks ── */
-    @media (max-width: 520px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      .site-header {
-        padding: 1.75rem 1rem 1.5rem;
-      }
-      main {
-        padding: 1.5rem 1rem 3rem;
-      }
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; }
+      header { padding: 2rem 1rem 1.5rem; }
     }
   </style>
 </head>
@@ -280,256 +197,159 @@
 <div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
 <div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
 
-  <!-- ═══════════════════════════════════════════ HEADER -->
-  <header class="site-header" role="banner">
+  <header>
     <div class="header-inner">
-      <div class="course-label">EGN3214</div>
-      <h1>
-        <span class="module-num">Module 4 —</span>
-        Modules, File I/O, and Error Handling
-      </h1>
-      <p class="intro">
-        This module introduces Python's module system, file input/output using the
-        <code style="background:rgba(255,255,255,0.15);border-radius:3px;padding:0.1em 0.35em;">with</code>
-        statement, and robust error handling with try-except. Use the resources below to
-        explore lesson content, practice problems, reference materials, and the module
-        assignment.
+      <p class="course-label">EGN3214 &mdash; Course Module</p>
+      <h1>4 &mdash; Modules, File I/O, and Error Handling</h1>
+      <p>
+        This module introduces three foundational Python programming topics: organising code with
+        modules and the standard library, reading and writing files safely using the
+        <code style="background:rgba(255,255,255,0.15);padding:0.1em 0.35em;border-radius:4px;">with</code>
+        statement, and handling runtime errors through exception handling. Use the artifacts below
+        to work through lesson material, reference documentation, and complete the module assignment.
       </p>
     </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════ MAIN -->
   <main>
+    <p class="section-label">Module Artifacts &mdash; 7 items</p>
 
-    <div class="section-meta">
-      <h2>Course Artifacts</h2>
-      <span class="artifact-count">11 items</span>
-    </div>
+    <div class="card-grid">
 
-    <div class="card-grid" role="list">
-
-      <!-- ─── Card 1: Module Topics ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Module Topics</span>
-          <span class="badge badge-filetype">.json</span>
-        </div>
+      <!-- 1 · Module Topics -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="content/module_topics.html">Module Topics</a>
           </span>
-          <a class="source-link" href="source/hierarchy.json" aria-label="Source file for Module Topics">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M13 9v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M9 2h5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13.5 2.5L8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            source file
-          </a>
+          <a class="source-link" href="source/hierarchy.json">source file</a>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Module Topics">Module Topics</span>
+          <span class="badge badge-filetype">.json</span>
         </div>
         <p class="card-desc">
-          A structured outline of the module's topics covering Python modules (importing,
-          custom modules, standard library), file I/O using the with statement, and error
-          handling, used by instructors to plan lessons and by learners to preview what
-          will be taught.
+          A structured outline of the module's topics covering Python modules (importing, custom
+          modules, standard library), file I/O using the with statement, and error handling, used
+          by instructors to plan lessons and by learners to preview what will be taught.
         </p>
-      </article>
+      </div>
 
-      <!-- ─── Card 2: Error Handling ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
+      <!-- 2 · Error Handling -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="content/_interactive.html">Error Handling</a>
           </span>
         </div>
-        <p class="card-desc">
-          An interactive lesson page explaining Python exception handling with try-except,
-          covering what exceptions are, how to catch and inspect them, and how to raise
-          them, used by learners to study error handling concepts with in-page explanations
-          and examples.
-        </p>
-      </article>
-
-      <!-- ─── Card 3: Basic Computer Skills ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Text Content">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <p class="card-desc">
+          An interactive lesson page explaining Python exception handling with try-except, covering
+          what exceptions are, how to catch and inspect them, and how to raise them, used by
+          learners to study error handling concepts with in-page explanations and examples.
+        </p>
+      </div>
+
+      <!-- 3 · Module 4 Basic Computer Skills -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="content/ext_21431c40.html">Module 4 Basic Computer Skills: Understanding File Types in Windows</a>
           </span>
         </div>
-        <p class="card-desc">
-          This instructor-created HTML page explains how file types work in Windows,
-          covering file formats, extensions, how to display and change them, and common
-          file types relevant to programming; learners use it as a reference when working
-          with files in the module.
-        </p>
-      </article>
-
-      <!-- ─── Card 4: Modules_File_I (example problems) ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Text Content">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Modules_File_I_example-problems.html">Modules_File_I</a>
-          </span>
-        </div>
         <p class="card-desc">
-          A practice problem asking learners to read a short Python division script,
-          identify the line that raises an exception, name the exception type (e.g.,
-          ZeroDivisionError or ValueError), and explain why it occurs — used as a
-          formative exercise to recognize and diagnose runtime errors.
+          This instructor-created HTML page explains how file types work in Windows, covering file
+          formats, extensions, how to display and change them, and common file types relevant to
+          programming; learners use it as a reference when working with files in the module.
         </p>
-      </article>
+      </div>
 
-      <!-- ─── Card 5: Python Modules ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
+      <!-- 4 · Python Modules -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="content/Modules_File_I_interactive_topics_t1-3.html">Python Modules</a>
           </span>
         </div>
-        <p class="card-desc">
-          An interactive lesson page introducing Python modules, covering what a module
-          is, how to import them, how to create custom modules, and how the Python path
-          works, used by learners to read and interact with foundational module concepts.
-        </p>
-      </article>
-
-      <!-- ─── Card 6: File IO ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Text Content">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <p class="card-desc">
+          An interactive lesson page introducing Python modules, covering what a module is, how to
+          import them, how to create custom modules, and how the Python path works, used by learners
+          to read and interact with foundational module concepts.
+        </p>
+      </div>
+
+      <!-- 5 · File IO -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="content/Modules_File_I_interactive_topics_t4-6.html">File IO</a>
           </span>
         </div>
-        <p class="card-desc">
-          An interactive lesson page covering file I/O using Python's with statement,
-          explaining file modes, the open() function, reading methods, and path handling,
-          used by learners to study how to safely and reliably work with files in Python.
-        </p>
-      </article>
-
-      <!-- ─── Card 7: Modules_File_I (t7) ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Text Content">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
+        <p class="card-desc">
+          An interactive lesson page covering file I/O using Python's with statement, explaining
+          file modes, the open() function, reading methods, and path handling, used by learners to
+          study how to safely and reliably work with files in Python.
+        </p>
+      </div>
+
+      <!-- 6 · Suggested Sources -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
-            <a href="content/Modules_File_I_interactive_topics_t7.html">Modules_File_I</a>
+            <a href="content/Modules_File_I_suggested-sources.html">4 &mdash; Modules, File I/O, and Error Handling &mdash; Reading and Writing CSV Files, Working with JSON</a>
           </span>
         </div>
-        <p class="card-desc">
-          An interactive lesson page on Python exception handling with try-except,
-          covering runtime exceptions, how to catch and inspect them, and how to raise
-          them, used by learners as a readable reference for writing robust
-          error-handling code.
-        </p>
-      </article>
-
-      <!-- ─── Card 8: Modules_File_I (lesson plan) ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Suggested Sources">Suggested Sources</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Modules_File_I_lesson-plan.html">Modules_File_I</a>
-          </span>
-        </div>
         <p class="card-desc">
-          A list of learning objectives for the module covering Python file I/O, error
-          handling, and modules, outlining the skills learners are expected to demonstrate
-          such as using file modes, the with statement, read/write methods, and exception
-          handling — used by instructors to frame the module and by learners to gauge
-          expected outcomes.
+          A curated reference page pointing learners to official and supplementary documentation
+          for Python's <code>csv</code> module and JSON handling, covering how to read and write
+          CSV files and work with JSON data; learners use it to access authoritative references
+          while completing file I/O exercises.
         </p>
-      </article>
+      </div>
 
-      <!-- ─── Card 9: Python Links – File I/O ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Modules_File_I_suggested-links.html">Python Links - File I/O</a>
-          </span>
-        </div>
-        <p class="card-desc">
-          A curated reference list of external resources including the official Python
-          documentation on file I/O and Real Python tutorials, providing learners with
-          authoritative reading material to supplement instruction on opening files, file
-          modes, the with statement, and reading and writing text files.
-        </p>
-      </article>
-
-      <!-- ─── Card 10: Van der Waals Assignment ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">Assignment</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
+      <!-- 7 · Assignment -->
+      <div class="card">
         <div class="card-title-row">
           <span class="card-name">
             <a href="assignments/index.html">Van der Waals Gas Analysis: Evaluating Equation-of-State Models with Real Experimental Data</a>
           </span>
         </div>
-        <p class="card-desc">
-          A 2–4 hour problem-solving assignment in which learners write Python code to
-          apply the van der Waals equation of state to real experimental gas data,
-          practising modules, file I/O, and error handling while comparing model
-          predictions to measured values, submitted as a Colab notebook or written report.
-        </p>
-      </article>
-
-      <!-- ─── Card 11: External Materials Index ─── -->
-      <article class="card" role="listitem">
-        <div class="card-badges">
-          <span class="badge badge-type">External Materials</span>
+        <div class="badge-row">
+          <span class="badge badge-type" data-type="Assignment">Assignment</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="external_materials_index.html">External Materials Index</a>
-          </span>
-        </div>
         <p class="card-desc">
-          This index page lists and links to the one external or supplementary resource
-          assigned for the module — the Windows file types explainer — giving learners
-          and instructors a single place to locate all outside materials for Module 4.
+          A 2&ndash;4 hour problem-solving assignment in which learners write Python code to apply
+          the van der Waals equation of state to real experimental gas data, practising modules,
+          file I/O, and error handling while comparing model predictions to measured values,
+          submitted as a Colab notebook or written report.
         </p>
-      </article>
+      </div>
 
     </div><!-- /.card-grid -->
-
   </main>
 
-  <!-- ═══════════════════════════════════════════ FOOTER -->
-  <footer class="site-footer" role="contentinfo">
-    EGN3214 &nbsp;·&nbsp; Module 4: Modules, File I/O, and Error Handling
+  <footer>
+    EGN3214 &mdash; Module 4: Modules, File I/O, and Error Handling
   </footer>
 
 

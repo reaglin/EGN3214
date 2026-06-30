@@ -5,100 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Module 7 – Object-Oriented Programming and AI-Assisted Coding Workflow | EGN3214</title>
   <style>
-    /* ── Reset & Base ── */
+    /* ── Reset & base ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
       font-size: 16px;
       line-height: 1.6;
-      color: #1e2a38;
       background: #f4f6f9;
-      min-height: 100vh;
+      color: #1e2a38;
     }
 
-    /* ── Page Shell ── */
+    /* ── Page wrapper ───────────────────────────────────────────── */
     .page-wrapper {
       max-width: 1100px;
       margin: 0 auto;
       padding: 2rem 1.25rem 4rem;
     }
 
-    /* ── Header ── */
+    /* ── Header ─────────────────────────────────────────────────── */
     .page-header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
+      background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
       color: #fff;
       border-radius: 10px;
-      padding: 2.5rem 2.25rem 2rem;
+      padding: 2.25rem 2.5rem;
       margin-bottom: 2.25rem;
-      box-shadow: 0 4px 18px rgba(37, 99, 168, 0.22);
     }
 
     .course-label {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.18);
-      color: #cfe3ff;
-      border-radius: 4px;
-      padding: 0.2rem 0.6rem;
-      margin-bottom: 0.75rem;
+      color: #a8cfee;
+      margin-bottom: 0.5rem;
     }
 
     .page-header h1 {
-      font-size: clamp(1.45rem, 3vw, 2rem);
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
       font-weight: 700;
       line-height: 1.25;
-      margin-bottom: 0.9rem;
-      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
     }
 
     .page-header p {
-      font-size: 0.97rem;
-      color: #d0e6ff;
+      font-size: 0.975rem;
+      color: #d0e6f7;
       max-width: 72ch;
-      line-height: 1.65;
     }
 
-    /* ── Section Label ── */
+    /* ── Section label ───────────────────────────────────────────── */
     .section-label {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       color: #5a7a99;
       margin-bottom: 1rem;
-      padding-left: 2px;
+      padding-left: 0.15rem;
     }
 
-    /* ── Card Grid ── */
+    /* ── Card grid ───────────────────────────────────────────────── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.25rem;
     }
 
-    /* ── Card ── */
+    /* ── Card ────────────────────────────────────────────────────── */
     .card {
       background: #ffffff;
-      border: 1px solid #dde4ed;
-      border-radius: 9px;
-      padding: 1.35rem 1.4rem 1.25rem;
+      border: 1px solid #dce4ed;
+      border-radius: 8px;
+      padding: 1.4rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
-      box-shadow: 0 2px 8px rgba(30, 42, 56, 0.06);
-      transition: box-shadow 0.18s ease, transform 0.18s ease;
+      gap: 0.65rem;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     .card:hover {
-      box-shadow: 0 6px 22px rgba(37, 99, 168, 0.14);
-      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(30, 60, 100, 0.1);
+      border-color: #b0c8e0;
     }
 
-    /* ── Card Top Row ── */
+    /* ── Card meta row ───────────────────────────────────────────── */
     .card-meta {
       display: flex;
       align-items: center;
@@ -107,103 +98,94 @@
     }
 
     .badge {
-      font-size: 0.68rem;
+      display: inline-block;
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 0.18rem 0.55rem;
+      padding: 0.2em 0.6em;
       border-radius: 4px;
       white-space: nowrap;
     }
 
     .badge-type {
       background: #e8f0fb;
-      color: #2563a8;
+      color: #2d5fa6;
     }
 
     .badge-filetype {
       background: #eef5ee;
       color: #2d7a3a;
+      font-family: "Courier New", monospace;
     }
 
-    /* ── Card Title Row ── */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
+    /* ── Card title ──────────────────────────────────────────────── */
     .card-title {
       font-size: 1rem;
-      font-weight: 650;
-      line-height: 1.35;
+      font-weight: 700;
       color: #1a3a5c;
+      line-height: 1.35;
     }
 
     .card-title a {
-      color: #1a3a5c;
+      color: #1a5fa8;
       text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.15s, color 0.15s;
     }
 
-    .card-title a:hover,
-    .card-title a:focus {
-      color: #2563a8;
-      border-bottom-color: #2563a8;
-      outline: none;
+    .card-title a:hover {
+      text-decoration: underline;
+      color: #0d3f7a;
     }
 
-    /* ── Source Link ── */
+    /* ── Source link ─────────────────────────────────────────────── */
     .source-link {
-      font-size: 0.72rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3em;
+      font-size: 0.75rem;
+      font-weight: 500;
       color: #5a7a99;
       text-decoration: none;
-      white-space: nowrap;
-      background: #f0f4f9;
-      border: 1px solid #c8d8ea;
+      border: 1px solid #b8cfe0;
       border-radius: 4px;
-      padding: 0.15rem 0.48rem;
+      padding: 0.15em 0.55em;
+      background: #f5f9fd;
       transition: background 0.15s, color 0.15s;
-      align-self: flex-start;
+      white-space: nowrap;
+      margin-left: 0.4rem;
+      vertical-align: middle;
     }
 
-    .source-link:hover,
-    .source-link:focus {
-      background: #dce9f8;
+    .source-link:hover {
+      background: #dceaf7;
       color: #1a3a5c;
-      outline: none;
+      border-color: #88b0d0;
     }
 
-    /* ── Card Description ── */
-    .card-description {
+    .source-link::before {
+      content: "⬇";
+      font-size: 0.7rem;
+    }
+
+    /* ── Card description ────────────────────────────────────────── */
+    .card-desc {
       font-size: 0.875rem;
-      color: #445566;
-      line-height: 1.6;
-      flex: 1;
+      color: #3f5568;
+      flex-grow: 1;
     }
 
-    /* ── Divider ── */
-    .card-divider {
-      border: none;
-      border-top: 1px solid #eaecf0;
-      margin: 0.1rem 0 0;
-    }
-
-    /* ── Footer ── */
+    /* ── Footer ──────────────────────────────────────────────────── */
     .page-footer {
       margin-top: 3rem;
       text-align: center;
       font-size: 0.78rem;
-      color: #8a9bb0;
+      color: #8a9bac;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .page-header { padding: 1.75rem 1.25rem 1.5rem; }
-      .card-grid { grid-template-columns: 1fr; }
+    /* ── Responsive tweaks ───────────────────────────────────────── */
+    @media (max-width: 520px) {
+      .page-header { padding: 1.75rem 1.25rem; }
+      .card { padding: 1.1rem 1.15rem; }
     }
   </style>
 </head>
@@ -212,198 +194,171 @@
 <div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
   <div class="page-wrapper">
 
-    <!-- ── Header ── -->
+    <!-- ── Header ─────────────────────────────────────────────── -->
     <header class="page-header">
-      <div class="course-label">EGN3214</div>
-      <h1>Module 7 &mdash; Object-Oriented Programming and AI-Assisted Coding Workflow</h1>
+      <p class="course-label">EGN3214 &mdash; Module 7</p>
+      <h1>Object-Oriented Programming and AI-Assisted Coding Workflow</h1>
       <p>
-        This module introduces the principles of object-oriented programming (OOP) in Python and demonstrates
-        how to model real-world engineering objects using classes, attributes, and methods. It also covers
-        modern AI-assisted coding tools&mdash;how they work, how to craft effective prompts, and how to
-        critically verify AI-generated code before applying it in engineering contexts.
+        This module introduces the principles of object-oriented programming (OOP) in the context of
+        engineering and scientific computing, and explores how modern AI-assisted coding tools can be
+        integrated responsibly into a professional development workflow. Work through the readings and
+        resources below to build a strong foundation in class design, inheritance, and AI-augmented coding practices.
       </p>
     </header>
 
-    <!-- ── Artifact Grid ── -->
+    <!-- ── Artifact grid ──────────────────────────────────────── -->
     <p class="section-label">Module Artifacts &mdash; 9 items</p>
 
     <div class="card-grid">
 
-      <!-- Card 1 -->
-      <article class="card">
+      <!-- 1 · Module Topics -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Module Topics</span>
           <span class="badge badge-filetype">.json</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
+        <div class="card-title">
+          <a href="content/module_topics.html">Module Topics</a>
           <a class="source-link" href="source/hierarchy.json">source file</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
+        <p class="card-desc">
           Outlines the module's learning topics across four areas — OOP fundamentals (classes, instances, attributes),
           modeling engineering objects (Beam and Sensor classes), inheritance and subclasses, and AI-assisted coding
           tools — serving as a roadmap for learners and instructors to navigate the module's scope and sequence.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 2 -->
-      <article class="card">
+      <!-- 2 · Responsible Use (interactive) -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/_interactive.html">Responsible Use and Verification of AI-Generated Code</a>
-          </span>
+        <div class="card-title">
+          <a href="content/_interactive.html">Responsible Use and Verification of AI-Generated Code</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
+        <p class="card-desc">
           This reading explains why AI coding assistants can produce syntactically correct but physically or
           dimensionally incorrect results, and teaches learners how to critically verify, test, and validate
           AI-generated code before using it in engineering contexts.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 3 -->
-      <article class="card">
+      <!-- 3 · Foundations of OOP -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t1.html">Foundations of Object-Oriented Programming</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t1.html">Foundations of Object-Oriented Programming</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
-          This reading introduces the core concepts of object-oriented programming&mdash;why it was developed,
-          how it differs from procedural programming, and how its principles of encapsulation, abstraction,
-          and modularity benefit engineering and scientific computing.
+        <p class="card-desc">
+          This reading introduces the core concepts of object-oriented programming — why it was developed, how it
+          differs from procedural programming, and how its principles of encapsulation, abstraction, and modularity
+          benefit engineering and scientific computing.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 4 -->
-      <article class="card">
+      <!-- 4 · Modeling Engineering Objects -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t2.html">Modeling Engineering Objects with Classes</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t2.html">Modeling Engineering Objects with Classes</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
+        <p class="card-desc">
           This reading demonstrates how to model real-world engineering objects such as beams, sensors, and pumps
-          as Python classes, mapping physical properties to attributes and physical behaviors to methods so
-          learners can apply OOP directly to engineering problems.
+          as Python classes, mapping physical properties to attributes and physical behaviors to methods so learners
+          can apply OOP directly to engineering problems.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 5 -->
-      <article class="card">
+      <!-- 5 · Inheritance -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t3.html">Inheritance and Class Hierarchies</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t3.html">Inheritance and Class Hierarchies</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
+        <p class="card-desc">
           This reading explains inheritance and class hierarchies in Python, covering how child classes automatically
           acquire attributes and methods from parent classes and how to extend or override that behavior to build
           organized, reusable engineering class structures.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 6 -->
-      <article class="card">
+      <!-- 6 · Intro to AI Tools -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t4.html">Introduction to AI-Assisted Coding Tools</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t4.html">Introduction to AI-Assisted Coding Tools</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
-          This reading surveys modern AI-assisted coding tools such as GitHub Copilot and ChatGPT, explaining
-          how they work, what kinds of tasks they assist with, and how engineers can integrate them productively
-          into their coding practice.
+        <p class="card-desc">
+          This reading surveys modern AI-assisted coding tools such as GitHub Copilot and ChatGPT, explaining how
+          they work, what kinds of tasks they assist with, and how engineers can integrate them productively into
+          their coding practice.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 7 -->
-      <article class="card">
+      <!-- 7 · AI Workflow -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t5.html">AI-Assisted Code Generation Workflow</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t5.html">AI-Assisted Code Generation Workflow</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
-          This reading describes a structured workflow for using AI code-generation tools effectively, focusing
-          on how to craft clear prompts, evaluate the output, and iteratively refine AI-generated code to meet
+        <p class="card-desc">
+          This reading describes a structured workflow for using AI code-generation tools effectively, focusing on
+          how to craft clear prompts, evaluate the output, and iteratively refine AI-generated code to meet
           engineering requirements.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 8 -->
-      <article class="card">
+      <!-- 8 · AI Debugging -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t6.html">AI-Assisted Debugging</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t6.html">AI-Assisted Debugging</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
-          This reading covers how to use AI assistants as debugging partners, explaining systematic strategies
-          for diagnosing errors, interpreting AI feedback, and correcting faulty code while developing stronger
+        <p class="card-desc">
+          This reading covers how to use AI assistants as debugging partners, explaining systematic strategies for
+          diagnosing errors, interpreting AI feedback, and correcting faulty code while developing stronger
           independent debugging skills.
         </p>
-      </article>
+      </div>
 
-      <!-- Card 9 -->
-      <article class="card">
+      <!-- 9 · Responsible Use (t7) -->
+      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Object_Oriented_Programming_interactive_topics_t7.html">Responsible Use and Verification of AI-Generated Code</a>
-          </span>
+        <div class="card-title">
+          <a href="content/Object_Oriented_Programming_interactive_topics_t7.html">Responsible Use and Verification of AI-Generated Code</a>
         </div>
-        <hr class="card-divider" />
-        <p class="card-description">
+        <p class="card-desc">
           This reading explains why AI coding assistants can produce syntactically correct but physically or
           dimensionally incorrect results, and teaches learners how to critically verify, test, and validate
           AI-generated code before using it in engineering contexts.
         </p>
-      </article>
+      </div>
 
     </div><!-- /.card-grid -->
 
-    <!-- ── Footer ── -->
+    <!-- ── Footer ─────────────────────────────────────────────── -->
     <footer class="page-footer">
       <p>EGN3214 &mdash; Module 7 &nbsp;|&nbsp; Object-Oriented Programming and AI-Assisted Coding Workflow</p>
     </footer>

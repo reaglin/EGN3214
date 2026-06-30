@@ -20,18 +20,8 @@
     "type": "Assignments"
   },
   {
-    "title": "External Materials \u2014 4 - Modules, File I/O, and Error Handling",
-    "href": "content/external_materials_index.html",
-    "type": "Content"
-  },
-  {
     "title": "Module 4 Basic Computer Skills: Understanding File Types in Windows",
     "href": "content/ext_21431c40.html",
-    "type": "Content"
-  },
-  {
-    "title": "Modules_File_I",
-    "href": "content/Modules_File_I_example-problems.html",
     "type": "Content"
   },
   {
@@ -45,18 +35,8 @@
     "type": "Content"
   },
   {
-    "title": "Modules_File_I",
-    "href": "content/Modules_File_I_interactive_topics_t7.html",
-    "type": "Content"
-  },
-  {
-    "title": "Modules_File_I",
-    "href": "content/Modules_File_I_lesson-plan.html",
-    "type": "Content"
-  },
-  {
-    "title": "Modules_File_I",
-    "href": "content/Modules_File_I_suggested-links.html",
+    "title": "4 - Modules, File I/O, and Error Handling \u2014 Reading and Writing CSV Files, Working with JSON",
+    "href": "content/Modules_File_I_suggested-sources.html",
     "type": "Content"
   },
   {

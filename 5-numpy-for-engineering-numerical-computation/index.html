@@ -3,25 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 5 – NumPy for Engineering Numerical Computation | EGN3214</title>
+  <title>5 - NumPy for Engineering Numerical Computation | EGN3214</title>
   <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f4f6f9;
-      color: #1e2430;
-      min-height: 100vh;
-      line-height: 1.6;
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    /* ── Header ── */
+    :root {
+      --color-bg: #f4f6f9;
+      --color-surface: #ffffff;
+      --color-primary: #1a3a5c;
+      --color-primary-light: #2563a8;
+      --color-accent: #e8f0fb;
+      --color-border: #d0d8e4;
+      --color-text: #1e2d3d;
+      --color-text-muted: #5a6a7e;
+      --color-badge-bg: #eef2f7;
+      --color-badge-text: #3b5270;
+      --color-source-link: #5a6a7e;
+      --color-source-link-hover: #1a3a5c;
+      --radius: 8px;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.13);
+      --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
     header {
-      background: linear-gradient(135deg, #0d3b6e 0%, #1a6496 100%);
-      color: #fff;
-      padding: 2.5rem 2rem 2rem;
-      border-bottom: 4px solid #f0a500;
+      background: linear-gradient(135deg, var(--color-primary) 0%, #24527a 100%);
+      color: #ffffff;
+      padding: 48px 24px 40px;
     }
 
     .header-inner {
@@ -36,172 +57,192 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 4px;
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 0.75rem;
-      color: #d6eaf8;
+      padding: 3px 10px;
+      margin-bottom: 14px;
+      color: #cde3f7;
     }
 
     header h1 {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-weight: 700;
       line-height: 1.25;
-      margin-bottom: 0.85rem;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
     }
 
     header p {
       font-size: 1rem;
-      max-width: 72ch;
-      color: #cde3f5;
+      max-width: 700px;
+      color: rgba(255, 255, 255, 0.85);
       line-height: 1.7;
     }
 
-    /* ── Main Content ── */
+    /* ── Main content ────────────────────────────────── */
     main {
       max-width: 1100px;
-      margin: 2.5rem auto;
-      padding: 0 1.5rem 3rem;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
     }
 
     .section-label {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #5a7a9a;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #dde4ee;
+      color: var(--color-text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--color-border);
     }
 
-    /* ── Card Grid ── */
+    /* ── Card grid ───────────────────────────────────── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      background: #ffffff;
-      border: 1px solid #dde4ee;
-      border-radius: 10px;
-      padding: 1.4rem 1.5rem 1.3rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 12px;
       transition: box-shadow 0.2s ease, transform 0.2s ease;
-      position: relative;
     }
 
     .card:hover {
-      box-shadow: 0 6px 22px rgba(13, 59, 110, 0.12);
+      box-shadow: var(--shadow-hover);
       transform: translateY(-2px);
     }
 
-    /* ── Card Top Row ── */
-    .card-meta {
+    /* ── Card header row ─────────────────────────────── */
+    .card-header {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .badge {
-      font-size: 0.68rem;
+    .card-name {
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-
-    .badge-type {
-      background: #e8f0fb;
-      color: #1a5276;
-      border: 1px solid #b6cff0;
-    }
-
-    .badge-filetype {
-      background: #fef9ec;
-      color: #7d5a00;
-      border: 1px solid #f0d88a;
-    }
-
-    /* ── Card Title Row ── */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-
-    .card-title {
-      font-size: 1.02rem;
-      font-weight: 700;
-      color: #0d3b6e;
+      color: var(--color-primary);
       line-height: 1.35;
     }
 
-    .card-title a {
-      color: #1155aa;
+    .card-name a {
+      color: var(--color-primary-light);
       text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.18s, color 0.18s;
     }
 
-    .card-title a:hover,
-    .card-title a:focus {
-      color: #0a3d80;
-      border-bottom-color: #f0a500;
-      outline: none;
+    .card-name a:hover {
+      text-decoration: underline;
+      color: var(--color-primary);
     }
 
+    .card-name a:focus-visible {
+      outline: 2px solid var(--color-primary-light);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* ── Source link ─────────────────────────────────── */
     .source-link {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #5a7a9a;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--color-source-link);
       text-decoration: none;
-      background: #f0f4fa;
-      border: 1px solid #c5d5e8;
+      border: 1px solid var(--color-border);
       border-radius: 4px;
-      padding: 0.18rem 0.5rem;
-      white-space: nowrap;
-      transition: background 0.18s, color 0.18s;
+      padding: 2px 8px;
+      margin-top: 4px;
+      align-self: flex-start;
+      background: var(--color-badge-bg);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .source-link:hover {
+      color: var(--color-source-link-hover);
+      border-color: #aab8c8;
+      background: #dde6f0;
+    }
+
+    .source-link svg {
       flex-shrink: 0;
     }
 
-    .source-link:hover,
-    .source-link:focus {
-      background: #dce8f5;
-      color: #0d3b6e;
-      outline: none;
+    /* ── Meta badges ─────────────────────────────────── */
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
     }
 
-    /* ── Card Description ── */
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: var(--color-badge-bg);
+      color: var(--color-badge-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .badge-type {
+      background: var(--color-accent);
+      color: var(--color-primary);
+      border-color: #c0d3ef;
+    }
+
+    .badge-filetype {
+      background: #f0f4f0;
+      color: #3b5240;
+      border-color: #c4d4c4;
+      font-family: 'Courier New', monospace;
+      font-size: 0.70rem;
+    }
+
+    /* ── Description ─────────────────────────────────── */
     .card-description {
       font-size: 0.88rem;
-      color: #3c4a5e;
+      color: var(--color-text-muted);
       line-height: 1.65;
-      flex: 1;
+      flex-grow: 1;
     }
 
-    /* ── Footer ── */
+    /* ── Footer ──────────────────────────────────────── */
     footer {
       text-align: center;
-      padding: 1.5rem 1rem 2rem;
+      padding: 20px 24px;
       font-size: 0.78rem;
-      color: #8a9bb0;
-      border-top: 1px solid #dde4ee;
-      background: #f4f6f9;
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface);
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 540px) {
-      header { padding: 1.75rem 1.25rem 1.5rem; }
-      main { padding: 0 1rem 2.5rem; }
-      .card-grid { grid-template-columns: 1fr; }
+    /* ── Responsive tweaks ───────────────────────────── */
+    @media (max-width: 480px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 36px 16px 32px;
+      }
+
+      main {
+        padding: 28px 16px 48px;
+      }
     }
   </style>
 </head>
@@ -211,154 +252,178 @@
 
   <header>
     <div class="header-inner">
-      <span class="course-label">EGN3214</span>
-      <h1>Module 5 &mdash; NumPy for Engineering Numerical Computation</h1>
+      <div class="course-label">EGN3214</div>
+      <h1>5 – NumPy for Engineering Numerical Computation</h1>
       <p>
-        This module introduces NumPy as the foundational library for numerical computation in engineering.
-        Learners explore array creation, vectorized and element-wise operations, universal functions,
-        broadcasting, linear algebra, and practical applications such as solving Manning&rsquo;s Equation
-        for open channel flow. Use the resources below to read, practice, and complete the module assignments.
+        This module introduces NumPy as a foundational tool for engineering numerical computation.
+        Learners explore ndarray creation and manipulation, vectorized and element-wise operations,
+        broadcasting, universal functions, linear algebra, and practical engineering applications —
+        including iterative numerical methods such as Newton-Raphson for solving real-world problems.
       </p>
     </div>
   </header>
 
   <main>
-    <p class="section-label">Module Artifacts &mdash; 7 items</p>
+    <div class="section-label">Module Artifacts &mdash; 9 items</div>
 
     <div class="card-grid">
 
-      <!-- 1. Module Topics -->
-      <div class="card">
+      <!-- 1: Module Topics -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/module_topics.html">Module Topics</a>
+          </div>
+          <a class="source-link" href="source/hierarchy.json">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M2 2h5v1.5H3.5v9h9V9H14v5H2V2z" fill="currentColor"/>
+              <path d="M9 2h5v5h-1.5V4.56L7.28 9.78 6.22 8.72 11.44 3.5H9V2z" fill="currentColor"/>
+            </svg>
+            source file
+          </a>
+        </div>
         <div class="card-meta">
           <span class="badge badge-type">Module Topics</span>
           <span class="badge badge-filetype">.json</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
-        </div>
         <p class="card-description">
-          Outlines the topics covered in the NumPy module, including array creation, element-wise operations,
-          universal functions, and broadcasting, serving as a syllabus-style reference for learners and
-          instructors navigating the module content.
+          Outlines the topics covered in the NumPy module, including array creation, element-wise operations, universal functions, and broadcasting, serving as a syllabus-style reference for learners and instructors navigating the module content.
         </p>
-      </div>
+      </article>
 
-      <!-- 2. NumPy Arrays -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+      <!-- 2: NumPy Arrays -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
             <a href="content/_interactive.html">NumPy Arrays</a>
-          </span>
+          </div>
         </div>
-        <p class="card-description">
-          An interactive HTML lesson on NumPy for engineering that guides learners through ndarray basics,
-          array creation, vectorized operations, broadcasting, indexing, linear algebra, and practical
-          engineering applications with explanations and embedded code examples.
-        </p>
-      </div>
-
-      <!-- 3. Open Channel Flow Assignment - New -->
-      <div class="card">
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Assignment_5_Open_Channel_derived.html">Open Channel Flow Assignment &mdash; New</a>
-          </span>
-        </div>
         <p class="card-description">
-          A derived version of Assignment 5 that directs students to use NumPy library functions and the
-          Newton-Raphson iterative method specifically to numerically solve for the depth of flow in an
-          open channel, submitted as a Colab notebook.
+          An interactive HTML lesson on NumPy for engineering that guides learners through ndarray basics, array creation, vectorized operations, broadcasting, indexing, linear algebra, and practical engineering applications with explanations and embedded code examples.
         </p>
-      </div>
+      </article>
 
-      <!-- 4. Open Channel Flow Assignment - Old -->
-      <div class="card">
+      <!-- 3: Open Channel Flow Assignment - New -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/Assignment_5_Open_Channel_derived.html">Open Channel Flow Assignment – New</a>
+          </div>
+        </div>
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Assignment_5_Open_Channel.html">Open Channel Flow Assignment &mdash; Old</a>
-          </span>
-        </div>
         <p class="card-description">
-          The original Assignment 5 that instructs students to apply Manning&rsquo;s Equation and an iterative
-          numerical technique to calculate the depth of flow in an open channel, submitted as a Colab notebook.
+          A derived version of Assignment 5 that directs students to use NumPy library functions and the Newton-Raphson iterative method specifically to numerically solve for the depth of flow in an open channel, submitted as a Colab notebook.
         </p>
-      </div>
+      </article>
 
-      <!-- 5. Assignment 5 – Find Depth of Flow -->
-      <div class="card">
+      <!-- 4: Open Channel Flow Assignment - Old -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/Assignment_5_Open_Channel.html">Open Channel Flow Assignment – Old</a>
+          </div>
+        </div>
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/ext_77319c9d.html">Assignment 5 &ndash; Find Depth of Flow in an Open Channel</a>
-          </span>
-        </div>
         <p class="card-description">
-          An instructor-authored summary page for Assignment 5 describing the task of solving Manning&rsquo;s
-          Equation for flow depth in a trapezoidal open channel with a 50&nbsp;cfs target flowrate using
-          Python functions with NumPy or math libraries and iterative methods.
+          The original Assignment 5 that instructs students to apply Manning's Equation and an iterative numerical technique to calculate the depth of flow in an open channel, submitted as a Colab notebook.
         </p>
-      </div>
+      </article>
 
-      <!-- 6. NumPy_for_Engineering -->
-      <div class="card">
+      <!-- 5: Assignment 5 – Find Depth of Flow -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/ext_77319c9d.html">Assignment 5 – Find Depth of Flow in an Open Channel</a>
+          </div>
+        </div>
         <div class="card-meta">
           <span class="badge badge-type">Text Content</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
+        <p class="card-description">
+          An instructor-authored summary page for Assignment 5 describing the task of solving Manning's Equation for flow depth in a trapezoidal open channel with a 50 cfs target flowrate using Python functions with NumPy or math libraries and iterative methods.
+        </p>
+      </article>
+
+      <!-- 6: NumPy_for_Engineering -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
             <a href="content/NumPy_for_Engineering_interactive_topics_t1-2.html">NumPy_for_Engineering</a>
-          </span>
+          </div>
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-type">Text Content</span>
+          <span class="badge badge-filetype">.html</span>
         </div>
         <p class="card-description">
-          A reading that introduces NumPy&rsquo;s ndarray data structure, explaining how it differs from
-          native Python data structures and why it is foundational for numerical computing in engineering;
-          learners use it to build the conceptual and practical groundwork needed before applying NumPy
-          to engineering calculations.
+          A reading that introduces NumPy's ndarray data structure, explaining how it differs from native Python data structures and why it is foundational for numerical computing in engineering; learners use it to build the conceptual and practical groundwork needed before applying NumPy to engineering calculations.
         </p>
-      </div>
+      </article>
 
-      <!-- 7. External Materials Index -->
-      <div class="card">
+      <!-- 7: Suggested Sources – Indexing, Slicing -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/NumPy_for_Engineering_o-mo3_suggested-sources.html">5 – NumPy for Engineering Numerical Computation — Indexing, Slicing, and Fancy Indexing, Reshaping, Transposing, and Array Manipulation</a>
+          </div>
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-type">Suggested Sources</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">
+          This HTML reference page links learners to the official NumPy documentation covering array indexing, slicing, fancy indexing, reshaping, transposing, and array manipulation, serving as a supplementary reading resource that students and instructors can consult to deepen their understanding of these NumPy techniques in an engineering computation context.
+        </p>
+      </article>
+
+      <!-- 8: Suggested Sources – NumPy Functions -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="content/NumPy_for_Engineering_suggested-sources.html">5 – NumPy for Engineering Numerical Computation — Numpy Functions, Introduction to NumPy and the ndarray, Creating NumPy Arrays</a>
+          </div>
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-type">Suggested Sources</span>
+          <span class="badge badge-filetype">.html</span>
+        </div>
+        <p class="card-description">
+          This HTML page is a reference resource linking learners to the official NumPy documentation along with curated readings on NumPy fundamentals — including the ndarray structure, array creation methods, and built-in NumPy functions — which students and instructors can use as a supplementary reference while working through engineering numerical computation topics in the module.
+        </p>
+      </article>
+
+      <!-- 9: External Materials Index -->
+      <article class="card">
+        <div class="card-header">
+          <div class="card-name">
+            <a href="external_materials_index.html">External Materials Index</a>
+          </div>
+        </div>
         <div class="card-meta">
           <span class="badge badge-type">External Materials</span>
           <span class="badge badge-filetype">.html</span>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="external_materials_index.html">External Materials Index</a>
-          </span>
-        </div>
         <p class="card-description">
-          An index page listing the external materials for the NumPy module, currently containing one
-          item &mdash; Assignment 5 on finding depth of flow in an open channel &mdash; giving learners
-          and instructors a quick reference to supplementary resources.
+          An index page listing the external materials for the NumPy module, currently containing one item — Assignment 5 on finding depth of flow in an open channel — giving learners and instructors a quick reference to supplementary resources.
         </p>
-      </div>
+      </article>
 
-    </div>
+    </div><!-- /.card-grid -->
   </main>
 
   <footer>
-    EGN3214 &mdash; Module 5: NumPy for Engineering Numerical Computation &nbsp;&bull;&nbsp; Course Module Index
+    EGN3214 &mdash; Module 5: NumPy for Engineering Numerical Computation
   </footer>
 
 
