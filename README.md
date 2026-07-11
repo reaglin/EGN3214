@@ -11,9 +11,9 @@ Programming for Engineers
 5. 5 - NumPy for Engineering Numerical Computation
 6. 6 - Data Visualization with Matplotlib and Intro to Pandas
 7. 7 - Object-Oriented Programming and AI-Assisted Coding Workflow
-8. Numerical Methods with SciPy and Curve Fitting
-9. Engineering Data Analysis and Simulation
-10. Machine Learning, Automation, Version Control, and Responsible AI
+8. 8 - Numerical Methods with SciPy and Curve Fitting
+9. 9 - Engineering Data Analysis and Simulation
+10. 10 - Machine Learning, Automation, Version Control, and Responsible AI
 
 ---
 

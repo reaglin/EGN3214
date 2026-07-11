@@ -1,0 +1,15 @@
+{
+  "activities": [
+    {
+      "id": "236519d7-e0e3-417e-bb3e-928171013455",
+      "title": "Drag-and-Drop Match",
+      "fileName": "drag-and-drop-match.html",
+      "templateName": "Drag-and-Drop Match",
+      "objective": "Describe SciPy functions input and output",
+      "currentVersion": 1,
+      "totalVersions": 1,
+      "createdDate": "2026-06-30T15:39:34.243015-04:00",
+      "modifiedDate": "2026-06-30T15:39:34.2430544-04:00"
+    }
+  ]
+}

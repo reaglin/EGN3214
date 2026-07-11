@@ -1,0 +1,150 @@
+{
+  "PresentationTitle": "3 - Functions, Comprehensions, and Functional Patterns",
+  "Topic": "Defining Functions, Parameters and Arguments, Variable-Length Arguments: *args and **kwargs, Scope and Variable Visibility, Recursion, Comprehensions, Lambda Functions and Functional Patterns",
+  "Audience": "undergraduate students",
+  "Tone": "Professional",
+  "Slides": [
+    {
+      "SlideNumber": 1,
+      "Title": "3 - Functions, Comprehensions, and Functional Patterns",
+      "Bullets": [
+        "A professional guide to writing reusable, expressive, and efficient Python code."
+      ],
+      "SpeakerNotes": "Welcome everyone. In this module we will build a solid understanding of how Python functions work \u2014 from basic definitions through advanced argument handling \u2014 and then move into comprehensions and functional programming tools like map and filter. These concepts are foundational to writing clean, professional Python code."
+    },
+    {
+      "SlideNumber": 2,
+      "Title": "Defining Functions",
+      "Bullets": [
+        "Use the def keyword to begin any function definition",
+        "The indented block beneath the signature is the function body",
+        "return sends a value back and exits the function immediately",
+        "A missing return statement implicitly returns None",
+        "Docstrings document functions and are accessible via __doc__"
+      ],
+      "SpeakerNotes": "Functions are defined with def, followed by a name and a parenthesized parameter list. The indented body is executed when the function is called. The return statement exits the function and passes a value back to the caller \u2014 without it, Python returns None automatically. Docstrings are string literals placed as the very first statement inside the function body. They serve as built-in documentation and can be read at runtime using the function\u0027s __doc__ attribute or the built-in help() function. To call a function, write its name followed by parentheses with any required arguments; the interpreter executes the body and resumes at the call site with the returned value."
+    },
+    {
+      "SlideNumber": 3,
+      "Title": "Parameters and Arguments",
+      "Bullets": [
+        "Parameters are names listed in the function definition",
+        "Arguments are actual values passed at the call site",
+        "Positional parameters are matched left-to-right by order",
+        "Keyword arguments are passed by explicitly naming the parameter",
+        "Default values make parameters optional at the call site"
+      ],
+      "SpeakerNotes": "It is important to distinguish parameters from arguments: parameters are placeholders in the definition, while arguments are the concrete values supplied during a call. Positional parameters are the most common \u2014 the first argument maps to the first parameter, and so on. Keyword arguments improve readability by naming the parameter explicitly, allowing arguments to appear in any order. Default parameter values are assigned in the signature using an equals sign; if the caller omits that argument, the default is used instead. Keeping this terminology clear helps students interpret Python error messages accurately."
+    },
+    {
+      "SlideNumber": 4,
+      "Title": "Variable-Length Arguments: *args and **kwargs",
+      "Bullets": [
+        "*args collects extra positional arguments into a tuple",
+        "**kwargs collects extra keyword arguments into a dictionary",
+        "Both can be combined in a single function signature",
+        "* unpacks a list or tuple at the call site",
+        "** unpacks a dictionary into keyword arguments at the call site"
+      ],
+      "SpeakerNotes": "When a parameter is prefixed with a single asterisk, Python bundles all extra positional arguments into a tuple assigned to that parameter \u2014 by convention called args. Double asterisks do the same for keyword arguments, collecting them into a dictionary \u2014 conventionally called kwargs. Using both together gives a function maximum flexibility, a pattern common in decorators and generic wrapper functions. The inverse also applies at the call site: the * operator unpacks a list or tuple into positional arguments, and ** unpacks a dictionary into keyword arguments. This symmetry between collection and unpacking is a powerful feature of Python\u0027s function call mechanism."
+    },
+    {
+      "SlideNumber": 5,
+      "Title": "Scope and the LEGB Rule",
+      "Bullets": [
+        "Python resolves names in Local, Enclosing, Global, Built-in order",
+        "Variables assigned inside a function are local by default",
+        "Local variables do not affect the outer scope",
+        "global declares that a name refers to a module-level variable",
+        "nonlocal lets nested functions modify enclosing scope variables"
+      ],
+      "SpeakerNotes": "Python\u0027s name resolution follows the LEGB rule: it searches Local scope first, then Enclosing function scopes, then the Global (module-level) scope, and finally the Built-in scope. Any name assigned inside a function is automatically treated as local, even if a global variable with the same name exists \u2014 this prevents accidental modification of outer variables. When you genuinely need to modify a module-level variable from within a function, the global keyword must be declared explicitly. The nonlocal keyword serves a similar purpose for nested functions: it binds the name to the nearest enclosing function scope that is not global, enabling closures to maintain and update state."
+    },
+    {
+      "SlideNumber": 6,
+      "Title": "Recursion",
+      "Bullets": [
+        "Recursion is when a function calls itself as part of its definition",
+        "Every recursive function needs at least one base case",
+        "The recursive case moves the input closer to the base case",
+        "Recursive results are combined with additional computation",
+        "Python\u0027s default recursion limit is approximately 1000 calls"
+      ],
+      "SpeakerNotes": "Recursion is a technique where a function solves a problem by reducing it to a smaller instance of the same problem and calling itself. The base case is critical \u2014 it is the condition under which the function returns a direct result without another recursive call, preventing infinite loops. The recursive case must always modify the argument so that it moves progressively closer to the base case. Results from recursive calls are typically combined with additional computations to build the final answer. Python enforces a maximum recursion depth, defaulting to around 1000, to protect against call stack overflow. Exceeding this limit raises a RecursionError even when the logic is correct, so very deep problems may require an iterative approach instead."
+    },
+    {
+      "SlideNumber": 7,
+      "Title": "List and Dictionary Comprehensions",
+      "Bullets": [
+        "List comprehensions create a new list from an iterable concisely",
+        "Syntax: [expression for item in iterable]",
+        "Dictionary comprehensions produce key-value pairs from an iterable",
+        "Syntax: {key_expr: value_expr for item in iterable}",
+        "Both support an optional if clause to filter elements"
+      ],
+      "SpeakerNotes": "List comprehensions replace many common for-loop patterns with a single, readable line. They evaluate an expression for each item in an iterable and collect the results into a new list. Dictionary comprehensions work identically but produce a dictionary by specifying both a key expression and a value expression separated by a colon. Both forms support an optional filtering if clause appended at the end; only items for which the condition evaluates to True are included. This filtering replaces the need for a nested if statement inside a traditional for loop, keeping the code compact and expressive."
+    },
+    {
+      "SlideNumber": 8,
+      "Title": "Set Comprehensions and Nested Comprehensions",
+      "Bullets": [
+        "Set comprehensions use curly braces without a colon",
+        "Duplicate values are automatically discarded in sets",
+        "Nested comprehensions use multiple for clauses in one expression",
+        "The leftmost for clause acts as the outermost loop",
+        "Nested comprehensions can flatten or combine multiple sequences"
+      ],
+      "SpeakerNotes": "Set comprehensions follow the same syntax as list comprehensions but use curly braces instead of square brackets and produce a set, so duplicate results are automatically eliminated. This is useful when uniqueness is a requirement. Nested comprehensions contain more than one for clause within a single comprehension expression, allowing iteration over nested iterables in a compact form. The leftmost for clause corresponds to the outermost loop, and additional for clauses represent inner loops. This pattern is commonly used to flatten a list of lists or to compute the Cartesian product of two sequences, but readability should be considered \u2014 very complex nested comprehensions may be better expressed as explicit for loops."
+    },
+    {
+      "SlideNumber": 9,
+      "Title": "Lambda Functions",
+      "Bullets": [
+        "lambda creates a small anonymous function in one expression",
+        "Syntax: lambda parameters: expression",
+        "No return statement needed \u2014 the expression is the return value",
+        "Best used for short, throwaway functions passed as arguments",
+        "Complex logic should use a named def function instead"
+      ],
+      "SpeakerNotes": "A lambda function is an anonymous function defined with the lambda keyword. It takes one or more parameters and evaluates a single expression, which becomes the implicit return value \u2014 no return keyword is needed. Lambda functions are most useful when a small, throwaway function is needed in a context such as an argument to map, filter, or sorted. Because they are limited to a single expression, any logic that requires multiple statements, assignments, or conditional branches should be placed in a named def function for clarity and maintainability."
+    },
+    {
+      "SlideNumber": 10,
+      "Title": "map() and filter()",
+      "Bullets": [
+        "map() applies a function to every element of an iterable",
+        "map() returns a lazy iterator \u2014 wrap in list() to materialise",
+        "filter() keeps only elements where the predicate returns True",
+        "Both accept lambda functions or named functions as arguments",
+        "map() and filter() can be nested to chain operations"
+      ],
+      "SpeakerNotes": "The built-in map() function takes a function and an iterable, applies the function to each element, and returns a map object \u2014 a lazy iterator that produces values on demand. Wrapping it in list() forces evaluation. The built-in filter() applies a predicate function to each element and returns only those for which the predicate evaluates to True. Both functions accept either a lambda or a named function. They can be composed by nesting calls \u2014 for example, applying filter() to narrow down elements and then map() to transform them \u2014 without creating intermediate lists. This chaining is a hallmark of functional programming style."
+    },
+    {
+      "SlideNumber": 11,
+      "Title": "Choosing the Right Tool: Comprehensions vs. Functional Tools",
+      "Bullets": [
+        "Comprehensions are often more readable for simple transformations",
+        "map/filter suit cases where a named function already exists",
+        "Lazy evaluation with map/filter benefits large datasets",
+        "Team conventions and codebase consistency matter",
+        "Prioritise clarity \u2014 choose whichever reads most naturally"
+      ],
+      "SpeakerNotes": "Python deliberately provides multiple ways to transform and filter data, so choosing between comprehensions and map/filter is largely a matter of context and style. List comprehensions tend to be more readable for straightforward transformations and are generally preferred in the Python community. However, map() and filter() are a natural fit when a named function already exists and passing it directly avoids creating a redundant lambda. Additionally, map and filter are lazy, which can be advantageous when working with large datasets where you do not want to materialise an entire list in memory. Ultimately, the best choice is whichever version is clearest to the reader and most consistent with the existing codebase."
+    },
+    {
+      "SlideNumber": 12,
+      "Title": "Summary",
+      "Bullets": [
+        "def, return, and docstrings form the foundation of Python functions",
+        "Positional, keyword, default, *args, and **kwargs enable flexible calls",
+        "LEGB, global, and nonlocal govern variable scope and visibility",
+        "Recursion solves self-similar problems \u2014 always include a base case",
+        "Comprehensions, lambda, map, and filter enable expressive data processing"
+      ],
+      "SpeakerNotes": "To summarise: we started with how to define functions using def, understanding the role of return and docstrings. We then explored the full range of parameter types \u2014 positional, keyword, default, and variable-length with *args and **kwargs \u2014 as well as call-site unpacking. We examined how Python resolves names using the LEGB rule and how global and nonlocal modify that behaviour. Recursion was introduced as a technique that depends on well-defined base cases and recursive cases, with awareness of Python\u0027s recursion depth limit. Finally, we covered comprehensions for concise data construction and functional tools \u2014 lambda, map, and filter \u2014 along with guidance on when to prefer one approach over another. Together these concepts give you a comprehensive toolkit for writing clean, professional Python."
+    }
+  ],
+  "GeneratedDate": "2026-07-06T09:28:44.1906977-04:00",
+  "PptxFileName": ""
+}

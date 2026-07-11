@@ -1,0 +1,24 @@
+{
+  "Tasks": [
+    {
+      "Id": "6cae9c65-8c97-474f-b3a9-61e31315e215",
+      "ShortDescription": "Generate Topics",
+      "DetailedDescription": "",
+      "Order": 0
+    },
+    {
+      "Id": "92ac30b0-4c7c-4d24-bff1-4f3ef6468877",
+      "ShortDescription": "Generate Presentation",
+      "DetailedDescription": "",
+      "Order": 1
+    },
+    {
+      "Id": "23becda2-d3ef-4e19-aeb0-60477f17b5eb",
+      "ShortDescription": "Narrate Presentation",
+      "DetailedDescription": "",
+      "Order": 2
+    }
+  ],
+  "Cells": {},
+  "LastModifiedDate": "2026-07-06T09:51:44.6038046-04:00"
+}

@@ -4,7 +4,7 @@
   "Description": "Programming for Engineers",
   "CreatedBy": "",
   "CreatedDate": "2026-05-13T09:57:17.5523423-04:00",
-  "LastModifiedDate": "2026-06-27T14:29:10.7960767-04:00",
+  "LastModifiedDate": "2026-06-29T11:39:00.4613825-04:00",
   "Modules": [
     {
       "ModuleName": "1 - Python Environment Setup and Language Fundamentals",
@@ -42,17 +42,17 @@
       "Order": 7
     },
     {
-      "ModuleName": "Numerical Methods with SciPy and Curve Fitting",
+      "ModuleName": "8 - Numerical Methods with SciPy and Curve Fitting",
       "FolderName": "Numerical_Methods_with",
       "Order": 8
     },
     {
-      "ModuleName": "Engineering Data Analysis and Simulation",
+      "ModuleName": "9 - Engineering Data Analysis and Simulation",
       "FolderName": "Engineering_Data_Analysis",
       "Order": 9
     },
     {
-      "ModuleName": "Machine Learning, Automation, Version Control, and Responsible AI",
+      "ModuleName": "10 - Machine Learning, Automation, Version Control, and Responsible AI",
       "FolderName": "Machine_Learning_Automation",
       "Order": 10
     }
