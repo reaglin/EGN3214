@@ -5,201 +5,267 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Module 8 – Numerical Methods with SciPy and Curve Fitting | EGN3214</title>
   <style>
-    /* ── Reset & Base ── */
+    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --primary:       #1a4b8c;
+      --primary-dark:  #123568;
+      --accent:        #2e7d9f;
+      --accent-light:  #e8f4f8;
+      --surface:       #ffffff;
+      --bg:            #f4f6f9;
+      --border:        #d1d9e0;
+      --text:          #1e2530;
+      --text-muted:    #5a6474;
+      --badge-bg:      #edf2f7;
+      --badge-text:    #3a4a5c;
+      --tag-topic:     #dbeafe;
+      --tag-topic-t:   #1e40af;
+      --tag-inter:     #dcfce7;
+      --tag-inter-t:   #15803d;
+      --tag-text:      #fef9c3;
+      --tag-text-t:    #854d0e;
+      --tag-topics:    #ede9fe;
+      --tag-topics-t:  #6b21a8;
+      --radius:        8px;
+      --shadow:        0 2px 8px rgba(0,0,0,.08);
+      --shadow-hover:  0 6px 18px rgba(0,0,0,.13);
+      --font:          'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
     body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f4f6f9;
-      color: #1e2a38;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
     }
 
-    /* ── Header ── */
+    /* ── Header banner ── */
     header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, var(--accent) 100%);
       color: #fff;
-      padding: 2.5rem 2rem 2rem;
-      border-bottom: 4px solid #f0a500;
+      padding: 3rem 1.5rem 2.5rem;
     }
 
     .header-inner {
-      max-width: 1100px;
+      max-width: 1060px;
       margin: 0 auto;
     }
 
     .course-label {
-      font-size: 0.8rem;
+      display: inline-block;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 20px;
+      font-size: .78rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: .07em;
       text-transform: uppercase;
-      color: #a8c8f0;
-      margin-bottom: 0.45rem;
+      padding: .28rem .85rem;
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
       font-weight: 700;
       line-height: 1.25;
-      margin-bottom: 0.9rem;
+      margin-bottom: .9rem;
     }
 
-    header p {
-      font-size: 0.97rem;
-      max-width: 780px;
-      color: #d4e5f7;
-      line-height: 1.65;
+    header h1 span.module-num {
+      opacity: .75;
+      font-weight: 400;
     }
 
-    /* ── Main ── */
+    header p.intro {
+      font-size: 1.03rem;
+      line-height: 1.7;
+      max-width: 760px;
+      opacity: .92;
+    }
+
+    /* ── Stat bar ── */
+    .stat-bar {
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      padding: 1.1rem 1.5rem;
+      background: var(--primary-dark);
+      border-bottom: 3px solid var(--accent);
+    }
+
+    .stat-pill {
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.9);
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 500;
+      padding: .25rem .8rem;
+      letter-spacing: .03em;
+    }
+
+    /* ── Main layout ── */
     main {
-      max-width: 1100px;
-      margin: 2.5rem auto 3rem;
+      max-width: 1060px;
+      margin: 2rem auto 3rem;
       padding: 0 1.25rem;
     }
 
-    .section-label {
-      font-size: 0.75rem;
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      color: var(--primary);
       text-transform: uppercase;
-      color: #5a7a9a;
-      margin-bottom: 1.1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 2px solid #d5dfe9;
+      letter-spacing: .06em;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: .5rem;
+      margin-bottom: 1.25rem;
     }
 
-    /* ── Card Grid ── */
+    /* ── Card grid ── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 2.5rem;
     }
 
     /* ── Card ── */
     .card {
-      background: #ffffff;
-      border: 1px solid #dce4ed;
-      border-radius: 8px;
-      padding: 1.3rem 1.4rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      transition: box-shadow 0.18s ease, transform 0.18s ease;
-      position: relative;
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+      overflow: hidden;
     }
 
     .card:hover {
-      box-shadow: 0 4px 18px rgba(37, 99, 168, 0.12);
-      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+      border-color: var(--accent);
     }
 
-    /* type badge + filetype pill row */
-    .card-meta {
+    .card-top {
+      padding: 1.1rem 1.15rem .75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+
+    /* Icon circle */
+    .card-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 1.1rem;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.2em 0.65em;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
+    .icon-topic   { background: var(--tag-topic);  color: var(--tag-topic-t); }
+    .icon-inter   { background: var(--tag-inter);  color: var(--tag-inter-t); }
+    .icon-text    { background: var(--tag-text);   color: var(--tag-text-t);  }
+    .icon-topics  { background: var(--tag-topics); color: var(--tag-topics-t);}
 
-    /* Badge colour by type */
-    .badge-module   { background: #e8f0fb; color: #1a50a0; }
-    .badge-text     { background: #e8f7ef; color: #1a6640; }
-    .badge-interact { background: #fef4e5; color: #a05a00; }
-
-    .filetype-pill {
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: #6b7f94;
-      background: #f0f3f7;
-      border: 1px solid #d5dfe9;
-      border-radius: 4px;
-      padding: 0.15em 0.5em;
-      font-family: "Courier New", monospace;
-    }
-
-    /* Title row */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
+    .card-title-block { flex: 1; min-width: 0; }
 
     .card-title {
-      font-size: 0.97rem;
+      font-size: .97rem;
       font-weight: 700;
-      color: #1e2a38;
+      color: var(--text);
       line-height: 1.35;
+      margin-bottom: .35rem;
     }
 
     .card-title a {
-      color: #1a50a0;
+      color: var(--primary);
       text-decoration: none;
+      transition: color .15s;
     }
-
-    .card-title a:hover,
-    .card-title a:focus {
-      text-decoration: underline;
-      color: #0d3579;
-    }
+    .card-title a:hover { color: var(--accent); text-decoration: underline; }
 
     .source-link {
-      font-size: 0.72rem;
+      display: inline-block;
+      margin-left: .5rem;
+      font-size: .72rem;
       font-weight: 600;
-      color: #5a7a9a;
+      color: var(--accent);
       text-decoration: none;
-      border: 1px solid #b8cfe0;
+      border: 1px solid var(--accent);
       border-radius: 4px;
-      padding: 0.15em 0.55em;
+      padding: .1rem .38rem;
+      vertical-align: middle;
       white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
+      transition: background .15s, color .15s;
+    }
+    .source-link:hover { background: var(--accent); color: #fff; }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .3rem;
     }
 
-    .source-link:hover,
-    .source-link:focus {
-      background: #dce9f5;
-      color: #1a3a5c;
-      border-color: #7faecf;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+      font-size: .7rem;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: .15rem .5rem;
+      letter-spacing: .03em;
     }
 
-    .source-link::before {
-      content: "⬡ ";
-      font-size: 0.65rem;
+    .badge-type  { background: var(--badge-bg); color: var(--badge-text); }
+    .badge-ft    { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-family: monospace; }
+
+    /* Specific type colours */
+    .badge-type.t-topic  { background: var(--tag-topic);  color: var(--tag-topic-t); }
+    .badge-type.t-inter  { background: var(--tag-inter);  color: var(--tag-inter-t); }
+    .badge-type.t-text   { background: var(--tag-text);   color: var(--tag-text-t);  }
+    .badge-type.t-topics { background: var(--tag-topics); color: var(--tag-topics-t);}
+
+    /* Divider */
+    .card-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 1.15rem;
     }
 
-    /* Description */
     .card-desc {
-      font-size: 0.875rem;
-      color: #44576b;
-      line-height: 1.6;
+      padding: .85rem 1.15rem 1.1rem;
+      font-size: .86rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
     }
 
     /* ── Footer ── */
     footer {
       text-align: center;
-      font-size: 0.78rem;
-      color: #8a9bac;
-      padding: 1.5rem 1rem 2rem;
-      border-top: 1px solid #dce4ed;
+      padding: 1.5rem 1rem;
+      font-size: .8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--surface);
     }
 
     /* ── Responsive ── */
-    @media (max-width: 480px) {
-      header { padding: 1.75rem 1.1rem 1.5rem; }
-      .card  { padding: 1.1rem 1.1rem 1rem; }
+    @media (max-width: 500px) {
+      header { padding: 2rem 1rem 1.75rem; }
+      .card-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -207,218 +273,238 @@
 <div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
 <div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
 
-  <header>
-    <div class="header-inner">
-      <p class="course-label">EGN3214 &nbsp;·&nbsp; Module 8</p>
-      <h1>Numerical Methods with SciPy and Curve Fitting</h1>
-      <p>
-        This module introduces the SciPy and NumPy libraries as practical tools for engineering
-        computation. Learners will explore root finding, numerical integration, linear and nonlinear
-        curve fitting, interpolation, and residuals analysis — and see how these techniques combine
-        into end-to-end engineering data workflows.
-      </p>
-    </div>
-  </header>
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="course-label">EGN3214</div>
+    <h1><span class="module-num">Module 8 — </span>Numerical Methods with SciPy and Curve Fitting</h1>
+    <p class="intro">
+      This module introduces Python's SciPy and NumPy libraries as practical tools for engineering
+      computation. Learners progress from SciPy fundamentals through root finding, numerical
+      integration, polynomial regression, and nonlinear curve fitting, concluding with residuals
+      analysis and end-to-end engineering data workflows. Use the artifacts below to read, explore,
+      and interact with each topic.
+    </p>
+  </div>
+</header>
 
-  <main>
-    <p class="section-label">Module Artifacts &nbsp;— 10 items</p>
+<!-- ═══════════════════════════════ STAT BAR ════════════════════════════ -->
+<div class="stat-bar">
+  <span class="stat-pill">📦 10 Artifacts</span>
+  <span class="stat-pill">📖 7 Topic Readings</span>
+  <span class="stat-pill">🎮 1 Interactive Activity</span>
+  <span class="stat-pill">📋 1 Module Overview</span>
+  <span class="stat-pill">📄 1 Contextual Reading</span>
+</div>
 
-    <div class="card-grid">
+<!-- ═══════════════════════════════ MAIN ════════════════════════════════ -->
+<main>
 
-      <!-- 1 · Module Topics -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-module">Module Topics</span>
-          <span class="filetype-pill">.json</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+  <!-- ── Overview & Context ── -->
+  <h2 class="section-heading">Overview &amp; Context</h2>
+  <div class="card-grid">
+
+    <!-- Module Topics -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topics">📋</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
+            <a class="source-link" href="source/hierarchy.json">source file</a>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topics">Module Topics</span>
+            <span class="badge badge-ft">.json</span>
+          </div>
         </div>
-        <p class="card-desc">
-          Outlines the full sequence of topics covered in the module—including SciPy fundamentals,
-          root finding, numerical integration, interpolation, and curve fitting—serving as a
-          syllabus-style reference that helps learners and instructors navigate the module's content
-          and progression.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">Outlines the full sequence of topics covered in the module—including SciPy fundamentals, root finding, numerical integration, interpolation, and curve fitting—serving as a syllabus-style reference that helps learners and instructors navigate the module's content and progression.</p>
+    </div>
 
-      <!-- 2 · Applying Numerical Methods (intro) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- Applying Numerical Methods (Text Content / Intro) -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-text">📄</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/_interactive.html">Applying Numerical Methods to Engineering Datasets</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-text">Text Content</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading walks learners through end-to-end engineering data workflows—cleaning raw
-          sensor data, selecting and applying numerical methods, and interpreting results—serving
-          as a contextual overview of how individual techniques combine into realistic engineering
-          pipelines.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading walks learners through end-to-end engineering data workflows—cleaning raw sensor data, selecting and applying numerical methods, and interpreting results—serving as a contextual overview of how individual techniques combine into realistic engineering pipelines.</p>
+    </div>
 
-      <!-- 3 · Introduction to SciPy -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+  </div>
+
+  <!-- ── Topic Readings ── -->
+  <h2 class="section-heading">Topic Readings</h2>
+  <div class="card-grid">
+
+    <!-- T1 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t1.html">Introduction to SciPy for Numerical Computing</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading introduces the SciPy library within the Python scientific computing ecosystem,
-          covering its major submodules, their engineering applications (stress analysis, curve
-          fitting, differential equations), and how learners should set up and navigate SciPy for
-          numerical work.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading introduces the SciPy library within the Python scientific computing ecosystem, covering its major submodules, their engineering applications (stress analysis, curve fitting, differential equations), and how learners should set up and navigate SciPy for numerical work.</p>
+    </div>
 
-      <!-- 4 · Root Finding -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- T2 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t2.html">Root Finding with scipy.optimize</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading explains the concept of root finding and demonstrates how to use
-          scipy.optimize tools (such as brentq and fsolve) to locate function zeros, covering method
-          selection, bracketing, convergence, and practical engineering use cases where analytical
-          solutions are unavailable.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading explains the concept of root finding and demonstrates how to use scipy.optimize tools (such as brentq and fsolve) to locate function zeros, covering method selection, bracketing, convergence, and practical engineering use cases where analytical solutions are unavailable.</p>
+    </div>
 
-      <!-- 5 · Numerical Integration -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- T3 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t3.html">Numerical Integration with scipy.integrate</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading covers numerical integration theory and practice using scipy.integrate,
-          addressing both formula-based integration (quad) and data-based integration (trapezoid,
-          Simpson's rule), with guidance on when and how to apply each tool to real engineering
-          problems.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading covers numerical integration theory and practice using scipy.integrate, addressing both formula-based integration (quad) and data-based integration (trapezoid, Simpson's rule), with guidance on when and how to apply each tool to real engineering problems.</p>
+    </div>
 
-      <!-- 6 · Linear Curve Fitting -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- T4 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t4.html">Linear Curve Fitting with numpy.polyfit</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading teaches polynomial and linear curve fitting using numpy.polyfit, explaining
-          how to model noisy experimental data with best-fit lines or polynomials, interpret
-          coefficients, assess fit quality with R², and apply the workflow to engineering datasets.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading teaches polynomial and linear curve fitting using numpy.polyfit, explaining how to model noisy experimental data with best-fit lines or polynomials, interpret coefficients, assess fit quality with R², and apply the workflow to engineering datasets.</p>
+    </div>
 
-      <!-- 7 · Nonlinear Curve Fitting -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
+    <!-- T5 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
+            <a href="content/Numerical_Methods_with_interactive_topics_t5.html">Nonlinear Curve Fitting with scipy.optimize.curve_fit</a>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Numerical_Methods_with_interactive_topics_t5.html">Nonlinear Curve Fitting with scipy.optimize.curve fit</a>
-          </span>
-        </div>
-        <p class="card-desc">
-          This reading covers nonlinear curve fitting using scipy.optimize.curve_fit, explaining
-          how to define custom model functions (e.g., exponential, power-law), estimate parameters,
-          interpret uncertainty via covariance, and apply the technique to engineering relationships
-          that linear methods cannot capture.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading covers nonlinear curve fitting using scipy.optimize.curve_fit, explaining how to define custom model functions (e.g., exponential, power-law), estimate parameters, interpret uncertainty via covariance, and apply the technique to engineering relationships that linear methods cannot capture.</p>
+    </div>
 
-      <!-- 8 · Residuals Analysis -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- T6 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t6.html">Residuals Analysis</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading explains residuals analysis as a method for evaluating curve-fit quality,
-          teaching learners how to compute, plot, and interpret residuals to detect model inadequacy,
-          bias, or violations of assumptions after fitting linear, polynomial, or nonlinear models.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading explains residuals analysis as a method for evaluating curve-fit quality, teaching learners how to compute, plot, and interpret residuals to detect model inadequacy, bias, or violations of assumptions after fitting linear, polynomial, or nonlinear models.</p>
+    </div>
 
-      <!-- 9 · Applying Numerical Methods (capstone) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-text">Text Content</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+    <!-- T7 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-topic">📘</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="content/Numerical_Methods_with_interactive_topics_t7.html">Applying Numerical Methods to Engineering Datasets</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-topic">Topic Detail</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          This reading walks learners through end-to-end engineering data workflows—cleaning raw
-          sensor data, selecting and applying numerical methods, and interpreting results—serving
-          as a contextual capstone showing how individual numerical techniques integrate into
-          complete engineering analysis pipelines.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">This reading walks learners through end-to-end engineering data workflows—cleaning raw sensor data, selecting and applying numerical methods, and interpreting results—serving as a contextual capstone showing how individual numerical techniques integrate into complete engineering analysis pipelines.</p>
+    </div>
 
-      <!-- 10 · Drag-and-Drop Match -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-interact">Interactive Activity</span>
-          <span class="filetype-pill">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
+  </div>
+
+  <!-- ── Interactive Activities ── -->
+  <h2 class="section-heading">Interactive Activities</h2>
+  <div class="card-grid">
+
+    <!-- Drag-and-Drop -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon icon-inter">🎮</div>
+        <div class="card-title-block">
+          <div class="card-title">
             <a href="interactive/drag-and-drop-match.html">Drag-and-Drop Match</a>
-          </span>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-type t-inter">Interactive Activity</span>
+            <span class="badge badge-ft">.html</span>
+          </div>
         </div>
-        <p class="card-desc">
-          Learners drag SciPy and NumPy function names to their matching input/output descriptions
-          to reinforce recognition of key numerical methods functions, serving as a self-check
-          activity within the module on numerical methods and curve fitting.
-        </p>
       </div>
+      <div class="card-divider"></div>
+      <p class="card-desc">Learners drag SciPy and NumPy function names to their matching input/output descriptions to reinforce recognition of key numerical methods functions, serving as a self-check activity within the module on numerical methods and curve fitting.</p>
+    </div>
 
-    </div><!-- /.card-grid -->
-  </main>
+  </div>
 
-  <footer>
-    EGN3214 &nbsp;·&nbsp; Module 8 — Numerical Methods with SciPy and Curve Fitting
-  </footer>
+</main>
+
+<!-- ═══════════════════════════════ FOOTER ════════════════════════════════ -->
+<footer>
+  <p>EGN3214 &mdash; Module 8: Numerical Methods with SciPy and Curve Fitting &nbsp;|&nbsp; Course Learning Materials</p>
+</footer>
 
 
 <footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>

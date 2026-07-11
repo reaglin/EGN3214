@@ -68,5 +68,10 @@
     "title": "Interactive Activities \u2014 3 - Functions, Comprehensions, and Functional Patterns",
     "href": "interactive/index.html",
     "type": "Interactive"
+  },
+  {
+    "title": "Quiz \u2014 3 - Functions, Comprehensions, and Functional Patterns",
+    "href": "quiz/index.html",
+    "type": "Quiz"
   }
 ]

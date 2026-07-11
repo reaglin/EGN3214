@@ -20,7 +20,7 @@
       var em = document.createElement('a');
       em.className = 'pm-embed-link';
       em.href = 'embed.html?u=' + encodeURIComponent(key) + '&t=' + encodeURIComponent(it.title || a.textContent.trim());
-      em.textContent = 'Embed';
+      em.textContent = '(Embed)';
       em.title = 'Get LMS embed code for this page';
       a.insertAdjacentElement('afterend', em);
     });
