@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conditional Statements</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 2 - Control Flow and Python Data Structures</a></div>
+<h1>Conditional Statements</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: If Else Statements in Python // Python RIGHT NOW!! // EP 4</a>
+<a href="#sec3">Video 2: if if if if if....elif</a>
+<a href="#sec4">Video 3: if-elif-else | Intro to CS - Python | Khan Academy</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Up to this point your programs have run straight through from the first line to the last. Conditional statements change that: they let a program examine a value, ask a yes-or-no question about it, and then choose which block of code to run. In Python this is done with the if statement, optionally extended by one or more elif clauses for additional cases and a final else clause that catches everything not already handled.</p>
+<p>The questions themselves are built from comparison operators (==, !=, &lt;, &gt;, &lt;=, &gt;=) and logical operators (and, or, not), which combine simple tests into more complex ones. Because Python uses indentation to mark the body of a conditional, you also need to be careful about how blocks are nested — a conditional placed inside another conditional only gets evaluated when the outer condition is true. This matters in engineering work, where decisions such as whether a measurement is in tolerance, which material a stress value calls for, or whether a sensor reading is an alarm condition all depend on branching logic.</p>
+<p>As you watch, pay attention to three things: the exact syntax (the colon at the end of the condition line and the consistent indentation beneath it), the order in which branches are tested, and the fact that in an if/elif/else chain only one branch ever runs. Try pausing the videos and predicting the output before the instructor shows it — tracing execution by hand is the fastest way to build reliable intuition.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: If Else Statements in Python // Python RIGHT NOW!! // EP 4</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/5-5Mf_L0UKw?cc_load_policy=1&amp;rel=0" title="Video: If Else Statements in Python // Python RIGHT NOW!! // EP 4 (NetworkChuck)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>NetworkChuck</strong> · 14:19 · 520,998 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=5-5Mf_L0UKw" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>Episode 4 of NetworkChuck&#39;s beginner Python series introduces the if statement and the else clause, likely building a small interactive script that takes input and branches on it. Expect coverage of the basic syntax — the condition line ending in a colon, the indented block beneath it — along with comparison operators used to form the test. It is a hands-on, type-along style video rather than a lecture.</p>
+<h3>Why this video</h3>
+<p>It gives a slow, beginner-friendly first exposure to the if and else subtopics with live coding, which is useful if you have never written a branch before.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: if if if if if....elif</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Ec9WQGw4lW0?cc_load_policy=1&amp;rel=0" title="Video: if if if if if....elif (NetworkChuck)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>NetworkChuck</strong> · 17:56 · 404,544 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=Ec9WQGw4lW0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>This follow-up from the same series focuses on chaining multiple conditions, moving from stacks of separate if statements to the elif clause. The title suggests a direct comparison between writing several independent ifs and writing one if/elif/else chain, which is exactly the distinction most beginners get wrong. Longer and more involved than the previous episode, it likely works through a multi-branch example end to end.</p>
+<h3>Why this video</h3>
+<p>It targets the elif clause specifically and clarifies why only one branch of a chain executes — the single most common source of logic errors in student code.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: if-elif-else | Intro to CS - Python | Khan Academy</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/q0bQrGhdPm4?cc_load_policy=1&amp;rel=0" title="Video: if-elif-else | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:46 · 12,901 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=q0bQrGhdPm4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>Khan Academy&#39;s short lesson walks through chained if-elif-else conditionals and, as the description states, traces the execution of those chains step by step. In under five minutes it concentrates on how control flow moves through the branches rather than on project building. It serves well as a compact review or a reference to rewatch before an assignment.</p>
+<h3>Why this video</h3>
+<p>The explicit execution tracing reinforces branch ordering and mutual exclusivity, and Khan Academy&#39;s intro-to-CS material is accurate and carefully sequenced.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>Together these three videos cover the full if / elif / else construct called for in MO1, along with the comparison and logical operators used to build the conditions and the nesting and ordering behavior that determines which branch runs. The two NetworkChuck episodes supply hands-on practice writing the syntax correctly, while the Khan Academy clip supplies the execution-tracing skill needed to reason about multi-branch and nested conditionals before you run the code. The remaining module outcomes on loops (MO2) and data structures (MO3 through MO5) are addressed in other topics, but the branching logic practiced here is a prerequisite: loop control statements and data-structure processing both rely on conditions you will write using these same patterns.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

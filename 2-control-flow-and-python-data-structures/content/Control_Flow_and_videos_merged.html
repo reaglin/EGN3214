@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>2 - Control Flow and Python Data Structures</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+<style>section.merged-part{border-top:2px solid rgba(128,128,128,.3);margin-top:2rem;padding-top:.5rem}nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}nav.toc a{display:block;text-decoration:none;padding:.12rem 0}</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 2 - Control Flow and Python Data Structures</a></div>
+<h1>2 - Control Flow and Python Data Structures</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#part1">Conditional Statements</a>
+<a href="#part2">for Loops and the range() Function</a>
+<a href="#part3">while Loops</a>
+<a href="#part4">Loop Control: break and continue</a>
+<a href="#part5">Lists</a>
+<a href="#part6">Tuples</a>
+<a href="#part7">Dictionaries</a>
+<a href="#part8">Sets and Choosing the Right Data Structure</a>
+</nav>
+<section class="merged-part" id="part1">
+<h2>Conditional Statements</h2>
+<section class="item" id="p1-sec1">
+<h3>Introduction</h3>
+<p>Up to this point your programs have run straight through from the first line to the last. Conditional statements change that: they let a program examine a value, ask a yes-or-no question about it, and then choose which block of code to run. In Python this is done with the if statement, optionally extended by one or more elif clauses for additional cases and a final else clause that catches everything not already handled.</p>
+<p>The questions themselves are built from comparison operators (==, !=, &lt;, &gt;, &lt;=, &gt;=) and logical operators (and, or, not), which combine simple tests into more complex ones. Because Python uses indentation to mark the body of a conditional, you also need to be careful about how blocks are nested — a conditional placed inside another conditional only gets evaluated when the outer condition is true. This matters in engineering work, where decisions such as whether a measurement is in tolerance, which material a stress value calls for, or whether a sensor reading is an alarm condition all depend on branching logic.</p>
+<p>As you watch, pay attention to three things: the exact syntax (the colon at the end of the condition line and the consistent indentation beneath it), the order in which branches are tested, and the fact that in an if/elif/else chain only one branch ever runs. Try pausing the videos and predicting the output before the instructor shows it — tracing execution by hand is the fastest way to build reliable intuition.</p>
+</section>
+<section class="item" id="p1-sec2">
+<h3>Video 1: If Else Statements in Python // Python RIGHT NOW!! // EP 4</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/5-5Mf_L0UKw?cc_load_policy=1&amp;rel=0" title="Video: If Else Statements in Python // Python RIGHT NOW!! // EP 4 (NetworkChuck)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>NetworkChuck</strong> · 14:19 · 520,998 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=5-5Mf_L0UKw" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>Episode 4 of NetworkChuck's beginner Python series introduces the if statement and the else clause, likely building a small interactive script that takes input and branches on it. Expect coverage of the basic syntax — the condition line ending in a colon, the indented block beneath it — along with comparison operators used to form the test. It is a hands-on, type-along style video rather than a lecture.</p>
+<h4>Why this video</h4>
+<p>It gives a slow, beginner-friendly first exposure to the if and else subtopics with live coding, which is useful if you have never written a branch before.</p>
+</section>
+<section class="item" id="p1-sec3">
+<h3>Video 2: if if if if if....elif</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Ec9WQGw4lW0?cc_load_policy=1&amp;rel=0" title="Video: if if if if if....elif (NetworkChuck)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>NetworkChuck</strong> · 17:56 · 404,544 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=Ec9WQGw4lW0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This follow-up from the same series focuses on chaining multiple conditions, moving from stacks of separate if statements to the elif clause. The title suggests a direct comparison between writing several independent ifs and writing one if/elif/else chain, which is exactly the distinction most beginners get wrong. Longer and more involved than the previous episode, it likely works through a multi-branch example end to end.</p>
+<h4>Why this video</h4>
+<p>It targets the elif clause specifically and clarifies why only one branch of a chain executes — the single most common source of logic errors in student code.</p>
+</section>
+<section class="item" id="p1-sec4">
+<h3>Video 3: if-elif-else | Intro to CS - Python | Khan Academy</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/q0bQrGhdPm4?cc_load_policy=1&amp;rel=0" title="Video: if-elif-else | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:46 · 12,901 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=q0bQrGhdPm4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>Khan Academy's short lesson walks through chained if-elif-else conditionals and, as the description states, traces the execution of those chains step by step. In under five minutes it concentrates on how control flow moves through the branches rather than on project building. It serves well as a compact review or a reference to rewatch before an assignment.</p>
+<h4>Why this video</h4>
+<p>The explicit execution tracing reinforces branch ordering and mutual exclusivity, and Khan Academy's intro-to-CS material is accurate and carefully sequenced.</p>
+</section>
+<section class="item" id="p1-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these three videos cover the full if / elif / else construct called for in MO1, along with the comparison and logical operators used to build the conditions and the nesting and ordering behavior that determines which branch runs. The two NetworkChuck episodes supply hands-on practice writing the syntax correctly, while the Khan Academy clip supplies the execution-tracing skill needed to reason about multi-branch and nested conditionals before you run the code. The remaining module outcomes on loops (MO2) and data structures (MO3 through MO5) are addressed in other topics, but the branching logic practiced here is a prerequisite: loop control statements and data-structure processing both rely on conditions you will write using these same patterns.</p>
+</section>
+<section class="item" id="p1-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part2">
+<h2>for Loops and the range() Function</h2>
+<section class="item" id="p2-sec1">
+<h3>Introduction</h3>
+<p>Repetition is one of the core ideas in programming. Rather than writing the same calculation twenty times, you write it once inside a loop and let Python repeat it. The for loop is Python's tool for stepping through a sequence of items one at a time — characters in a string, measurements in a list, or numbers produced by the range() function. In engineering work, that sequence is often a set of sensor readings, a table of material properties, or a span of time steps in a simulation.</p>
+<p>The range() function deserves special attention because it is how you turn a for loop into a counted loop. range(stop), range(start, stop), and range(start, stop, step) each generate a sequence of integers, and the fact that the stop value is excluded is a common source of off-by-one errors. When you need both the position and the value of each item — for example, to report that the third reading exceeded a limit — enumerate() gives you the index and the element together, which is cleaner and less error-prone than manually maintaining a counter variable.</p>
+<p>As you watch these videos, trace the loop variable by hand: write down its value on each pass and note exactly when the loop stops. Pay attention to indentation, since the indented block is what repeats. Also notice how each presenter chooses between looping directly over a collection and looping over range() — knowing which to reach for is a skill you will use throughout this course.</p>
+</section>
+<section class="item" id="p2-sec2">
+<h3>Video 1: for loops with range() | Intro to CS - Python | Khan Academy</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/QpLf-0MfAgc?cc_load_policy=1&amp;rel=0" title="Video: for loops with range() | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:23 · 14,354 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=QpLf-0MfAgc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, focused lesson on pairing for loops with range() to repeat a block of code a fixed number of times. Based on its description, it walks through tracing how the computer updates the loop variable on each iteration, which is the key mental model for understanding counted loops. Expect clear examples of the start, stop, and step behavior of range().</p>
+<h4>Why this video</h4>
+<p>Khan Academy's Intro to CS material is carefully sequenced and accurate, and the emphasis on tracing loop variable updates directly supports the range() and numeric-range subtopics.</p>
+</section>
+<section class="item" id="p2-sec3">
+<h3>Video 2: Python For Loops - Programming for Beginners</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/dHANJ4l6fwA?cc_load_policy=1&amp;rel=0" title="Video: Python For Loops - Programming for Beginners (Python Simplified)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Python Simplified</strong> · 5:19 · 164,150 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=dHANJ4l6fwA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A beginner-oriented tutorial introducing the for loop as a basic control flow tool in Python, covering both how to write one and why you would use it. It is likely to demonstrate iterating over sequences such as lists and strings, along with the indentation rules that define the loop body. The pacing is brisk and example-driven.</p>
+<h4>Why this video</h4>
+<p>It covers the foundational 'The for Loop' subtopic from the ground up, giving you the general iteration pattern before you specialize it with range().</p>
+</section>
+<section class="item" id="p2-sec4">
+<h3>Video 3: Enumerate Function in Python | Python Tutorial - Day #42</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/kGnYc_h1geM?cc_load_policy=1&amp;rel=0" title="Video: Enumerate Function in Python | Python Tutorial - Day #42 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 7:37 · 354,183 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=kGnYc_h1geM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A dedicated tutorial on Python's enumerate() function, part of CodeWithHarry's day-by-day Python series. It should explain how enumerate() returns both an index and a value during iteration, how to unpack those two items in the for statement, and when this approach is preferable to tracking a counter yourself. The longer runtime allows for worked examples.</p>
+<h4>Why this video</h4>
+<p>This is the only video here devoted to enumerate(), so it fills the 'Iterating with an Index' subtopic directly and shows the idiomatic Python alternative to index arithmetic.</p>
+</section>
+<section class="item" id="p2-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these videos build the for-loop half of MO2: the Python Simplified tutorial establishes the basic for loop over a sequence, the Khan Academy lesson adds range() for controlling a fixed number of iterations over numeric ranges, and the CodeWithHarry video adds enumerate() for cases where you need the index as well as the value. These iteration patterns are also prerequisites for the list-processing work in MO3, since looping is how you read, transform, and summarize the ordered collections you will build later in the module.</p>
+</section>
+<section class="item" id="p2-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part3">
+<h2>while Loops</h2>
+<section class="item" id="p3-sec1">
+<h3>Introduction</h3>
+<p>A while loop repeats a block of code as long as a condition evaluates to True. Unlike a for loop, which walks through a known sequence or range, a while loop is the right tool when you cannot say in advance how many repetitions are needed — reading sensor values until a threshold is crossed, asking a user for input until it is valid, or refining a numerical estimate until the error is small enough.</p>
+<p>Three ideas hold this topic together. First, the structure: initialize a variable before the loop, test a condition at the top, and update that variable inside the loop body. Second, loop guards: if the condition never becomes False, you get an infinite loop, which is the most common while-loop bug. Third, the comparison with for loops: many loops can be written either way, and recognizing when each is clearer is part of writing readable engineering code.</p>
+<p>As you watch, trace the loop variable by hand on each pass — what is its value when the condition is tested, and what changes it inside the body? Pay particular attention to where the update statement sits; moving or forgetting it is usually what turns a working loop into one that never stops.</p>
+</section>
+<section class="item" id="p3-sec2">
+<h3>Video 1: while loops | Intro to CS - Python | Khan Academy</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/KsiWTrZQFXg?cc_load_policy=1&amp;rel=0" title="Video: while loops | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:29 · 12,317 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=KsiWTrZQFXg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>Khan Academy's introduction to while loops shows how a block of code is repeated while a condition holds, and walks through tracing how a loop variable changes from one iteration to the next. Expect a step-by-step execution trace rather than a list of syntax rules.</p>
+<h4>Why this video</h4>
+<p>The emphasis on tracing the loop variable directly supports the first subtopic, loop structure, and builds the mental habit you need to spot a missing update that would cause an infinite loop.</p>
+</section>
+<section class="item" id="p3-sec3">
+<h3>Video 2: Python while loop 🔄</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/rP4p0luqvR8?cc_load_policy=1&amp;rel=0" title="Video: Python while loop 🔄 (Bro Code)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Bro Code</strong> · 4:10 · 37,895 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=rP4p0luqvR8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>Bro Code's fast-paced tutorial demonstrates the while statement in Python with worked examples, typically including input validation patterns where the loop keeps prompting until acceptable data is entered. It covers the basic syntax and the role of the condition that controls repetition.</p>
+<h4>Why this video</h4>
+<p>It is a clear, concise demonstration of the classic use case for while loops — repeating until a condition is satisfied when the iteration count is unknown — from a widely used programming channel.</p>
+</section>
+<section class="item" id="p3-sec4">
+<h3>Video 3: Python Pop: For Loop To While Loop</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/fN7T58KJurU?cc_load_policy=1&amp;rel=0" title="Video: Python Pop: For Loop To While Loop (MaeMap)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>MaeMap</strong> · 4:27 · 1,816 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=fN7T58KJurU" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This short MaeMap video takes a for loop and rewrites it as an equivalent while loop, showing what must be added by hand: the counter initialization, the condition, and the increment. It makes the structural differences between the two loop forms explicit.</p>
+<h4>Why this video</h4>
+<p>It targets the comparing for and while loops subtopic directly, and the side-by-side conversion makes clear why a forgotten increment leaves a while loop running forever.</p>
+</section>
+<section class="item" id="p3-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These three videos build the while-loop half of MO2. Khan Academy establishes the structure and the trace-the-variable habit, Bro Code demonstrates practical Python syntax and the condition-driven use case, and MaeMap's for-to-while conversion clarifies when each loop form is the better choice. Because while conditions are built from the same comparison and logical operators used in if statements, the material also reinforces MO1, and the loops you practice here are the ones you will later use to iterate over lists and other collections in MO3.</p>
+</section>
+<section class="item" id="p3-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part4">
+<h2>Loop Control: break and continue</h2>
+<section class="item" id="p4-sec1">
+<h3>Introduction</h3>
+<p>Loops repeat work, but real programs rarely want every iteration to run to completion in exactly the same way. Sometimes you find what you were searching for and want to stop immediately; sometimes you hit a bad or irrelevant data point and want to skip just that pass and keep going. Python gives you two small but powerful keywords for this: break, which exits the loop entirely, and continue, which jumps straight to the next iteration.</p>
+<p>This topic also introduces a feature that surprises many newcomers: the else clause attached to a for or while loop. Unlike the else in an if statement, a loop's else block runs only when the loop finishes normally, that is, without ever hitting a break. That makes it a clean way to express search patterns such as "look through all the readings; if none exceeded the threshold, report that everything was within limits." You will also encounter pass, which does nothing and is simply a placeholder, and it is worth keeping it mentally separate from break and continue.</p>
+<p>As you watch, pay attention to three things. First, trace exactly where control goes after break versus after continue, especially inside nested loops, where break only exits the innermost loop. Second, watch how the loop variable and any counters or accumulators behave when an iteration is skipped, since a continue placed before an increment in a while loop is a classic infinite loop bug. Third, notice when break and continue genuinely make code clearer and when a well-written condition would be simpler and more readable.</p>
+</section>
+<section class="item" id="p4-sec2">
+<h3>Video 1: break and continue in Python | Python Tutorial - Day #19</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/RkwJnjdrm70?cc_load_policy=1&amp;rel=0" title="Video: break and continue in Python | Python Tutorial - Day #19 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:14 · 858,751 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=RkwJnjdrm70" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused tutorial on the two core loop control statements, showing how break terminates a loop early and how continue skips the remainder of the current iteration. Expect live-coded examples using for and while loops, with the output walked through step by step so you can see the flow of control. Being part of a day-by-day Python series, it stays at an introductory pace and assumes only that you already know how to write a basic loop.</p>
+<h4>Why this video</h4>
+<p>It is the most direct match for the first two subtopics, from a widely followed Python instructor whose beginner series is known for short, example-driven explanations rather than abstract description.</p>
+</section>
+<section class="item" id="p4-sec3">
+<h3>Video 2: for Loop with else in Python | Python Tutorial - Day #35</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/qUkcIgErZzc?cc_load_policy=1&amp;rel=0" title="Video: for Loop with else in Python | Python Tutorial - Day #35 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 6:33 · 357,368 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=qUkcIgErZzc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This video covers the less familiar else clause attached to a for loop, explaining when the else block executes and when it is skipped. It should demonstrate the key rule that else runs only if the loop completes without encountering a break, typically illustrated with a search-style example. The short runtime keeps it tightly on this single idea.</p>
+<h4>Why this video</h4>
+<p>The loop else clause is the subtopic students most often misunderstand, and this video isolates it and ties it directly back to break, which is exactly the connection you need to make.</p>
+</section>
+<section class="item" id="p4-sec4">
+<h3>Video 3: L41: Break continue &amp; pass in python explained with examples</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/SVAVQHfJbE0?cc_load_policy=1&amp;rel=0" title="Video: L41: Break continue &amp; pass in python explained with examples (IIT Madras - B.S. Degree Programme)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>IIT Madras - B.S. Degree Programme</strong> · 12:58 · 44,517 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=SVAVQHfJbE0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A university lecture that treats break, continue, and pass together, explaining each with worked examples and showing how they differ in effect. Because it comes from a structured programming course, it is likely to spend more time on reasoning about control flow and on why you would choose one statement over another. It serves as a more formal companion to the quicker tutorial-style videos.</p>
+<h4>Why this video</h4>
+<p>It adds academic framing and brings in pass for contrast, which helps you build the judgment needed for the practical use cases subtopic rather than just memorizing syntax.</p>
+</section>
+<section class="item" id="p4-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These three videos together support MO2 by covering the loop control statements directly: the first demonstrates break and continue in both for and while loops, the second completes the picture with the loop else clause, and the third reinforces the distinctions with additional worked examples and the contrasting pass statement. Because break and continue are almost always paired with an if test inside the loop body, the examples also reinforce the conditional logic and comparison operators from MO1. Finally, the search and filtering patterns demonstrated here are the same patterns you will apply when iterating over lists and other collections later in the module, providing a bridge toward MO3.</p>
+</section>
+<section class="item" id="p4-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part5">
+<h2>Lists</h2>
+<section class="item" id="p5-sec1">
+<h3>Introduction</h3>
+<p>A list is Python's workhorse container: an ordered, mutable sequence that can hold numbers, strings, or even other lists. Because the items keep their order, you can reach any element by its index position, and because lists are mutable, you can change, add, or remove items after the list has been created. In engineering work this maps naturally onto things like a series of sensor readings, a set of measured dimensions, or a queue of simulation results.</p>
+<p>In this course, lists are the bridge between the control flow ideas you just met and the data structures that follow. Loops become far more useful once you have a collection to iterate over, and conditional statements become more powerful once you can filter or update the contents of a list. Later in the module you will compare lists against tuples, dictionaries, and sets, so a solid grasp of list behavior gives you the baseline for those comparisons.</p>
+<p>As you watch, pay attention to five things: how a list is created and indexed (including negative indices), how items are changed or removed in place, how slice notation selects a sub-range, how a list comprehension compresses a loop into a single expression, and what the common built-in methods such as append, insert, remove, pop, sort, and reverse actually do to the original list. Try typing each example yourself and then changing one value to see what happens.</p>
+</section>
+<section class="item" id="p5-sec2">
+<h3>Video 1: what is a List in Python?</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/1KLgcBcWCsE?cc_load_policy=1&amp;rel=0" title="Video: what is a List in Python? (NetworkChuck)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>NetworkChuck</strong> · 13:14 · 269,816 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=1KLgcBcWCsE" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An introductory walkthrough of what a list is in Python, aimed at viewers who are new to the language. Expect coverage of how to create a list, how to access items by index, and how to change the contents of a list, with the hands-on, follow-along style the channel is known for. It is positioned as part of a beginner Python series, so concepts are built up slowly with live typing rather than slides.</p>
+<h4>Why this video</h4>
+<p>NetworkChuck is a well-known IT and programming educator whose beginner explanations are clear and paced for first-time learners, making this a good entry point for the Creating and Accessing Lists and Modifying Lists subtopics.</p>
+</section>
+<section class="item" id="p5-sec3">
+<h3>Video 2: List Methods in Python | Python Tutorial - Day #23</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/scWc3F8LbOo?cc_load_policy=1&amp;rel=0" title="Video: List Methods in Python | Python Tutorial - Day #23 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 9:32 · 658,156 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=scWc3F8LbOo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused tutorial on Python's built-in list methods, part of CodeWithHarry's day-by-day Python course. It is likely to demonstrate the methods you use most often, such as append, insert, remove, pop, sort, reverse, index, and count, showing how each one affects the list it is called on. The short runtime keeps it practical and example-driven rather than theoretical.</p>
+<h4>Why this video</h4>
+<p>This video targets the Common List Operations and Methods subtopic directly, and the structured tutorial-series format from a high-volume Python teaching channel makes the method-by-method coverage easy to review before an assignment.</p>
+</section>
+<section class="item" id="p5-sec4">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these two videos support MO3 most directly: the first builds the foundation of creating lists, accessing elements by index, and modifying contents, while the second drills into the built-in methods you will use to process ordered collections. They also reinforce MO2, since iterating over a list with a for loop is the natural companion to everything shown here, and they prepare you for MO4 and MO5 by establishing the mutability and ordering behavior of lists that you will later contrast with tuples, dictionaries, and sets. Note that slicing and list comprehensions may receive lighter treatment in these videos, so pair them with the course readings and practice exercises on those subtopics.</p>
+</section>
+<section class="item" id="p5-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part6">
+<h2>Tuples</h2>
+<section class="item" id="p6-sec1">
+<h3>Introduction</h3>
+<p>A tuple is an ordered sequence of values written with parentheses, such as (3.5, 2.1, 0.0) or ('steel', 200e9). Like a list, a tuple keeps its items in order and lets you reach them by index or slice. Unlike a list, a tuple is immutable: once it is created, you cannot add, remove, or replace its elements. That single difference is what makes tuples useful for fixed collections — sensor coordinates, RGB color values, material constants, or a pair of values returned together from a function.</p>
+<p>In this course, tuples matter for two reasons. First, they are the natural choice whenever data should be protected from accidental modification, which makes engineering code easier to trust and to read. Second, tuples support packing and unpacking, a convenient Python idiom that lets you assign several variables at once (x, y, z = point) and return multiple results from a single function. You will also meet tuples indirectly in loops, in dictionary keys, and in function arguments, so recognizing them early pays off later.</p>
+<p>As you watch, pay attention to three things: the syntax details that trip people up (especially the single-element tuple, which needs a trailing comma), what happens when you try to modify a tuple and what the error message tells you, and which operations are still allowed — indexing, slicing, concatenation, membership tests, count, and index. Finally, keep a running mental list of decision criteria: when is a tuple the better choice than a list, and when does immutability get in your way?</p>
+</section>
+<section class="item" id="p6-sec2">
+<h3>Video 1: Tuples in Python | Python Tutorial - Day #24</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/PipsOUDKrVk?cc_load_policy=1&amp;rel=0" title="Video: Tuples in Python | Python Tutorial - Day #24 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 8:15 · 639,511 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=PipsOUDKrVk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An introductory walkthrough of tuples in Python: how to create them with parentheses, how to access elements by index, and how tuples differ from lists. It is likely to demonstrate immutability directly by attempting to change an element and showing the resulting error, and to cover the single-element tuple comma rule.</p>
+<h4>Why this video</h4>
+<p>CodeWithHarry's Python series is a well-paced beginner course, and this episode maps directly onto the Creating and Accessing Tuples and Immutability subtopics with live code you can retype yourself.</p>
+</section>
+<section class="item" id="p6-sec3">
+<h3>Video 2: Operations on Tuples in Python | Python Tutorial - Day #25</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/XblLSduioJI?cc_load_policy=1&amp;rel=0" title="Video: Operations on Tuples in Python | Python Tutorial - Day #25 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 6:59 · 537,579 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=XblLSduioJI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A follow-up lesson focused on what you can actually do with a tuple once it exists, likely including indexing and slicing, concatenation and repetition, membership checks, and built-in methods such as count and index. It should reinforce why these operations return new objects rather than modifying the original tuple.</p>
+<h4>Why this video</h4>
+<p>It extends the first video from syntax to practical use, giving you the concrete operation-by-operation comparison you need to judge tuples against lists in MO4 and MO5.</p>
+</section>
+<section class="item" id="p6-sec4">
+<h3>Video 3: Tuple unpacking in Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Phw9k6x9sO8?cc_load_policy=1&amp;rel=0" title="Video: Tuple unpacking in Python (Python Morsels)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Python Morsels</strong> · 3:17 · 1,699 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=Phw9k6x9sO8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, focused screencast on tuple unpacking: replacing hard-coded indices like point[0] and point[1] with descriptive variable names assigned in a single statement. Expect a demonstration of multiple assignment and the readability benefits it brings.</p>
+<h4>Why this video</h4>
+<p>Python Morsels produces precise, idiom-focused clips, and this one covers the Tuple Packing and Unpacking subtopic better than a general overview, showing why the technique improves code clarity.</p>
+</section>
+<section class="item" id="p6-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these videos target the tuple portion of the module's data-structure outcomes. The first two build the factual basis for MO4 by showing how tuples are created and accessed and by demonstrating immutability and the limited set of permitted operations, so you can contrast tuples with the lists covered in MO3. The operations video and the unpacking clip then supply the practical and readability arguments behind MO5, helping you justify choosing a tuple over a list for fixed engineering data or for returning several values from one function. Because tuples are sequences, the indexing and iteration patterns shown here also carry straight into the for-loop work of MO2.</p>
+</section>
+<section class="item" id="p6-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part7">
+<h2>Dictionaries</h2>
+<section class="item" id="p7-sec1">
+<h3>Introduction</h3>
+<p>A dictionary is a Python collection that stores data as key-value pairs. Instead of asking for "the item at position 3," you ask for "the value stored under the key 'voltage'." You create dictionaries with curly braces, access values by key, and add, update, or remove entries as your program runs. Because keys are looked up directly rather than by scanning through positions, dictionaries give fast access even when they hold large amounts of data.</p>
+<p>This matters in EGN3214 because most engineering data is labeled, not just ordered. Sensor readings tied to sensor IDs, material properties tied to material names, unit conversion factors tied to unit symbols, and student records tied to ID numbers all map naturally onto key-value pairs. Learning dictionaries also sharpens your ability to choose among lists, tuples, dictionaries, and sets, which is one of the central skills of this module.</p>
+<p>As you watch, pay attention to four things: the syntax for creating a dictionary and retrieving a value by key, what happens when you assign to a key that does or does not already exist, the methods keys(), values(), and items() and how they drive loops over a dictionary, and the rules about what can serve as a key. Try each example in your own Python environment and deliberately trigger a KeyError so you recognize it later.</p>
+</section>
+<section class="item" id="p7-sec2">
+<h3>Video 1: Dictionaries in Python | Python Tutorial - Day #33</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/j2G68uQtOwM?cc_load_policy=1&amp;rel=0" title="Video: Dictionaries in Python | Python Tutorial - Day #33 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 10:20 · 593,202 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=j2G68uQtOwM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A full tutorial lesson on Python dictionaries from a long-running beginner Python series. Based on its length and placement in the course, it likely walks through creating dictionaries with curly braces, accessing and changing values by key, adding and deleting entries, and the common built-in dictionary methods, with typed code examples throughout.</p>
+<h4>Why this video</h4>
+<p>At about ten minutes it is the most complete single treatment of the topic here, covering creation, access, and modification in one pass, and CodeWithHarry's day-by-day Python series is a well-established beginner resource.</p>
+</section>
+<section class="item" id="p7-sec3">
+<h3>Video 2: Dictionaries | Intro to CS - Python | Khan Academy</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/nf26Yv5JTOc?cc_load_policy=1&amp;rel=0" title="Video: Dictionaries | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:22 · 9,519 views · 1y ago · captions — <a href="https://www.youtube.com/watch?v=nf26Yv5JTOc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, focused introduction from Khan Academy's Intro to CS - Python course. The description indicates it defines a new dictionary using curly brackets and shows how to access a value by its key, framing dictionaries as a way to store data in key-value pairs.</p>
+<h4>Why this video</h4>
+<p>It is the cleanest starting point if dictionaries are new to you, and Khan Academy's careful, slow-paced explanations make it a reliable first look at the Creating and Accessing Dictionaries subtopic.</p>
+</section>
+<section class="item" id="p7-sec4">
+<h3>Video 3: L59: More on dictionaries | keys, values &amp; essential methods</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/gTpPI3SMnAA?cc_load_policy=1&amp;rel=0" title="Video: L59: More on dictionaries | keys, values &amp; essential methods (IIT Madras - B.S. Degree Programme)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>IIT Madras - B.S. Degree Programme</strong> · 6:16 · 35,111 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=gTpPI3SMnAA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A lecture from the IIT Madras BS Degree Programme course Programming in Python that goes beyond the basics to cover keys, values, and the essential dictionary methods. Expect attention to keys(), values(), and related methods, which are exactly the tools you use to loop over a dictionary's entries.</p>
+<h4>Why this video</h4>
+<p>It extends the introductory videos into the Modifying and Iterating Over Dictionaries subtopics, and it comes from a structured university course sequence, so the terminology matches what you will see in formal coursework.</p>
+</section>
+<section class="item" id="p7-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these three videos build the dictionary half of MO4 and MO5: Khan Academy establishes what a key-value pair is and how access by key differs from access by position, CodeWithHarry extends that into creating, modifying, and deleting entries with full code examples, and the IIT Madras lecture supplies the keys(), values(), and items() methods you need to iterate over dictionary contents. The iteration material also reinforces MO2, since looping over a dictionary's keys or items is a direct application of for loops to a non-numeric sequence. Once you can describe a dictionary's mutability, its access-by-key behavior, and its lookup speed, you have the basis for comparing it against lists, tuples, and sets and for justifying your choice of data structure in an engineering problem.</p>
+</section>
+<section class="item" id="p7-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part8">
+<h2>Sets and Choosing the Right Data Structure</h2>
+<section class="item" id="p8-sec1">
+<h3>Introduction</h3>
+<p>A set in Python is an unordered collection of unique elements. Unlike a list, a set cannot contain duplicates and does not preserve a fixed order, so you cannot index into it. What you gain in return is speed and expressiveness: checking whether a value is in a set is very fast even for large collections, and sets support mathematical operations such as union, intersection, difference, and symmetric difference directly with operators or methods.</p>
+<p>In engineering work these properties matter more than they might first appear. Removing duplicate sensor IDs, finding which parts appear in two different bills of materials, checking whether a node has already been visited in a graph traversal, or testing membership against a large lookup table are all tasks where a set is the natural and efficient choice. Python also provides frozenset, an immutable version of a set that can itself be used as a dictionary key or placed inside another set.</p>
+<p>This topic closes Module 2 by bringing lists, tuples, dictionaries, and sets together and asking the practical question: which one should you use? As you watch, pay attention to three things — the syntax for creating sets (and the trap that empty curly braces create a dictionary, not a set), what each set operation returns and whether it modifies the original set, and the trade-offs in mutability, ordering, duplicates, and lookup speed that distinguish the four core structures.</p>
+</section>
+<section class="item" id="p8-sec2">
+<h3>Video 1: Sets in Python | Python Tutorial - Day #31</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/l3kCO8cVA6o?cc_load_policy=1&amp;rel=0" title="Video: Sets in Python | Python Tutorial - Day #31 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 7:52 · 493,814 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=l3kCO8cVA6o" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An introductory lesson on Python sets covering how to create them, the rule that elements must be unique and hashable, and the fact that sets are unordered and therefore not indexable. Based on its position in the series, it is likely to demonstrate adding and removing elements, membership testing with the in operator, and the common pitfall of using empty braces when you intend an empty set.</p>
+<h4>Why this video</h4>
+<p>It is a short, beginner-friendly entry point from a well-established Python tutorial channel, and it maps directly onto the Creating and Using Sets and Membership Testing subtopics.</p>
+</section>
+<section class="item" id="p8-sec3">
+<h3>Video 2: Set Methods in Python | Python Tutorial - Day #32</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/HOrutCnp2zo?cc_load_policy=1&amp;rel=0" title="Video: Set Methods in Python | Python Tutorial - Day #32 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 15:58 · 491,916 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=HOrutCnp2zo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A follow-up lesson focused on set methods, which would typically include add, update, remove, discard, pop, and clear, along with the set operations union, intersection, difference, and symmetric difference. The longer runtime suggests worked examples of each method and discussion of subset and superset relationships between sets.</p>
+<h4>Why this video</h4>
+<p>It gives the hands-on, method-by-method coverage needed for the Set Operations subtopic and continues directly from the previous video, so the two work well as a pair.</p>
+</section>
+<section class="item" id="p8-sec4">
+<h3>Video 3: Python list vs tuple vs set vs frozenset</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/UqSj3UF5p7w?cc_load_policy=1&amp;rel=0" title="Video: Python list vs tuple vs set vs frozenset (Python In Production)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Python In Production</strong> · 10:44 · 283 views · 4mo ago · captions — <a href="https://www.youtube.com/watch?v=UqSj3UF5p7w" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A comparison-oriented video that places list, tuple, set, and frozenset side by side as containers for working with many objects at once, as part of a broader series on Python data types. Expect discussion of mutability, ordering, duplicate handling, and the situations in which each container is the right choice, including the immutable frozenset.</p>
+<h4>Why this video</h4>
+<p>It is the most direct match for the Comparing Core Data Structures and Selecting the Right Structure subtopics, and it introduces frozenset, which the other two videos may not cover in depth.</p>
+</section>
+<section class="item" id="p8-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These videos support MO4 and MO5 most directly: the two CodeWithHarry lessons build working knowledge of how sets are created, modified, searched, and combined, while the comparison video explicitly contrasts lists, tuples, sets, and frozensets on mutability, ordering, and duplicate handling so you can reason about which structure fits a given problem. Together they also reinforce MO3 by placing lists in context against the alternatives, and the membership-testing and iteration examples connect back to the conditional and loop techniques from MO1 and MO2, since sets are most often used inside if tests and loops over engineering data.</p>
+</section>
+<section class="item" id="p8-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

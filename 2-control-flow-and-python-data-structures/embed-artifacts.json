@@ -25,6 +25,51 @@
     "type": "Content"
   },
   {
+    "title": "Conditional Statements",
+    "href": "content/Control_Flow_and_t1_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "for Loops and the range() Function",
+    "href": "content/Control_Flow_and_t2_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "while Loops",
+    "href": "content/Control_Flow_and_t3_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Loop Control: break and continue",
+    "href": "content/Control_Flow_and_t4_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Lists",
+    "href": "content/Control_Flow_and_t5_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Tuples",
+    "href": "content/Control_Flow_and_t6_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Dictionaries",
+    "href": "content/Control_Flow_and_t7_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Sets and Choosing the Right Data Structure",
+    "href": "content/Control_Flow_and_t8_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "2 - Control Flow and Python Data Structures",
+    "href": "content/Control_Flow_and_videos_merged.html",
+    "type": "Content"
+  },
+  {
     "title": "Control_Flow_and",
     "href": "content/_interactive.html",
     "type": "Content"

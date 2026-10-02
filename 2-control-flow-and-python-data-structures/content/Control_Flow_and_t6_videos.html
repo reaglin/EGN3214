@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tuples</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 2 - Control Flow and Python Data Structures</a></div>
+<h1>Tuples</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Tuples in Python | Python Tutorial - Day #24</a>
+<a href="#sec3">Video 2: Operations on Tuples in Python | Python Tutorial - Day #25</a>
+<a href="#sec4">Video 3: Tuple unpacking in Python</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>A tuple is an ordered sequence of values written with parentheses, such as (3.5, 2.1, 0.0) or (&#39;steel&#39;, 200e9). Like a list, a tuple keeps its items in order and lets you reach them by index or slice. Unlike a list, a tuple is immutable: once it is created, you cannot add, remove, or replace its elements. That single difference is what makes tuples useful for fixed collections — sensor coordinates, RGB color values, material constants, or a pair of values returned together from a function.</p>
+<p>In this course, tuples matter for two reasons. First, they are the natural choice whenever data should be protected from accidental modification, which makes engineering code easier to trust and to read. Second, tuples support packing and unpacking, a convenient Python idiom that lets you assign several variables at once (x, y, z = point) and return multiple results from a single function. You will also meet tuples indirectly in loops, in dictionary keys, and in function arguments, so recognizing them early pays off later.</p>
+<p>As you watch, pay attention to three things: the syntax details that trip people up (especially the single-element tuple, which needs a trailing comma), what happens when you try to modify a tuple and what the error message tells you, and which operations are still allowed — indexing, slicing, concatenation, membership tests, count, and index. Finally, keep a running mental list of decision criteria: when is a tuple the better choice than a list, and when does immutability get in your way?</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Tuples in Python | Python Tutorial - Day #24</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/PipsOUDKrVk?cc_load_policy=1&amp;rel=0" title="Video: Tuples in Python | Python Tutorial - Day #24 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 8:15 · 639,511 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=PipsOUDKrVk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>An introductory walkthrough of tuples in Python: how to create them with parentheses, how to access elements by index, and how tuples differ from lists. It is likely to demonstrate immutability directly by attempting to change an element and showing the resulting error, and to cover the single-element tuple comma rule.</p>
+<h3>Why this video</h3>
+<p>CodeWithHarry&#39;s Python series is a well-paced beginner course, and this episode maps directly onto the Creating and Accessing Tuples and Immutability subtopics with live code you can retype yourself.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: Operations on Tuples in Python | Python Tutorial - Day #25</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/XblLSduioJI?cc_load_policy=1&amp;rel=0" title="Video: Operations on Tuples in Python | Python Tutorial - Day #25 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 6:59 · 537,579 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=XblLSduioJI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A follow-up lesson focused on what you can actually do with a tuple once it exists, likely including indexing and slicing, concatenation and repetition, membership checks, and built-in methods such as count and index. It should reinforce why these operations return new objects rather than modifying the original tuple.</p>
+<h3>Why this video</h3>
+<p>It extends the first video from syntax to practical use, giving you the concrete operation-by-operation comparison you need to judge tuples against lists in MO4 and MO5.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Tuple unpacking in Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Phw9k6x9sO8?cc_load_policy=1&amp;rel=0" title="Video: Tuple unpacking in Python (Python Morsels)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Python Morsels</strong> · 3:17 · 1,699 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=Phw9k6x9sO8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, focused screencast on tuple unpacking: replacing hard-coded indices like point[0] and point[1] with descriptive variable names assigned in a single statement. Expect a demonstration of multiple assignment and the readability benefits it brings.</p>
+<h3>Why this video</h3>
+<p>Python Morsels produces precise, idiom-focused clips, and this one covers the Tuple Packing and Unpacking subtopic better than a general overview, showing why the technique improves code clarity.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>Together these videos target the tuple portion of the module&#39;s data-structure outcomes. The first two build the factual basis for MO4 by showing how tuples are created and accessed and by demonstrating immutability and the limited set of permitted operations, so you can contrast tuples with the lists covered in MO3. The operations video and the unpacking clip then supply the practical and readability arguments behind MO5, helping you justify choosing a tuple over a list for fixed engineering data or for returning several values from one function. Because tuples are sequences, the indexing and iteration patterns shown here also carry straight into the for-loop work of MO2.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>for Loops and the range() Function</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 2 - Control Flow and Python Data Structures</a></div>
+<h1>for Loops and the range() Function</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: for loops with range() | Intro to CS - Python | Khan Academy</a>
+<a href="#sec3">Video 2: Python For Loops - Programming for Beginners</a>
+<a href="#sec4">Video 3: Enumerate Function in Python | Python Tutorial - Day #42</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Repetition is one of the core ideas in programming. Rather than writing the same calculation twenty times, you write it once inside a loop and let Python repeat it. The for loop is Python&#39;s tool for stepping through a sequence of items one at a time — characters in a string, measurements in a list, or numbers produced by the range() function. In engineering work, that sequence is often a set of sensor readings, a table of material properties, or a span of time steps in a simulation.</p>
+<p>The range() function deserves special attention because it is how you turn a for loop into a counted loop. range(stop), range(start, stop), and range(start, stop, step) each generate a sequence of integers, and the fact that the stop value is excluded is a common source of off-by-one errors. When you need both the position and the value of each item — for example, to report that the third reading exceeded a limit — enumerate() gives you the index and the element together, which is cleaner and less error-prone than manually maintaining a counter variable.</p>
+<p>As you watch these videos, trace the loop variable by hand: write down its value on each pass and note exactly when the loop stops. Pay attention to indentation, since the indented block is what repeats. Also notice how each presenter chooses between looping directly over a collection and looping over range() — knowing which to reach for is a skill you will use throughout this course.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: for loops with range() | Intro to CS - Python | Khan Academy</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/QpLf-0MfAgc?cc_load_policy=1&amp;rel=0" title="Video: for loops with range() | Intro to CS - Python | Khan Academy (Khan Academy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Khan Academy</strong> · 4:23 · 14,354 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=QpLf-0MfAgc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, focused lesson on pairing for loops with range() to repeat a block of code a fixed number of times. Based on its description, it walks through tracing how the computer updates the loop variable on each iteration, which is the key mental model for understanding counted loops. Expect clear examples of the start, stop, and step behavior of range().</p>
+<h3>Why this video</h3>
+<p>Khan Academy&#39;s Intro to CS material is carefully sequenced and accurate, and the emphasis on tracing loop variable updates directly supports the range() and numeric-range subtopics.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: Python For Loops - Programming for Beginners</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/dHANJ4l6fwA?cc_load_policy=1&amp;rel=0" title="Video: Python For Loops - Programming for Beginners (Python Simplified)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Python Simplified</strong> · 5:19 · 164,150 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=dHANJ4l6fwA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A beginner-oriented tutorial introducing the for loop as a basic control flow tool in Python, covering both how to write one and why you would use it. It is likely to demonstrate iterating over sequences such as lists and strings, along with the indentation rules that define the loop body. The pacing is brisk and example-driven.</p>
+<h3>Why this video</h3>
+<p>It covers the foundational &#39;The for Loop&#39; subtopic from the ground up, giving you the general iteration pattern before you specialize it with range().</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Enumerate Function in Python | Python Tutorial - Day #42</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/kGnYc_h1geM?cc_load_policy=1&amp;rel=0" title="Video: Enumerate Function in Python | Python Tutorial - Day #42 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 7:37 · 354,183 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=kGnYc_h1geM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A dedicated tutorial on Python&#39;s enumerate() function, part of CodeWithHarry&#39;s day-by-day Python series. It should explain how enumerate() returns both an index and a value during iteration, how to unpack those two items in the for statement, and when this approach is preferable to tracking a counter yourself. The longer runtime allows for worked examples.</p>
+<h3>Why this video</h3>
+<p>This is the only video here devoted to enumerate(), so it fills the &#39;Iterating with an Index&#39; subtopic directly and shows the idiomatic Python alternative to index arithmetic.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>Together these videos build the for-loop half of MO2: the Python Simplified tutorial establishes the basic for loop over a sequence, the Khan Academy lesson adds range() for controlling a fixed number of iterations over numeric ranges, and the CodeWithHarry video adds enumerate() for cases where you need the index as well as the value. These iteration patterns are also prerequisites for the list-processing work in MO3, since looping is how you read, transform, and summarize the ordered collections you will build later in the module.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>
