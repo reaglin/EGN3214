@@ -50,6 +50,51 @@
     "type": "Content"
   },
   {
+    "title": "Numpy Functions",
+    "href": "content/NumPy_for_Engineering_t1_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Introduction to NumPy and the ndarray",
+    "href": "content/NumPy_for_Engineering_t2_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Creating NumPy Arrays",
+    "href": "content/NumPy_for_Engineering_t3_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Element-Wise Operations and Universal Functions",
+    "href": "content/NumPy_for_Engineering_t4_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Broadcasting",
+    "href": "content/NumPy_for_Engineering_t5_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Indexing, Slicing, and Fancy Indexing",
+    "href": "content/NumPy_for_Engineering_t6_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Reshaping, Transposing, and Array Manipulation",
+    "href": "content/NumPy_for_Engineering_t7_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Linear Algebra with NumPy",
+    "href": "content/NumPy_for_Engineering_t8_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "5 - NumPy for Engineering Numerical Computation",
+    "href": "content/NumPy_for_Engineering_videos_merged.html",
+    "type": "Content"
+  },
+  {
     "title": "NumPy_for_Engineering",
     "href": "content/_interactive.html",
     "type": "Content"

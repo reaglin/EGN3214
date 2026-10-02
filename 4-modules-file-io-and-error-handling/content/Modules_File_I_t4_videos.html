@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File I/O with the with Statement</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>File I/O with the with Statement</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Python read a file &#128269;</a>
+<a href="#sec3">Video 2: Intro to Python Pathlib Library | Automate Everything with Python</a>
+<a href="#sec4">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Up to now your programs have worked with data that lives only in memory: once the script ends, everything is gone. File input and output (file I/O) is how a program keeps data between runs — reading a configuration file, logging sensor readings, saving results to a text file that a colleague can open later. In Python the starting point is the built-in open() function, which takes a filename and a mode such as &#39;r&#39; for reading, &#39;w&#39; for writing (which overwrites), or &#39;a&#39; for appending.</p>
+<p>The catch is that an open file is a limited operating-system resource, and if your program crashes before closing it you can leak file handles or lose buffered data that was never written to disk. That is why Python offers the with statement, a context manager that automatically closes the file when the block ends — even if an exception is raised inside it. This connects directly to the error-handling material in this module: a with block paired with try/except is the standard, professional way to work with files. You should also get comfortable with pathlib, the modern object-oriented way to build and inspect file paths so your code works on Windows, macOS, and Linux without hard-coded slashes.</p>
+<p>As you watch the videos below, pay attention to three things: the exact syntax of the with open(...) as f: line and what the variable f actually is; which methods are used to pull text out of a file (read, readline, readlines, or looping over the file directly); and how paths are constructed and checked before a file is opened. Try typing each example yourself and then deliberately break it — use a filename that does not exist — so you can see what error Python raises and how the with statement still cleans up.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Python read a file &#128269;</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/LpZmZs2_BC4?cc_load_policy=1&amp;rel=0" title="Video: Python read a file &#128269; (Bro Code)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Bro Code</strong> · 3:40 · 135,412 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=LpZmZs2_BC4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, fast-paced walkthrough of reading a text file in Python using open() inside a with block, as shown in the description&#39;s try/with/print(file.read()) snippet. It demonstrates the basic file-reading pattern and wraps it in a try block so that a missing or unreadable file is handled gracefully rather than crashing the program.</p>
+<h3>Why this video</h3>
+<p>Bro Code is a well-known Python tutorial channel with concise, code-first examples, and this clip hits the core of the topic — opening files, the with statement context manager, and reading text — while explicitly tying file I/O to error handling, which is exactly the focus of this module.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: Intro to Python Pathlib Library | Automate Everything with Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/_35WzjGtBs4?cc_load_policy=1&amp;rel=0" title="Video: Intro to Python Pathlib Library | Automate Everything with Python (Learn With Udemy Course)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Learn With Udemy Course</strong> · 9:27 · 70 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=_35WzjGtBs4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>An introduction to Python&#39;s pathlib library, the modern object-oriented approach to working with file and directory paths. Expect coverage of creating Path objects, joining path components, and inspecting paths and files, presented as part of a broader automation-with-Python course.</p>
+<h3>Why this video</h3>
+<p>It directly addresses the &#39;Working with File Paths Using pathlib&#39; subtopic, giving you the cross-platform path handling you need before opening files, and at roughly nine minutes it is long enough to show real examples rather than just syntax.</p>
+</section>
+<section class="item" id="sec4">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

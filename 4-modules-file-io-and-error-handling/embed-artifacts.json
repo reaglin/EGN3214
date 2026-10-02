@@ -45,6 +45,46 @@
     "type": "Content"
   },
   {
+    "title": "Introduction to Python Modules",
+    "href": "content/Modules_File_I_t1_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Writing and Using Custom Modules",
+    "href": "content/Modules_File_I_t2_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Using Standard Library Modules",
+    "href": "content/Modules_File_I_t3_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "File I/O with the with Statement",
+    "href": "content/Modules_File_I_t4_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Reading and Writing CSV Files",
+    "href": "content/Modules_File_I_t5_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Working with JSON",
+    "href": "content/Modules_File_I_t6_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Error Handling with try-except",
+    "href": "content/Modules_File_I_t7_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "4 - Modules, File I/O, and Error Handling",
+    "href": "content/Modules_File_I_videos_merged.html",
+    "type": "Content"
+  },
+  {
     "title": "Module 4 \u2014 Basic Computer Skills: File Types",
     "href": "content/Module_4_Basic_Computer_Skills.html",
     "type": "Content"

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Broadcasting</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>Broadcasting</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Numpy Array Broadcasting In Python Explained</a>
+<a href="#sec3">Video 2: L4.3 Vectors, Matrices, and Broadcasting</a>
+<a href="#sec4">Video 3: Numpy Python Tutorial | Numpy Indexing and Slicing | Numpy Broadcasting</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Broadcasting is the rule set NumPy uses to carry out arithmetic between arrays whose shapes are not identical but are compatible. Instead of forcing you to tile or copy data so that both operands have the same shape, NumPy conceptually stretches the smaller array along the dimensions where it has length 1 or where a dimension is missing. The result is code that looks like simple algebra — adding a scalar offset to a sensor array, subtracting a row of column means from a data matrix, or building a 2D grid from two 1D vectors — while running at compiled speed with no extra memory for the stretched copies.</p>
+<p>In this course, broadcasting is what makes vectorized engineering computation practical. Once you can combine a (100, 3) array of measurements with a (3,) array of calibration constants, or a column vector of times with a row vector of frequencies, you stop writing nested Python loops and start writing expressions that mirror the equations in your textbook. Broadcasting is also the most common source of confusing bugs for new NumPy users, because a shape mismatch either raises an error or, worse, silently produces an array of the wrong shape.</p>
+<p>As you watch, keep three things in the front of your mind. First, the actual rule: compare shapes from the trailing (rightmost) dimension backward, and dimensions are compatible only if they are equal or one of them is 1. Second, the role of reshaping tools such as reshape, np.newaxis, and None in deliberately creating a length-1 axis so that an operation broadcasts the way you intend. Third, how to read a ValueError about operands that could not be broadcast together, and how to use .shape to diagnose it before you run anything else.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Numpy Array Broadcasting In Python Explained</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/oG1t3qlzq14?cc_load_policy=1&amp;rel=0" title="Video: Numpy Array Broadcasting In Python Explained (mCoding)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>mCoding</strong> · 13:06 · 41,700 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=oG1t3qlzq14" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A focused walkthrough of how NumPy adds and combines arrays of different shapes, from the mCoding channel. Based on its title and description, it explains the broadcasting mechanism itself — how shapes are compared and aligned — and works through concrete code examples rather than treating broadcasting as a side note. Source code is provided by the producer so you can run the same examples yourself.</p>
+<h3>Why this video</h3>
+<p>mCoding is a well-regarded Python channel known for precise, technically careful explanations, and this is a full-length video devoted entirely to broadcasting, which makes it the best fit for the &#39;What Is Broadcasting?&#39; and &#39;Broadcasting Rules&#39; subtopics.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: L4.3 Vectors, Matrices, and Broadcasting</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/4Ehb_is-MFU?cc_load_policy=1&amp;rel=0" title="Video: L4.3 Vectors, Matrices, and Broadcasting (Sebastian Raschka)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Sebastian Raschka</strong> · 16:15 · 8,878 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=4Ehb_is-MFU" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A lecture segment from Sebastian Raschka&#39;s deep learning course that places broadcasting in the context of vectors, matrices, and linear algebra operations in NumPy and PyTorch. Expect coverage of array dimensionality and shape, how computational libraries extend standard linear algebra conventions, and where broadcasting fits into matrix and vector arithmetic.</p>
+<h3>Why this video</h3>
+<p>Raschka is a university instructor and author, and the linear-algebra framing connects broadcasting to the vector and matrix patterns engineers actually use, supporting the &#39;Common Broadcasting Patterns in Engineering&#39; subtopic.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Numpy Python Tutorial | Numpy Indexing and Slicing | Numpy Broadcasting</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/M7M-VGGJx3o?cc_load_policy=1&amp;rel=0" title="Video: Numpy Python Tutorial | Numpy Indexing and Slicing | Numpy Broadcasting (Acadaimy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Acadaimy</strong> · 6:41 · 2,211 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=M7M-VGGJx3o" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short tutorial that covers NumPy indexing, slicing, and broadcasting together in under seven minutes. It is a compact, hands-on demonstration showing how elements and subarrays are selected and then how arrays of differing shapes are combined in arithmetic expressions.</p>
+<h3>Why this video</h3>
+<p>Its brevity makes it a useful review or quick refresher, and pairing broadcasting with indexing and slicing reinforces the connection between selecting array subsets and operating on them — a link you will need when debugging shape mismatches.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>These three videos together target MO2 directly: the mCoding video establishes what broadcasting is and the shape-compatibility rules that let you combine arrays without explicit Python loops, while Raschka&#39;s lecture shows those rules operating on the vectors and matrices typical of engineering and linear-algebra work. The Acadaimy tutorial reinforces MO2 and also touches MO3 by presenting indexing and slicing alongside broadcasting, which helps you recognize how the shape of a selected subarray determines whether a later operation will broadcast correctly. Collectively they give you both the rule you can apply mechanically and the shape-reasoning habits needed to avoid broadcasting errors in your own code.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

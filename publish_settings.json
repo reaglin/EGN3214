@@ -1,6 +1,6 @@
 ﻿{
-  "RepoUrl": "",
-  "Branch": "main",
+  "RepoUrl": "https://github.com/reaglin/EGN3214/",
+  "Branch": "gh-pages",
   "IncludeQuizzes": true,
   "Theme": "teal"
 }

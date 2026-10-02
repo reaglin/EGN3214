@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>4 - Modules, File I/O, and Error Handling</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+<style>section.merged-part{border-top:2px solid rgba(128,128,128,.3);margin-top:2rem;padding-top:.5rem}nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}nav.toc a{display:block;text-decoration:none;padding:.12rem 0}</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>4 - Modules, File I/O, and Error Handling</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#part1">Introduction to Python Modules</a>
+<a href="#part2">Writing and Using Custom Modules</a>
+<a href="#part3">Using Standard Library Modules</a>
+<a href="#part4">File I/O with the with Statement</a>
+<a href="#part5">Reading and Writing CSV Files</a>
+<a href="#part6">Working with JSON</a>
+<a href="#part7">Error Handling with try-except</a>
+</nav>
+<section class="merged-part" id="part1">
+<h2>Introduction to Python Modules</h2>
+<section class="item" id="p1-sec1">
+<h3>Introduction</h3>
+<p>A module is simply a Python file containing code — functions, classes, and variables — that you can reuse in other programs. Instead of rewriting the same square-root routine or random-number generator in every project, you import a module and call what you need. Python ships with a large standard library of modules such as math, random, os, and sys, and you can also write your own modules and install third-party ones with pip.</p>
+<p>In this course, modules matter because they are the bridge between writing short scripts and building organized, maintainable engineering programs. The same import mechanics you learn here are what let you later open files, catch errors, and eventually pull in scientific packages. Understanding how Python finds a module at runtime — the module search path — also saves you hours of debugging the all-too-common ModuleNotFoundError.</p>
+<p>As you watch, pay attention to the differences among the import forms: plain import module, selective from module import name, and aliasing with import module as alias. Notice how each form changes the name you actually type when calling a function, and watch for any discussion of where Python looks for files (the current directory, then installed library locations). Try typing each example yourself in a file rather than only in the interactive shell, since that is where search-path behavior becomes visible.</p>
+</section>
+<section class="item" id="p1-sec2">
+<h3>Video 1: How import works in Python | Python Tutorial - Day #44</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Pr7UOr35NcI?cc_load_policy=1&amp;rel=0" title="Video: How import works in Python | Python Tutorial - Day #44 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:42 · 354,415 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=Pr7UOr35NcI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused lesson on the mechanics of the import statement in Python, from a longer structured Python tutorial series. It is likely to walk through what happens when Python executes an import, the different import syntaxes available, and how imported names become accessible in your program. Expect live coding demonstrations rather than slides.</p>
+<h4>Why this video</h4>
+<p>Because this video is devoted specifically to how import works rather than just how to use it, it directly supports the harder subtopics of module loading and the search path, and CodeWithHarry's series format keeps the explanation sequential and beginner-friendly.</p>
+</section>
+<section class="item" id="p1-sec3">
+<h3>Video 2: PYTHON MODULES in 9 minutes: import, from, as, namespace, math, random and more</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/hWbD_6xhYe0?cc_load_policy=1&amp;rel=0" title="Video: PYTHON MODULES in 9 minutes: import, from, as, namespace, math, random and more (BitBoss)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>BitBoss</strong> · 9:22 · 87,316 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=hWbD_6xhYe0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A compact nine-minute overview that, per its description, covers what modules are and how to use the import, from, and as statements, along with namespaces and examples from the math and random modules. It is a fast tour that connects each import form to the naming rules that follow from it.</p>
+<h4>Why this video</h4>
+<p>This single video maps almost one-to-one onto the subtopics of this lesson — plain imports, selective imports, aliases, and namespaces — making it an efficient review or a strong first watch before the longer tutorials.</p>
+</section>
+<section class="item" id="p1-sec4">
+<h3>Video 3: Modules and Pip | Python Tutorial - Day #3</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/xwKO_y2gHxQ?cc_load_policy=1&amp;rel=0" title="Video: Modules and Pip | Python Tutorial - Day #3 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:41 · 3,698,442 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=xwKO_y2gHxQ" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An early-series introduction that presents modules alongside pip, Python's package installer. It likely explains the idea of reusable code libraries, shows importing a standard library module, and then demonstrates installing and importing an external package.</p>
+<h4>Why this video</h4>
+<p>It supplies the practical context for why modules exist and where they come from, which rounds out the conceptual What Is a Module? subtopic; its very large view count reflects its usefulness as an accessible starting point.</p>
+</section>
+<section class="item" id="p1-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part2">
+<h2>Writing and Using Custom Modules</h2>
+<section class="item" id="p2-sec1">
+<h3>Introduction</h3>
+<p>Up to now you have probably written each program as a single Python file. As your engineering scripts grow, you will find yourself copying the same unit-conversion function, material constant, or plotting helper from one file to the next. A custom module solves this: any .py file you write can be imported into another script, so the functions and constants you define once become reusable tools across every project you build.</p>
+<p>This topic walks through the full workflow. You create a module file with a sensible name, group related functions and constants inside it, add docstrings so others (including future you) know how to use it, and then import it from another script using import or from ... import. A key piece is the if __name__ == '__main__' guard, which lets a file behave as both a runnable program and an importable library: code under the guard runs only when you execute the file directly, not when something imports it. Without the guard, your module's test or demo code fires every time it is imported, which is a common and confusing bug.</p>
+<p>The videos below focus on the two parts that trip students up most: understanding what __name__ actually is and why the guard matters, and organizing code sensibly across files. While watching, pay attention to what gets printed when a file is run directly versus imported, how module-level code differs from code inside functions, and how splitting code into separate files changes the way you call it.</p>
+</section>
+<section class="item" id="p2-sec2">
+<h3>Video 1: if __name__ == "__main__" in Python | Python Tutorial - Day #45</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/y_CX2Rvitk8?cc_load_policy=1&amp;rel=0" title="Video: if __name__ == &quot;__main__&quot; in Python | Python Tutorial - Day #45 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 9:24 · 373,338 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=y_CX2Rvitk8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A tutorial-style walkthrough of the if __name__ == '__main__' statement in Python, part of a longer beginner Python series. It should explain what the built-in __name__ variable holds, how its value changes between running a file directly and importing it, and how the guard is written in practice. Expect live code demonstrations with two files showing the difference in behavior.</p>
+<h4>Why this video</h4>
+<p>At just over nine minutes it gives the guard enough time for a full worked example, and CodeWithHarry's step-by-step beginner teaching style suits students meeting modules for the first time.</p>
+</section>
+<section class="item" id="p2-sec3">
+<h3>Video 2: What does if __name__ == '__main__' do in Python?</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/x5IbdKnvt6k?cc_load_policy=1&amp;rel=0" title="Video: What does if __name__ == '__main__' do in Python? (Tech With Tim)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Tech With Tim</strong> · 5:08 · 87,974 views · 1y ago · captions — <a href="https://www.youtube.com/watch?v=x5IbdKnvt6k" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A concise explanation of the same construct, aimed at clearing up why the line appears in so much Python code. It likely demonstrates importing a file and observing which code executes, then shows how the guard restricts the demo or test code to direct execution only. The short format makes it a quick reference or review.</p>
+<h4>Why this video</h4>
+<p>Tech With Tim is a well-regarded Python channel, and this five-minute version is a good second pass or refresher if you want the concept stated compactly after the longer tutorial.</p>
+</section>
+<section class="item" id="p2-sec4">
+<h3>Video 3: 5 Tips To Organize Python Code</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/e9yMYdnSlUA?cc_load_policy=1&amp;rel=0" title="Video: 5 Tips To Organize Python Code (Tech With Tim)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Tech With Tim</strong> · 12:16 · 342,490 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=e9yMYdnSlUA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>Five practical tips for organizing Python code, which should touch on splitting work into functions, separating code across files and modules, using constants rather than magic numbers, and keeping related logic grouped together. The advice is general-purpose rather than tied to one construct, so treat it as guidance you apply when deciding what belongs in your module.</p>
+<h4>Why this video</h4>
+<p>It directly supports the organizing functions and constants subtopic and helps you make good design decisions about what to pull out of a script and into a reusable module.</p>
+</section>
+<section class="item" id="p2-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part3">
+<h2>Using Standard Library Modules</h2>
+<section class="item" id="p3-sec1">
+<h3>Introduction</h3>
+<p>Python ships with a large collection of ready-made modules known as the standard library. Instead of writing your own code to compute a square root, list the files in a folder, read command-line arguments, stamp a record with the current date, or generate a test value, you import a module that already does it. In this topic we look at five that come up constantly in engineering scripting: math for numeric functions and constants, os and os.path for working with files and directories in a platform-independent way, sys for interacting with the interpreter and the command line, datetime for dates and times, and random for pseudo-random values and sampling.</p>
+<p>These modules matter in EGN3214 because they are the bridge between the plain Python syntax you have practiced and real scripting tasks: building a path to a data file, checking whether it exists before opening it, timestamping output, pulling an input filename from the command line, and exiting cleanly when something goes wrong. None of them require installation, so any script you write using them will run on a classmate's machine or a lab computer without extra setup. They also pair directly with the file I/O and exception handling material in the rest of this module.</p>
+<p>As you watch the videos below, pay attention to three things: the import statement itself and the different forms it can take, the dotted notation used to reach a function inside a module, and how the presenter finds out what a module offers. Getting comfortable reading the official Python documentation for a module is more valuable than memorizing individual function names, because the same pattern applies to every module in the standard library.</p>
+</section>
+<section class="item" id="p3-sec2">
+<h3>Video 1: Time Module in Python | Python Tutorial - Day #84</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/oTtIvV-Q1FY?cc_load_policy=1&amp;rel=0" title="Video: Time Module in Python | Python Tutorial - Day #84 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 11:37 · 138,483 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=oTtIvV-Q1FY" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This video walks through Python's time module, covering how the interpreter represents time, how to get the current time, how to format or convert it for display, and how to pause execution with a sleep call. It is demonstrated live in a code editor so you can see the import and the function calls in context.</p>
+<h4>Why this video</h4>
+<p>Time handling is the closest companion to the datetime subtopic, and the video shows the same pattern of importing a standard library module and exploring its functions that applies across all five modules here. The sleep and timestamp techniques it demonstrates are routinely useful in engineering scripts that log data or poll for results.</p>
+</section>
+<section class="item" id="p3-sec3">
+<h3>Video 2: Modules and Pip | Python Tutorial - Day #3</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/xwKO_y2gHxQ?cc_load_policy=1&amp;rel=0" title="Video: Modules and Pip | Python Tutorial - Day #3 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:41 · 3,698,442 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=xwKO_y2gHxQ" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This lesson introduces what a module is in Python, how to bring one into your program with an import statement, and how to call the functions it provides. It distinguishes modules that come bundled with Python from third-party packages, and demonstrates using pip to install libraries that are not part of the standard library.</p>
+<h4>Why this video</h4>
+<p>It establishes the foundation the whole topic rests on: the import mechanism and dotted access that you will use identically for math, os, sys, datetime, and random. The contrast it draws between built-in and installed modules clarifies exactly why standard library modules need no additional setup.</p>
+</section>
+<section class="item" id="p3-sec4">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part4">
+<h2>File I/O with the with Statement</h2>
+<section class="item" id="p4-sec1">
+<h3>Introduction</h3>
+<p>Up to now your programs have worked with data that lives only in memory: once the script ends, everything is gone. File input and output (file I/O) is how a program keeps data between runs — reading a configuration file, logging sensor readings, saving results to a text file that a colleague can open later. In Python the starting point is the built-in open() function, which takes a filename and a mode such as 'r' for reading, 'w' for writing (which overwrites), or 'a' for appending.</p>
+<p>The catch is that an open file is a limited operating-system resource, and if your program crashes before closing it you can leak file handles or lose buffered data that was never written to disk. That is why Python offers the with statement, a context manager that automatically closes the file when the block ends — even if an exception is raised inside it. This connects directly to the error-handling material in this module: a with block paired with try/except is the standard, professional way to work with files. You should also get comfortable with pathlib, the modern object-oriented way to build and inspect file paths so your code works on Windows, macOS, and Linux without hard-coded slashes.</p>
+<p>As you watch the videos below, pay attention to three things: the exact syntax of the with open(...) as f: line and what the variable f actually is; which methods are used to pull text out of a file (read, readline, readlines, or looping over the file directly); and how paths are constructed and checked before a file is opened. Try typing each example yourself and then deliberately break it — use a filename that does not exist — so you can see what error Python raises and how the with statement still cleans up.</p>
+</section>
+<section class="item" id="p4-sec2">
+<h3>Video 1: Python read a file 🔍</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/LpZmZs2_BC4?cc_load_policy=1&amp;rel=0" title="Video: Python read a file 🔍 (Bro Code)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Bro Code</strong> · 3:40 · 135,412 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=LpZmZs2_BC4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, fast-paced walkthrough of reading a text file in Python using open() inside a with block, as shown in the description's try/with/print(file.read()) snippet. It demonstrates the basic file-reading pattern and wraps it in a try block so that a missing or unreadable file is handled gracefully rather than crashing the program.</p>
+<h4>Why this video</h4>
+<p>Bro Code is a well-known Python tutorial channel with concise, code-first examples, and this clip hits the core of the topic — opening files, the with statement context manager, and reading text — while explicitly tying file I/O to error handling, which is exactly the focus of this module.</p>
+</section>
+<section class="item" id="p4-sec3">
+<h3>Video 2: Intro to Python Pathlib Library | Automate Everything with Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/_35WzjGtBs4?cc_load_policy=1&amp;rel=0" title="Video: Intro to Python Pathlib Library | Automate Everything with Python (Learn With Udemy Course)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Learn With Udemy Course</strong> · 9:27 · 70 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=_35WzjGtBs4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An introduction to Python's pathlib library, the modern object-oriented approach to working with file and directory paths. Expect coverage of creating Path objects, joining path components, and inspecting paths and files, presented as part of a broader automation-with-Python course.</p>
+<h4>Why this video</h4>
+<p>It directly addresses the 'Working with File Paths Using pathlib' subtopic, giving you the cross-platform path handling you need before opening files, and at roughly nine minutes it is long enough to show real examples rather than just syntax.</p>
+</section>
+<section class="item" id="p4-sec4">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part5">
+<h2>Reading and Writing CSV Files</h2>
+<section class="item" id="p5-sec1">
+<h3>Introduction</h3>
+<p>A CSV (comma-separated values) file is one of the simplest and most widely used ways to store tabular data. It is just plain text: each line is a row, and the values in that row are separated by commas. Spreadsheet programs, lab instruments, sensors, and web services all export CSV, which is why engineers run into it constantly. Because it is plain text, you can open a CSV in any editor and see exactly what is there — a useful habit before you write code against it.</p>
+<p>Python ships with a built-in csv module, so no third-party installation is required. In this topic you will work with four tools from that module: csv.reader, which gives you each row as a list; csv.DictReader, which uses the header row to give you each row as a dictionary keyed by column name; csv.writer, which writes rows from lists; and csv.DictWriter, which writes rows from dictionaries and can emit the header for you. This connects directly to the file I/O and exception handling work earlier in Module 4 — you still open files with open(), still use with blocks, and still need to handle missing files and malformed data.</p>
+<p>As you watch, pay attention to a few specific things: how the file is opened (including the newline='' argument that prevents blank rows on some systems), whether the header row is being consumed or skipped, and when the list-based approach is more convenient than the dictionary-based one. Also notice that everything read from a CSV arrives as a string, so numeric columns must be converted with int() or float() before you can do arithmetic on them.</p>
+</section>
+<section class="item" id="p5-sec2">
+<h3>Video 1: Reading a CSV file in Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9AJvH-nM5zs?cc_load_policy=1&amp;rel=0" title="Video: Reading a CSV file in Python (Python Morsels)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Python Morsels</strong> · 3:22 · 1,179 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=9AJvH-nM5zs" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, focused screencast on reading a CSV file using only Python's standard library csv module. Based on the title and description, it walks through the helper functions the module provides for reading, showing that no third-party package such as pandas is needed for basic work. Expect to see a file opened and its rows iterated over in a few lines of code.</p>
+<h4>Why this video</h4>
+<p>Python Morsels is a well-regarded Python teaching resource, and the tight three-minute format gives you a clean, accurate first look at csv.reader before moving on to the dictionary-based variants.</p>
+</section>
+<section class="item" id="p5-sec3">
+<h3>Video 2: Understanding CSV Files</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/UofTplCVkYI?cc_load_policy=1&amp;rel=0" title="Video: Understanding CSV Files (macmostvideo)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>macmostvideo</strong> · 5:21 · 124,781 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=UofTplCVkYI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A conceptual explanation of what CSV files actually are: plain text files that hold spreadsheet-style data, useful for importing and exporting between applications. It is not Python-specific, so it focuses on the format itself — rows, delimiters, and how spreadsheet programs interpret them. This is the background that makes the Python code in the other videos make sense.</p>
+<h4>Why this video</h4>
+<p>It directly serves the 'What Is a CSV File?' subtopic, and understanding the format independently of any one language helps you reason about quoting, delimiters, and header rows when your own files misbehave.</p>
+</section>
+<section class="item" id="p5-sec4">
+<h3>Video 3: Python Files - Let's read data from a csv into a dictionary</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/pIIIZBnuegk?cc_load_policy=1&amp;rel=0" title="Video: Python Files - Let's read data from a csv into a dictionary (Python with Andrew)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Python with Andrew</strong> · 7:10 · 1,683 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=pIIIZBnuegk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A hands-on walkthrough of reading CSV data into dictionaries so that columns can be accessed by name rather than by position. Given the title and description, it demonstrates the pattern behind csv.DictReader and why keying rows by column header makes data easier to work with. Expect practical code you can adapt to your own data files.</p>
+<h4>Why this video</h4>
+<p>This covers the csv.DictReader subtopic in a worked, step-by-step way, and it illustrates the key trade-off between list-based and dictionary-based reading that you will need when deciding which writer to use as well.</p>
+</section>
+<section class="item" id="p5-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part6">
+<h2>Working with JSON</h2>
+<section class="item" id="p6-sec1">
+<h3>Introduction</h3>
+<p>JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data. It looks a lot like a mix of Python dictionaries and lists: curly braces hold key-value pairs, square brackets hold ordered sequences, and values can be strings, numbers, booleans, null, or nested objects and arrays. Because it is both human-readable and easy for programs to parse, JSON has become the default way that web APIs exchange data and that applications store settings and configuration.</p>
+<p>In this module you have been working with files and with code that can fail at runtime; JSON sits right at the intersection of those ideas. Python's built-in json module gives you four functions to remember: json.loads and json.load turn JSON text (from a string or a file object) into Python objects, and json.dumps and json.dump turn Python objects back into JSON text (to a string or a file). You will also meet the module's limits — not every Python object is serializable, dictionary keys become strings, tuples become arrays, and malformed input raises a JSONDecodeError that your program should handle gracefully.</p>
+<p>As you watch the videos below, pay attention to three things: the mapping between JSON types and Python types, the difference between the functions ending in 's' (string) and those without (file), and formatting options such as indent and sort_keys that make configuration files readable. Try typing the examples yourself and then deliberately break one — delete a comma or a quote — so you can see what error Python reports.</p>
+</section>
+<section class="item" id="p6-sec2">
+<h3>Video 1: JSON Tutorial Python | Basic Python Recipes</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Q1uKHJXeB_Y?cc_load_policy=1&amp;rel=0" title="Video: JSON Tutorial Python | Basic Python Recipes (mCoding)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>mCoding</strong> · 5:56 · 25,759 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=Q1uKHJXeB_Y" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A concise, practical walkthrough of reading and writing JSON in Python using the standard library json module. Expect to see loading JSON from a file and from a string, dumping Python data structures back out, and the type correspondence between JSON and Python values. Source code is provided by the channel so you can follow along.</p>
+<h4>Why this video</h4>
+<p>mCoding is produced by a professional Python developer known for accurate, no-filler explanations, making this a reliable first look at json.load/loads and json.dump/dumps.</p>
+</section>
+<section class="item" id="p6-sec3">
+<h3>Video 2: How To Use JSON In Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/-51jxlQaxyA?cc_load_policy=1&amp;rel=0" title="Video: How To Use JSON In Python (Tech With Tim)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Tech With Tim</strong> · 6:11 · 248,880 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=-51jxlQaxyA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A fast-paced introduction aimed at getting you productive with JSON in Python in a few minutes. It is likely to cover the basic syntax of JSON, converting between Python dictionaries and JSON strings, and saving and loading JSON data from files. The pacing suits a quick review or a second pass after the other videos.</p>
+<h4>Why this video</h4>
+<p>Tech With Tim is a widely followed Python instructor whose beginner-focused style reinforces the core four functions and the dictionary-to-JSON mental model with minimal overhead.</p>
+</section>
+<section class="item" id="p6-sec4">
+<h3>Video 3: Learn JSON Step-by-Step from Scratch</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9t3vMi95z2w?cc_load_policy=1&amp;rel=0" title="Video: Learn JSON Step-by-Step from Scratch (Automation Step by Step)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Automation Step by Step</strong> · 13:11 · 126,173 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=9t3vMi95z2w" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A language-agnostic, step-by-step introduction to JSON itself: what it is, what it is used for, how to write valid JSON by hand, and a demo of building and inspecting a JSON document. It spends time on syntax rules and structure rather than on any one programming language.</p>
+<h4>Why this video</h4>
+<p>This is the best fit for the 'What Is JSON?' subtopic and for understanding configuration files, since it grounds you in the format's rules before you start calling Python functions on it.</p>
+</section>
+<section class="item" id="p6-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part7">
+<h2>Error Handling with try-except</h2>
+<section class="item" id="p7-sec1">
+<h3>Introduction</h3>
+<p>Up to this point, most of your Python scripts have assumed everything goes right: the file exists, the user types a number, and the denominator is never zero. Real engineering scripts do not get that luxury. A sensor log may be missing, a CSV column may contain text where a float was expected, or a calculation may divide by zero partway through a batch of data. Python signals these runtime problems by raising exceptions, and if nothing handles them, the program stops immediately with a traceback.</p>
+<p>Exception handling gives you a structured way to anticipate those failures and respond to them. In this topic you will learn what an exception actually is, how the basic try-except block separates risky code from recovery code, and how the optional else and finally clauses let you run code only when no error occurred or always run cleanup such as closing a file. You will also see how to capture the exception object itself so you can report a useful message instead of a bare crash, and how to raise exceptions deliberately when your own function receives invalid input, such as a negative length or an out-of-range temperature.</p>
+<p>As you watch the videos below, pay attention to three things: which specific exception types are being caught (catching a bare Exception hides bugs), the exact order in which try, except, else, and finally execute, and how the presenter uses the exception message to explain what went wrong. Then connect it back to Module 4 as a whole, since file I/O is where most of your exception handling will live, and try the same examples yourself with deliberately broken input.</p>
+</section>
+<section class="item" id="p7-sec2">
+<h3>Video 1: Exception Handling in Python | Python Tutorial - Day #36</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/4LKo6dlku7M?cc_load_policy=1&amp;rel=0" title="Video: Exception Handling in Python | Python Tutorial - Day #36 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 10:53 · 674,912 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=4LKo6dlku7M" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This video introduces Python exceptions and the basic try-except structure, showing how code that would normally crash can be caught and handled instead. Expect demonstrations of common error types and how to write except clauses that respond to them, including accessing the error information Python provides. It is the natural starting point for the first several subtopics.</p>
+<h4>Why this video</h4>
+<p>CodeWithHarry is a widely followed Python instructor whose day-by-day tutorial series builds concepts in small, well-sequenced steps, making this a clear and accurate introduction to what an exception is and how try-except works.</p>
+</section>
+<section class="item" id="p7-sec3">
+<h3>Video 2: Finally keyword in Python | Python Tutorial - Day #37</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/r_iuC-IDpPM?cc_load_policy=1&amp;rel=0" title="Video: Finally keyword in Python | Python Tutorial - Day #37 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 8:05 · 400,752 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=r_iuC-IDpPM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A direct follow-up that focuses on the finally keyword and how it fits alongside try and except. It should demonstrate that finally runs whether or not an exception occurred, which is exactly the behavior you want for cleanup tasks like closing a file or releasing a resource. Watch for the execution order relative to the except block and any return statements.</p>
+<h4>Why this video</h4>
+<p>It targets the else and finally subtopic specifically, and because it continues the same series the examples and style carry over directly from the previous video.</p>
+</section>
+<section class="item" id="p7-sec4">
+<h3>Video 3: Raising custom errors in Python | Python Tutorial - Day #38</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Phr4CNppYoM?cc_load_policy=1&amp;rel=0" title="Video: Raising custom errors in Python | Python Tutorial - Day #38 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 10:42 · 394,301 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=Phr4CNppYoM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This video covers raising exceptions yourself with the raise statement and defining custom error types for your own code. It should show how a function can reject invalid input by raising an informative error rather than silently returning a wrong result. This maps directly onto validating engineering inputs such as negative dimensions or impossible material properties.</p>
+<h4>Why this video</h4>
+<p>It completes the topic by moving from catching errors to signaling them, which is the subtopic most relevant to writing reusable engineering functions that other code can trust.</p>
+</section>
+<section class="item" id="p7-sec5">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

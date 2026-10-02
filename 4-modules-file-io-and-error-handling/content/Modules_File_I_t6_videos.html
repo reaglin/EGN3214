@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working with JSON</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>Working with JSON</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: JSON Tutorial Python | Basic Python Recipes</a>
+<a href="#sec3">Video 2: How To Use JSON In Python</a>
+<a href="#sec4">Video 3: Learn JSON Step-by-Step from Scratch</a>
+<a href="#sec5">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data. It looks a lot like a mix of Python dictionaries and lists: curly braces hold key-value pairs, square brackets hold ordered sequences, and values can be strings, numbers, booleans, null, or nested objects and arrays. Because it is both human-readable and easy for programs to parse, JSON has become the default way that web APIs exchange data and that applications store settings and configuration.</p>
+<p>In this module you have been working with files and with code that can fail at runtime; JSON sits right at the intersection of those ideas. Python&#39;s built-in json module gives you four functions to remember: json.loads and json.load turn JSON text (from a string or a file object) into Python objects, and json.dumps and json.dump turn Python objects back into JSON text (to a string or a file). You will also meet the module&#39;s limits — not every Python object is serializable, dictionary keys become strings, tuples become arrays, and malformed input raises a JSONDecodeError that your program should handle gracefully.</p>
+<p>As you watch the videos below, pay attention to three things: the mapping between JSON types and Python types, the difference between the functions ending in &#39;s&#39; (string) and those without (file), and formatting options such as indent and sort_keys that make configuration files readable. Try typing the examples yourself and then deliberately break one — delete a comma or a quote — so you can see what error Python reports.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: JSON Tutorial Python | Basic Python Recipes</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Q1uKHJXeB_Y?cc_load_policy=1&amp;rel=0" title="Video: JSON Tutorial Python | Basic Python Recipes (mCoding)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>mCoding</strong> · 5:56 · 25,759 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=Q1uKHJXeB_Y" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A concise, practical walkthrough of reading and writing JSON in Python using the standard library json module. Expect to see loading JSON from a file and from a string, dumping Python data structures back out, and the type correspondence between JSON and Python values. Source code is provided by the channel so you can follow along.</p>
+<h3>Why this video</h3>
+<p>mCoding is produced by a professional Python developer known for accurate, no-filler explanations, making this a reliable first look at json.load/loads and json.dump/dumps.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: How To Use JSON In Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/-51jxlQaxyA?cc_load_policy=1&amp;rel=0" title="Video: How To Use JSON In Python (Tech With Tim)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Tech With Tim</strong> · 6:11 · 248,880 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=-51jxlQaxyA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A fast-paced introduction aimed at getting you productive with JSON in Python in a few minutes. It is likely to cover the basic syntax of JSON, converting between Python dictionaries and JSON strings, and saving and loading JSON data from files. The pacing suits a quick review or a second pass after the other videos.</p>
+<h3>Why this video</h3>
+<p>Tech With Tim is a widely followed Python instructor whose beginner-focused style reinforces the core four functions and the dictionary-to-JSON mental model with minimal overhead.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Learn JSON Step-by-Step from Scratch</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9t3vMi95z2w?cc_load_policy=1&amp;rel=0" title="Video: Learn JSON Step-by-Step from Scratch (Automation Step by Step)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Automation Step by Step</strong> · 13:11 · 126,173 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=9t3vMi95z2w" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A language-agnostic, step-by-step introduction to JSON itself: what it is, what it is used for, how to write valid JSON by hand, and a demo of building and inspecting a JSON document. It spends time on syntax rules and structure rather than on any one programming language.</p>
+<h3>Why this video</h3>
+<p>This is the best fit for the &#39;What Is JSON?&#39; subtopic and for understanding configuration files, since it grounds you in the format&#39;s rules before you start calling Python functions on it.</p>
+</section>
+<section class="item" id="sec5">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

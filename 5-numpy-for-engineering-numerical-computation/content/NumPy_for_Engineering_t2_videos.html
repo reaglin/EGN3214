@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to NumPy and the ndarray</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>Introduction to NumPy and the ndarray</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Numpy Tutorial #2 - Numpy Arrays vs Python Lists (Python f&#252;r Data Science)</a>
+<a href="#sec3">Video 2: L88: Introduction to numpy library | arrays vs lists explained</a>
+<a href="#sec4">Video 3: NumPy vs Pandas</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>NumPy (Numerical Python) is the foundation of almost all scientific and engineering computing in Python. At its core is a single data structure: the ndarray, an N-dimensional array of elements that all share one data type and sit in a contiguous block of memory. That design is what makes NumPy fast — operations are applied to whole arrays at once by compiled code rather than by stepping through items one at a time in Python.</p>
+<p>In this course, NumPy is the bridge between the general-purpose Python you already know and real numerical engineering work: sensor data, measurement series, coordinate sets, matrices of coefficients, and simulation results. Before you can create arrays, index them, or do linear algebra, you need a clear mental model of how an ndarray differs from a Python list. A list can hold mixed types and grows easily, but it stores references to scattered objects; an ndarray is fixed in size and homogeneous, which is exactly what allows vectorized arithmetic and the attributes you will rely on throughout the module.</p>
+<p>As you watch, focus on four things: what NumPy is and what problems it was built to solve; how an ndarray is created and what it actually stores; concrete comparisons of speed, memory, and behavior between arrays and lists (notice how + behaves differently for each); and the key attributes that describe an array — shape, ndim, size, and dtype. Try typing the examples yourself and printing those attributes for every array you make; it is the fastest way to build intuition for the rest of the module.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Numpy Tutorial #2 - Numpy Arrays vs Python Lists (Python f&#252;r Data Science)</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/0tNt4Lu7EZg?cc_load_policy=1&amp;rel=0" title="Video: Numpy Tutorial #2 - Numpy Arrays vs Python Lists (Python f&#252;r Data Science) (The Morpheus Tutorials)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>The Morpheus Tutorials</strong> · 15:27 · 15,971 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=0tNt4Lu7EZg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>The second entry in a Python data science tutorial series, this video focuses specifically on comparing NumPy arrays with standard Python lists. Expect hands-on code demonstrations of how each structure is created and how they differ in typing, memory behavior, and the results of arithmetic operations, likely including timing comparisons that show why arrays are preferred for numerical work.</p>
+<h3>Why this video</h3>
+<p>It targets the &#39;NumPy Arrays vs. Python Lists&#39; subtopic directly and at length, giving you enough runtime to see worked examples rather than a one-line claim that arrays are faster. Note that the series is produced in a German-language Data Science context, so use the on-screen code as your main reference.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: L88: Introduction to numpy library | arrays vs lists explained</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/O0IrNk1qoUE?cc_load_policy=1&amp;rel=0" title="Video: L88: Introduction to numpy library | arrays vs lists explained (IIT Madras - B.S. Degree Programme)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>IIT Madras - B.S. Degree Programme</strong> · 10:23 · 26,099 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=O0IrNk1qoUE" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A lecture from the IIT Madras B.S. Degree &#39;Programming in Python&#39; course that introduces the NumPy library and then explains the array-versus-list distinction. As a classroom-style lecture it should cover what NumPy is, why it exists alongside core Python, how to import it and build arrays, and the reasoning behind the ndarray&#39;s homogeneous, fixed-size design.</p>
+<h3>Why this video</h3>
+<p>It is a university lecture from a structured programming course, so the explanation is paced for students meeting NumPy for the first time and covers both &#39;What Is NumPy?&#39; and the list comparison in one place.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: NumPy vs Pandas</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/KHoEbRH46Zk?cc_load_policy=1&amp;rel=0" title="Video: NumPy vs Pandas (IBM Technology)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>IBM Technology</strong> · 5:55 · 301,392 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=KHoEbRH46Zk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, high-level IBM Technology explainer that positions NumPy against Pandas: what each library is for, what data structures they provide, and when an engineer or analyst would reach for one versus the other. It frames NumPy as the numerical array layer that other libraries, including Pandas, are built on top of.</p>
+<h3>Why this video</h3>
+<p>It gives useful context for &#39;What Is NumPy?&#39; by showing where NumPy sits in the wider Python data ecosystem, and at under six minutes from a reputable producer it is an efficient orientation before you dive into array mechanics.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>These videos establish the conceptual groundwork the rest of the module depends on. Understanding that an ndarray is homogeneous, fixed-size, and contiguous explains why creation functions like np.array(), np.arange(), and np.linspace() exist and must be chosen deliberately (MO1), and why element-wise arithmetic and broadcasting work on arrays but not on lists (MO2). The emphasis on shape, ndim, size, and dtype prepares you to reason about which elements you are selecting when you move on to slicing, Boolean masking, and fancy indexing (MO3), and to keep track of dimensions when passing matrices to numpy.linalg for solving systems and finding eigenvalues (MO4). Finally, seeing where NumPy fits among Python&#39;s numerical tools motivates its use for descriptive statistics and evaluating mathematical functions over whole datasets at once (MO5).</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

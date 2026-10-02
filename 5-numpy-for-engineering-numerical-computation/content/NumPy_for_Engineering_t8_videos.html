@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linear Algebra with NumPy</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>Linear Algebra with NumPy</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Numpy Arrays - Fast Linear Algebra in Python</a>
+<a href="#sec3">Video 2: 8 Numpy Matrix Multiplication | Dot | Inner | Outer [Product]</a>
+<a href="#sec4">Video 3: HOW TO: LINEAR ALGEBRA BASICS USING NUMPY FOR DATA SCIENCE</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Linear algebra is the mathematical backbone of most engineering computation. Circuit analysis, static equilibrium problems, finite element models, structural vibration, control systems, and least-squares curve fitting all reduce, at some point, to matrices and vectors. NumPy&#39;s numpy.linalg module gives you fast, well-tested implementations of these operations so you can focus on setting up the problem correctly rather than coding Gaussian elimination from scratch.</p>
+<p>In this topic you will work with matrix multiplication (the @ operator, np.dot, np.matmul, and the related inner and outer products), solving systems of equations with np.linalg.solve, extracting eigenvalues and eigenvectors with np.linalg.eig, applying decompositions such as LU, QR, SVD, and Cholesky, and computing norms and determinants with np.linalg.norm and np.linalg.det. A recurring theme is the distinction between element-wise operations (the * operator) and true matrix operations (the @ operator) — a mistake here produces results that look plausible but are wrong.</p>
+<p>As you watch, pay close attention to array shapes: which dimensions must match for a product to be legal, and what shape comes back. Also notice that results are floating point, so a determinant that should be exactly zero may come back as something like 1e-17; learn to interpret near-singular systems rather than trusting equality checks. Try to re-type the examples yourself as you watch, and then apply them to a small engineering system of your own.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Numpy Arrays - Fast Linear Algebra in Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/u5kq2VpSAgo?cc_load_policy=1&amp;rel=0" title="Video: Numpy Arrays - Fast Linear Algebra in Python (Socratica)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Socratica</strong> · 14:10 · 17,205 views · 6mo ago · captions — <a href="https://www.youtube.com/watch?v=u5kq2VpSAgo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A recent, polished overview of NumPy arrays framed specifically around doing linear algebra quickly in Python. Based on its title and framing, it should cover how arrays are created and shaped, how array operations differ from ordinary Python lists, and how NumPy&#39;s compiled routines make matrix and vector work fast. Expect demonstrations of core array arithmetic leading into linear algebra operations.</p>
+<h3>Why this video</h3>
+<p>Socratica is a well-established producer of clear, carefully scripted Python tutorials, and this video is the most current of the three. It gives you the array foundation and performance rationale that the rest of the topic builds on.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: 8 Numpy Matrix Multiplication | Dot | Inner | Outer [Product]</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9EWLIMoUlq4?cc_load_policy=1&amp;rel=0" title="Video: 8 Numpy Matrix Multiplication | Dot | Inner | Outer [Product] (Data Insights School)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Data Insights School</strong> · 16:04 · 1,606 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=9EWLIMoUlq4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A focused walkthrough of multiplication operations on NumPy arrays and matrices, distinguishing the dot product, the inner product, and the outer product. The description indicates worked examples with vectors and matrices so you can see what each function expects as input and what shape it returns.</p>
+<h3>Why this video</h3>
+<p>Matrix multiplication is the first subtopic here, and this video treats it in depth rather than in passing — particularly useful for sorting out the frequently confused dot, inner, and outer products and the shape rules behind each.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: HOW TO: LINEAR ALGEBRA BASICS USING NUMPY FOR DATA SCIENCE</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Aeh4HS3yheg?cc_load_policy=1&amp;rel=0" title="Video: HOW TO: LINEAR ALGEBRA BASICS USING NUMPY FOR DATA SCIENCE (Mr Fugu Data Science)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Mr Fugu Data Science</strong> · 14:39 · 305 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=Aeh4HS3yheg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A practical tour of common linear algebra operations in NumPy aimed at data science workflows. From its title and description, expect coverage of routines in the numpy.linalg family — things like determinants, inverses, solving systems, and eigen-decomposition — shown as short code examples rather than theory.</p>
+<h3>Why this video</h3>
+<p>It ties several subtopics together in one place, including solving linear systems, eigenvalues, norms, and determinants, giving you a compact reference for which function to reach for in a given situation.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>These videos target MO4 most directly: between them they demonstrate np.linalg routines for solving systems of linear equations and for computing eigenvalues and eigenvectors of square matrices, along with supporting operations such as determinants, inverses, and norms. The Socratica video reinforces MO1 and MO2 by reviewing array construction and vectorized, loop-free arithmetic, which is the prerequisite mindset for treating whole matrices as single objects. The matrix multiplication video sharpens the MO2 distinction between element-wise operations and true matrix products, while the shape-handling and slicing shown throughout all three reinforce the indexing skills of MO3 as you assemble coefficient matrices and right-hand-side vectors from engineering data.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

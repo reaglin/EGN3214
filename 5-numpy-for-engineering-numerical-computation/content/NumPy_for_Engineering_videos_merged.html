@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>5 - NumPy for Engineering Numerical Computation</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+<style>section.merged-part{border-top:2px solid rgba(128,128,128,.3);margin-top:2rem;padding-top:.5rem}nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}nav.toc a{display:block;text-decoration:none;padding:.12rem 0}</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 5 - NumPy for Engineering Numerical Computation</a></div>
+<h1>5 - NumPy for Engineering Numerical Computation</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#part1">Numpy Functions</a>
+<a href="#part2">Introduction to NumPy and the ndarray</a>
+<a href="#part3">Creating NumPy Arrays</a>
+<a href="#part4">Element-Wise Operations and Universal Functions</a>
+<a href="#part5">Broadcasting</a>
+<a href="#part6">Indexing, Slicing, and Fancy Indexing</a>
+<a href="#part7">Reshaping, Transposing, and Array Manipulation</a>
+<a href="#part8">Linear Algebra with NumPy</a>
+</nav>
+<section class="merged-part" id="part1">
+<h2>Numpy Functions</h2>
+<section class="item" id="p1-sec1">
+<h3>Introduction</h3>
+<p>NumPy is more than a container for numbers: it ships with a large library of ready-made functions that do the heavy lifting of engineering computation. These fall into a few families you will use again and again: mathematical and arithmetic functions (element-wise addition, powers, exponentials, trigonometry), statistical functions (mean, median, standard deviation, min/max, sums along an axis), linear algebra functions in numpy.linalg (matrix multiplication, determinants, inverses, solving Ax = b, eigenvalues), array manipulation functions (reshape, transpose, concatenate, stack, split), sorting and searching functions (sort, argsort, argmax, where, searchsorted), and input/output functions for loading and saving data (loadtxt, genfromtxt, save, savetxt).</p>
+<p>This matters in EGN3214 because engineering problems usually arrive as tables of measurements or systems of equations, not as single scalars. Writing Python loops over thousands of sensor readings is slow and error-prone; calling a vectorized NumPy function on the whole array is one line, far faster, and much closer to the mathematical notation you already use in statics, circuits, and thermodynamics.</p>
+<p>As you watch the videos below, pay attention to three things: (1) the distinction between element-wise operations (the * operator) and true matrix operations (np.dot, the @ operator, or numpy.linalg routines) — this is the single most common source of bugs; (2) how shapes and axes control what a function returns, especially for statistics computed along rows versus columns; and (3) when a problem outgrows NumPy and is better handled by a specialized library such as SciPy. Keep a notebook open and retype the examples rather than only watching.</p>
+</section>
+<section class="item" id="p1-sec2">
+<h3>Video 1: Numpy Arrays - Fast Linear Algebra in Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/u5kq2VpSAgo?cc_load_policy=1&amp;rel=0" title="Video: Numpy Arrays - Fast Linear Algebra in Python (Socratica)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Socratica</strong> · 14:10 · 17,205 views · 6mo ago · captions — <a href="https://www.youtube.com/watch?v=u5kq2VpSAgo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A broad introduction to NumPy arrays with an emphasis on linear algebra, from the Socratica channel. Expect coverage of how arrays are created and shaped, how arithmetic on arrays is vectorized, and how NumPy performs matrix operations such as products, inverses, and solving systems quickly compared with plain Python.</p>
+<h4>Why this video</h4>
+<p>Socratica is a well-regarded producer of concise, carefully scripted Python tutorials, and this video connects the mathematical and arithmetic function family directly to the linear algebra subtopic in a single clear narrative.</p>
+</section>
+<section class="item" id="p1-sec3">
+<h3>Video 2: DS - ML Tutorial 21. Arithmetic and Linear Algebra Operations with NumPy</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/2CXelmQnfjY?cc_load_policy=1&amp;rel=0" title="Video: DS - ML Tutorial 21. Arithmetic and Linear Algebra Operations with NumPy (Demystify with Ajay)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Demystify with Ajay</strong> · 19:36 · 1,395 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=2CXelmQnfjY" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A longer, worked tutorial that walks through arithmetic operations on NumPy arrays and then moves into linear algebra operations. The pace allows for live demonstration of the operations in code, so you can see the syntax, the printed output, and the difference between element-wise and matrix-level computation.</p>
+<h4>Why this video</h4>
+<p>At roughly twenty minutes it gives more hands-on screen time than a short overview, making it a good follow-along companion for practicing the arithmetic and numpy.linalg functions yourself.</p>
+</section>
+<section class="item" id="p1-sec4">
+<h3>Video 3: SciPy - A Scientific Extension of NumPy | Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/wuIrxCrXIyc?cc_load_policy=1&amp;rel=0" title="Video: SciPy - A Scientific Extension of NumPy | Python (Socratica)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Socratica</strong> · 10:01 · 11,771 views · 6mo ago · captions — <a href="https://www.youtube.com/watch?v=wuIrxCrXIyc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An overview of SciPy, the collection of scientific modules built on top of NumPy arrays. The video introduces what SciPy adds beyond NumPy — specialized routines for areas such as optimization, integration, interpolation, signal processing, and advanced linear algebra — and shows how SciPy functions consume and return ordinary NumPy arrays.</p>
+<h4>Why this video</h4>
+<p>It sets the boundary of the topic: once you know NumPy's built-in function families, this clarifies which engineering tasks reach past them, and it reinforces that the NumPy array remains the common data structure across the scientific Python stack.</p>
+</section>
+<section class="item" id="p1-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these videos reinforce the module outcomes. The Socratica array video and the Demystify with Ajay tutorial both demonstrate array creation and shaping (MO1) and vectorized element-wise arithmetic across arrays without Python loops (MO2), while their indexing and slicing examples support selecting subsets of data (MO3). Their linear algebra segments map directly onto solving systems of equations and computing eigenvalues with numpy.linalg (MO4), and the array-wide mathematical and statistical functions shown — sums, means, trigonometric and power functions applied to whole arrays — underpin characterizing engineering data (MO5). The SciPy video extends the picture, showing where NumPy's function library hands off to more specialized scientific routines, which is useful context as you choose the right tool for a given computation.</p>
+</section>
+<section class="item" id="p1-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part2">
+<h2>Introduction to NumPy and the ndarray</h2>
+<section class="item" id="p2-sec1">
+<h3>Introduction</h3>
+<p>NumPy (Numerical Python) is the foundation of almost all scientific and engineering computing in Python. At its core is a single data structure: the ndarray, an N-dimensional array of elements that all share one data type and sit in a contiguous block of memory. That design is what makes NumPy fast — operations are applied to whole arrays at once by compiled code rather than by stepping through items one at a time in Python.</p>
+<p>In this course, NumPy is the bridge between the general-purpose Python you already know and real numerical engineering work: sensor data, measurement series, coordinate sets, matrices of coefficients, and simulation results. Before you can create arrays, index them, or do linear algebra, you need a clear mental model of how an ndarray differs from a Python list. A list can hold mixed types and grows easily, but it stores references to scattered objects; an ndarray is fixed in size and homogeneous, which is exactly what allows vectorized arithmetic and the attributes you will rely on throughout the module.</p>
+<p>As you watch, focus on four things: what NumPy is and what problems it was built to solve; how an ndarray is created and what it actually stores; concrete comparisons of speed, memory, and behavior between arrays and lists (notice how + behaves differently for each); and the key attributes that describe an array — shape, ndim, size, and dtype. Try typing the examples yourself and printing those attributes for every array you make; it is the fastest way to build intuition for the rest of the module.</p>
+</section>
+<section class="item" id="p2-sec2">
+<h3>Video 1: Numpy Tutorial #2 - Numpy Arrays vs Python Lists (Python für Data Science)</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/0tNt4Lu7EZg?cc_load_policy=1&amp;rel=0" title="Video: Numpy Tutorial #2 - Numpy Arrays vs Python Lists (Python für Data Science) (The Morpheus Tutorials)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>The Morpheus Tutorials</strong> · 15:27 · 15,971 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=0tNt4Lu7EZg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>The second entry in a Python data science tutorial series, this video focuses specifically on comparing NumPy arrays with standard Python lists. Expect hands-on code demonstrations of how each structure is created and how they differ in typing, memory behavior, and the results of arithmetic operations, likely including timing comparisons that show why arrays are preferred for numerical work.</p>
+<h4>Why this video</h4>
+<p>It targets the 'NumPy Arrays vs. Python Lists' subtopic directly and at length, giving you enough runtime to see worked examples rather than a one-line claim that arrays are faster. Note that the series is produced in a German-language Data Science context, so use the on-screen code as your main reference.</p>
+</section>
+<section class="item" id="p2-sec3">
+<h3>Video 2: L88: Introduction to numpy library | arrays vs lists explained</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/O0IrNk1qoUE?cc_load_policy=1&amp;rel=0" title="Video: L88: Introduction to numpy library | arrays vs lists explained (IIT Madras - B.S. Degree Programme)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>IIT Madras - B.S. Degree Programme</strong> · 10:23 · 26,099 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=O0IrNk1qoUE" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A lecture from the IIT Madras B.S. Degree 'Programming in Python' course that introduces the NumPy library and then explains the array-versus-list distinction. As a classroom-style lecture it should cover what NumPy is, why it exists alongside core Python, how to import it and build arrays, and the reasoning behind the ndarray's homogeneous, fixed-size design.</p>
+<h4>Why this video</h4>
+<p>It is a university lecture from a structured programming course, so the explanation is paced for students meeting NumPy for the first time and covers both 'What Is NumPy?' and the list comparison in one place.</p>
+</section>
+<section class="item" id="p2-sec4">
+<h3>Video 3: NumPy vs Pandas</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/KHoEbRH46Zk?cc_load_policy=1&amp;rel=0" title="Video: NumPy vs Pandas (IBM Technology)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>IBM Technology</strong> · 5:55 · 301,392 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=KHoEbRH46Zk" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, high-level IBM Technology explainer that positions NumPy against Pandas: what each library is for, what data structures they provide, and when an engineer or analyst would reach for one versus the other. It frames NumPy as the numerical array layer that other libraries, including Pandas, are built on top of.</p>
+<h4>Why this video</h4>
+<p>It gives useful context for 'What Is NumPy?' by showing where NumPy sits in the wider Python data ecosystem, and at under six minutes from a reputable producer it is an efficient orientation before you dive into array mechanics.</p>
+</section>
+<section class="item" id="p2-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These videos establish the conceptual groundwork the rest of the module depends on. Understanding that an ndarray is homogeneous, fixed-size, and contiguous explains why creation functions like np.array(), np.arange(), and np.linspace() exist and must be chosen deliberately (MO1), and why element-wise arithmetic and broadcasting work on arrays but not on lists (MO2). The emphasis on shape, ndim, size, and dtype prepares you to reason about which elements you are selecting when you move on to slicing, Boolean masking, and fancy indexing (MO3), and to keep track of dimensions when passing matrices to numpy.linalg for solving systems and finding eigenvalues (MO4). Finally, seeing where NumPy fits among Python's numerical tools motivates its use for descriptive statistics and evaluating mathematical functions over whole datasets at once (MO5).</p>
+</section>
+<section class="item" id="p2-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part3">
+<h2>Creating NumPy Arrays</h2>
+<section class="item" id="p3-sec1">
+<h3>Introduction</h3>
+<p>Every NumPy workflow begins with getting data into an array. Sometimes that data already exists as a Python list or tuple and simply needs converting; more often, you need to generate it — a time vector for a simulation, a grid of sample points for plotting a function, a matrix of zeros to accumulate results, an identity matrix for a linear algebra step, or random values for a Monte Carlo trial. NumPy provides a dedicated creation function for each of these cases, and choosing the right one makes your code shorter, faster, and easier to read.</p>
+<p>In this course, array creation is the foundation everything else rests on. The vectorized arithmetic, indexing, linear algebra, and statistics you will use later all assume you can produce arrays of the right shape and data type to begin with. Pay particular attention to the distinction between np.arange(), which is defined by a step size and excludes the endpoint, and np.linspace(), which is defined by a count of points and includes the endpoint — this difference causes a large share of beginner errors in engineering scripts.</p>
+<p>As you watch, keep a few questions in mind: What arguments does each function take, and what does it return? What is the dtype of the resulting array, and when does that matter? How do the shape and reshape operations relate to the number of elements? Try typing each example into your own Python session and then changing one argument at a time to see what happens.</p>
+</section>
+<section class="item" id="p3-sec2">
+<h3>Video 1: Numpy Tutorial #1 - Create Arrays (Python for Data Science)</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/XamW67vUJ-Q?cc_load_policy=1&amp;rel=0" title="Video: Numpy Tutorial #1 - Create Arrays (Python for Data Science) (The Morpheus Tutorials)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>The Morpheus Tutorials</strong> · 13:20 · 36,036 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=XamW67vUJ-Q" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>An introductory tutorial on creating NumPy arrays, opening a longer Python-for-data-science playlist. Based on its title and position in the series, it should cover importing NumPy, building arrays from Python lists and nested lists, and inspecting basic attributes such as shape and data type. Expect the pace of a first-contact lesson, with code typed out and explained line by line.</p>
+<h4>Why this video</h4>
+<p>It directly addresses the 'Creating Arrays from Python Sequences' subtopic and gives you the vocabulary (array, shape, dtype) that the remaining videos assume. As the first entry in an established tutorial series, it is pitched at exactly the level of someone meeting NumPy for the first time.</p>
+</section>
+<section class="item" id="p3-sec3">
+<h3>Video 2: How to Create Numpy Arrays Using Numpy Functions ( arange(), zeros(), ones(), full() and reshape())</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/DZiJGALRfJQ?cc_load_policy=1&amp;rel=0" title="Video: How to Create Numpy Arrays Using Numpy Functions ( arange(), zeros(), ones(), full() and reshape()) (WsCube Tech! ENGLISH)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>WsCube Tech! ENGLISH</strong> · 12:52 · 4,625 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=DZiJGALRfJQ" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused walkthrough of NumPy's built-in generator functions: arange() for evenly spaced sequences by step, zeros(), ones(), and full() for constant-value initialization, and reshape() for changing the layout of an existing array. The description indicates each function is demonstrated with concrete code examples.</p>
+<h4>Why this video</h4>
+<p>This is the closest match to the 'Range' and 'Constant-Value Initialization Functions' subtopics, and the inclusion of reshape() helps you connect the number of elements an array holds to the shape it can take.</p>
+</section>
+<section class="item" id="p3-sec4">
+<h3>Video 3: Numpy Tutorial #14 - More ways to create arrays (Python for Data Science)</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/pv3KvUMRZKs?cc_load_policy=1&amp;rel=0" title="Video: Numpy Tutorial #14 - More ways to create arrays (Python for Data Science) (The Morpheus Tutorials)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>The Morpheus Tutorials</strong> · 8:10 · 2,465 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=pv3KvUMRZKs" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A later episode in the same series that gathers additional array-creation techniques beyond the basic np.array() call. Given its title and placement, it likely surveys functions such as linspace, identity or eye, and random generation, showing when each is the natural choice.</p>
+<h4>Why this video</h4>
+<p>It fills in the remaining subtopics — linspace, identity and diagonal matrices, and random arrays — and reinforces the idea that NumPy offers a specialized constructor for each common pattern rather than requiring loops.</p>
+</section>
+<section class="item" id="p3-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these three videos cover the construction functions named in MO1: converting Python sequences with np.array(), generating evenly spaced values with np.arange() and np.linspace(), filling arrays with zeros(), ones(), and full(), and producing identity and random arrays. They also build the shape and dtype awareness you will need downstream — broadcasting in MO2 depends on understanding array shapes, indexing in MO3 depends on knowing how arrays are laid out, the linear algebra work in MO4 frequently starts from an identity or zero matrix, and the statistical and function-evaluation tasks in MO5 typically begin with a linspace-generated input range.</p>
+</section>
+<section class="item" id="p3-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part4">
+<h2>Element-Wise Operations and Universal Functions</h2>
+<section class="item" id="p4-sec1">
+<h3>Introduction</h3>
+<p>In NumPy, arithmetic and mathematical operations are applied element by element across an entire array at once. Writing a + b, a * 2, or np.sin(a) tells NumPy to loop internally in compiled code rather than in Python, which is why vectorized code is both shorter to write and dramatically faster than an equivalent for-loop. The functions that perform these element-wise operations — np.add, np.sqrt, np.exp, np.sin, and many others — are called universal functions, or ufuncs.</p>
+<p>This matters for engineering work because measurement data, time steps, node positions, and sensor channels naturally live in arrays. Converting a column of readings from volts to pressure, computing the magnitude of force components, or evaluating a model at a thousand time points all become single expressions. Related ideas follow from the same mechanism: comparison operators (&gt;, &lt;=, ==) applied to an array return a Boolean array of the same shape, which can then be used as a mask, and aggregate reductions such as sum(), mean(), min(), max(), and std() collapse an array down to a summary value, optionally along a chosen axis.</p>
+<p>As you watch, pay attention to three things: the shapes of the arrays going into each operation and coming out, when broadcasting lets arrays of different shapes combine (and when it raises an error), and the difference between an operation that returns a full array and a reduction that returns a single number. Try typing the examples yourself and checking .shape and .dtype after each step.</p>
+</section>
+<section class="item" id="p4-sec2">
+<h3>Video 1: Numpy  Fundamentals | Array Operations</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/587cXyBzUjg?cc_load_policy=1&amp;rel=0" title="Video: Numpy  Fundamentals | Array Operations (Dan Kornas)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Dan Kornas</strong> · 6:25 · 92 views · 1y ago · captions — <a href="https://www.youtube.com/watch?v=587cXyBzUjg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short overview of core NumPy array operations, aimed at showing how computations are performed efficiently on arrays rather than through Python loops. Expect demonstrations of basic element-wise arithmetic and common built-in array methods and functions.</p>
+<h4>Why this video</h4>
+<p>Its brevity and focus on operations make it a good orientation to the whole topic, setting up vectorized arithmetic and the general idea of applying functions across an array at once.</p>
+</section>
+<section class="item" id="p4-sec3">
+<h3>Video 2: Arithmetic Operations with NumPy Arrays | NumPy Python Tutorials - In English</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/7wZMDSaVqS0?cc_load_policy=1&amp;rel=0" title="Video: Arithmetic Operations with NumPy Arrays | NumPy Python Tutorials - In English (WsCube Tech! ENGLISH)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>WsCube Tech! ENGLISH</strong> · 5:15 · 1,616 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=7wZMDSaVqS0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused tutorial on arithmetic with NumPy arrays, covering addition, subtraction, multiplication, and division applied element-wise between arrays and between an array and a scalar. It is part of WsCube Tech's structured NumPy tutorial series, so the examples are presented step by step in a coding environment.</p>
+<h4>Why this video</h4>
+<p>It gives direct, hands-on coverage of the vectorized arithmetic subtopic, and being from an established tutorial series it keeps the syntax and terminology consistent and easy to follow.</p>
+</section>
+<section class="item" id="p4-sec4">
+<h3>Video 3: 🚀 How to BROADCAST Numpy Arrays?🚀(DON'T MISS the Rules to Broadcast Arrays)</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/_n7X8MXM3q0?cc_load_policy=1&amp;rel=0" title="Video: 🚀 How to BROADCAST Numpy Arrays?🚀(DON'T MISS the Rules to Broadcast Arrays) (Non Techie)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Non Techie</strong> · 3:23 · 54 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=_n7X8MXM3q0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A quick explainer on broadcasting: how NumPy stretches arrays of different but compatible shapes so that element-wise operations can still be performed. The description indicates it also walks through the rules that determine when broadcasting is allowed.</p>
+<h4>Why this video</h4>
+<p>Broadcasting is the rule set that makes element-wise operations work beyond identically shaped arrays, so this video fills in the shape-compatibility reasoning that the arithmetic videos assume.</p>
+</section>
+<section class="item" id="p4-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these videos target MO2 most directly: the first two build fluency with vectorized element-wise arithmetic on arrays, and the third supplies the broadcasting rules needed to combine arrays of compatible but different shapes without writing loops. Because element-wise comparisons produce Boolean arrays, the operations shown here also underpin the Boolean masking skills in MO3, and the ufunc and reduction patterns introduced here are the same ones used to evaluate trigonometric functions and compute descriptive statistics in MO5. The arrays used in the demonstrations assume the creation functions from MO1, so watching these clips reinforces that earlier material in an applied setting.</p>
+</section>
+<section class="item" id="p4-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part5">
+<h2>Broadcasting</h2>
+<section class="item" id="p5-sec1">
+<h3>Introduction</h3>
+<p>Broadcasting is the rule set NumPy uses to carry out arithmetic between arrays whose shapes are not identical but are compatible. Instead of forcing you to tile or copy data so that both operands have the same shape, NumPy conceptually stretches the smaller array along the dimensions where it has length 1 or where a dimension is missing. The result is code that looks like simple algebra — adding a scalar offset to a sensor array, subtracting a row of column means from a data matrix, or building a 2D grid from two 1D vectors — while running at compiled speed with no extra memory for the stretched copies.</p>
+<p>In this course, broadcasting is what makes vectorized engineering computation practical. Once you can combine a (100, 3) array of measurements with a (3,) array of calibration constants, or a column vector of times with a row vector of frequencies, you stop writing nested Python loops and start writing expressions that mirror the equations in your textbook. Broadcasting is also the most common source of confusing bugs for new NumPy users, because a shape mismatch either raises an error or, worse, silently produces an array of the wrong shape.</p>
+<p>As you watch, keep three things in the front of your mind. First, the actual rule: compare shapes from the trailing (rightmost) dimension backward, and dimensions are compatible only if they are equal or one of them is 1. Second, the role of reshaping tools such as reshape, np.newaxis, and None in deliberately creating a length-1 axis so that an operation broadcasts the way you intend. Third, how to read a ValueError about operands that could not be broadcast together, and how to use .shape to diagnose it before you run anything else.</p>
+</section>
+<section class="item" id="p5-sec2">
+<h3>Video 1: Numpy Array Broadcasting In Python Explained</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/oG1t3qlzq14?cc_load_policy=1&amp;rel=0" title="Video: Numpy Array Broadcasting In Python Explained (mCoding)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>mCoding</strong> · 13:06 · 41,700 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=oG1t3qlzq14" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused walkthrough of how NumPy adds and combines arrays of different shapes, from the mCoding channel. Based on its title and description, it explains the broadcasting mechanism itself — how shapes are compared and aligned — and works through concrete code examples rather than treating broadcasting as a side note. Source code is provided by the producer so you can run the same examples yourself.</p>
+<h4>Why this video</h4>
+<p>mCoding is a well-regarded Python channel known for precise, technically careful explanations, and this is a full-length video devoted entirely to broadcasting, which makes it the best fit for the 'What Is Broadcasting?' and 'Broadcasting Rules' subtopics.</p>
+</section>
+<section class="item" id="p5-sec3">
+<h3>Video 2: L4.3 Vectors, Matrices, and Broadcasting</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/4Ehb_is-MFU?cc_load_policy=1&amp;rel=0" title="Video: L4.3 Vectors, Matrices, and Broadcasting (Sebastian Raschka)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Sebastian Raschka</strong> · 16:15 · 8,878 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=4Ehb_is-MFU" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A lecture segment from Sebastian Raschka's deep learning course that places broadcasting in the context of vectors, matrices, and linear algebra operations in NumPy and PyTorch. Expect coverage of array dimensionality and shape, how computational libraries extend standard linear algebra conventions, and where broadcasting fits into matrix and vector arithmetic.</p>
+<h4>Why this video</h4>
+<p>Raschka is a university instructor and author, and the linear-algebra framing connects broadcasting to the vector and matrix patterns engineers actually use, supporting the 'Common Broadcasting Patterns in Engineering' subtopic.</p>
+</section>
+<section class="item" id="p5-sec4">
+<h3>Video 3: Numpy Python Tutorial | Numpy Indexing and Slicing | Numpy Broadcasting</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/M7M-VGGJx3o?cc_load_policy=1&amp;rel=0" title="Video: Numpy Python Tutorial | Numpy Indexing and Slicing | Numpy Broadcasting (Acadaimy)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Acadaimy</strong> · 6:41 · 2,211 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=M7M-VGGJx3o" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short tutorial that covers NumPy indexing, slicing, and broadcasting together in under seven minutes. It is a compact, hands-on demonstration showing how elements and subarrays are selected and then how arrays of differing shapes are combined in arithmetic expressions.</p>
+<h4>Why this video</h4>
+<p>Its brevity makes it a useful review or quick refresher, and pairing broadcasting with indexing and slicing reinforces the connection between selecting array subsets and operating on them — a link you will need when debugging shape mismatches.</p>
+</section>
+<section class="item" id="p5-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These three videos together target MO2 directly: the mCoding video establishes what broadcasting is and the shape-compatibility rules that let you combine arrays without explicit Python loops, while Raschka's lecture shows those rules operating on the vectors and matrices typical of engineering and linear-algebra work. The Acadaimy tutorial reinforces MO2 and also touches MO3 by presenting indexing and slicing alongside broadcasting, which helps you recognize how the shape of a selected subarray determines whether a later operation will broadcast correctly. Collectively they give you both the rule you can apply mechanically and the shape-reasoning habits needed to avoid broadcasting errors in your own code.</p>
+</section>
+<section class="item" id="p5-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part6">
+<h2>Indexing, Slicing, and Fancy Indexing</h2>
+<section class="item" id="p6-sec1">
+<h3>Introduction</h3>
+<p>Once you can create NumPy arrays, the next essential skill is getting data back out of them. Indexing and slicing let you pull a single element, a row, a column, a sub-block, or a scattered set of values from an array. In engineering work this is how you isolate a sensor channel from a data matrix, trim a transient from the start of a time series, or grab every tenth sample from a long measurement record.</p>
+<p>This topic moves from simple to advanced. Basic integer indexing uses positions (remember: counting starts at 0, and negative indices count from the end). Slicing uses the start:stop:step pattern and extends to multiple dimensions, such as A[1:4, 0:2]. Boolean (mask) indexing builds an array of True/False values from a condition and uses it to filter data, which is how you answer questions like "which readings exceeded the limit?" Fancy indexing passes an array or list of integers to select elements in any order, with repeats allowed. Finally, np.where gives you conditional selection: either the positions where a condition holds, or an element-wise choice between two values.</p>
+<p>As you watch, pay close attention to three things: whether the result is a view into the original array or a copy (slices are views, fancy and Boolean indexing produce copies), how the shape of the result follows from the shape of the index, and how multi-dimensional indexing separates row and column specifications with a comma. Try every example in your own notebook and deliberately change the indices to see what breaks and why.</p>
+</section>
+<section class="item" id="p6-sec2">
+<h3>Video 1: NumPy Array Indexing - Complete Tutorial In English 😍</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/rn5dND7NdQE?cc_load_policy=1&amp;rel=0" title="Video: NumPy Array Indexing - Complete Tutorial In English 😍 (WsCube Tech! ENGLISH)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>WsCube Tech! ENGLISH</strong> · 10:59 · 2,370 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=rn5dND7NdQE" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused tutorial on NumPy array indexing from the WsCube Tech NumPy Mastery series, covering how to access individual elements by position in one-dimensional and multi-dimensional arrays. Expect coverage of zero-based indexing, negative indexing, and the row/column comma notation used for 2D arrays, demonstrated live in Python. The pacing is beginner-friendly with worked examples rather than theory.</p>
+<h4>Why this video</h4>
+<p>It is the most direct match for the Basic Integer Indexing subtopic and establishes the position-based notation that all the later techniques (slicing, masking, fancy indexing) build on.</p>
+</section>
+<section class="item" id="p6-sec3">
+<h3>Video 2: How to Create Numpy Arrays? || Slicing Operation in NumPy Arrays &amp; Attributions 🔥</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/eIyCnvVhFXo?cc_load_policy=1&amp;rel=0" title="Video: How to Create Numpy Arrays? || Slicing Operation in NumPy Arrays &amp; Attributions 🔥 (WsCube Tech! ENGLISH)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>WsCube Tech! ENGLISH</strong> · 12:44 · 8,398 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=eIyCnvVhFXo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>From the same NumPy course series, this video reviews array creation and then works through slicing operations and array attributes. Look for the start:stop:step syntax, omitting values to take everything from or to an endpoint, step sizes for skipping elements, and slicing along two dimensions at once. The attributes portion (shape, size, dtype, ndim) helps you predict and verify the shape of each slice you extract.</p>
+<h4>Why this video</h4>
+<p>It covers the Slicing Arrays subtopic in depth while reinforcing array creation from earlier in the module, and the attribute discussion gives you a practical way to check that a slice returned what you expected.</p>
+</section>
+<section class="item" id="p6-sec4">
+<h3>Video 3: Fancy NumPy Array Indexing in Python | Python Quick Tips</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/RKFqqJnYnV8?cc_load_policy=1&amp;rel=0" title="Video: Fancy NumPy Array Indexing in Python | Python Quick Tips (Revernos: the FinTech Channel.)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Revernos: the FinTech Channel.</strong> · 3:03 · 492 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=RKFqqJnYnV8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A short, targeted quick-tip video on fancy indexing, the technique of passing a list or array of integer indices to select multiple arbitrary elements at once. In three minutes it demonstrates how fancy indexing differs from a simple slice, including selecting elements out of order or repeating selections. It is the natural follow-on once basic indexing and slicing feel comfortable.</p>
+<h4>Why this video</h4>
+<p>It addresses the Fancy (Integer Array) Indexing subtopic specifically and concisely, which is the step most students find unintuitive after mastering ordinary slices.</p>
+</section>
+<section class="item" id="p6-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>Together these videos target MO3 directly: the first builds integer indexing, the second builds slicing and the shape awareness needed to confirm your selections, and the third introduces fancy integer-array indexing. The creation and attribute material in the second video also reinforces MO1. Boolean masking and np.where are listed as subtopics but are only lightly touched by these videos, so plan to supplement them with the course notes and practice problems, where you will combine conditions with comparison operators and use np.where to filter or recode engineering datasets before computing statistics in later topics.</p>
+</section>
+<section class="item" id="p6-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part7">
+<h2>Reshaping, Transposing, and Array Manipulation</h2>
+<section class="item" id="p7-sec1">
+<h3>Introduction</h3>
+<p>Engineering data rarely arrives in the shape an algorithm expects. A sensor log may come in as one long 1-D stream when you need a table of rows and columns; a matrix may need to be transposed before it can be multiplied; results from several trials may need to be joined into one block, or split back apart. NumPy handles all of this through shape manipulation: operations that rearrange how the same underlying data is presented, usually without copying or changing a single value.</p>
+<p>In this topic you will work with reshape to change dimensions, transpose (and the .T attribute) to swap axes, flatten and ravel to collapse an array back to one dimension, hstack/vstack/concatenate and the split functions to join and separate arrays, and techniques such as squeeze, np.newaxis, and expand_dims to add or remove length-one dimensions. These tools are the connective tissue between the array creation, indexing, and linear algebra skills covered elsewhere in this module.</p>
+<p>As you watch, pay attention to three things: whether the total number of elements is preserved (reshape requires it), whether the result is a view sharing memory with the original or an independent copy (ravel versus flatten is the classic example), and which axis an operation acts along. Keep a Python session open and retype the examples with your own small arrays — shape errors are far easier to understand once you have caused a few deliberately.</p>
+</section>
+<section class="item" id="p7-sec2">
+<h3>Video 1: Numpy Tutorial #10 - Reshape (Python für Data Science)</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/bjfmlHghW34?cc_load_policy=1&amp;rel=0" title="Video: Numpy Tutorial #10 - Reshape (Python für Data Science) (The Morpheus Tutorials)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>The Morpheus Tutorials</strong> · 7:17 · 2,655 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=bjfmlHghW34" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused tutorial on np.reshape from a long-running NumPy/data science series. Based on its title and placement in the playlist, it should demonstrate converting arrays between 1-D, 2-D, and higher-dimensional shapes, the requirement that the element count match, and likely the use of -1 to let NumPy infer one dimension automatically.</p>
+<h4>Why this video</h4>
+<p>It isolates reshaping — the foundational operation of this topic — in a short, single-concept lesson, which makes it a good starting point before combining shape changes with stacking or transposing. Note that the narration is in German; the code shown on screen is standard NumPy and follows along easily, and captions can help.</p>
+</section>
+<section class="item" id="p7-sec3">
+<h3>Video 2: 6 Numpy Array | Ravel | Squeeze | Transpose | linspace | np.tile | Repeat</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/6Kh357KlVW0?cc_load_policy=1&amp;rel=0" title="Video: 6 Numpy Array | Ravel | Squeeze | Transpose | linspace | np.tile | Repeat (Data Insights School)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Data Insights School</strong> · 10:17 · 438 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=6Kh357KlVW0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>This video works through several array manipulation functions in one session: ravel for flattening, squeeze for dropping length-one dimensions, and transpose for swapping axes, alongside linspace, np.tile, and repeat. The description indicates it explicitly contrasts repeat with np.tile, which are easy to confuse.</p>
+<h4>Why this video</h4>
+<p>It covers three of our subtopics — flattening/raveling, transposing, and removing dimensions — in a single compact walkthrough, so you can see how these operations relate to each other rather than learning them in isolation.</p>
+</section>
+<section class="item" id="p7-sec4">
+<h3>Video 3: 7 Numpy Stacking</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/f1_KgdB80Vc?cc_load_policy=1&amp;rel=0" title="Video: 7 Numpy Stacking (Data Insights School)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Data Insights School</strong> · 16:00 · 894 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=f1_KgdB80Vc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A dedicated lesson on joining arrays, covering vertical and horizontal stacking and the dimension-compatibility rules that stacking requires. The description notes that arrays must have matching dimensions and flags the case of mixing 2-D and 3-D arrays, which will not stack.</p>
+<h4>Why this video</h4>
+<p>Stacking is the subtopic most likely to produce confusing shape errors in practice, and this video spends its full length on the rules behind those errors rather than just the syntax.</p>
+</section>
+<section class="item" id="p7-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These three videos round out the array-handling skills the module outcomes depend on. Reshaping and transposing determine whether arrays are broadcast-compatible, so they directly support the vectorized arithmetic work in MO2, and correctly shaped 2-D arrays are a prerequisite for the matrix operations and numpy.linalg routines in MO4. Flattening, squeezing, and adding axes change how indexing and slicing behave, reinforcing MO3, while stacking and splitting let you assemble arrays built with np.array, np.arange, or np.linspace (MO1) into the larger datasets you will then summarize with descriptive statistics and evaluate functions over in MO5.</p>
+</section>
+<section class="item" id="p7-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+<section class="merged-part" id="part8">
+<h2>Linear Algebra with NumPy</h2>
+<section class="item" id="p8-sec1">
+<h3>Introduction</h3>
+<p>Linear algebra is the mathematical backbone of most engineering computation. Circuit analysis, static equilibrium problems, finite element models, structural vibration, control systems, and least-squares curve fitting all reduce, at some point, to matrices and vectors. NumPy's numpy.linalg module gives you fast, well-tested implementations of these operations so you can focus on setting up the problem correctly rather than coding Gaussian elimination from scratch.</p>
+<p>In this topic you will work with matrix multiplication (the @ operator, np.dot, np.matmul, and the related inner and outer products), solving systems of equations with np.linalg.solve, extracting eigenvalues and eigenvectors with np.linalg.eig, applying decompositions such as LU, QR, SVD, and Cholesky, and computing norms and determinants with np.linalg.norm and np.linalg.det. A recurring theme is the distinction between element-wise operations (the * operator) and true matrix operations (the @ operator) — a mistake here produces results that look plausible but are wrong.</p>
+<p>As you watch, pay close attention to array shapes: which dimensions must match for a product to be legal, and what shape comes back. Also notice that results are floating point, so a determinant that should be exactly zero may come back as something like 1e-17; learn to interpret near-singular systems rather than trusting equality checks. Try to re-type the examples yourself as you watch, and then apply them to a small engineering system of your own.</p>
+</section>
+<section class="item" id="p8-sec2">
+<h3>Video 1: Numpy Arrays - Fast Linear Algebra in Python</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/u5kq2VpSAgo?cc_load_policy=1&amp;rel=0" title="Video: Numpy Arrays - Fast Linear Algebra in Python (Socratica)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Socratica</strong> · 14:10 · 17,205 views · 6mo ago · captions — <a href="https://www.youtube.com/watch?v=u5kq2VpSAgo" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A recent, polished overview of NumPy arrays framed specifically around doing linear algebra quickly in Python. Based on its title and framing, it should cover how arrays are created and shaped, how array operations differ from ordinary Python lists, and how NumPy's compiled routines make matrix and vector work fast. Expect demonstrations of core array arithmetic leading into linear algebra operations.</p>
+<h4>Why this video</h4>
+<p>Socratica is a well-established producer of clear, carefully scripted Python tutorials, and this video is the most current of the three. It gives you the array foundation and performance rationale that the rest of the topic builds on.</p>
+</section>
+<section class="item" id="p8-sec3">
+<h3>Video 2: 8 Numpy Matrix Multiplication | Dot | Inner | Outer [Product]</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9EWLIMoUlq4?cc_load_policy=1&amp;rel=0" title="Video: 8 Numpy Matrix Multiplication | Dot | Inner | Outer [Product] (Data Insights School)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Data Insights School</strong> · 16:04 · 1,606 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=9EWLIMoUlq4" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A focused walkthrough of multiplication operations on NumPy arrays and matrices, distinguishing the dot product, the inner product, and the outer product. The description indicates worked examples with vectors and matrices so you can see what each function expects as input and what shape it returns.</p>
+<h4>Why this video</h4>
+<p>Matrix multiplication is the first subtopic here, and this video treats it in depth rather than in passing — particularly useful for sorting out the frequently confused dot, inner, and outer products and the shape rules behind each.</p>
+</section>
+<section class="item" id="p8-sec4">
+<h3>Video 3: HOW TO: LINEAR ALGEBRA BASICS USING NUMPY FOR DATA SCIENCE</h3>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Aeh4HS3yheg?cc_load_policy=1&amp;rel=0" title="Video: HOW TO: LINEAR ALGEBRA BASICS USING NUMPY FOR DATA SCIENCE (Mr Fugu Data Science)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe></div>
+<p class="video-meta"><strong>Mr Fugu Data Science</strong> · 14:39 · 305 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=Aeh4HS3yheg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h4>About this video</h4>
+<p>A practical tour of common linear algebra operations in NumPy aimed at data science workflows. From its title and description, expect coverage of routines in the numpy.linalg family — things like determinants, inverses, solving systems, and eigen-decomposition — shown as short code examples rather than theory.</p>
+<h4>Why this video</h4>
+<p>It ties several subtopics together in one place, including solving linear systems, eigenvalues, norms, and determinants, giving you a compact reference for which function to reach for in a given situation.</p>
+</section>
+<section class="item" id="p8-sec5">
+<h3>How These Videos Support the Learning Outcomes</h3>
+<p>These videos target MO4 most directly: between them they demonstrate np.linalg routines for solving systems of linear equations and for computing eigenvalues and eigenvectors of square matrices, along with supporting operations such as determinants, inverses, and norms. The Socratica video reinforces MO1 and MO2 by reviewing array construction and vectorized, loop-free arithmetic, which is the prerequisite mindset for treating whole matrices as single objects. The matrix multiplication video sharpens the MO2 distinction between element-wise operations and true matrix products, while the shape-handling and slicing shown throughout all three reinforce the indexing skills of MO3 as you assemble coefficient matrices and right-hand-side vectors from engineering data.</p>
+</section>
+<section class="item" id="p8-sec6">
+<h3>About These Videos</h3>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

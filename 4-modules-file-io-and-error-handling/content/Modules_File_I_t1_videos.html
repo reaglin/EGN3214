@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Python Modules</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 4 - Modules, File I/O, and Error Handling</a></div>
+<h1>Introduction to Python Modules</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: How import works in Python | Python Tutorial - Day #44</a>
+<a href="#sec3">Video 2: PYTHON MODULES in 9 minutes: import, from, as, namespace, math, random and more</a>
+<a href="#sec4">Video 3: Modules and Pip | Python Tutorial - Day #3</a>
+<a href="#sec5">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>A module is simply a Python file containing code — functions, classes, and variables — that you can reuse in other programs. Instead of rewriting the same square-root routine or random-number generator in every project, you import a module and call what you need. Python ships with a large standard library of modules such as math, random, os, and sys, and you can also write your own modules and install third-party ones with pip.</p>
+<p>In this course, modules matter because they are the bridge between writing short scripts and building organized, maintainable engineering programs. The same import mechanics you learn here are what let you later open files, catch errors, and eventually pull in scientific packages. Understanding how Python finds a module at runtime — the module search path — also saves you hours of debugging the all-too-common ModuleNotFoundError.</p>
+<p>As you watch, pay attention to the differences among the import forms: plain import module, selective from module import name, and aliasing with import module as alias. Notice how each form changes the name you actually type when calling a function, and watch for any discussion of where Python looks for files (the current directory, then installed library locations). Try typing each example yourself in a file rather than only in the interactive shell, since that is where search-path behavior becomes visible.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: How import works in Python | Python Tutorial - Day #44</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/Pr7UOr35NcI?cc_load_policy=1&amp;rel=0" title="Video: How import works in Python | Python Tutorial - Day #44 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:42 · 354,415 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=Pr7UOr35NcI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A focused lesson on the mechanics of the import statement in Python, from a longer structured Python tutorial series. It is likely to walk through what happens when Python executes an import, the different import syntaxes available, and how imported names become accessible in your program. Expect live coding demonstrations rather than slides.</p>
+<h3>Why this video</h3>
+<p>Because this video is devoted specifically to how import works rather than just how to use it, it directly supports the harder subtopics of module loading and the search path, and CodeWithHarry&#39;s series format keeps the explanation sequential and beginner-friendly.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: PYTHON MODULES in 9 minutes: import, from, as, namespace, math, random and more</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/hWbD_6xhYe0?cc_load_policy=1&amp;rel=0" title="Video: PYTHON MODULES in 9 minutes: import, from, as, namespace, math, random and more (BitBoss)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>BitBoss</strong> · 9:22 · 87,316 views · 4y ago · captions — <a href="https://www.youtube.com/watch?v=hWbD_6xhYe0" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A compact nine-minute overview that, per its description, covers what modules are and how to use the import, from, and as statements, along with namespaces and examples from the math and random modules. It is a fast tour that connects each import form to the naming rules that follow from it.</p>
+<h3>Why this video</h3>
+<p>This single video maps almost one-to-one onto the subtopics of this lesson — plain imports, selective imports, aliases, and namespaces — making it an efficient review or a strong first watch before the longer tutorials.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Modules and Pip | Python Tutorial - Day #3</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/xwKO_y2gHxQ?cc_load_policy=1&amp;rel=0" title="Video: Modules and Pip | Python Tutorial - Day #3 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 12:41 · 3,698,442 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=xwKO_y2gHxQ" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>An early-series introduction that presents modules alongside pip, Python&#39;s package installer. It likely explains the idea of reusable code libraries, shows importing a standard library module, and then demonstrates installing and importing an external package.</p>
+<h3>Why this video</h3>
+<p>It supplies the practical context for why modules exist and where they come from, which rounds out the conceptual What Is a Module? subtopic; its very large view count reflects its usefulness as an accessible starting point.</p>
+</section>
+<section class="item" id="sec5">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>
