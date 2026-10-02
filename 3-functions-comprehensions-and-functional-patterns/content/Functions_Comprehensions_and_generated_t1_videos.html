@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Defining Functions</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 3 - Functions, Comprehensions, and Functional Patterns</a></div>
+<h1>Defining Functions</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: LEARN FUNCTIONS in PYTHON: def, pass, syntax, None, return vs print, arguments, scope and more</a>
+<a href="#sec3">Video 2: Python functions &#128222;</a>
+<a href="#sec4">Video 3: Python return statement &#128281;</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>A function is a named block of code that you define once and reuse whenever you need it. In Python, you create one with the def statement: you give the function a name, list any parameters in parentheses, and indent the body beneath the colon. When the function finishes, a return statement can hand a value back to the code that called it — and if you omit return, Python quietly returns None. Calling the function by name, with parentheses and any required arguments, is what actually runs that code.</p>
+<p>This matters because almost everything that follows in the course is built on functions. Parameter styles, scope rules, recursion, and the functional patterns later in this module all assume you are comfortable with the basic def/return/call cycle. Good habits start here too: descriptive names in lowercase_with_underscores, and a docstring — a triple-quoted string on the first line of the body — that explains what the function does, what it expects, and what it gives back.</p>
+<p>As you watch, keep three questions in mind. First, what is the difference between a function that returns a value and one that only prints something — can you use the result in an expression afterward? Second, where does execution go when a return runs, and what happens to any code after it? Third, what does the function need from the caller, and what does the caller get back? Try pausing and predicting the output before the narrator reveals it.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: LEARN FUNCTIONS in PYTHON: def, pass, syntax, None, return vs print, arguments, scope and more</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/9k91jETchkI?cc_load_policy=1&amp;rel=0" title="Video: LEARN FUNCTIONS in PYTHON: def, pass, syntax, None, return vs print, arguments, scope and more (BitBoss)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>BitBoss</strong> · 16:13 · 377,158 views · 2y ago · captions — <a href="https://www.youtube.com/watch?v=9k91jETchkI" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A comprehensive single-video walkthrough of Python functions, covering the def statement and its syntax, the pass placeholder for empty function bodies, arguments, the None value, and variable scope. The title also highlights the frequently confused distinction between return and print, which is one of the most common stumbling blocks for beginners. At roughly sixteen minutes it is the longest of the three and serves as the main overview for this topic.</p>
+<h3>Why this video</h3>
+<p>It touches nearly every subtopic here — defining with def, calling with arguments, and returning values — in one continuous explanation, and its direct treatment of return versus print addresses the error students most often make when writing their first functions.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: Python functions &#128222;</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/vg7Hwd9TANY?cc_load_policy=1&amp;rel=0" title="Video: Python functions &#128222; (Bro Code)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Bro Code</strong> · 9:15 · 49,520 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=vg7Hwd9TANY" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>Bro Code&#39;s concise introduction defines a function as a block of code that executes only when it is called, then demonstrates writing one with def and invoking it by name. Expect short, typed-along examples that show parameters being passed in and the function body running on demand. The pacing is quick and the examples are deliberately simple.</p>
+<h3>Why this video</h3>
+<p>It is a clean, beginner-friendly treatment of the def statement and of calling a function, from a channel widely used for its clear, no-filler coding demonstrations — a good first watch or a quick review before the longer video.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Python return statement &#128281;</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/ZnBQfF5JFDM?cc_load_policy=1&amp;rel=0" title="Video: Python return statement &#128281; (Bro Code)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Bro Code</strong> · 3:31 · 130,674 views · 5y ago · captions — <a href="https://www.youtube.com/watch?v=ZnBQfF5JFDM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, focused lesson on the return statement: how a function sends a value or object back to the caller so the result can be stored in a variable or used in a larger expression. In about three and a half minutes it isolates the single concept rather than mixing it with other function topics.</p>
+<h3>Why this video</h3>
+<p>Because return is the subtopic students most often misunderstand, a dedicated short video is valuable; it reinforces that a returned value is reusable data, not screen output, which is the key idea behind building functions that compose.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>Together these videos build the foundation for MO1: the BitBoss overview and the Bro Code introduction demonstrate constructing functions with def and passing arguments, while the dedicated return video reinforces writing explicit return statements that produce usable results. The scope discussion in the BitBoss video previews the LEGB reasoning developed in MO2, and the habit of writing small, well-named, documented functions established here is what later outcomes depend on — recursion in MO3 requires a function that returns a value from both its base and recursive cases, and the comprehension and lambda comparisons in MO4 and MO5 only make sense once you can read a standard def-based function fluently. Supplement the videos with the course material on docstrings, since documentation is part of MO1 but receives limited attention in these clips.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

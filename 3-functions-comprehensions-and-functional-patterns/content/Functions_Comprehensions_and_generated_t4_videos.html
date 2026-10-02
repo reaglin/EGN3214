@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope and Variable Visibility</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:2rem auto;padding:0 1.25rem;color:#222;line-height:1.55}
+h1{font-size:1.9rem;border-bottom:2px solid #ddd;padding-bottom:.4rem}
+h2{font-size:1.3rem;color:#1f3864;margin-top:1.6rem}
+body{padding-left:1.1rem;padding-right:1.1rem}
+ul,ol{margin:.4rem 0 1rem 1.4rem}
+li{margin:.25rem 0}
+nav.toc{background:rgba(128,128,128,.08);border:1px solid rgba(128,128,128,.25);border-radius:8px;padding:.6rem 1rem;margin:1.2rem 0}
+nav.toc strong{display:block;margin-bottom:.3rem}
+nav.toc a{display:block;text-decoration:none;padding:.12rem 0}
+section.item{border-top:1px solid rgba(128,128,128,.22);padding-top:.3rem}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+th,td{border:1px solid rgba(128,128,128,.45);padding:.4rem .6rem;text-align:left;vertical-align:top}
+thead th{background:rgba(128,128,128,.18);font-weight:600}
+tbody tr:nth-child(even){background:rgba(128,128,128,.08)}
+</style>
+</head>
+<body>
+<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ 3 - Functions, Comprehensions, and Functional Patterns</a></div>
+<h1>Scope and Variable Visibility</h1>
+<nav class="toc"><strong>Contents</strong>
+<a href="#sec1">Introduction</a>
+<a href="#sec2">Video 1: Local vs Global Variables in Python| Python Tutorial - Day #48</a>
+<a href="#sec3">Video 2: Functions within functions, closures, and variable scopes in Python</a>
+<a href="#sec4">Video 3: Local and global variables in Python</a>
+<a href="#sec5">How These Videos Support the Learning Outcomes</a>
+<a href="#sec6">About These Videos</a>
+</nav>
+<section class="item" id="sec1">
+<h2>Introduction</h2>
+<p>Every time Python encounters a variable name, it has to decide which value that name refers to. The answer depends on where the name is used. Python searches for names in a fixed order known as the LEGB rule: Local (inside the current function), Enclosing (inside any outer function that wraps it), Global (at the top level of the module), and finally Built-in (names like len and print that Python provides automatically). The first match wins, and if no match is found you get a NameError.</p>
+<p>Scope matters in this course because you are now writing functions, and functions are the main way Python creates new scopes. Assigning to a name inside a function creates a local variable by default, even if a variable with the same name already exists outside the function. When you genuinely need a function to change a variable that lives elsewhere, Python requires you to say so explicitly with the global keyword (for module-level names) or the nonlocal keyword (for names in an enclosing function). Understanding this prevents a whole category of confusing bugs, such as a function that seems to update a counter but leaves the original unchanged, or an UnboundLocalError on a name you thought was global.</p>
+<p>As you watch, keep three questions in mind for every example: where is this name first assigned, which scope does Python search first, and does this code read a variable or rebind it? Try predicting the output before the narrator reveals it, then pause and check. Pay particular attention to the difference between mutating an object (such as appending to a list) and reassigning a name, since only the latter triggers the need for global or nonlocal.</p>
+</section>
+<section class="item" id="sec2">
+<h2>Video 1: Local vs Global Variables in Python| Python Tutorial - Day #48</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/RaG6GgcDt54?cc_load_policy=1&amp;rel=0" title="Video: Local vs Global Variables in Python| Python Tutorial - Day #48 (CodeWithHarry)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>CodeWithHarry</strong> · 10:37 · 316,123 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=RaG6GgcDt54" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A beginner-oriented walkthrough of the distinction between local and global variables in Python, likely using small function examples to show what happens when a name is defined inside a function versus at module level. Based on the title and description, it should also demonstrate when and why you would reach for the global keyword to modify a module-level variable from inside a function.</p>
+<h3>Why this video</h3>
+<p>CodeWithHarry&#39;s tutorial series is a well-known, slow-paced introduction, making this a good first pass at the Local and Global layers of LEGB and at the global keyword subtopic before you tackle nested functions.</p>
+</section>
+<section class="item" id="sec3">
+<h2>Video 2: Functions within functions, closures, and variable scopes in Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/jXugs4B3lwU?cc_load_policy=1&amp;rel=0" title="Video: Functions within functions, closures, and variable scopes in Python (mCoding)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>mCoding</strong> · 18:44 · 73,833 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=jXugs4B3lwU" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>This video covers defining functions inside other functions, how closures capture variables from an enclosing scope, and how Python resolves variable names across those nested levels. Given the title and the channel&#39;s style, expect precise explanations of why an inner function can read an outer function&#39;s variables, and where nonlocal becomes necessary to rebind them.</p>
+<h3>Why this video</h3>
+<p>mCoding is produced by a professional Python developer known for technically accurate, detail-focused explanations, and this is the one video of the three that directly addresses the Enclosing layer of LEGB and the nonlocal keyword.</p>
+</section>
+<section class="item" id="sec4">
+<h2>Video 3: Local and global variables in Python</h2>
+<div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:.6rem 0;background:#000"><iframe src="https://www.youtube-nocookie.com/embed/OJa5QIeiNfQ?cc_load_policy=1&amp;rel=0" title="Video: Local and global variables in Python (Python Morsels)" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-meta"><strong>Python Morsels</strong> · 4:17 · 1,986 views · 3y ago · captions — <a href="https://www.youtube.com/watch?v=OJa5QIeiNfQ" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<h3>About this video</h3>
+<p>A short, focused explanation of the key asymmetry in Python scoping: inside a function you can read global variables freely, but assigning to a name makes it local unless you declare otherwise. The description suggests it works through what happens within each function call and why the read/write distinction trips people up.</p>
+<h3>Why this video</h3>
+<p>Python Morsels produces concise, carefully worded lessons, and at just over four minutes this is an efficient review or reinforcement of the local-versus-global rule and the exact behavior that motivates the global keyword.</p>
+</section>
+<section class="item" id="sec5">
+<h2>How These Videos Support the Learning Outcomes</h2>
+<p>These three videos together support MO2, the ability to trace Python&#39;s LEGB scope rule and predict which value a name resolves to. The CodeWithHarry and Python Morsels videos build the Local and Global layers and the assignment-makes-it-local rule that underlies the global keyword, with the Python Morsels clip offering a compact restatement for review. The mCoding video extends the picture to the Enclosing layer through nested functions and closures, which is where nonlocal applies. Because scope is a property of functions, the examples also reinforce MO1 by showing how def creates a new namespace each time a function runs, and the mental model of per-call local scopes will be useful later when you trace recursive calls for MO3.</p>
+</section>
+<section class="item" id="sec6">
+<h2>About These Videos</h2>
+<p>These videos were chosen from YouTube on October 2, 2026. Each has captions; the player turns them on. Videos on YouTube can be changed or removed — if one no longer plays, tell your instructor. If a player does not appear, use its Watch on YouTube link.</p>
+</section>
+
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
+</html>

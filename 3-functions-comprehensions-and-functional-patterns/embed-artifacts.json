@@ -25,6 +25,41 @@
     "type": "Content"
   },
   {
+    "title": "Defining Functions",
+    "href": "content/Functions_Comprehensions_and_generated_t1_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Parameters and Arguments",
+    "href": "content/Functions_Comprehensions_and_generated_t2_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Scope and Variable Visibility",
+    "href": "content/Functions_Comprehensions_and_generated_t4_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Recursion",
+    "href": "content/Functions_Comprehensions_and_generated_t5_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Comprehensions",
+    "href": "content/Functions_Comprehensions_and_generated_t6_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "Lambda Functions and Functional Patterns",
+    "href": "content/Functions_Comprehensions_and_generated_t7_videos.html",
+    "type": "Content"
+  },
+  {
+    "title": "3 - Functions, Comprehensions, and Functional Patterns",
+    "href": "content/Functions_Comprehensions_and_generated_videos_merged.html",
+    "type": "Content"
+  },
+  {
     "title": "Functions_Comprehensions_and",
     "href": "content/Functions_Comprehensions_and_interactive_topics_t1-2.html",
     "type": "Content"
