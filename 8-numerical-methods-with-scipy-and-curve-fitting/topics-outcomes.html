@@ -18,13 +18,13 @@ li{margin:5px 0}
 .el-body{color:#555}
 .prefix{color:#555;font-style:italic;margin:6px 0 14px}
 .mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
-.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .code{font-size:.8rem;color:#595959;text-transform:uppercase;letter-spacing:.04em}
 .mo .statement{font-weight:600;margin:4px 0 8px}
 .meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
 .meta .map{background:#eaf6ec;color:#137333}
 .co{margin:7px 0}
 .co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
-.empty{color:#888}
+.empty{color:#595959}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@ li{margin:5px 0}
 <div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
 
 <h2 id="topics">Module Topics</h2>
-<h3>Introduction to SciPy for Numerical Computing</h3>
+<h3 id="topic-1">Introduction to SciPy for Numerical Computing</h3>
 <div class="summary">Introduces the SciPy library, its ecosystem, and how it extends NumPy to support numerical methods used in engineering and science.</div>
 <ul>
 <li><strong>What is SciPy?</strong> <span class="el-body">— SciPy is an open-source Python library built on top of NumPy that provides a wide collection of algorithms for scientific and technical computing.</span></li>
@@ -41,7 +41,7 @@ li{margin:5px 0}
 <li><strong>Installing and Importing SciPy Submodules</strong> <span class="el-body">— SciPy submodules must be imported explicitly; importing the top-level scipy package does not automatically load all submodules.</span></li>
 <li><strong>Overview of Numerical Problem Categories</strong> <span class="el-body">— This module focuses on three core numerical problem types: root finding, numerical integration (including ODEs), and curve fitting.</span></li>
 </ul>
-<h3>Root Finding with scipy.optimize</h3>
+<h3 id="topic-2">Root Finding with scipy.optimize</h3>
 <div class="summary">Covers scalar and multivariate root-finding methods available in scipy.optimize, including bracket-based and derivative-based approaches.</div>
 <ul>
 <li><strong>Concept of Root Finding</strong> <span class="el-body">— Root finding is the process of locating values of x such that f(x) = 0, a fundamental task in engineering analysis such as finding equilibrium points or solving implicit equations.</span></li>
@@ -50,7 +50,7 @@ li{margin:5px 0}
 <li><strong>General Scalar Minimization and root_scalar</strong> <span class="el-body">— scipy.optimize.root_scalar provides a unified interface for choosing among multiple root-finding algorithms using a common function signature.</span></li>
 <li><strong>Practical Considerations for Root Finding</strong> <span class="el-body">— Choosing an appropriate root-finding method depends on function continuity, availability of derivatives, and whether a bracketing interval can be identified.</span></li>
 </ul>
-<h3>Numerical Integration with scipy.integrate</h3>
+<h3 id="topic-3">Numerical Integration with scipy.integrate</h3>
 <div class="summary">Covers numerical quadrature for definite integrals and the integration of systems of ordinary differential equations using scipy.integrate.</div>
 <ul>
 <li><strong>Numerical Quadrature: quad and dblquad</strong> <span class="el-body">— scipy.integrate.quad computes definite integrals of scalar functions over a finite or infinite interval using adaptive Gaussian quadrature.</span></li>
@@ -60,7 +60,7 @@ li{margin:5px 0}
 <li><strong>Defining the Derivative Function for solve_ivp</strong> <span class="el-body">— The user-defined function passed to solve_ivp must accept time t and state vector y and return the vector of derivatives dy/dt.</span></li>
 <li><strong>Interpreting and Visualizing ODE Solutions</strong> <span class="el-body">— Once solve_ivp returns a result, the solution arrays can be plotted with Matplotlib to visualize the system&#39;s transient and steady-state behavior.</span></li>
 </ul>
-<h3>Linear Curve Fitting with numpy.polyfit</h3>
+<h3 id="topic-4">Linear Curve Fitting with numpy.polyfit</h3>
 <div class="summary">Explains polynomial regression using numpy.polyfit, including model selection, coefficient interpretation, and generating fitted curves for visualization.</div>
 <ul>
 <li><strong>What is Curve Fitting?</strong> <span class="el-body">— Curve fitting finds the parameters of a mathematical model that minimize the difference between the model&#39;s predictions and observed data points.</span></li>
@@ -69,7 +69,7 @@ li{margin:5px 0}
 <li><strong>Linearization of Nonlinear Data</strong> <span class="el-body">— Some nonlinear relationships such as exponential or power-law models can be transformed into linear form, allowing numpy.polyfit to be applied after a variable substitution.</span></li>
 <li><strong>Generating and Plotting Fitted Curves</strong> <span class="el-body">— After obtaining polynomial coefficients, a smooth fitted curve is generated by evaluating the polynomial on a dense array of x values and overlaying it on the scatter plot of the data.</span></li>
 </ul>
-<h3>Nonlinear Curve Fitting with scipy.optimize.curve_fit</h3>
+<h3 id="topic-5">Nonlinear Curve Fitting with scipy.optimize.curve_fit</h3>
 <div class="summary">Covers fitting arbitrary nonlinear models to data using scipy.optimize.curve_fit, including defining model functions, interpreting fit parameters, and assessing uncertainty.</div>
 <ul>
 <li><strong>When to Use Nonlinear Fitting</strong> <span class="el-body">— Nonlinear curve fitting is required when the relationship between variables cannot be described by a polynomial or linearized form, and the model has parameters that appear nonlinearly.</span></li>
@@ -78,7 +78,7 @@ li{margin:5px 0}
 <li><strong>Setting Initial Guesses and Bounds</strong> <span class="el-body">— Providing good initial parameter estimates via the p0 argument and restricting parameter ranges with bounds improves convergence and prevents physically unreasonable solutions.</span></li>
 <li><strong>Handling Convergence Failures</strong> <span class="el-body">— If curve_fit cannot converge, it raises a RuntimeError; diagnosing and resolving convergence failures is an important practical skill.</span></li>
 </ul>
-<h3>Residuals Analysis</h3>
+<h3 id="topic-6">Residuals Analysis</h3>
 <div class="summary">Explains how to compute, visualize, and interpret residuals to evaluate curve-fit quality and identify model inadequacy on engineering datasets.</div>
 <ul>
 <li><strong>What are Residuals?</strong> <span class="el-body">— Residuals are the differences between observed data values and the corresponding values predicted by the fitted model, quantifying the pointwise error of the fit.</span></li>
@@ -88,7 +88,7 @@ li{margin:5px 0}
 <li><strong>Applying Residuals Analysis to Engineering Datasets</strong> <span class="el-body">— On real engineering datasets, residuals analysis guides iterative model improvement by revealing systematic errors tied to physical phenomena not yet captured by the model.</span></li>
 <li><strong>Overfitting and Model Complexity</strong> <span class="el-body">— Increasing model complexity will always reduce residuals on training data, but may degrade predictive performance on new data—a phenomenon known as overfitting.</span></li>
 </ul>
-<h3>Applying Numerical Methods to Engineering Datasets</h3>
+<h3 id="topic-7">Applying Numerical Methods to Engineering Datasets</h3>
 <div class="summary">Brings together root finding, integration, ODE solving, and curve fitting in end-to-end workflows applied to realistic engineering problems.</div>
 <ul>
 <li><strong>Structuring an End-to-End Numerical Workflow</strong> <span class="el-body">— A complete numerical workflow involves loading and inspecting data, selecting and applying an appropriate method, validating results, and communicating outputs clearly.</span></li>
@@ -129,6 +129,6 @@ li{margin:5px 0}
 <div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
 <div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
 
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
 </body>
 </html>

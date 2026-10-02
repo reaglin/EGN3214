@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "4 - Modules, File I/O, and Error Handling (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "4 - Modules, File I/O, and Error Handling \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -42,11 +47,6 @@
   {
     "title": "Module 4 \u2014 Basic Computer Skills: File Types",
     "href": "content/Module_4_Basic_Computer_Skills.html",
-    "type": "Content"
-  },
-  {
-    "title": "4 - Modules, File I/O, and Error Handling \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

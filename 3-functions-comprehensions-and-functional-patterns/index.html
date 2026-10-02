@@ -1,399 +1,131 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 3 – Functions, Comprehensions, and Functional Patterns | EGN3214</title>
-  <style>
-    /* ── Reset & base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --brand-dark:   #1a3a5c;
-      --brand-mid:    #2563a8;
-      --brand-light:  #dbe8f7;
-      --accent:       #e07b00;
-      --bg:           #f4f6f9;
-      --surface:      #ffffff;
-      --border:       #d1dae6;
-      --text-main:    #1e2a38;
-      --text-muted:   #5a6a7e;
-      --text-link:    #1d5faa;
-      --badge-bg:     #eef3fb;
-      --badge-text:   #2a4f82;
-      --radius:       8px;
-      --shadow:       0 2px 8px rgba(0,0,0,.09);
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── Header ── */
-    header {
-      background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-mid) 100%);
-      color: #fff;
-      padding: 2.5rem 1.5rem 2rem;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .course-label {
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: #a8c8f0;
-      margin-bottom: .45rem;
-    }
-
-    header h1 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: .9rem;
-    }
-
-    header p {
-      font-size: .97rem;
-      color: #cde0f5;
-      max-width: 720px;
-      line-height: 1.65;
-    }
-
-    /* ── Main content ── */
-    main {
-      max-width: 1100px;
-      margin: 2rem auto 3rem;
-      padding: 0 1.25rem;
-    }
-
-    .section-heading {
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.1rem;
-      padding-bottom: .4rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    /* ── Card grid ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.15rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.25rem 1.35rem 1.15rem;
-      display: flex;
-      flex-direction: column;
-      gap: .55rem;
-      transition: box-shadow .18s ease, transform .18s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 6px 20px rgba(0,0,0,.13);
-      transform: translateY(-2px);
-    }
-
-    /* card top row */
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: .55rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      border: 1px solid #b8cff0;
-      border-radius: 4px;
-      padding: .18em .55em;
-      white-space: nowrap;
-    }
-
-    .badge-filetype {
-      background: #f0f4f0;
-      color: #3a5c3a;
-      border-color: #b0ccb0;
-      font-family: 'Consolas', 'Courier New', monospace;
-    }
-
-    /* card title row */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: .5rem;
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.3;
-    }
-
-    .card-title a {
-      color: var(--text-link);
-      text-decoration: none;
-    }
-
-    .card-title a:hover,
-    .card-title a:focus {
-      text-decoration: underline;
-      color: var(--brand-dark);
-    }
-
-    .source-link {
-      font-size: .75rem;
-      font-weight: 500;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
-      border: 1px solid #f0c070;
-      border-radius: 4px;
-      padding: .12em .48em;
-      background: #fff8ed;
-      transition: background .15s;
-    }
-
-    .source-link:hover,
-    .source-link:focus {
-      background: #fce9c0;
-      text-decoration: underline;
-    }
-
-    /* card description */
-    .card-desc {
-      font-size: .875rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      flex-grow: 1;
-    }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      font-size: .78rem;
-      color: var(--text-muted);
-      padding: 1.5rem 1rem 2rem;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
-    }
-
-    /* ── Responsive tweaks ── */
-    @media (max-width: 480px) {
-      .card-grid { grid-template-columns: 1fr; }
-      header { padding: 2rem 1rem 1.5rem; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3 - Functions, Comprehensions, and Functional Patterns — EGN3214</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
-<div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
-
-  <header>
-    <div class="header-inner">
-      <p class="course-label">EGN3214 &nbsp;·&nbsp; Module 3</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero">
+    <div class="hero-inner">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">EGN3214</a><span class="sep" aria-hidden="true">›</span><span class="current">3 - Functions, Comprehensions, and Functional Patterns</span>
+  </nav>
+      <div class="hero-label">Module 3</div>
       <h1>Functions, Comprehensions, and Functional Patterns</h1>
-      <p>
-        This module explores Python's function model in depth — from defining and documenting
-        functions to mastering variable-length arguments, scope rules, comprehensions, and
-        higher-order functional patterns. Use the artifacts below to read, practise, and
-        assess your understanding of writing flexible, expressive, and reusable Python code.
-      </p>
+      <p class="hero-desc">Covers function definition, positional and keyword parameters, default values, *args/**kwargs, scope, and recursion, then introduces list, dict, and set comprehensions alongside lambda functions and the map/filter functional programming patterns.</p>
     </div>
   </header>
-
-  <main>
-    <p class="section-heading">Module Artifacts &nbsp;— &nbsp;11 items</p>
-
-    <div class="card-grid">
-
-      <!-- 1: Module Topics -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Module Topics</span>
-          <span class="badge badge-filetype">.json</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
-        </div>
-        <p class="card-desc">A structured outline of all topics covered in the module, spanning function definitions, parameters, *args/**kwargs, scope rules, comprehensions, and functional patterns, used by learners and instructors to navigate the module's learning objectives.</p>
-      </div>
-
-      <!-- 2: Presentation -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Presentation</span>
-          <span class="badge badge-filetype">.pptx</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="presentation/Functions_Comprehensions_and_generated.pptx">Functions_Comprehensions_and_generated.pptx</a>
-          </span>
-        </div>
-        <p class="card-desc">A slide deck covering Python function definitions, parameters, arguments, return values, list/dict/set comprehensions, and functional programming patterns, used by instructors to deliver lectures and by learners as a reference for writing reusable and expressive Python code.</p>
-      </div>
-
-      <!-- 3: Scope and Visibility -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/_interactive.html">Scope and Visibility</a>
-          </span>
-        </div>
-        <p class="card-desc">A reading page covering Python's variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.</p>
-      </div>
-
-      <!-- 4: Functions and Parameters -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t1-2.html">Functions and Parameters</a>
-          </span>
-        </div>
-        <p class="card-desc">An interactive reading page introducing Python function definitions using the def and return statements along with docstrings, used by learners to understand how to write, call, and document reusable functions.</p>
-      </div>
-
-      <!-- 5: Variable length arguments -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t3_v2.html">Variable length arguments</a>
-          </span>
-        </div>
-        <p class="card-desc">A reading page covering Python's variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.</p>
-      </div>
-
-      <!-- 6: Functions_Comprehensions_and (Topic Detail t3) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t3.html">Functions_Comprehensions_and</a>
-          </span>
-        </div>
-        <p class="card-desc">A reference text covering advanced Python function concepts — including variable-length arguments (*args and **kwargs), list/dict/set comprehensions, and functional programming patterns like decorators and middleware — which learners read to understand how to write flexible, reusable functions and instructors can assign as a study resource or lecture supplement.</p>
-      </div>
-
-      <!-- 7: Scope with Examples -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t4_v2.html">Scope with Examples</a>
-          </span>
-        </div>
-        <p class="card-desc">An interactive reading page covering Python's LEGB scope rule and the global and nonlocal keywords, used by learners to understand how variable names are resolved across local, enclosing, global, and built-in scopes.</p>
-      </div>
-
-      <!-- 8: Functions_Comprehensions_and (Topic Detail t4) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Functions_Comprehensions_and_interactive_topics_t4.html">Functions_Comprehensions_and</a>
-          </span>
-        </div>
-        <p class="card-desc">An interactive reading page covering Python's LEGB scope rule and the global and nonlocal keywords, used by learners to understand how variable names are resolved across local, enclosing, global, and built-in scopes.</p>
-      </div>
-
-      <!-- 9: FV-PV Problem -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Future_Value.html">FV-PV Problem</a>
-          </span>
-        </div>
-        <p class="card-desc">An assignment page directing students to write a Python while-loop program that evaluates multiple equipment purchase scenarios by calculating Present Value of resale and revenue streams over a 10-year lifespan at 5% interest, used by learners to apply engineering economics concepts in code.</p>
-      </div>
-
-      <!-- 10: Quiz Question Bank -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Quiz</span>
-          <span class="badge badge-filetype">.json</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="quiz/index.html">Quiz Question Bank (35 questions)</a>
-          </span>
-          <a class="source-link" href="source/quiz_questions.json">source file</a>
-        </div>
-        <p class="card-desc">A 35-question quiz bank testing learners on Python function syntax (def keyword, return statements, docstrings, default and keyword arguments) and related functional programming concepts, used by instructors to build assessments or by learners to self-test their understanding of the module.</p>
-      </div>
-
-      <!-- 11: Base Case or Recursive Case? -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge">Interactive Activity</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="interactive/base-case-or-recursive-case.html">Base Case or Recursive Case?</a>
-          </span>
-        </div>
-        <p class="card-desc">A ten-round interactive quiz presenting hidden blocks from Python recursive functions and asking learners to classify each block as either a base case or a recursive case, used to reinforce understanding of recursion structure.</p>
-      </div>
-
-    </div><!-- /.card-grid -->
+  <main class="page-wrap" id="main">
+<section aria-labelledby="topics-h">
+<h2 id="topics-h">Topics</h2>
+<p class="section-intro">This module covers 7 topics. Open a topic to see its subtopics.</p>
+<ol class="topic-list">
+<li><a class="topic-card" href="topics-outcomes.html#topic-1"><span class="topic-num" aria-hidden="true">1</span><span class="topic-text"><span class="topic-title">Defining Functions</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-2"><span class="topic-num" aria-hidden="true">2</span><span class="topic-text"><span class="topic-title">Parameters and Arguments</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-3"><span class="topic-num" aria-hidden="true">3</span><span class="topic-text"><span class="topic-title">Variable-Length Arguments: *args and **kwargs</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-4"><span class="topic-num" aria-hidden="true">4</span><span class="topic-text"><span class="topic-title">Scope and Variable Visibility</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-5"><span class="topic-num" aria-hidden="true">5</span><span class="topic-text"><span class="topic-title">Recursion</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-6"><span class="topic-num" aria-hidden="true">6</span><span class="topic-text"><span class="topic-title">Comprehensions</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-7"><span class="topic-num" aria-hidden="true">7</span><span class="topic-text"><span class="topic-title">Lambda Functions and Functional Patterns</span><span class="topic-meta">5 subtopics</span></span></a></li>
+</ol>
+<p class="more-links"><a href="topics-outcomes.html#topics">All topics and subtopics</a><a href="topics-outcomes.html#outcomes">Student learning outcomes</a></p>
+</section>
+<section aria-labelledby="content-h">
+<h2 id="content-h">Module Content</h2>
+<p class="section-intro">10 items.</p>
+<ul class="content-grid">
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📊</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Presentation</span><span class="pill pill-format"><span aria-hidden="true">📽️ </span>PowerPoint</span></div>
+    <div class="content-title"><a href="presentation/Functions_Comprehensions_and_generated.pptx" download>Functions_Comprehensions_and_generated.pptx</a></div>
+    <p class="content-desc">A slide deck covering Python function definitions, parameters, arguments, return values, list/dict/set comprehensions, and functional programming patterns, used by instructors to deliver lectures and by learners as a reference for writing reusable and expressive Python code.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/_interactive.html">Scope and Visibility</a></div>
+    <p class="content-desc">A reading page covering Python&#39;s variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Functions_Comprehensions_and_interactive_topics_t1-2.html">Functions and Parameters</a></div>
+    <p class="content-desc">An interactive reading page introducing Python function definitions using the def and return statements along with docstrings, used by learners to understand how to write, call, and document reusable functions.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Functions_Comprehensions_and_interactive_topics_t3_v2.html">Variable length arguments</a></div>
+    <p class="content-desc">A reading page covering Python&#39;s variable-length argument mechanisms (*args and **kwargs), explaining how they collect positional and keyword arguments to build flexible, reusable functions; learners read through the explanations and examples to understand how to apply these patterns in their own code.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Functions_Comprehensions_and_interactive_topics_t3.html">Functions_Comprehensions_and</a></div>
+    <p class="content-desc">A reference text covering advanced Python function concepts—including variable-length arguments (*args and **kwargs), list/dict/set comprehensions, and functional programming patterns like decorators and middleware—which learners read to understand how to write flexible, reusable functions and instructors can assign as a study resource or lecture supplement.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Functions_Comprehensions_and_interactive_topics_t4_v2.html">Scope with Examples</a></div>
+    <p class="content-desc">An interactive reading page covering Python&#39;s LEGB scope rule and the global and nonlocal keywords, used by learners to understand how variable names are resolved across local, enclosing, global, and built-in scopes.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Functions_Comprehensions_and_interactive_topics_t4.html">Functions_Comprehensions_and</a></div>
+    <p class="content-desc">An interactive reading page covering Python&#39;s LEGB scope rule and the global and nonlocal keywords, used by learners to understand how variable names are resolved across local, enclosing, global, and built-in scopes.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Future_Value.html">FV-PV Problem</a></div>
+    <p class="content-desc">An assignment page directing students to write a Python while-loop program that evaluates multiple equipment purchase scenarios by calculating Present Value of resale and revenue streams over a 10-year lifespan at 5% interest, used by learners to apply engineering economics concepts in code.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">✅</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Quiz</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="quiz/index.html">Quiz Question Bank (35 questions)</a></div>
+    <p class="content-desc">A 35-question quiz bank testing learners on Python function syntax (def keyword, return statements, docstrings, default and keyword arguments) and related functional programming concepts, used by instructors to build assessments or by learners to self-test their understanding of the module.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">🎮</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Activity</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="interactive/base-case-or-recursive-case.html">Base Case or Recursive Case?</a></div>
+    <p class="content-desc">A ten-round interactive quiz presenting hidden blocks from Python recursive functions and asking learners to classify each block as either a base case or a recursive case, used to reinforce understanding of recursion structure.</p>
+  </div>
+</li>
+</ul>
+</section>
+<nav class="module-nav" aria-label="Modules">
+  <a href="../2-control-flow-and-python-data-structures/index.html">← 2 - Control Flow and Python Data Structures</a>
+  <a class="center-link" href="../index.html">↑ All modules</a>
+  <a href="../4-modules-file-io-and-error-handling/index.html">4 - Modules, File I/O, and Error Handling →</a>
+</nav>
   </main>
-
-  <footer>
-    <p>EGN3214 &nbsp;·&nbsp; Module 3: Functions, Comprehensions, and Functional Patterns</p>
-  </footer>
-
-
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
-<section class="presemaker-extras" style="max-width:1000px;margin:2rem auto;padding:0 1rem;"><h2>Topics &amp; Learning Outcomes</h2><p><a href="topics-outcomes.html">View Topics &amp; Learning Outcomes</a></p></section><script src="embed-inject.js" defer></script></body>
+<script src="embed-inject.js" defer></script>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
 </html>

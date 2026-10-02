@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "3 - Functions, Comprehensions, and Functional Patterns (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "3 - Functions, Comprehensions, and Functional Patterns \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -47,11 +52,6 @@
   {
     "title": "Using a While Loop for Input and Calculating Present Value",
     "href": "content/Future_Value.html",
-    "type": "Content"
-  },
-  {
-    "title": "3 - Functions, Comprehensions, and Functional Patterns \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

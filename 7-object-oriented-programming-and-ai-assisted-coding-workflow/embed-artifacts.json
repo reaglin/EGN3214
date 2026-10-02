@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -8,11 +13,6 @@
     "title": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow \u2014 Module Topics",
     "href": "topics.html",
     "type": "Page"
-  },
-  {
-    "title": "7 - Object-Oriented Programming and AI-Assisted Coding Workflow \u2014 Module Topics",
-    "href": "content/module_topics.html",
-    "type": "Content"
   },
   {
     "title": "Foundations of Object-Oriented Programming",

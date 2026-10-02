@@ -1,403 +1,91 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EGN3214 — Module 4: Modules, File I/O, and Error Handling</title>
-  <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --clr-bg:          #f4f6f9;
-      --clr-surface:     #ffffff;
-      --clr-primary:     #1a3a5c;
-      --clr-primary-lt:  #25527f;
-      --clr-accent:      #2e7d9e;
-      --clr-accent-lt:   #e8f4f8;
-      --clr-text:        #1e2533;
-      --clr-muted:       #5a6478;
-      --clr-border:      #d5dce8;
-      --clr-tag-bg:      #eef1f7;
-      --clr-tag-text:    #3b4a6b;
-      --radius:          8px;
-      --shadow:          0 2px 8px rgba(0,0,0,0.08);
-      --shadow-hover:    0 6px 18px rgba(0,0,0,0.13);
-      --transition:      0.2s ease;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--clr-bg);
-      color: var(--clr-text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── Header Banner ── */
-    .site-header {
-      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%);
-      color: #fff;
-      padding: 2.8rem 1.5rem 2.2rem;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .course-label {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 4px;
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .site-header h1 {
-      font-size: clamp(1.45rem, 3.5vw, 2.1rem);
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 0.85rem;
-      letter-spacing: -0.01em;
-    }
-
-    .site-header p {
-      font-size: 0.97rem;
-      max-width: 700px;
-      color: rgba(255,255,255,0.88);
-      line-height: 1.65;
-    }
-
-    /* ── Main Content ── */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2.4rem 1.5rem 3.5rem;
-    }
-
-    .section-heading {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--clr-muted);
-      margin-bottom: 1.2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--clr-border);
-    }
-
-    /* ── Card Grid ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: var(--clr-surface);
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.35rem 1.4rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      transition: box-shadow var(--transition), transform var(--transition);
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
-    }
-
-    /* ── Card Header ── */
-    .card-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .card-name {
-      font-size: 0.985rem;
-      font-weight: 700;
-      color: var(--clr-text);
-      line-height: 1.35;
-    }
-
-    .card-name a {
-      color: var(--clr-primary-lt);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color var(--transition), color var(--transition);
-    }
-
-    .card-name a:hover,
-    .card-name a:focus {
-      color: var(--clr-accent);
-      border-bottom-color: var(--clr-accent);
-      outline: none;
-    }
-
-    .card-name a:focus-visible {
-      outline: 2px solid var(--clr-accent);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    /* ── Source Link ── */
-    .source-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--clr-muted);
-      text-decoration: none;
-      background: var(--clr-tag-bg);
-      border: 1px solid var(--clr-border);
-      border-radius: 4px;
-      padding: 0.15rem 0.5rem;
-      margin-top: 0.15rem;
-      width: fit-content;
-      transition: background var(--transition), color var(--transition);
-    }
-
-    .source-link::before {
-      content: "⬇";
-      font-size: 0.68rem;
-    }
-
-    .source-link:hover,
-    .source-link:focus {
-      background: var(--clr-accent-lt);
-      color: var(--clr-accent);
-      border-color: var(--clr-accent);
-      outline: none;
-    }
-
-    .source-link:focus-visible {
-      outline: 2px solid var(--clr-accent);
-      outline-offset: 2px;
-    }
-
-    /* ── Metadata Badges ── */
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      padding: 0.18rem 0.55rem;
-      border-radius: 4px;
-      background: var(--clr-tag-bg);
-      color: var(--clr-tag-text);
-      border: 1px solid var(--clr-border);
-    }
-
-    .badge.type-module-topics  { background: #e8f0fe; color: #1a4fa0; border-color: #b8d0f5; }
-    .badge.type-text-content   { background: #e6f4ea; color: #1a6632; border-color: #a8d9b4; }
-    .badge.type-assignment     { background: #fef3e2; color: #8a4a00; border-color: #f5d49a; }
-    .badge.type-suggested      { background: #f3e8fd; color: #5e2a8a; border-color: #d4a8f5; }
-
-    .badge.filetype {
-      background: #f0f1f4;
-      color: #4a5270;
-      border-color: #cdd2df;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.68rem;
-    }
-
-    /* ── Description ── */
-    .card-description {
-      font-size: 0.875rem;
-      color: var(--clr-muted);
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    /* ── Footer ── */
-    .site-footer {
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.78rem;
-      color: var(--clr-muted);
-      border-top: 1px solid var(--clr-border);
-      background: var(--clr-surface);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      .site-header {
-        padding: 2rem 1rem 1.6rem;
-      }
-      main {
-        padding: 1.8rem 1rem 3rem;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4 - Modules, File I/O, and Error Handling — EGN3214</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
-<div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
-
-  <header class="site-header" role="banner">
-    <div class="header-inner">
-      <span class="course-label">EGN3214</span>
-      <h1>Module 4 — Modules, File I/O, and Error Handling</h1>
-      <p>
-        This module introduces three foundational Python topics: organising code with modules
-        (importing, creating custom modules, and navigating the standard library), reading and
-        writing files safely using the <code style="background:rgba(255,255,255,0.15);padding:0 4px;border-radius:3px;">with</code> statement,
-        and writing robust programs through structured exception handling.
-        Browse the artifacts below to access lessons, references, and the module assignment.
-      </p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero">
+    <div class="hero-inner">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">EGN3214</a><span class="sep" aria-hidden="true">›</span><span class="current">4 - Modules, File I/O, and Error Handling</span>
+  </nav>
+      <div class="hero-label">Module 4</div>
+      <h1>Modules, File I/O, and Error Handling</h1>
+      <p class="hero-desc">Covers writing and importing custom modules, using standard library modules, reading and writing text and CSV files with the with-statement context manager, working with JSON, and applying try-except patterns for graceful error handling in engineering scripts.</p>
     </div>
   </header>
-
-  <main>
-    <h2 class="section-heading">Module Artifacts</h2>
-
-    <div class="card-grid" role="list">
-
-      <!-- Card 1: Module Topics -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="content/module_topics.html">Module Topics</a>
-          </div>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-module-topics">Module Topics</span>
-          <span class="badge filetype">.json</span>
-        </div>
-        <p class="card-description">
-          A structured outline of the module's topics covering Python modules (importing, custom
-          modules, standard library), file I/O using the <code>with</code> statement, and error
-          handling, used by instructors to plan lessons and by learners to preview what will be
-          taught.
-        </p>
-      </article>
-
-      <!-- Card 2: Error Handling -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="content/_interactive.html">Error Handling</a>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-text-content">Text Content</span>
-          <span class="badge filetype">.html</span>
-        </div>
-        <p class="card-description">
-          An interactive lesson page explaining Python exception handling with
-          <code>try</code>-<code>except</code>, covering what exceptions are, how to catch and
-          inspect them, and how to raise them, used by learners to study error handling concepts
-          with in-page explanations and examples.
-        </p>
-      </article>
-
-      <!-- Card 3: Python Modules -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="content/Modules_File_I_interactive_topics_t1-3.html">Python Modules</a>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-text-content">Text Content</span>
-          <span class="badge filetype">.html</span>
-        </div>
-        <p class="card-description">
-          An interactive lesson page introducing Python modules, covering what a module is, how
-          to import them, how to create custom modules, and how the Python path works, used by
-          learners to read and interact with foundational module concepts.
-        </p>
-      </article>
-
-      <!-- Card 4: File IO -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="content/Modules_File_I_interactive_topics_t4-6.html">File IO</a>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-text-content">Text Content</span>
-          <span class="badge filetype">.html</span>
-        </div>
-        <p class="card-description">
-          An interactive lesson page covering file I/O using Python's <code>with</code>
-          statement, explaining file modes, the <code>open()</code> function, reading methods,
-          and path handling, used by learners to study how to safely and reliably work with
-          files in Python.
-        </p>
-      </article>
-
-      <!-- Card 5: Suggested Sources -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="content/Modules_File_I_suggested-sources.html">4 - Modules, File I/O, and Error Handling — Reading and Writing CSV Files, Working with JSON</a>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-suggested">Suggested Sources</span>
-          <span class="badge filetype">.html</span>
-        </div>
-        <p class="card-description">
-          A curated reference page that points learners to official and supplementary
-          documentation resources for Python's <code>csv</code> module and JSON handling,
-          covering how to read and write CSV files and work with JSON data; learners would use
-          it to access authoritative references while completing file I/O exercises, and
-          instructors would use it to direct students to reliable external sources for these
-          topics.
-        </p>
-      </article>
-
-      <!-- Card 6: Assignment -->
-      <article class="card" role="listitem">
-        <div class="card-header">
-          <div class="card-name">
-            <a href="assignments/index.html">Van der Waals Gas Analysis: Evaluating Equation-of-State Models with Real Experimental Data</a>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="badge type-assignment">Assignment</span>
-          <span class="badge filetype">.html</span>
-        </div>
-        <p class="card-description">
-          A 2–4 hour problem-solving assignment in which learners write Python code to apply the
-          van der Waals equation of state to real experimental gas data, practising modules, file
-          I/O, and error handling while comparing model predictions to measured values, submitted
-          as a Colab notebook or written report.
-        </p>
-      </article>
-
-    </div>
+  <main class="page-wrap" id="main">
+<section aria-labelledby="topics-h">
+<h2 id="topics-h">Topics</h2>
+<p class="section-intro">This module covers 7 topics. Open a topic to see its subtopics.</p>
+<ol class="topic-list">
+<li><a class="topic-card" href="topics-outcomes.html#topic-1"><span class="topic-num" aria-hidden="true">1</span><span class="topic-text"><span class="topic-title">Introduction to Python Modules</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-2"><span class="topic-num" aria-hidden="true">2</span><span class="topic-text"><span class="topic-title">Writing and Using Custom Modules</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-3"><span class="topic-num" aria-hidden="true">3</span><span class="topic-text"><span class="topic-title">Using Standard Library Modules</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-4"><span class="topic-num" aria-hidden="true">4</span><span class="topic-text"><span class="topic-title">File I/O with the with Statement</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-5"><span class="topic-num" aria-hidden="true">5</span><span class="topic-text"><span class="topic-title">Reading and Writing CSV Files</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-6"><span class="topic-num" aria-hidden="true">6</span><span class="topic-text"><span class="topic-title">Working with JSON</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-7"><span class="topic-num" aria-hidden="true">7</span><span class="topic-text"><span class="topic-title">Error Handling with try-except</span><span class="topic-meta">6 subtopics</span></span></a></li>
+</ol>
+<p class="more-links"><a href="topics-outcomes.html#topics">All topics and subtopics</a><a href="topics-outcomes.html#outcomes">Student learning outcomes</a></p>
+</section>
+<section aria-labelledby="content-h">
+<h2 id="content-h">Module Content</h2>
+<p class="section-intro">5 items.</p>
+<ul class="content-grid">
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/_interactive.html">Error Handling</a></div>
+    <p class="content-desc">An interactive lesson page explaining Python exception handling with try-except, covering what exceptions are, how to catch and inspect them, and how to raise them, used by learners to study error handling concepts with in-page explanations and examples.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Modules_File_I_interactive_topics_t1-3.html">Python Modules</a></div>
+    <p class="content-desc">An interactive lesson page introducing Python modules, covering what a module is, how to import them, how to create custom modules, and how the Python path works, used by learners to read and interact with foundational module concepts.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Modules_File_I_interactive_topics_t4-6.html">File IO</a></div>
+    <p class="content-desc">An interactive lesson page covering file I/O using Python&#39;s with statement, explaining file modes, the open() function, reading methods, and path handling, used by learners to study how to safely and reliably work with files in Python.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Suggested Sources</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Modules_File_I_suggested-sources.html">4 - Modules, File I/O, and Error Handling — Reading and Writing CSV Files, Working with JSON</a></div>
+    <p class="content-desc">This artifact is a curated reference page that points learners to official and supplementary documentation resources for Python&#39;s `csv` module and JSON handling, covering how to read and write CSV files and work with JSON data; learners would use it to access authoritative references while completing file I/O exercises, and instructors would use it to direct students to reliable external sources for these topics.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📝</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Assignment</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="assignments/index.html">Assignments</a></div>
+    <p class="content-desc">A 2–4 hour problem-solving assignment in which learners write Python code to apply the van der Waals equation of state to real experimental gas data, practising modules, file I/O, and error handling while comparing model predictions to measured values, submitted as a Colab notebook or written report.</p>
+  </div>
+</li>
+</ul>
+</section>
+<nav class="module-nav" aria-label="Modules">
+  <a href="../3-functions-comprehensions-and-functional-patterns/index.html">← 3 - Functions, Comprehensions, and Functional Patterns</a>
+  <a class="center-link" href="../index.html">↑ All modules</a>
+  <a href="../5-numpy-for-engineering-numerical-computation/index.html">5 - NumPy for Engineering Numerical Computation →</a>
+</nav>
   </main>
-
-  <footer class="site-footer" role="contentinfo">
-    EGN3214 &mdash; Module 4: Modules, File I/O, and Error Handling
-  </footer>
-
-
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
-<section class="presemaker-extras" style="max-width:1000px;margin:2rem auto;padding:0 1rem;"><h2>Topics &amp; Learning Outcomes</h2><p><a href="topics-outcomes.html">View Topics &amp; Learning Outcomes</a></p></section><script src="embed-inject.js" defer></script></body>
+<script src="embed-inject.js" defer></script>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
 </html>

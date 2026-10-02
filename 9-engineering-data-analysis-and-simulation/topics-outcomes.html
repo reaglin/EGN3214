@@ -18,13 +18,13 @@ li{margin:5px 0}
 .el-body{color:#555}
 .prefix{color:#555;font-style:italic;margin:6px 0 14px}
 .mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
-.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .code{font-size:.8rem;color:#595959;text-transform:uppercase;letter-spacing:.04em}
 .mo .statement{font-weight:600;margin:4px 0 8px}
 .meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
 .meta .map{background:#eaf6ec;color:#137333}
 .co{margin:7px 0}
 .co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
-.empty{color:#888}
+.empty{color:#595959}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@ li{margin:5px 0}
 <div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
 
 <h2 id="topics">Module Topics</h2>
-<h3>Introduction to Engineering Data Workflows</h3>
+<h3 id="topic-1">Introduction to Engineering Data Workflows</h3>
 <div class="summary">Establishes the end-to-end pipeline from raw data acquisition to actionable insight. Introduces the key Python libraries used throughout the module.</div>
 <ul>
 <li><strong>The Engineering Data Pipeline</strong> <span class="el-body">— A structured data pipeline guides engineers from raw measurements to validated conclusions. Understanding each stage prevents errors from propagating downstream.</span></li>
@@ -42,7 +42,7 @@ li{margin:5px 0}
 <li><strong>Overview of matplotlib</strong> <span class="el-body">— matplotlib is Python&#39;s foundational plotting library, enabling creation of static, animated, and interactive visualizations suitable for engineering reports.</span></li>
 <li><strong>Setting Up the Python Environment</strong> <span class="el-body">— A reproducible environment ensures that all library versions are consistent across team members and computing platforms.</span></li>
 </ul>
-<h3>Loading and Inspecting Engineering Data</h3>
+<h3 id="topic-2">Loading and Inspecting Engineering Data</h3>
 <div class="summary">Covers the practical techniques for importing CSV and time-series data files into Python and performing initial inspection to understand data structure and quality.</div>
 <ul>
 <li><strong>Reading CSV Files with pandas</strong> <span class="el-body">— The pd.read_csv() function is the primary method for loading comma-separated engineering datasets into a DataFrame for analysis.</span></li>
@@ -51,7 +51,7 @@ li{margin:5px 0}
 <li><strong>Selecting and Filtering Data</strong> <span class="el-body">— Subsetting a DataFrame to relevant rows and columns is a fundamental skill for focusing analysis on the engineering variables of interest.</span></li>
 <li><strong>Importing Data from Multiple Sources</strong> <span class="el-body">— Engineering projects often combine data from multiple CSV files, sensors, or logging systems that must be merged into a single coherent dataset.</span></li>
 </ul>
-<h3>Data Cleaning and Preprocessing</h3>
+<h3 id="topic-3">Data Cleaning and Preprocessing</h3>
 <div class="summary">Addresses the identification and correction of common data quality issues including missing values, outliers, incorrect types, and inconsistent formatting found in raw engineering datasets.</div>
 <ul>
 <li><strong>Detecting and Handling Missing Values</strong> <span class="el-body">— Missing values are ubiquitous in engineering data due to sensor faults, communication dropouts, or logging gaps, and must be addressed before analysis.</span></li>
@@ -61,7 +61,7 @@ li{margin:5px 0}
 <li><strong>Normalizing and Scaling Data</strong> <span class="el-body">— Engineering signals recorded in different units or on vastly different scales must be normalized before comparison, visualization, or use as simulation inputs.</span></li>
 <li><strong>Resampling and Aggregating Time-Series Data</strong> <span class="el-body">— Engineering time-series data is often recorded at irregular intervals or at higher frequencies than required for analysis, necessitating resampling to a uniform grid.</span></li>
 </ul>
-<h3>Visualizing Engineering Data with matplotlib</h3>
+<h3 id="topic-4">Visualizing Engineering Data with matplotlib</h3>
 <div class="summary">Teaches the construction of clear, informative plots for communicating engineering data patterns, trends, distributions, and relationships using matplotlib and pandas plotting utilities.</div>
 <ul>
 <li><strong>Line Plots for Time-Series Data</strong> <span class="el-body">— Line plots are the standard visualization for time-series engineering data, clearly showing how a measured variable evolves over time.</span></li>
@@ -71,7 +71,7 @@ li{margin:5px 0}
 <li><strong>Formatting and Annotating Plots</strong> <span class="el-body">— Proper formatting, labeling, and annotation transform a basic plot into a professional engineering figure ready for reports or publications.</span></li>
 <li><strong>Visualizing Simulation Results Alongside Measured Data</strong> <span class="el-body">— Overlaying simulated and measured data on the same plot is the primary method for validating simulation models against physical experiments.</span></li>
 </ul>
-<h3>Time-Stepping Simulation Fundamentals</h3>
+<h3 id="topic-5">Time-Stepping Simulation Fundamentals</h3>
 <div class="summary">Introduces the principles of numerical time-stepping methods used to simulate dynamic engineering systems governed by ordinary differential equations, with emphasis on implementation in Python.</div>
 <ul>
 <li><strong>Ordinary Differential Equations in Engineering</strong> <span class="el-body">— Many engineering systems are governed by ordinary differential equations (ODEs) that describe how state variables such as position, current, or temperature change over time.</span></li>
@@ -81,7 +81,7 @@ li{margin:5px 0}
 <li><strong>Step Size Selection and Accuracy</strong> <span class="el-body">— Choosing an appropriate time step is a critical engineering decision balancing simulation accuracy against computational cost.</span></li>
 <li><strong>Using scipy for ODE Integration</strong> <span class="el-body">— SciPy&#39;s integrate module provides robust, adaptive ODE solvers that serve as reference implementations for validating custom time-stepping code.</span></li>
 </ul>
-<h3>Simulating Mechanical Systems</h3>
+<h3 id="topic-6">Simulating Mechanical Systems</h3>
 <div class="summary">Applies time-stepping methods to model fundamental mechanical systems including spring-mass-damper oscillators, analyzing dynamic behavior and comparing numerical results to analytical solutions.</div>
 <ul>
 <li><strong>The Spring-Mass-Damper System</strong> <span class="el-body">— The spring-mass-damper is the canonical mechanical dynamic system, described by a second-order linear ODE that governs displacement over time under applied forces.</span></li>
@@ -90,7 +90,7 @@ li{margin:5px 0}
 <li><strong>Forced Vibration and Resonance</strong> <span class="el-body">— When an external periodic force is applied, the system response depends strongly on the ratio of forcing frequency to natural frequency, reaching maximum amplitude at resonance.</span></li>
 <li><strong>Numerical Implementation of the Mechanical Model</strong> <span class="el-body">— Converting the second-order mechanical ODE into a state-space form and implementing a time-stepping loop in Python produces the simulated displacement and velocity time histories.</span></li>
 </ul>
-<h3>Simulating Electrical Systems</h3>
+<h3 id="topic-7">Simulating Electrical Systems</h3>
 <div class="summary">Applies time-stepping simulation to model RC and RLC electrical circuits, computing voltage and current transient responses and validating results against analytical solutions.</div>
 <ul>
 <li><strong>The RC Circuit</strong> <span class="el-body">— The RC circuit is the simplest first-order electrical system, described by a first-order ODE governing the voltage across the capacitor during charging or discharging.</span></li>
@@ -99,7 +99,7 @@ li{margin:5px 0}
 <li><strong>Frequency Domain Analysis</strong> <span class="el-body">— While time-stepping produces time-domain results, frequency-domain analysis using Fourier transforms provides complementary insight into circuit filtering characteristics.</span></li>
 <li><strong>Validation Against Analytical Solutions</strong> <span class="el-body">— Analytical solutions for RC and RLC circuits under standard inputs provide exact benchmarks for assessing the accuracy of time-stepping implementations.</span></li>
 </ul>
-<h3>Simulating Thermal Systems</h3>
+<h3 id="topic-8">Simulating Thermal Systems</h3>
 <div class="summary">Applies first- and second-order ODE-based simulation to model heat transfer in lumped-parameter thermal systems, including Newton&#39;s law of cooling and multi-node conduction networks.</div>
 <ul>
 <li><strong>Lumped Parameter Thermal Models</strong> <span class="el-body">— Lumped parameter thermal models treat a body as having a single uniform temperature, valid when internal conduction resistance is small compared to surface convection resistance.</span></li>
@@ -141,6 +141,6 @@ li{margin:5px 0}
 <div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
 <div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
 
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
 </body>
 </html>

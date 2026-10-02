@@ -1,413 +1,124 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 6 – Data Visualization with Matplotlib and Intro to Pandas | EGN3214</title>
-  <style>
-    /* ── Reset & base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6f9;
-      color: #2c3e50;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── Header / hero ── */
-    header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2e6da4 100%);
-      color: #fff;
-      padding: 2.8rem 2rem 2.2rem;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .course-label {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 4px;
-      padding: 0.22rem 0.7rem;
-      margin-bottom: 0.85rem;
-    }
-
-    header h1 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 0.75rem;
-    }
-
-    header p {
-      font-size: 0.97rem;
-      max-width: 760px;
-      color: rgba(255,255,255,0.88);
-    }
-
-    /* ── Main content area ── */
-    main {
-      max-width: 1100px;
-      margin: 2.2rem auto 3rem;
-      padding: 0 1.2rem;
-    }
-
-    .section-title {
-      font-size: 1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #5a6a7a;
-      margin-bottom: 1.1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 2px solid #d6dde6;
-    }
-
-    /* ── Card grid ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #dce3ec;
-      border-radius: 8px;
-      padding: 1.3rem 1.4rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: box-shadow 0.18s, transform 0.18s;
-    }
-
-    .card:hover {
-      box-shadow: 0 6px 20px rgba(46,109,164,0.12);
-      transform: translateY(-2px);
-    }
-
-    /* ── Card top row: badges ── */
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      border-radius: 4px;
-      padding: 0.18rem 0.55rem;
-      white-space: nowrap;
-    }
-
-    .badge-type {
-      background: #e8f0fb;
-      color: #2e6da4;
-      border: 1px solid #b8d0ed;
-    }
-
-    .badge-filetype {
-      background: #f0f4f0;
-      color: #3a6b3a;
-      border: 1px solid #b5d1b5;
-      font-family: 'Courier New', monospace;
-    }
-
-    /* ── Card title row ── */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-
-    .card-name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1a3a5c;
-    }
-
-    .card-name a {
-      color: #1a3a5c;
-      text-decoration: none;
-      border-bottom: 2px solid #2e6da4;
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .card-name a:hover {
-      color: #2e6da4;
-      border-color: #5ba3d9;
-    }
-
-    .source-link {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #6b8fa8;
-      text-decoration: none;
-      border: 1px solid #b0c8d8;
-      border-radius: 4px;
-      padding: 0.15rem 0.5rem;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .source-link:hover {
-      background: #2e6da4;
-      color: #fff;
-      border-color: #2e6da4;
-    }
-
-    /* ── Description ── */
-    .card-description {
-      font-size: 0.875rem;
-      color: #4a5d6e;
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      font-size: 0.78rem;
-      color: #8a9bab;
-      padding: 1.5rem 1rem 2rem;
-      border-top: 1px solid #dce3ec;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 500px) {
-      header { padding: 2rem 1.1rem 1.6rem; }
-      .card  { padding: 1rem 1.1rem; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6 - Data Visualization with Matplotlib and Intro to Pandas — EGN3214</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
-<div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
-
-  <header>
-    <div class="header-inner">
-      <span class="course-label">EGN3214</span>
-      <h1>Module 6 &mdash; Data Visualization with Matplotlib and Intro to Pandas</h1>
-      <p>
-        This module introduces Python-based data visualization using Matplotlib and covers the
-        foundational data-handling capabilities of Pandas. Learners will build skills in creating
-        and styling a variety of plots, organizing multi-panel figures, and performing descriptive
-        analysis on structured datasets — core competencies for engineering data workflows.
-      </p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero">
+    <div class="hero-inner">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">EGN3214</a><span class="sep" aria-hidden="true">›</span><span class="current">6 - Data Visualization with Matplotlib and Intro to Pandas</span>
+  </nav>
+      <div class="hero-label">Module 6</div>
+      <h1>Data Visualization with Matplotlib and Intro to Pandas</h1>
+      <p class="hero-desc">Covers matplotlib&#39;s pyplot interface for producing line plots, scatter plots, bar charts, histograms, subplots, and publication-quality figures, then introduces pandas Series and DataFrames for reading, filtering, sorting, and performing descriptive statistics on engineering datasets.</p>
     </div>
   </header>
-
-  <main>
-    <h2 class="section-title">Module Artifacts</h2>
-
-    <div class="card-grid">
-
-      <!-- Card 1: Module Topics -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Module Topics</span>
-          <span class="badge badge-filetype">.json</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
-        </div>
-        <p class="card-description">
-          This JSON file defines the structured outline of the Data Visualization with Python module,
-          listing all topics and subtopics — including Matplotlib basics, line and scatter plots, bar
-          charts, histograms, subplots, figure styling, and Pandas data handling — serving as the
-          navigational backbone instructors use to organize and sequence the module's content.
-        </p>
-      </div>
-
-      <!-- Card 2: Descriptive Statistics (Text Content) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/_interactive.html">Descriptive Statistics with Pandas</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading introduces learners to Pandas descriptive statistics methods, covering how to
-          compute summary measures such as mean, median, standard deviation, and aggregations on
-          DataFrames, enabling learners to quickly explore and summarize engineering and scientific
-          datasets without writing statistical formulas from scratch.
-        </p>
-      </div>
-
-      <!-- Card 3: Introduction to Matplotlib -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t1.html">Introduction to Matplotlib and the pyplot Interface</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading introduces learners to the Matplotlib library and its pyplot interface, covering
-          what Matplotlib is, how pyplot works, and the distinction between Figure and Axes objects,
-          giving learners the foundational conceptual framework needed before creating any plots in Python.
-        </p>
-      </div>
-
-      <!-- Card 4: Line Plots and Scatter Plots -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t2.html">Line Plots and Scatter Plots</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading teaches learners how to create and customize line plots and scatter plots using
-          Matplotlib, explaining when each plot type is appropriate, how to control markers and line
-          styles, and how to use them to visualize trends or relationships in scientific and engineering data.
-        </p>
-      </div>
-
-      <!-- Card 5: Bar Charts and Histograms -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t3.html">Bar Charts and Histograms</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading explains the differences between bar charts and histograms and teaches learners
-          how to create, annotate, and interpret both using Matplotlib, illustrating when to use each
-          for comparing categorical quantities versus visualizing the distribution of continuous data.
-        </p>
-      </div>
-
-      <!-- Card 6: Subplots and Figure Layout -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t4.html">Subplots and Figure Layout</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading teaches learners how to arrange multiple plots within a single Matplotlib figure
-          using <code>plt.subplots()</code>, covering how to create subplot grids, plot on individual
-          Axes objects, and control figure layout to enable side-by-side comparison of related visualizations.
-        </p>
-      </div>
-
-      <!-- Card 7: Publication-Quality Figure Styling -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t5.html">Publication-Quality Figure Styling</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading guides learners through the techniques required to style Matplotlib figures to
-          publication or professional standards, covering typography, color choices, line weights, tick
-          formatting, and other visual elements needed for journal articles, reports, or conference posters.
-        </p>
-      </div>
-
-      <!-- Card 8: Introduction to Pandas: Series and DataFrames -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t6.html">Introduction to Pandas: Series and DataFrames</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading introduces learners to the two core Pandas data structures — Series and DataFrames —
-          explaining their properties, how they are created, and how they relate to NumPy, giving learners
-          the foundational knowledge needed for all subsequent data manipulation and analysis tasks.
-        </p>
-      </div>
-
-      <!-- Card 9: Reading, Filtering, and Sorting Data -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t7.html">Reading, Filtering, and Sorting Data with Pandas</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading teaches learners how to load structured data into Pandas DataFrames from files,
-          and how to filter rows and sort data using Pandas' expressive querying and indexing tools,
-          enabling learners to prepare and slice real datasets for analysis.
-        </p>
-      </div>
-
-      <!-- Card 10: Descriptive Statistics with Pandas (Topic Detail) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-name">
-            <a href="content/Data_Visualization_with_interactive_topics_t8.html">Descriptive Statistics with Pandas</a>
-          </span>
-        </div>
-        <p class="card-description">
-          This reading introduces learners to Pandas descriptive statistics methods, covering how to
-          compute summary measures such as mean, median, standard deviation, and aggregations on
-          DataFrames, enabling learners to quickly explore and summarize engineering and scientific
-          datasets without writing statistical formulas from scratch.
-        </p>
-      </div>
-
-    </div><!-- /.card-grid -->
+  <main class="page-wrap" id="main">
+<section aria-labelledby="topics-h">
+<h2 id="topics-h">Topics</h2>
+<p class="section-intro">This module covers 8 topics. Open a topic to see its subtopics.</p>
+<ol class="topic-list">
+<li><a class="topic-card" href="topics-outcomes.html#topic-1"><span class="topic-num" aria-hidden="true">1</span><span class="topic-text"><span class="topic-title">Introduction to Matplotlib and the pyplot Interface</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-2"><span class="topic-num" aria-hidden="true">2</span><span class="topic-text"><span class="topic-title">Line Plots and Scatter Plots</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-3"><span class="topic-num" aria-hidden="true">3</span><span class="topic-text"><span class="topic-title">Bar Charts and Histograms</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-4"><span class="topic-num" aria-hidden="true">4</span><span class="topic-text"><span class="topic-title">Subplots and Figure Layout</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-5"><span class="topic-num" aria-hidden="true">5</span><span class="topic-text"><span class="topic-title">Publication-Quality Figure Styling</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-6"><span class="topic-num" aria-hidden="true">6</span><span class="topic-text"><span class="topic-title">Introduction to Pandas: Series and DataFrames</span><span class="topic-meta">4 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-7"><span class="topic-num" aria-hidden="true">7</span><span class="topic-text"><span class="topic-title">Reading, Filtering, and Sorting Data with Pandas</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-8"><span class="topic-num" aria-hidden="true">8</span><span class="topic-text"><span class="topic-title">Descriptive Statistics with Pandas</span><span class="topic-meta">5 subtopics</span></span></a></li>
+</ol>
+<p class="more-links"><a href="topics-outcomes.html#topics">All topics and subtopics</a><a href="topics-outcomes.html#outcomes">Student learning outcomes</a></p>
+</section>
+<section aria-labelledby="content-h">
+<h2 id="content-h">Module Content</h2>
+<p class="section-intro">9 items.</p>
+<ul class="content-grid">
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/_interactive.html">Descriptive Statistics with Pandas</a></div>
+    <p class="content-desc">This reading introduces learners to Pandas descriptive statistics methods, covering how to compute summary measures such as mean, median, standard deviation, and aggregations on DataFrames, enabling learners to quickly explore and summarize engineering and scientific datasets without writing statistical formulas from scratch.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t1.html">Introduction to Matplotlib and the pyplot Interface</a></div>
+    <p class="content-desc">This reading introduces learners to the Matplotlib library and its pyplot interface, covering what Matplotlib is, how pyplot works, and the distinction between Figure and Axes objects, giving learners the foundational conceptual framework needed before creating any plots in Python.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t2.html">Line Plots and Scatter Plots</a></div>
+    <p class="content-desc">This reading teaches learners how to create and customize line plots and scatter plots using Matplotlib, explaining when each plot type is appropriate, how to control markers and line styles, and how to use them to visualize trends or relationships in scientific and engineering data.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t3.html">Bar Charts and Histograms</a></div>
+    <p class="content-desc">This reading explains the differences between bar charts and histograms and teaches learners how to create, annotate, and interpret both using Matplotlib, illustrating when to use each for comparing categorical quantities versus visualizing the distribution of continuous data.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t4.html">Subplots and Figure Layout</a></div>
+    <p class="content-desc">This reading teaches learners how to arrange multiple plots within a single Matplotlib figure using plt.subplots(), covering how to create subplot grids, plot on individual Axes objects, and control figure layout to enable side-by-side comparison of related visualizations.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t5.html">Publication-Quality Figure Styling</a></div>
+    <p class="content-desc">This reading guides learners through the techniques required to style Matplotlib figures to publication or professional standards, covering typography, color choices, line weights, tick formatting, and other visual elements needed for journal articles, reports, or conference posters.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t6.html">Introduction to Pandas: Series and DataFrames</a></div>
+    <p class="content-desc">This reading introduces learners to the two core Pandas data structures—Series and DataFrames—explaining their properties, how they are created, and how they relate to NumPy, giving learners the foundational knowledge needed for all subsequent data manipulation and analysis tasks.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t7.html">Reading, Filtering, and Sorting Data with Pandas</a></div>
+    <p class="content-desc">This reading teaches learners how to load structured data into Pandas DataFrames from files, and how to filter rows and sort data using Pandas&#39; expressive querying and indexing tools, enabling learners to prepare and slice real datasets for analysis.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Data_Visualization_with_interactive_topics_t8.html">Descriptive Statistics with Pandas</a></div>
+    <p class="content-desc">This reading introduces learners to Pandas descriptive statistics methods, covering how to compute summary measures such as mean, median, standard deviation, and aggregations on DataFrames, enabling learners to quickly explore and summarize engineering and scientific datasets without writing statistical formulas from scratch.</p>
+  </div>
+</li>
+</ul>
+</section>
+<nav class="module-nav" aria-label="Modules">
+  <a href="../5-numpy-for-engineering-numerical-computation/index.html">← 5 - NumPy for Engineering Numerical Computation</a>
+  <a class="center-link" href="../index.html">↑ All modules</a>
+  <a href="../7-object-oriented-programming-and-ai-assisted-coding-workflow/index.html">7 - Object-Oriented Programming and AI-Assisted Coding Workflow →</a>
+</nav>
   </main>
-
-  <footer>
-    EGN3214 &mdash; Module 6 &nbsp;|&nbsp; Data Visualization with Matplotlib and Intro to Pandas
-  </footer>
-
-
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
-<section class="presemaker-extras" style="max-width:1000px;margin:2rem auto;padding:0 1rem;"><h2>Topics &amp; Learning Outcomes</h2><p><a href="topics-outcomes.html">View Topics &amp; Learning Outcomes</a></p></section><script src="embed-inject.js" defer></script></body>
+<script src="embed-inject.js" defer></script>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
 </html>

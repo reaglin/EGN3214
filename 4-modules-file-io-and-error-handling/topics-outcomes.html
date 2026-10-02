@@ -18,13 +18,13 @@ li{margin:5px 0}
 .el-body{color:#555}
 .prefix{color:#555;font-style:italic;margin:6px 0 14px}
 .mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
-.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .code{font-size:.8rem;color:#595959;text-transform:uppercase;letter-spacing:.04em}
 .mo .statement{font-weight:600;margin:4px 0 8px}
 .meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
 .meta .map{background:#eaf6ec;color:#137333}
 .co{margin:7px 0}
 .co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
-.empty{color:#888}
+.empty{color:#595959}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@ li{margin:5px 0}
 <div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
 
 <h2 id="topics">Module Topics</h2>
-<h3>Introduction to Python Modules</h3>
+<h3 id="topic-1">Introduction to Python Modules</h3>
 <div class="summary">Explains what modules are, why they are used, and how Python locates and loads them at runtime.</div>
 <ul>
 <li><strong>What Is a Module?</strong> <span class="el-body">— A module is a single Python file containing definitions, functions, classes, and variables that can be reused in other scripts.</span></li>
@@ -42,7 +42,7 @@ li{margin:5px 0}
 <li><strong>Module Aliases</strong> <span class="el-body">— The &#39;as&#39; keyword creates a shorter or more descriptive alias for an imported module or name.</span></li>
 <li><strong>The Module Search Path</strong> <span class="el-body">— When Python encounters an import statement it searches a sequence of directories defined in sys.path to locate the module file.</span></li>
 </ul>
-<h3>Writing and Using Custom Modules</h3>
+<h3 id="topic-2">Writing and Using Custom Modules</h3>
 <div class="summary">Covers how to design, write, and import your own Python modules to share reusable engineering functions across projects.</div>
 <ul>
 <li><strong>Creating a Custom Module File</strong> <span class="el-body">— A custom module is created by writing functions, classes, or constants in a .py file and saving it in a location accessible to your scripts.</span></li>
@@ -51,7 +51,7 @@ li{margin:5px 0}
 <li><strong>Importing Your Custom Module</strong> <span class="el-body">— Once saved in the correct directory, a custom module is imported using the same syntax as any standard library module.</span></li>
 <li><strong>Documenting a Custom Module</strong> <span class="el-body">— Good documentation within a module enables other engineers to understand and correctly use its functions without reading the implementation.</span></li>
 </ul>
-<h3>Using Standard Library Modules</h3>
+<h3 id="topic-3">Using Standard Library Modules</h3>
 <div class="summary">Introduces key modules included with Python that are immediately useful for engineering scripting tasks without additional installation.</div>
 <ul>
 <li><strong>The math Module</strong> <span class="el-body">— The math module provides mathematical functions and constants commonly needed in engineering calculations.</span></li>
@@ -60,7 +60,7 @@ li{margin:5px 0}
 <li><strong>The datetime Module</strong> <span class="el-body">— The datetime module supplies classes for manipulating dates and times, which is useful for timestamping engineering data logs.</span></li>
 <li><strong>The random Module</strong> <span class="el-body">— The random module generates pseudo-random numbers and provides tools for random sampling, useful in simulations and testing.</span></li>
 </ul>
-<h3>File I/O with the with Statement</h3>
+<h3 id="topic-4">File I/O with the with Statement</h3>
 <div class="summary">Explains how to open, read, and write text files safely using Python&#39;s with-statement context manager to guarantee proper resource cleanup.</div>
 <ul>
 <li><strong>Opening Files and File Modes</strong> <span class="el-body">— Python&#39;s built-in open() function returns a file object that provides methods for reading and writing; the mode argument determines how the file is accessed.</span></li>
@@ -69,7 +69,7 @@ li{margin:5px 0}
 <li><strong>Writing Text Files</strong> <span class="el-body">— Opening a file in write or append mode allows you to output strings to the file using the write or writelines methods.</span></li>
 <li><strong>Working with File Paths Using pathlib</strong> <span class="el-body">— The pathlib module provides an object-oriented interface for constructing and manipulating file paths that works consistently across operating systems.</span></li>
 </ul>
-<h3>Reading and Writing CSV Files</h3>
+<h3 id="topic-5">Reading and Writing CSV Files</h3>
 <div class="summary">Covers using Python&#39;s built-in csv module to read tabular data from CSV files and write structured results, a common task in engineering data workflows.</div>
 <ul>
 <li><strong>What Is a CSV File?</strong> <span class="el-body">— A CSV (Comma-Separated Values) file stores tabular data as plain text, with each row on a new line and columns separated by a delimiter, typically a comma.</span></li>
@@ -78,7 +78,7 @@ li{margin:5px 0}
 <li><strong>Writing CSV Files with csv.writer</strong> <span class="el-body">— csv.writer provides methods to write rows to a CSV file, handling quoting and delimiter escaping automatically.</span></li>
 <li><strong>Writing CSV Files with csv.DictWriter</strong> <span class="el-body">— csv.DictWriter writes dictionaries as CSV rows, with field names specified at construction time.</span></li>
 </ul>
-<h3>Working with JSON</h3>
+<h3 id="topic-6">Working with JSON</h3>
 <div class="summary">Introduces JSON as a human-readable data interchange format and demonstrates how Python&#39;s json module serializes and deserializes data for configuration files and APIs.</div>
 <ul>
 <li><strong>What Is JSON?</strong> <span class="el-body">— JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data using key-value pairs, arrays, and nested objects.</span></li>
@@ -87,7 +87,7 @@ li{margin:5px 0}
 <li><strong>JSON for Configuration Files</strong> <span class="el-body">— Storing simulation parameters or tool settings in a JSON file allows engineers to modify inputs without editing source code.</span></li>
 <li><strong>Limitations of Python&#39;s json Module</strong> <span class="el-body">— Not all Python objects can be directly serialized to JSON; certain types require custom handling or conversion before they can be encoded.</span></li>
 </ul>
-<h3>Error Handling with try-except</h3>
+<h3 id="topic-7">Error Handling with try-except</h3>
 <div class="summary">Explains Python&#39;s exception handling model and demonstrates how to use try-except blocks to build resilient engineering scripts that recover gracefully from runtime errors.</div>
 <ul>
 <li><strong>What Is an Exception?</strong> <span class="el-body">— An exception is a runtime error that interrupts normal program flow; if not handled, it terminates the script and displays a traceback.</span></li>
@@ -129,6 +129,6 @@ li{margin:5px 0}
 <div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
 <div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
 
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
 </body>
 </html>

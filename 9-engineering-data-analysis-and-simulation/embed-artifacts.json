@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "9 - Engineering Data Analysis and Simulation (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "9 - Engineering Data Analysis and Simulation \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -47,11 +52,6 @@
   {
     "title": "Simulating Thermal Systems",
     "href": "content/Engineering_Data_Analysis_interactive_topics_t8.html",
-    "type": "Content"
-  },
-  {
-    "title": "9 - Engineering Data Analysis and Simulation \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

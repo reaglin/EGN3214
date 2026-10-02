@@ -18,13 +18,13 @@ li{margin:5px 0}
 .el-body{color:#555}
 .prefix{color:#555;font-style:italic;margin:6px 0 14px}
 .mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
-.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .code{font-size:.8rem;color:#595959;text-transform:uppercase;letter-spacing:.04em}
 .mo .statement{font-weight:600;margin:4px 0 8px}
 .meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
 .meta .map{background:#eaf6ec;color:#137333}
 .co{margin:7px 0}
 .co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
-.empty{color:#888}
+.empty{color:#595959}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@ li{margin:5px 0}
 <div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
 
 <h2 id="topics">Module Topics</h2>
-<h3>Conditional Statements</h3>
+<h3 id="topic-1">Conditional Statements</h3>
 <div class="summary">Conditional statements allow a program to make decisions by executing different code blocks based on whether a condition evaluates to true or false. This topic covers if, elif, and else constructs in Python.</div>
 <ul>
 <li><strong>The if Statement</strong> <span class="el-body">— The if statement is the most fundamental conditional construct in Python, executing a block of code only when a specified condition is True.</span></li>
@@ -42,7 +42,7 @@ li{margin:5px 0}
 <li><strong>Comparison and Logical Operators</strong> <span class="el-body">— Conditions in Python are built using comparison operators (==, !=, &lt;, &gt;, &lt;=, &gt;=) and logical operators (and, or, not) to form complex Boolean expressions.</span></li>
 <li><strong>Nested Conditionals</strong> <span class="el-body">— Conditional statements can be placed inside other conditional blocks to test additional conditions when an outer condition is True.</span></li>
 </ul>
-<h3>for Loops and the range() Function</h3>
+<h3 id="topic-2">for Loops and the range() Function</h3>
 <div class="summary">The for loop iterates over a sequence of items, making it ideal for processing collections of data. The range() function generates numeric sequences commonly used to control loop iterations.</div>
 <ul>
 <li><strong>The for Loop</strong> <span class="el-body">— A for loop in Python iterates over each item in a sequence — such as a list, string, or range — executing the loop body once per item.</span></li>
@@ -50,14 +50,14 @@ li{margin:5px 0}
 <li><strong>Iterating with an Index Using enumerate()</strong> <span class="el-body">— The enumerate() function allows a for loop to access both the index and the value of each item in an iterable simultaneously.</span></li>
 <li><strong>Looping Over Numeric Ranges in Engineering</strong> <span class="el-body">— Engineering applications frequently require iterating over a defined numeric range, such as time steps in a simulation or indices in a data array.</span></li>
 </ul>
-<h3>while Loops</h3>
+<h3 id="topic-3">while Loops</h3>
 <div class="summary">A while loop repeats a block of code for as long as a specified condition remains True, making it suitable for situations where the number of iterations is not known in advance.</div>
 <ul>
 <li><strong>The while Loop Structure</strong> <span class="el-body">— A while loop continuously executes its body until its controlling condition evaluates to False, checking the condition before each iteration.</span></li>
 <li><strong>Infinite Loops and Loop Guards</strong> <span class="el-body">— An infinite loop occurs when a while loop&#39;s condition never becomes False, causing the program to run indefinitely without halting.</span></li>
 <li><strong>Comparing for and while Loops</strong> <span class="el-body">— Choosing between a for loop and a while loop depends on whether the number of iterations is known in advance or determined dynamically during execution.</span></li>
 </ul>
-<h3>Loop Control: break and continue</h3>
+<h3 id="topic-4">Loop Control: break and continue</h3>
 <div class="summary">The break and continue statements provide fine-grained control over loop execution, allowing early termination or skipping specific iterations without exiting the loop entirely.</div>
 <ul>
 <li><strong>The break Statement</strong> <span class="el-body">— The break statement immediately terminates the innermost loop it appears in, transferring control to the first statement after the loop.</span></li>
@@ -65,7 +65,7 @@ li{margin:5px 0}
 <li><strong>The else Clause on Loops</strong> <span class="el-body">— Python allows an optional else clause on both for and while loops, which executes only if the loop completed normally without encountering a break statement.</span></li>
 <li><strong>Practical Use Cases for break and continue</strong> <span class="el-body">— In engineering and data processing, break and continue are frequently used to handle exceptions in data, implement early-exit optimizations, and process conditional sequences.</span></li>
 </ul>
-<h3>Lists</h3>
+<h3 id="topic-5">Lists</h3>
 <div class="summary">Lists are ordered, mutable sequences that can hold items of any type, making them one of the most versatile and widely used data structures in Python.</div>
 <ul>
 <li><strong>Creating and Accessing Lists</strong> <span class="el-body">— A list is created using square brackets and can store any mix of data types. Individual elements are accessed using zero-based integer indices.</span></li>
@@ -74,7 +74,7 @@ li{margin:5px 0}
 <li><strong>List Comprehensions</strong> <span class="el-body">— A list comprehension provides a concise, readable way to create a new list by applying an expression to each item in an iterable, optionally filtered by a condition.</span></li>
 <li><strong>Common List Operations and Methods</strong> <span class="el-body">— Python provides a rich set of built-in functions and list methods for sorting, searching, counting, and transforming list data.</span></li>
 </ul>
-<h3>Tuples</h3>
+<h3 id="topic-6">Tuples</h3>
 <div class="summary">Tuples are ordered, immutable sequences that are ideal for storing fixed collections of data that should not be changed after creation.</div>
 <ul>
 <li><strong>Creating and Accessing Tuples</strong> <span class="el-body">— Tuples are defined using parentheses (or simply commas) and support the same indexing and slicing operations as lists, but their contents cannot be modified.</span></li>
@@ -82,7 +82,7 @@ li{margin:5px 0}
 <li><strong>Tuple Packing and Unpacking</strong> <span class="el-body">— Tuple packing assigns multiple values into a single tuple, while tuple unpacking assigns the elements of a tuple to individual variables in one statement.</span></li>
 <li><strong>When to Use Tuples vs. Lists</strong> <span class="el-body">— Tuples are preferred when the data represents a fixed record or should be protected from modification, while lists are better suited for collections that need to grow or change.</span></li>
 </ul>
-<h3>Dictionaries</h3>
+<h3 id="topic-7">Dictionaries</h3>
 <div class="summary">Dictionaries store data as key-value pairs, enabling fast lookups by key rather than by position, and are ideal for representing structured, labeled data.</div>
 <ul>
 <li><strong>Creating and Accessing Dictionaries</strong> <span class="el-body">— Dictionaries are created using curly braces with colon-separated key-value pairs. Values are retrieved by supplying the corresponding key in square brackets.</span></li>
@@ -90,7 +90,7 @@ li{margin:5px 0}
 <li><strong>Iterating Over Dictionaries</strong> <span class="el-body">— Python provides dedicated methods for iterating over a dictionary&#39;s keys, values, or key-value pairs using keys(), values(), and items().</span></li>
 <li><strong>Engineering Applications of Dictionaries</strong> <span class="el-body">— Dictionaries are well suited for mapping labeled engineering data, such as material properties, configuration parameters, or named measurement channels.</span></li>
 </ul>
-<h3>Sets and Choosing the Right Data Structure</h3>
+<h3 id="topic-8">Sets and Choosing the Right Data Structure</h3>
 <div class="summary">Sets store unique, unordered elements and support efficient membership testing and set operations. This topic also provides guidance on selecting the appropriate data structure for engineering problems.</div>
 <ul>
 <li><strong>Creating and Using Sets</strong> <span class="el-body">— A set is an unordered collection of unique elements defined with curly braces or the set() constructor. It automatically discards duplicate values.</span></li>
@@ -131,6 +131,6 @@ li{margin:5px 0}
 <div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
 <div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
 
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
 </body>
 </html>

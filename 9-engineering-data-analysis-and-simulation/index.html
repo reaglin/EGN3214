@@ -1,427 +1,124 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Module 9 – Engineering Data Analysis and Simulation | EGN3214</title>
-  <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f4f6f9;
-      color: #1e2530;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── Header / Hero ── */
-    header {
-      background: linear-gradient(135deg, #1a3a5c 0%, #2b6cb0 100%);
-      color: #fff;
-      padding: 2.5rem 1.5rem 2rem;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .course-label {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.65rem;
-      margin-bottom: 0.85rem;
-    }
-
-    header h1 {
-      font-size: clamp(1.4rem, 3.5vw, 2.1rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.75rem;
-    }
-
-    header p {
-      font-size: 1rem;
-      max-width: 720px;
-      opacity: 0.9;
-      line-height: 1.65;
-    }
-
-    /* ── Main Content ── */
-    main {
-      max-width: 1100px;
-      margin: 2.5rem auto 4rem;
-      padding: 0 1.25rem;
-    }
-
-    .section-heading {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #5a7a9a;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #d8e4f0;
-    }
-
-    /* ── Card Grid ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: #ffffff;
-      border: 1px solid #dce6f0;
-      border-radius: 8px;
-      padding: 1.35rem 1.4rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      transition: box-shadow 0.18s ease, border-color 0.18s ease;
-      position: relative;
-    }
-
-    .card:hover {
-      box-shadow: 0 4px 18px rgba(30, 70, 120, 0.12);
-      border-color: #a8c4e0;
-    }
-
-    /* ── Card Meta Row ── */
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border-radius: 3px;
-      padding: 0.18rem 0.55rem;
-    }
-
-    .badge-type {
-      background: #e8f0fb;
-      color: #2355a0;
-      border: 1px solid #c4d7f5;
-    }
-
-    .badge-filetype {
-      background: #f0f4f8;
-      color: #4a6278;
-      border: 1px solid #ccd8e4;
-      font-weight: 500;
-    }
-
-    /* ── Card Title Row ── */
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1a3a5c;
-      line-height: 1.3;
-    }
-
-    .card-title a {
-      color: #1a5fa8;
-      text-decoration: none;
-    }
-
-    .card-title a:hover,
-    .card-title a:focus {
-      text-decoration: underline;
-      color: #154d8a;
-    }
-
-    .source-link {
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: #5a8abf;
-      text-decoration: none;
-      white-space: nowrap;
-      border: 1px solid #a8c8e8;
-      border-radius: 3px;
-      padding: 0.12rem 0.45rem;
-      transition: background 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
-
-    .source-link:hover,
-    .source-link:focus {
-      background: #d8ecfd;
-      color: #0f3f72;
-      text-decoration: none;
-    }
-
-    /* ── Card Description ── */
-    .card-description {
-      font-size: 0.875rem;
-      color: #3c4e62;
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    /* ── Footer ── */
-    footer {
-      background: #1a3a5c;
-      color: rgba(255, 255, 255, 0.6);
-      text-align: center;
-      font-size: 0.78rem;
-      padding: 1.1rem 1rem;
-    }
-
-    footer span {
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 480px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      header {
-        padding: 1.75rem 1rem 1.5rem;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9 - Engineering Data Analysis and Simulation — EGN3214</title>
+  <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-<div class="pm-backlink" style="font-family:'Segoe UI',Arial,sans-serif;padding:8px 16px;background:#f5f8fc;border-bottom:1px solid #dce3ec"><a href="../index.html" style="color:#1a3c6e;font-weight:600;text-decoration:none">↑ EGN3214</a></div>
-<div style="border:1px solid #c9d4e3;background:#f5f8fc;border-radius:8px;padding:10px 16px;margin:0 0 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:'Segoe UI',Arial,sans-serif"><strong style="color:#1a3c6e">Module outline:</strong><a href="topics-outcomes.html#topics" style="color:#1a3c6e;font-weight:600;text-decoration:none">📋 Module Topics</a><a href="topics-outcomes.html#outcomes" style="color:#137333;font-weight:600;text-decoration:none">🎯 Student Learning Outcomes</a></div>
-
-  <header>
-    <div class="header-inner">
-      <span class="course-label">EGN3214</span>
-      <h1>Module 9 &mdash; Engineering Data Analysis and Simulation</h1>
-      <p>
-        This module guides learners through the full engineering data pipeline&mdash;from
-        loading and cleaning raw datasets to visualizing results&mdash;and introduces
-        numerical simulation techniques for thermal, mechanical, and electrical systems
-        using Python-based ODE methods. Use the resources below to navigate readings,
-        topic details, and supporting content.
-      </p>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero">
+    <div class="hero-inner">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">EGN3214</a><span class="sep" aria-hidden="true">›</span><span class="current">9 - Engineering Data Analysis and Simulation</span>
+  </nav>
+      <div class="hero-label">Module 9</div>
+      <h1>Engineering Data Analysis and Simulation</h1>
+      <p class="hero-desc">Covers the full engineering data workflow — loading, cleaning, and visualizing CSV and time-series data using pandas, NumPy, and matplotlib — then implements time-stepping simulation models for mechanical, electrical, and thermal systems, comparing results with analytical solutions.</p>
     </div>
   </header>
-
-  <main>
-    <p class="section-heading">Module Artifacts &mdash; 10 items</p>
-
-    <div class="card-grid">
-
-      <!-- 1: Module Topics -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Module Topics</span>
-          <span class="badge badge-filetype">.json</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/module_topics.html">Module Topics</a>
-          </span>
-          <a class="source-link" href="source/hierarchy.json">source file</a>
-        </div>
-        <p class="card-description">
-          A structured outline of the module&rsquo;s learning topics&mdash;covering the
-          engineering data pipeline, pandas and NumPy basics, data loading and inspection,
-          cleaning and preprocessing, and matplotlib visualization&mdash;used by learners
-          to navigate the course content and by instructors to sequence instruction.
-        </p>
-      </div>
-
-      <!-- 2: Simulating Thermal Systems (Text Content) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Text Content</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/_interactive.html">Simulating Thermal Systems</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that introduces numerical ODE-based simulation of thermal systems
-          &mdash; covering Newton&rsquo;s law of cooling and related heat-transfer
-          models &mdash; which learners use to understand how to model and solve
-          temperature-evolution problems computationally.
-        </p>
-      </div>
-
-      <!-- 3: Introduction to Engineering Data Workflows -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t1.html">Introduction to Engineering Data Workflows</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that outlines the full engineering data workflow from raw data
-          acquisition through cleaning, exploration, and analysis, giving learners and
-          instructors a conceptual roadmap for the topics covered throughout the module.
-        </p>
-      </div>
-
-      <!-- 4: Loading and Inspecting Engineering Data -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t2.html">Loading and Inspecting Engineering Data</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that covers how to load raw engineering datasets into Python, inspect
-          their structure, identify data-type issues, duplicates, and index misalignments,
-          serving as a practical starting point for any data analysis task.
-        </p>
-      </div>
-
-      <!-- 5: Data Cleaning and Preprocessing -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t3.html">Data Cleaning and Preprocessing</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that explains techniques for detecting and handling missing values,
-          outliers, sensor saturation, and formatting errors in raw engineering datasets,
-          which learners apply to prepare data for reliable analysis or model training.
-        </p>
-      </div>
-
-      <!-- 6: Visualizing Engineering Data with matplotlib -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t4.html">Visualizing Engineering Data with matplotlib</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that teaches how to use matplotlib to create and customize engineering
-          plots &mdash; including time-series, comparison, and distribution charts &mdash;
-          which learners use to visualize and communicate data and simulation results
-          effectively.
-        </p>
-      </div>
-
-      <!-- 7: Time-Stepping Simulation Fundamentals -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t5.html">Time-Stepping Simulation Fundamentals</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that introduces ordinary differential equations and numerical
-          time-stepping methods (such as Euler and Runge-Kutta) as the foundation for
-          simulating dynamic engineering systems, which learners use before tackling
-          domain-specific simulation topics.
-        </p>
-      </div>
-
-      <!-- 8: Simulating Mechanical Systems -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t6.html">Simulating Mechanical Systems</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that covers numerical simulation of mechanical systems such as
-          mass-spring-damper models, explaining how to set up and solve their governing
-          ODEs to predict vibration, resonance, and transient behavior.
-        </p>
-      </div>
-
-      <!-- 9: Simulating Electrical Systems -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t7.html">Simulating Electrical Systems</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that explains how to model and numerically simulate RC and RLC
-          electrical circuits using ODE methods derived from Kirchhoff&rsquo;s laws,
-          which learners use to predict voltage and current dynamics over time.
-        </p>
-      </div>
-
-      <!-- 10: Simulating Thermal Systems (Topic Detail) -->
-      <div class="card">
-        <div class="card-meta">
-          <span class="badge badge-type">Topic Detail</span>
-          <span class="badge badge-filetype">.html</span>
-        </div>
-        <div class="card-title-row">
-          <span class="card-title">
-            <a href="content/Engineering_Data_Analysis_interactive_topics_t8.html">Simulating Thermal Systems</a>
-          </span>
-        </div>
-        <p class="card-description">
-          A reading that introduces numerical ODE-based simulation of thermal systems
-          &mdash; covering Newton&rsquo;s law of cooling and related heat-transfer
-          models &mdash; which learners use to understand how to model and solve
-          temperature-evolution problems computationally.
-        </p>
-      </div>
-
-    </div>
+  <main class="page-wrap" id="main">
+<section aria-labelledby="topics-h">
+<h2 id="topics-h">Topics</h2>
+<p class="section-intro">This module covers 8 topics. Open a topic to see its subtopics.</p>
+<ol class="topic-list">
+<li><a class="topic-card" href="topics-outcomes.html#topic-1"><span class="topic-num" aria-hidden="true">1</span><span class="topic-text"><span class="topic-title">Introduction to Engineering Data Workflows</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-2"><span class="topic-num" aria-hidden="true">2</span><span class="topic-text"><span class="topic-title">Loading and Inspecting Engineering Data</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-3"><span class="topic-num" aria-hidden="true">3</span><span class="topic-text"><span class="topic-title">Data Cleaning and Preprocessing</span><span class="topic-meta">6 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-4"><span class="topic-num" aria-hidden="true">4</span><span class="topic-text"><span class="topic-title">Visualizing Engineering Data with matplotlib</span><span class="topic-meta">6 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-5"><span class="topic-num" aria-hidden="true">5</span><span class="topic-text"><span class="topic-title">Time-Stepping Simulation Fundamentals</span><span class="topic-meta">6 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-6"><span class="topic-num" aria-hidden="true">6</span><span class="topic-text"><span class="topic-title">Simulating Mechanical Systems</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-7"><span class="topic-num" aria-hidden="true">7</span><span class="topic-text"><span class="topic-title">Simulating Electrical Systems</span><span class="topic-meta">5 subtopics</span></span></a></li>
+<li><a class="topic-card" href="topics-outcomes.html#topic-8"><span class="topic-num" aria-hidden="true">8</span><span class="topic-text"><span class="topic-title">Simulating Thermal Systems</span><span class="topic-meta">6 subtopics</span></span></a></li>
+</ol>
+<p class="more-links"><a href="topics-outcomes.html#topics">All topics and subtopics</a><a href="topics-outcomes.html#outcomes">Student learning outcomes</a></p>
+</section>
+<section aria-labelledby="content-h">
+<h2 id="content-h">Module Content</h2>
+<p class="section-intro">9 items.</p>
+<ul class="content-grid">
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Reading</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/_interactive.html">Simulating Thermal Systems</a></div>
+    <p class="content-desc">A reading that introduces numerical ODE-based simulation of thermal systems — covering Newton&#39;s law of cooling and related heat-transfer models — which learners use to understand how to model and solve temperature-evolution problems computationally.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t1.html">Introduction to Engineering Data Workflows</a></div>
+    <p class="content-desc">A reading that outlines the full engineering data workflow from raw data acquisition through cleaning, exploration, and analysis, giving learners and instructors a conceptual roadmap for the topics covered throughout the module.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t2.html">Loading and Inspecting Engineering Data</a></div>
+    <p class="content-desc">A reading that covers how to load raw engineering datasets into Python, inspect their structure, identify data-type issues, duplicates, and index misalignments, serving as a practical starting point for any data analysis task.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t3.html">Data Cleaning and Preprocessing</a></div>
+    <p class="content-desc">A reading that explains techniques for detecting and handling missing values, outliers, sensor saturation, and formatting errors in raw engineering datasets, which learners apply to prepare data for reliable analysis or model training.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t4.html">Visualizing Engineering Data with matplotlib</a></div>
+    <p class="content-desc">A reading that teaches how to use matplotlib to create and customize engineering plots — including time-series, comparison, and distribution charts — which learners use to visualize and communicate data and simulation results effectively.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t5.html">Time-Stepping Simulation Fundamentals</a></div>
+    <p class="content-desc">A reading that introduces ordinary differential equations and numerical time-stepping methods (such as Euler and Runge-Kutta) as the foundation for simulating dynamic engineering systems, which learners use before tackling domain-specific simulation topics.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t6.html">Simulating Mechanical Systems</a></div>
+    <p class="content-desc">A reading that covers numerical simulation of mechanical systems such as mass-spring-damper models, explaining how to set up and solve their governing ODEs to predict vibration, resonance, and transient behavior.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t7.html">Simulating Electrical Systems</a></div>
+    <p class="content-desc">A reading that explains how to model and numerically simulate RC and RLC electrical circuits using ODE methods derived from Kirchhoff&#39;s laws, which learners use to predict voltage and current dynamics over time.</p>
+  </div>
+</li>
+<li class="content-card">
+  <div class="content-icon" aria-hidden="true">📄</div>
+  <div class="content-body">
+    <div class="content-meta"><span class="pill">Topic Detail</span><span class="pill pill-format"><span aria-hidden="true">🌐 </span>Web page</span></div>
+    <div class="content-title"><a href="content/Engineering_Data_Analysis_interactive_topics_t8.html">Simulating Thermal Systems</a></div>
+    <p class="content-desc">A reading that introduces numerical ODE-based simulation of thermal systems — covering Newton&#39;s law of cooling and related heat-transfer models — which learners use to understand how to model and solve temperature-evolution problems computationally.</p>
+  </div>
+</li>
+</ul>
+</section>
+<nav class="module-nav" aria-label="Modules">
+  <a href="../8-numerical-methods-with-scipy-and-curve-fitting/index.html">← 8 - Numerical Methods with SciPy and Curve Fitting</a>
+  <a class="center-link" href="../index.html">↑ All modules</a>
+  <a href="../10-machine-learning-automation-version-control-and-responsible-a/index.html">10 - Machine Learning, Automation, Version Control, and Responsible AI →</a>
+</nav>
   </main>
-
-  <footer>
-    <span>EGN3214</span> &mdash; Module 9: Engineering Data Analysis and Simulation
-  </footer>
-
-
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
-<section class="presemaker-extras" style="max-width:1000px;margin:2rem auto;padding:0 1rem;"><h2>Topics &amp; Learning Outcomes</h2><p><a href="topics-outcomes.html">View Topics &amp; Learning Outcomes</a></p></section><script src="embed-inject.js" defer></script></body>
+<script src="embed-inject.js" defer></script>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
+</body>
 </html>

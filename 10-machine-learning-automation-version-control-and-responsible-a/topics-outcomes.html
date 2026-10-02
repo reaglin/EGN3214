@@ -18,13 +18,13 @@ li{margin:5px 0}
 .el-body{color:#555}
 .prefix{color:#555;font-style:italic;margin:6px 0 14px}
 .mo{border:1px solid #e2e2e2;border-radius:6px;padding:12px 16px;margin:12px 0}
-.mo .code{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+.mo .code{font-size:.8rem;color:#595959;text-transform:uppercase;letter-spacing:.04em}
 .mo .statement{font-weight:600;margin:4px 0 8px}
 .meta span{display:inline-block;background:#eef2f8;color:#1a3c6e;border-radius:3px;padding:1px 8px;margin:0 6px 0 0;font-size:.85rem}
 .meta .map{background:#eaf6ec;color:#137333}
 .co{margin:7px 0}
 .co .code{font-weight:600;color:#1a3c6e;margin-right:6px}
-.empty{color:#888}
+.empty{color:#595959}
 </style>
 </head>
 <body>
@@ -33,7 +33,7 @@ li{margin:5px 0}
 <div class="toc"><a href="#topics">📋 Module Topics</a><a href="#outcomes">🎯 Student Learning Outcomes</a></div>
 
 <h2 id="topics">Module Topics</h2>
-<h3>Foundations of Supervised Machine Learning</h3>
+<h3 id="topic-1">Foundations of Supervised Machine Learning</h3>
 <div class="summary">Introduces the core concepts of supervised learning, distinguishing between regression and classification tasks and explaining how labeled training data drives model development.</div>
 <ul>
 <li><strong>What Is Supervised Learning?</strong> <span class="el-body">— Supervised learning is a machine learning paradigm in which a model is trained on labeled input-output pairs to learn a mapping from features to targets.</span></li>
@@ -42,7 +42,7 @@ li{margin:5px 0}
 <li><strong>Bias-Variance Trade-off</strong> <span class="el-body">— The bias-variance trade-off describes the tension between a model that is too simple (high bias) and one that is too complex (high variance).</span></li>
 <li><strong>Model Evaluation Metrics</strong> <span class="el-body">— Selecting appropriate evaluation metrics is essential for understanding how well a model performs on the intended engineering task.</span></li>
 </ul>
-<h3>Machine Learning with scikit-learn</h3>
+<h3 id="topic-2">Machine Learning with scikit-learn</h3>
 <div class="summary">Covers the practical use of the scikit-learn library to build, train, and evaluate regression and classification models in engineering contexts.</div>
 <ul>
 <li><strong>The scikit-learn API Design</strong> <span class="el-body">— scikit-learn provides a consistent estimator API in which every model object exposes fit, predict, and score methods, making it straightforward to swap algorithms.</span></li>
@@ -52,7 +52,7 @@ li{margin:5px 0}
 <li><strong>Hyperparameter Tuning</strong> <span class="el-body">— Hyperparameters are model configuration settings that are not learned from data and must be set before training; tuning them improves model performance.</span></li>
 <li><strong>Model Interpretability and Feature Importance</strong> <span class="el-body">— Understanding which features drive model predictions is critical in engineering applications where decisions have physical and safety consequences.</span></li>
 </ul>
-<h3>Engineering Automation and Parameter Sweep Pipelines</h3>
+<h3 id="topic-3">Engineering Automation and Parameter Sweep Pipelines</h3>
 <div class="summary">Introduces strategies for automating repetitive engineering computations and systematically exploring parameter spaces using scripted pipelines.</div>
 <ul>
 <li><strong>Why Automate Engineering Workflows?</strong> <span class="el-body">— Automation replaces manual, error-prone repetition with reliable, reproducible scripts that can execute complex sequences of engineering tasks consistently.</span></li>
@@ -61,7 +61,7 @@ li{margin:5px 0}
 <li><strong>Handling Large Result Sets</strong> <span class="el-body">— Parameter sweeps can generate large volumes of output data that require efficient storage, querying, and summarization strategies.</span></li>
 <li><strong>Scheduling and Running Long Jobs</strong> <span class="el-body">— Engineering automation scripts that take significant time to run benefit from progress tracking, logging, and the ability to resume after interruption.</span></li>
 </ul>
-<h3>Git and GitHub Version Control</h3>
+<h3 id="topic-4">Git and GitHub Version Control</h3>
 <div class="summary">Establishes foundational and collaborative version control practices using Git locally and GitHub as a remote repository platform for engineering code projects.</div>
 <ul>
 <li><strong>Why Version Control Matters for Engineers</strong> <span class="el-body">— Version control systems track every change made to a codebase, enabling engineers to review history, revert mistakes, and collaborate without overwriting each other&#39;s work.</span></li>
@@ -71,7 +71,7 @@ li{margin:5px 0}
 <li><strong>Pull Requests and Code Review</strong> <span class="el-body">— Pull requests on GitHub are a formal mechanism for proposing changes, inviting peer review, and merging approved work into a shared branch.</span></li>
 <li><strong>Repository Hygiene and .gitignore</strong> <span class="el-body">— Good repository hygiene ensures that only relevant source files are tracked, avoiding clutter from generated outputs, credentials, or environment-specific files.</span></li>
 </ul>
-<h3>Responsible AI Integration in Engineering Practice</h3>
+<h3 id="topic-5">Responsible AI Integration in Engineering Practice</h3>
 <div class="summary">Consolidates the ethical, professional, and technical obligations engineers must uphold when using AI tools, including verification of AI-generated code and accountability for outcomes.</div>
 <ul>
 <li><strong>The Role of AI Tools in Engineering Workflows</strong> <span class="el-body">— AI coding assistants and generative tools can accelerate engineering software development, but they introduce new responsibilities around verification and professional judgment.</span></li>
@@ -114,6 +114,6 @@ li{margin:5px 0}
 <div class="co"><span class="code">CO2</span>Write computer functions to meet specific calculation needs.</div>
 <div class="co"><span class="code">CO3</span>Write computer programs to solve mathematical expressions and engineering problems</div>
 
-<footer class="presemaker-credit" style="margin-top:2rem;padding:14px 0;border-top:1px solid #ddd;text-align:center;font:13px/1.4 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#777;">Created with <a href="https://apps.microsoft.com/detail/9mt854nv3fgf?hl=en-US&amp;gl=US" target="_blank" rel="noopener" style="color:#3b6ea5;text-decoration:none;">PreseMaker</a></footer>
+<footer class="presemaker-credit" data-credit="2" style="margin-top:2rem;padding:14px 8px;border-top:1px solid #ddd;background:#fff;text-align:center;font:13px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#595959;"><svg width="20" height="20" viewBox="0 0 2048 2048" aria-hidden="true" focusable="false" style="vertical-align:-5px;margin-right:7px"><rect width="2048" height="2048" rx="384" fill="#0F6E6E"/><path fill="#0A5050" d="M1024 1000 344 832v816l680 168zm0 0 680-168v816l-680 168z"/><path fill="#fff" d="M1024 944 384 784v808l640 160zm0 0 640-160v808l-640 160z"/><rect x="1002" y="944" width="44" height="808" fill="#0F6E6E"/><rect x="936" y="246" width="176" height="448" rx="44" fill="#fff"/><rect x="800" y="382" width="448" height="176" rx="44" fill="#fff"/></svg>Created with <a href="https://softwareplus.ai/coursebuilder/" target="_blank" rel="noopener" style="color:#2f5d8f;font-weight:600;text-decoration:none;">CourseBuilder+</a><span aria-hidden="true"> · </span><a href="https://softwareplus.ai/" target="_blank" rel="noopener" style="color:#2f5d8f;text-decoration:none;">SoftwarePlus.ai</a></footer>
 </body>
 </html>

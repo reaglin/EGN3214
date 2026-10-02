@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "2 - Control Flow and Python Data Structures (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "2 - Control Flow and Python Data Structures \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -17,11 +22,6 @@
   {
     "title": "Control_Flow_and",
     "href": "content/Control_Flow_and_interactive_topics_t5-8.html",
-    "type": "Content"
-  },
-  {
-    "title": "2 - Control Flow and Python Data Structures \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

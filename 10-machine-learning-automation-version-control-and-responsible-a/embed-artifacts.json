@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -32,11 +37,6 @@
   {
     "title": "Responsible AI Integration in Engineering Practice",
     "href": "content/Machine_Learning_Automation_interactive_topics_t5.html",
-    "type": "Content"
-  },
-  {
-    "title": "10 - Machine Learning, Automation, Version Control, and Responsible AI \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

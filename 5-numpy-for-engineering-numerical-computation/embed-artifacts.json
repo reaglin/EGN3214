@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "5 - NumPy for Engineering Numerical Computation (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "5 - NumPy for Engineering Numerical Computation \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -27,11 +32,6 @@
   {
     "title": "Assignment 5 \u2013 Find Depth of Flow in an Open Channel",
     "href": "content/ext_77319c9d.html",
-    "type": "Content"
-  },
-  {
-    "title": "5 - NumPy for Engineering Numerical Computation \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

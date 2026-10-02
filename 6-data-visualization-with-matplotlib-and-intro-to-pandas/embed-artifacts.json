@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "6 - Data Visualization with Matplotlib and Intro to Pandas (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "6 - Data Visualization with Matplotlib and Intro to Pandas \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -47,11 +52,6 @@
   {
     "title": "Descriptive Statistics with Pandas",
     "href": "content/Data_Visualization_with_interactive_topics_t8.html",
-    "type": "Content"
-  },
-  {
-    "title": "6 - Data Visualization with Matplotlib and Intro to Pandas \u2014 Module Topics",
-    "href": "content/module_topics.html",
     "type": "Content"
   },
   {

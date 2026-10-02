@@ -1,5 +1,10 @@
 ﻿[
   {
+    "title": "1 - Python Environment Setup and Language Fundamentals (module page)",
+    "href": "index.html",
+    "type": "Module page"
+  },
+  {
     "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Topics \u0026 Learning Outcomes",
     "href": "topics-outcomes.html",
     "type": "Page"
@@ -8,11 +13,6 @@
     "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Module Topics",
     "href": "topics.html",
     "type": "Page"
-  },
-  {
-    "title": "1 - Python Environment Setup and Language Fundamentals \u2014 Module Topics",
-    "href": "content/module_topics.html",
-    "type": "Content"
   },
   {
     "title": "Python_Environment_Setup",
